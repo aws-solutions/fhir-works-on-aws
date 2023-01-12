@@ -1,0 +1,70 @@
+// DO NOT ADD COMMENTS IN THIS FILE.  They will be lost when the Rush tool resaves it.
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
+  "packages": [
+    {
+      "name": "@typescript-eslint/eslint-plugin",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@typescript-eslint/parser",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "eslint",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "eslint-config-airbnb-base",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "eslint-config-prettier",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "eslint-plugin-import",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest-each",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest-mock-extended",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "prettier",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "standard-version",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "ts-jest",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "typescript",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "winston",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "winston-transport",
+      "allowedCategories": [ "production" ]
+    }
+  ]
+}
