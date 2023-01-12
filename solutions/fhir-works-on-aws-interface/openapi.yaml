@@ -1,0 +1,964 @@
+openapi: 3.0.0
+info:
+  title: FHIR Works on AWS
+  description: This is an implementation of FHIR Works on AWS interface
+
+  contact:
+    email: fhir-works-on-aws-dev@amazon.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+  - name: authorization
+    description: Calls to authorize the request
+  - name: bundle
+    description: Operations to handle bundle requests
+  - name: history
+    description: Operations to search non-active FHIR resources
+  - name: search
+    description: Operations to search active FHIR resources
+  - name: persistence
+    description: Operations for CRUD like behaviors on FHIR resources
+paths:
+  /authz:
+    post:
+      tags:
+        - authorization
+      summary: Authorizes if user can perform the action
+      operationId: isAuthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationRequest'
+      responses:
+        '204':
+          description: Access granted
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /authz/bundle:
+    post:
+      tags:
+        - authorization
+      summary: Authorizes if all elements of a Bundle transactions are authorized
+      operationId: isBundleAuthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationBundleRequest'
+      responses:
+        '204':
+          description: Access granted
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /bundle/batch:
+    post:
+      tags:
+        - bundle
+      summary: Process a batch of requests
+      description: Process a batch of requests that are not dependent on each other
+      operationId: batch
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /bundle/transaction:
+    post:
+      tags:
+        - bundle
+      summary: authorize Bundle transactions
+      description: Used to authorize Bundle transactions
+      operationId: transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /history/{resourceType}/{id}:
+    get:
+      tags:
+        - history
+      summary: Search the history of a single FHIR resource instance
+      description: Search the history of a single FHIR resource instance
+      operationId: instanceHistory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /history/{resourceType}:
+    get:
+      tags:
+        - history
+      summary: Search the history of a single FHIR resource type
+      description: Search the history of a single FHIR resource type
+      operationId: typeHistory
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /history:
+    get:
+      tags:
+        - history
+      summary: Searches all historical resources in the FHIR server
+      description: Searches all historical resources in the FHIR server
+      operationId: globalHistory
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /search/{resourceType}:
+    get:
+      tags:
+        - search
+      summary: Search across a single FHIR resource type
+      description: Search across a single FHIR resource type
+      operationId: typeSearch
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /search:
+    get:
+      tags:
+        - search
+      summary: Searches all resources in the FHIR server
+      description: Searches all resources in the FHIR server
+      operationId: globalSearch
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /persistence/{resourceType}:
+    post:
+      tags:
+        - persistence
+      summary: create a new FHIR resource
+      operationId: createResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /persistence/{resourceType}/{id}:
+    get:
+      tags:
+        - persistence
+      summary: read a new FHIR resource
+      operationId: readResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      responses:
+        '200':
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - persistence
+      summary: update a new FHIR resource
+      operationId: updateResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceUpdateRequest'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - persistence
+      summary: delete a FHIR resource
+      operationId: deleteResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - persistence
+      summary: patch a new FHIR resource
+      operationId: patchResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceUpdateRequest'
+      responses:
+        '200':
+          description: Patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /persistence/{resourceType}/{id}/{vid}:
+    get:
+      tags:
+        - persistence
+      summary: read a new FHIR resource
+      operationId: vReadResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        - name: vid
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /persistence/conditional/{resourceType}:
+    post:
+      tags:
+        - persistence
+      summary: conditionally create a new FHIR resource
+      operationId: conditionalCreateResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionalResourceRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /persistence/conditional/{resourceType}/{id}:
+    put:
+      tags:
+        - persistence
+      summary: conditionally update a new FHIR resource
+      operationId: conditionalUpdateResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionalResourceRequest'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - persistence
+      summary: conditionally delete a FHIR resource
+      operationId: conditionalDeleteResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - persistence
+      summary: conditionally patch a FHIR resource
+      operationId: conditionalPatchResource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: Patient
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+            example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionalResourceRequest'
+      responses:
+        '200':
+          description: Patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AuthorizationRequest:
+      required:
+        - accessToken
+        - operation
+      properties:
+        acessToken:
+          type: string
+          example: eyJhbGciOUz9.eyJzdWxMjMQ.SflMeKKF2QT
+        operation:
+          type: string
+          example: create
+        resourceType:
+          type: string
+          example: Patient
+        id:
+          type: string
+          format: uuid
+          example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        vid:
+          type: string
+          example: '1'
+      description: Request to authorize the user based on what they are trying to
+        do
+    AuthorizationBundleRequest:
+      required:
+        - accessToken
+        - requests
+      properties:
+        acessToken:
+          type: string
+          example: eyJhbGciOUz9.eyJzdWxMjMQ.SflMeKKF2QT
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchReadWriteRequest'
+      description: Request to authorize the user based on all the things this bundle
+        is trying to do
+    ErrorResponse:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Could not find entry
+      description: Response when errors occur
+    BundleResponse:
+      required:
+        - batchReadWriteResponses
+        - requests
+      properties:
+        batchReadWriteResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchReadWriteResponse'
+      description: Response for Bundle interactions
+    BatchRequest:
+      required:
+        - requests
+        - startTime
+      properties:
+        startTime:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchReadWriteRequest'
+      description: Request to process many operations that are independent of each
+        other
+    TransactionRequest:
+      required:
+        - requests
+        - startTime
+      properties:
+        startTime:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchReadWriteRequest'
+      description: Request to process many operations that are dependent of each other
+    BatchReadWriteRequest:
+      required:
+        - id
+        - operation
+        - resource
+        - resourceType
+      properties:
+        operation:
+          type: string
+          example: create
+        resourceType:
+          type: string
+          example: Patient
+        id:
+          type: string
+          format: uuid
+          example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        resource:
+          type: object
+        vid:
+          type: string
+          example: '1'
+        fullUrl:
+          type: string
+          format: url
+          example: https://www.acme-corp.com/Patient/1234
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+      description: A single request representing a Bundle entry
+    BatchReadWriteResponse:
+      required:
+        - operation
+        - resource
+      properties:
+        operation:
+          type: string
+          example: create
+        resourceType:
+          type: string
+          example: Patient
+        id:
+          type: string
+          format: uuid
+          example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        resource:
+          type: object
+        vid:
+          type: string
+          example: '1'
+      description: A single response correlating to a single a Bundle entry
+    GenericResponse:
+      required:
+        - resource
+      properties:
+        resource:
+          type: object
+          additionalProperties: true
+          properties:
+            id:
+              type: string
+              description: 'Unique id of the created resource'
+            resourceType:
+              type: string
+      description: A generic response for a successful operation. Response should include the full resource along with a required id field for the resource.
+    Reference:
+      required:
+        - id
+        - referenceFullUrl
+        - referencePath
+        - resourceType
+        - rootUrl
+        - vid
+      properties:
+        resourceType:
+          type: string
+          example: Patient
+        id:
+          type: string
+          format: uuid
+          example: fd8bcf46-ea06-4f9f-af5b-b62f68702d6d
+        vid:
+          type: string
+          example: '1'
+        rootUrl:
+          type: string
+          format: url
+          example: https://www.test-FHIR.com/
+        referenceFullUrl:
+          type: string
+          format: url
+          example: https://www.test-FHIR.com/Patient/123
+        referencePath:
+          type: string
+          description: Where to find the reference in the Bundle entry
+          example: provider.reference
+      description: A connection between entries in a Bundle
+    ResourceCreateRequest:
+      required:
+        - resourceType
+      type: object
+      additionalProperties: true
+      properties:
+        resourceType:
+          type: string
+    ResourceUpdateRequest:
+      required:
+        - id
+        - resourceType
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        resourceType:
+          type: string
+    ConditionalResourceRequest:
+      properties:
+        resource:
+          type: object
+        query:
+          type: object

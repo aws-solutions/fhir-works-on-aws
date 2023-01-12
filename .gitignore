@@ -44,6 +44,7 @@ jspm_packages/
 .node_repl_history
 
 # Output of 'npm pack'
+*.zip
 *.tgz
 
 # Yarn Integrity file
@@ -66,3 +67,22 @@ common/autoinstallers/*/.npmrc
 
 # Heft
 .heft
+
+/.serverless
+/.vscode
+!/.gitignore
+/build
+Info_Output.yml
+dist
+lib
+.build
+.idea
+yarn-error.log
+
+coverage
+##############################
+## local Development
+##############################
+serverless-output.yml
+serverless-output.yaml
+serverless_config.json
