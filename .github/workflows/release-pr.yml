@@ -32,9 +32,9 @@ jobs:
       - name: Create Pull Request to merge to mainline
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "dev-release-${{ github.event.head_commit.id }}"
+          source_branch: 'dev-release-${{ github.event.head_commit.id }}'
           destination_branch: mainline
           pr_draft: false
-          pr_reviewer: "awslabs/aws-chamonix-fhir"
-          pr_label: "auto-release-pr"
+          pr_reviewer: 'awslabs/aws-chamonix-fhir'
+          pr_label: 'auto-release-pr'
           github_token: ${{ secrets.PR_TOKEN }}

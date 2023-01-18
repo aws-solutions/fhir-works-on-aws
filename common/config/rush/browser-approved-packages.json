@@ -3,68 +3,80 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@rushstack/heft",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@rushstack/heft-jest-plugin",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@rushstack/heft-node-rig",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@typescript-eslint/eslint-plugin",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@typescript-eslint/parser",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint-config-airbnb-base",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint-config-prettier",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint-plugin-import",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint-plugin-prettier",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "jest",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "jest-each",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "jest-mock-extended",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "prettier",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "standard-version",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "ts-jest",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "typescript",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "winston",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "winston-transport",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     }
   ]
 }

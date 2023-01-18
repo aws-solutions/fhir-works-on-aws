@@ -1,0 +1,33 @@
+{
+  "cacheVersion": "7.32.0_0a6b5fd8082a1309996b773d0dc5e32ebc5745bb",
+  "fileVersions": [
+    ["constants.ts", ""],
+    ["bundle.ts", ""],
+    ["bulkDataAccess.ts", ""],
+    ["search.ts", ""],
+    ["authorization.ts", ""],
+    ["genericResponse.ts", ""],
+    ["capabilities.ts", ""],
+    ["history.ts", ""],
+    ["persistence.ts", ""],
+    ["validator.ts", ""],
+    ["fhirConfig.ts", ""],
+    ["implementationGuides.ts", ""],
+    ["resourceMeta.ts", ""],
+    ["errors/MethodNotAllowedError.ts", ""],
+    ["utilities.ts", ""],
+    ["errors/InvalidResourceError.ts", ""],
+    ["errors/ResourceNotFoundError.ts", ""],
+    ["errors/ResourceVersionNotFoundError.ts", ""],
+    ["errors/UnauthorizedError.ts", ""],
+    ["errors/TooManyConcurrentExportRequestsError.ts", ""],
+    ["errors/InvalidSearchParameterError.ts", ""],
+    ["errors/ResourceConflictError.ts", ""],
+    ["errors/BadRequestError.ts", ""],
+    ["loggerBuilder.ts", ""],
+    ["stubs.ts", ""],
+    ["index.ts", ""],
+    ["smartAuthorization.ts", ""],
+    ["utilities.test.ts", ""]
+  ]
+}

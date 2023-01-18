@@ -1,0 +1,13 @@
+# This file is used by Viperlight utility to override findings (false alarm)
+
+#Config excludes
+node_modules
+cdk.out
+common
+.tools
+.next
+build
+lib
+
+# NOTICE files
+.*/NOTICE

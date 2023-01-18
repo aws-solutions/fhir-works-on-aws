@@ -195,6 +195,50 @@
       "autoinstallerName": "rush-prettier",
       // This will invoke common/autoinstallers/rush-prettier/node_modules/.bin/pretty-quick
       "shellCommand": "pretty-quick --staged"
+    },
+    {
+      "name": "cinstall",
+      "commandKind": "global",
+      "summary": "Run rush install with bypass-policy and perform custom git-hook install",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "node common/scripts/install-run-rush.js install --bypass-policy --max-install-attempts 1 && node common/scripts/install-hooks"
+    },
+    {
+      "name": "cupdate",
+      "commandKind": "global",
+      "summary": "Run rush update with bypass-policy and perform custom git-hook install",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "node common/scripts/install-run-rush.js update --bypass-policy --max-install-attempts 1 && node common/scripts/install-hooks"
+    },
+    {
+      "name": "commitlint",
+      "commandKind": "global",
+      "summary": "Conventional commit check on commit messages",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "commitlint",
+      "shellCommand": "commitlint"
+    },
+    {
+      "name": "commitizen",
+      "commandKind": "global",
+      "summary": "Prepare conventional commit messages",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "commitizen",
+      "shellCommand": "bash .github/workflows/scripts/commitizen.sh"
+    },
+    {
+      "name": "git-secrets-scan",
+      "commandKind": "global",
+      "summary": "Used to perform a git-secrets scan on the packages",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "bash .github/workflows/scripts/git-secrets-scan.sh"
+    },
+    {
+      "name": "viperlight-scan",
+      "commandKind": "global",
+      "summary": "Used to perform a viperlight scan on the packages",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "bash .github/workflows/scripts/viperlight-scan.sh"
     }
   ],
 
@@ -203,6 +247,13 @@
    * For example, you might define a "--production" parameter for the "rush build" command.
    */
   "parameters": [
+    {
+      "parameterKind": "string",
+      "argumentName": "FILE",
+      "longName": "--edit",
+      "description": "read last commit message from the specified file or fallbacks to ./.git/COMMIT_EDITMSG",
+      "associatedCommands": ["commitlint"]
+    }
     // {
     //   /**
     //    * (Required) Determines the type of custom parameter.

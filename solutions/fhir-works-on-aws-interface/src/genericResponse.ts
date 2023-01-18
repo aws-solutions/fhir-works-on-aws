@@ -4,6 +4,6 @@
  */
 
 export interface GenericResponse {
-    readonly message: string;
-    readonly resource?: any;
+  readonly message: string;
+  readonly resource?: any;
 }

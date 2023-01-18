@@ -5,16 +5,16 @@
 
 // eslint-disable-next-line import/prefer-default-export
 export class InvalidResourceError extends Error {
-    readonly isInvalidResourceError: boolean;
+  readonly isInvalidResourceError: boolean;
 
-    constructor(message = 'Invalid Resource') {
-        // Node Error class requires passing a string message to the parent class
-        super(message);
-        Object.setPrototypeOf(this, InvalidResourceError.prototype);
-        this.isInvalidResourceError = true;
-        this.name = this.constructor.name;
-    }
+  constructor(message = 'Invalid Resource') {
+    // Node Error class requires passing a string message to the parent class
+    super(message);
+    Object.setPrototypeOf(this, InvalidResourceError.prototype);
+    this.isInvalidResourceError = true;
+    this.name = this.constructor.name;
+  }
 }
 export function isInvalidResourceError(error: unknown): error is InvalidResourceError {
-    return Boolean(error) && (error as InvalidResourceError).isInvalidResourceError === true;
+  return Boolean(error) && (error as InvalidResourceError).isInvalidResourceError === true;
 }
