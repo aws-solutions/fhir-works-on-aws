@@ -15,7 +15,7 @@
   },
   "repository": {
     "url": "https://github.com/aws-solutions/fhir-works-on-aws.git",
-    "defaultBranch": "develop"
+    "defaultBranch": "main"
   },
   "eventHooks": {
     "preRushInstall": [],
