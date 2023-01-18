@@ -2,11 +2,12 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 // eslint-disable-next-line import/prefer-default-export
 export class MethodNotAllowedError extends Error {
   readonly isMethodNotAllowed: boolean;
 
+  // eslint-disable-next-line @typescript-eslint/typedef
   constructor(message = 'Method Not Allowed') {
     // Node Error class requires passing a string message to the parent class
     super(message);

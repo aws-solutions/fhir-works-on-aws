@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable tsdoc/syntax */
 import { FhirVersion } from './constants';
 
 export type ExportJobStatus = 'completed' | 'failed' | 'in-progress' | 'canceled' | 'canceling';
@@ -44,7 +45,7 @@ export interface BulkDataAccess {
    * is specified by '_outputFormat'. This interface is to support the bulk export request API
    * https://hl7.org/Fhir/uv/bulkdata/export/index.html#bulk-data-kick-off-request
    * @param initiateExportRequest - request to initiate export
-   * @return jobId - id of the export job that was created
+   * @returns jobId - id of the export job that was created
    */
   initiateExport(initiateExportRequest: InitiateExportRequest): Promise<string>;
 
@@ -65,7 +66,7 @@ export interface BulkDataAccess {
    * https://hl7.org/Fhir/uv/bulkdata/export/index.html#bulk-data-status-request
    * @param jobId - Id of the job you would like to get the export status for
    * @param tenantId - tenant identifier in a multi-tenancy setup
-   * @return GetExportStatusResponse - The status of the export job as well as additional metadata information if the job is now completed
+   * @returns GetExportStatusResponse - The status of the export job as well as additional metadata information if the job is now completed
    */
   getExportStatus(jobId: string, tenantId?: string): Promise<GetExportStatusResponse>;
 }

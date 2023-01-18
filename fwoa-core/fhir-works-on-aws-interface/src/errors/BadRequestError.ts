@@ -4,9 +4,11 @@
  */
 
 // eslint-disable-next-line import/prefer-default-export
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 export class BadRequestError extends Error {
   readonly isBadRequestError: boolean;
 
+  // eslint-disable-next-line @typescript-eslint/typedef
   constructor(message = 'Bad Request') {
     // Node Error class requires passing a string message to the parent class
     super(message);

@@ -2,6 +2,7 @@
   "name": "@aws/fhir-works-on-aws-interface",
   "version": "12.1.0",
   "description": "FHIR Works on AWS hosted on AWS Lambda",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
     "type": "git",
     "url": "git://github.com/awslabs/fhir-works-on-aws-interface.git"

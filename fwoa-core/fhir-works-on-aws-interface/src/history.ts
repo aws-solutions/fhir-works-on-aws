@@ -7,6 +7,7 @@ import { SearchEntry, SearchFilter } from './search';
 
 export interface GlobalHistoryRequest {
   baseUrl: string; // server's URL
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   queryParams?: any;
   searchFilters?: SearchFilter[];
   tenantId?: string;

@@ -12,7 +12,8 @@ export interface ImplementationGuides {
    * Different implementations of this interface may choose to process only a subset of the above resources.
    *
    * @param input - an array of FHIR resource objects to be compiled.
-   * @return compiled output - The output is not meant to be used by any other entity other than the module that implements this interface.
+   * @returns compiled output - The output is not meant to be used by any other entity other than the module that implements this interface.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compile(input: any[]): Promise<any>;
 }

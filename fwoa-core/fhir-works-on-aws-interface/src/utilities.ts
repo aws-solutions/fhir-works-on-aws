@@ -8,6 +8,7 @@ import { ExportType } from './bulkDataAccess';
 import { TypeOperation, SystemOperation } from './constants';
 import { MethodNotAllowedError } from './errors/MethodNotAllowedError';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function chunkArray(myArray: any[], chunkSize: number): any[][] {
   const results = [];
 
@@ -18,7 +19,8 @@ export function chunkArray(myArray: any[], chunkSize: number): any[][] {
   return results;
 }
 
-export function clone(item: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function clone(item: any): any {
   return JSON.parse(JSON.stringify(item));
 }
 
@@ -32,7 +34,7 @@ export function cleanAuthHeader(authorizationHeader?: string): string {
 
 /**
  * Returns everything before the query with the starting and ending '/' removed
- * ex: /Patient/?name=Joe -> Patient
+ * ex: /Patient/?name=Joe returns Patient
  */
 function cleanUrlPath(urlPath: string): string {
   let path = urlPath.split('?')[0];

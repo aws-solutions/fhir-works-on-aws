@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 // eslint-disable-next-line import/prefer-default-export
 export class ResourceVersionNotFoundError extends Error {
   readonly isResourceVersionNotFoundError: boolean;

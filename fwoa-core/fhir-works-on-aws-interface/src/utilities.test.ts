@@ -17,6 +17,7 @@ describe('getRequestInformation', () => {
         { operation: 'update', resourceType: 'Patient', id: '123' }
       ],
       ['invalid update', 'fake', { operation: 'update', resourceType: 'fake' }]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ]).test('%s', (testName: string, urlPath: string, expectedResponse: any) => {
       const results = getRequestInformation('PUT', urlPath);
       expect(results).toEqual(expectedResponse);
@@ -31,6 +32,7 @@ describe('getRequestInformation', () => {
         { operation: 'patch', resourceType: 'Patient', id: '123' }
       ],
       ['invalid patch', 'fake', { operation: 'patch', resourceType: 'fake' }]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ]).test('%s', (testName: string, urlPath: string, expectedResponse: any) => {
       const results = getRequestInformation('PATCH', urlPath);
       expect(results).toEqual(expectedResponse);
@@ -45,6 +47,7 @@ describe('getRequestInformation', () => {
         { operation: 'delete', resourceType: 'Patient', id: '123' }
       ],
       ['invalid delete', 'fake', { operation: 'delete', resourceType: 'fake' }]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ]).test('%s', (testName: string, urlPath: string, expectedResponse: any) => {
       const results = getRequestInformation('DELETE', urlPath);
       expect(results).toEqual(expectedResponse);
@@ -91,6 +94,7 @@ describe('getRequestInformation', () => {
       ['type-search without query', '/Patient', { operation: 'search-type', resourceType: 'Patient' }],
       ['search globally with query', '/?name=joe', { operation: 'search-system' }],
       ['search globally without query', '', { operation: 'search-system' }]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ]).test('%s', (testName: string, urlPath: string, expectedResponse: any) => {
       const results = getRequestInformation('GET', urlPath);
       expect(results).toEqual(expectedResponse);
@@ -102,6 +106,7 @@ describe('getRequestInformation', () => {
       ['search globally', '/_search/', { operation: 'search-system' }],
       ['batch', '?format=json', { operation: 'transaction' }],
       ['create', 'Patient/?format=json', { operation: 'create', resourceType: 'Patient' }]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ]).test('%s', (testName: string, urlPath: string, expectedResponse: any) => {
       const results = getRequestInformation('POST', urlPath);
       expect(results).toEqual(expectedResponse);

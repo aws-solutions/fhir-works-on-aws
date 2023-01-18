@@ -31,6 +31,7 @@ export interface OAuthStrategy {
   managementEndpoint?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export type tokenEndpointAuthMethod = 'client_secret_basic' | 'client_secret_post' | 'private_key_jwt';
 
 /**
@@ -123,6 +124,7 @@ export interface Profile {
   bulkDataAccess?: BulkDataAccess;
   genericResource?: GenericResource;
   resources?: Resources;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compiledImplementationGuides?: any;
 }
 /**

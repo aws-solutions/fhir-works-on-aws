@@ -4,6 +4,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/typedef */
 import {
   AccessBulkDataJobRequest,
   Authorization,
@@ -15,12 +16,13 @@ import { History } from './history';
 import { Persistence } from './persistence';
 import { Search, SearchCapabilityStatement } from './search';
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace stubs {
   export const bundle: Bundle = {
     batch(request) {
       throw new Error('Method not implemented.');
     },
-
+    
     transaction(request) {
       throw new Error('Method not implemented.');
     }

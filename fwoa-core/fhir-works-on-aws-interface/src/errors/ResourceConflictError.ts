@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 // eslint-disable-next-line import/prefer-default-export
 export class ResourceConflictError extends Error {
   readonly isResourceConflictError: boolean;
