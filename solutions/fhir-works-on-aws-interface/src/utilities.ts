@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { TypeOperation, SystemOperation } from './constants';
-import { ExportType } from './bulkDataAccess';
 import { BulkDataAuth } from './authorization';
+import { ExportType } from './bulkDataAccess';
+import { TypeOperation, SystemOperation } from './constants';
 import { MethodNotAllowedError } from './errors/MethodNotAllowedError';
 
 export function chunkArray(myArray: any[], chunkSize: number): any[][] {

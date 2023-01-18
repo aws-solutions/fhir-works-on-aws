@@ -239,6 +239,20 @@
       "summary": "Used to perform a viperlight scan on the packages",
       "safeForSimultaneousRushProcesses": true,
       "shellCommand": "bash .github/workflows/scripts/viperlight-scan.sh"
+    },
+    {
+      "name": "pkg-json-lint",
+      "commandKind": "bulk",
+      "summary": "Run lint on package.json files",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true
+    },
+    {
+      "name": "sort-package-json",
+      "commandKind": "bulk",
+      "summary": "Sort package.json file",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true
     }
   ],
 

@@ -4,8 +4,8 @@
  */
 
 import each from 'jest-each';
-import { getRequestInformation } from './utilities';
 import { ExportType } from './bulkDataAccess';
+import { getRequestInformation } from './utilities';
 
 describe('getRequestInformation', () => {
   describe('verb: PUT', () => {

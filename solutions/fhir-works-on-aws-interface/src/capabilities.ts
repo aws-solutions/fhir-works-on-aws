@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { GenericResponse } from './genericResponse';
 import { FhirVersion } from './constants';
+import { GenericResponse } from './genericResponse';
 
 // https://www.hl7.org/fhir/http.html#capabilities
 export type CapabilityMode = 'full' | 'normative' | 'terminology';

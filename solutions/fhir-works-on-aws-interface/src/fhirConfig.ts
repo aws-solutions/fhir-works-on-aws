@@ -4,8 +4,8 @@
  */
 
 import { Authorization } from './authorization';
-import { Bundle } from './bundle';
 import { BulkDataAccess } from './bulkDataAccess';
+import { Bundle } from './bundle';
 import {
   ConfigVersion,
   FhirVersion,

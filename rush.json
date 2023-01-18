@@ -30,6 +30,12 @@
       "projectFolder": "solutions/fhir-works-on-aws-interface",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@aws/eslint-config-workbench-core-eslint-custom",
+      "projectFolder": "core/eslint-custom",
+      "reviewCategory": "tools",
+      "shouldPublish": false
     }
   ]
 }

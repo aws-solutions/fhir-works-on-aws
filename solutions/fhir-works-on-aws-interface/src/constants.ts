@@ -3,7 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-export type KeyValueMap = { [key: string]: any };
+export interface KeyValueMap {
+  [key: string]: any;
+}
 
 export type IssueSeverity = 'fatal' | 'error' | 'warning' | 'information';
 

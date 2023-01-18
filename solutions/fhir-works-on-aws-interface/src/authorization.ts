@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { ExportType } from './bulkDataAccess';
 import { BatchReadWriteRequest } from './bundle';
 import { TypeOperation, SystemOperation, KeyValueMap } from './constants';
-import { ExportType } from './bulkDataAccess';
 import { SearchFilter } from './search';
 
 export interface BulkDataAuth {

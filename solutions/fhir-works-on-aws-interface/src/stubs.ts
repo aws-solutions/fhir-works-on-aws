@@ -4,18 +4,18 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Search, SearchCapabilityStatement } from './search';
-import { History } from './history';
 import {
   AccessBulkDataJobRequest,
   Authorization,
   GetSearchFilterBasedOnIdentityRequest
 } from './authorization';
-import { Persistence } from './persistence';
-import { Bundle } from './bundle';
 import { BulkDataAccess } from './bulkDataAccess';
+import { Bundle } from './bundle';
+import { History } from './history';
+import { Persistence } from './persistence';
+import { Search, SearchCapabilityStatement } from './search';
 
-export module stubs {
+export namespace stubs {
   export const bundle: Bundle = {
     batch(request) {
       throw new Error('Method not implemented.');
