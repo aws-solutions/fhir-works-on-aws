@@ -5,9 +5,8 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { importConvention } from './rules/import-convention';
-import { namingConvention } from './rules/naming-convention';
 
-const rules: any = Object.assign({}, namingConvention.rules, importConvention.rules);
+const rules: any = Object.assign({}, importConvention.rules);
 
 export const customESLint: any = {
   plugins: ['security', 'import'],
@@ -18,7 +17,7 @@ export const customESLint: any = {
     'plugin:import/recommended',
     'plugin:import/typescript'
   ],
-  rules: rules,
+  rules: { ...rules, '@typescript-eslint/naming-convention': 'off' },
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx']
