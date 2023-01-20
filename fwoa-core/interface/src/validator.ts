@@ -7,7 +7,7 @@ export interface Validator {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validate(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resource: any,
     { tenantId, typeOperation }: { tenantId?: string; typeOperation?: TypeOperation }
   ): Promise<void>;

@@ -45,7 +45,7 @@ importers:
       sort-package-json: 1.57.0
       typescript: 4.9.4
 
-  ../../fwoa-core/fhir-works-on-aws-interface:
+  ../../fwoa-core/interface:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@rushstack/eslint-config': ^3.0.0
@@ -2974,7 +2974,10 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
+    resolution:
+      {
+        integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+      }
 
   /concat-stream/2.0.0:
     resolution:
