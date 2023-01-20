@@ -20,4 +20,4 @@ jobs:
         uses: ./.github/actions/baseAction
 
       - name: Rush test
-        run: node common/scripts/install-run-rush.js test:only --verbose
+        run: node common/scripts/install-run-rush.js test --verbose
