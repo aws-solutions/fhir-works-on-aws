@@ -63,8 +63,8 @@ Please refer to [Contributing via Pull Requests](./CONTRIBUTING.md#contributing-
    - `rush add -p example-lib --all --dev --caret --make-consistent` - Make all devDependency for a package consistent across all projects
    - `rush add -p example-lib@1.2.3 --all --dev` or `rush add -p example-lib --exact --all --dev` - Adds package to all the projects as devDependencies (installs the exact version, use this if there is a need for exact version or else always install dependencies and devDependencies with `--caret` option)
 4. [`rush check`](https://rushjs.io/pages/commands/rush_check/) - Checks each project's package.json files and ensures that all dependencies are of the same version throughout the repository.
-5. Triggering commands using `rush` as mentioned above triggers them for all the projects in the monorepo, but if you want to trigger a command just for a specific package then (for example trigger commands just for [workbench-core/audit](./workbench-core/audit/) package):
-   - Go to projects root folder - `cd ./workbench-core/audit`
+5. Triggering commands using `rush` as mentioned above triggers them for all the projects in the monorepo, but if you want to trigger a command just for a specific package then (for example trigger commands just for [fwoa-core/interface](./fwoa-core/interface/) package):
+   - Go to projects root folder - `cd ./fwoa-core/interfac`
    - Instead of running commands using `rush` use `rushx`, example:
      - run build - `rushx build`
      - run test - `rushx test`
