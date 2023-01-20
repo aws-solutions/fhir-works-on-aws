@@ -1,5 +1,5 @@
 {
-  "name": "@aws/eslint-config-workbench-core-eslint-custom",
+  "name": "@aws/eslint-config-fwoa-eslint-custom",
   "version": "0.0.1",
   "description": "Custom eslint rules",
   "homepage": "https://github.com/aws-solutions/solution-spark-on-aws",
