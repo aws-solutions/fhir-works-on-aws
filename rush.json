@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.83.1",
+  "pnpmVersion": "7.13.0",
+  "nodeSupportedVersionRange": ">=14.15.0 <15.0.0 || >=16.13.0 <17.0.0",
+  "ensureConsistentVersions": true,
+  "projectFolderMaxDepth": 3,
+  "approvedPackagesPolicy": {
+    "reviewCategories": ["production", "tools", "prototypes"],
+    "ignoredNpmScopes": ["@types"]
+  },
+  "gitPolicy": {
+    "versionBumpCommitMessage": "Bump versions [skip ci]",
+    "changeLogUpdateCommitMessage": "Update changelogs [skip ci]"
+  },
+  "repository": {
+    "url": "https://github.com/aws-solutions/fhir-works-on-aws.git",
+    "defaultBranch": "main"
+  },
+  "eventHooks": {
+    "preRushInstall": [],
+    "postRushInstall": [],
+    "preRushBuild": [],
+    "postRushBuild": []
+  },
+  "variants": [],
+  "projects": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-interface",
+      "projectFolder": "fwoa-core/interface",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@aws/eslint-config-fwoa-eslint-custom",
+      "projectFolder": "core/eslint-custom",
+      "reviewCategory": "tools",
+      "shouldPublish": false
+    }
+  ]
+}

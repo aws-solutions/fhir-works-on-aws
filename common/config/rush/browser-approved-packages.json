@@ -1,0 +1,126 @@
+// DO NOT ADD COMMENTS IN THIS FILE.  They will be lost when the Rush tool resaves it.
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
+  "packages": [
+    {
+      "name": "@aws/eslint-config-fwoa-eslint-custom",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws/eslint-config-workbench-core-eslint-custom",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@rushstack/eslint-config",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@rushstack/heft",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@rushstack/heft-jest-plugin",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@rushstack/heft-node-rig",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@typescript-eslint/eslint-plugin",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@typescript-eslint/parser",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "depcheck",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "eslint",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "eslint-config-airbnb-base",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "eslint-config-prettier",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "eslint-import-resolver-typescript",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "eslint-plugin-import",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "eslint-plugin-security",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "jest",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "jest-each",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "jest-mock-extended",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "license-check-and-add",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "license-checker",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "npm-package-json-lint",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "npm-package-json-lint-config-default",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "prettier",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "sort-package-json",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "standard-version",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "ts-jest",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "typescript",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "winston",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "winston-transport",
+      "allowedCategories": ["production"]
+    }
+  ]
+}
