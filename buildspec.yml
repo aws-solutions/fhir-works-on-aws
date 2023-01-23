@@ -2,11 +2,13 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 16 #The Solutions pipeline version do not support 14, v14 will be manually set
     commands:
       - echo "nothing to do in install"
   pre_build:
     commands:
+      - echo "Setting node version to 14"
+      - n 14
       - echo "Installing dependencies and executing unit tests - `pwd`"
       - echo Update npm to latest
       - npm install -g npm@latest
