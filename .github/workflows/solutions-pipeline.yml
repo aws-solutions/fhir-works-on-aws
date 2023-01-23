@@ -1,4 +1,4 @@
-name: Pipeline Workflow
+name: Solutions Pipeline Workflow
 
 env:
   REGION: us-east-1
@@ -7,7 +7,7 @@ on: push
 
 jobs:
   pipeline-job:
-    name: Pipeline Job
+    name: Trigger Solutions Pipeline
     if: github.repository_owner == 'aws-solutions'
     runs-on: ubuntu-latest
     permissions:

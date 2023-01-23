@@ -8,6 +8,11 @@ common
 .next
 build
 lib
+fwoa-core/interface/THIRD-PARTY
 
 # NOTICE files
 .*/NOTICE
+
+# Line excludes
+solutions-pipelines-integration:49
+.github/temp-workflows/release-pr.yml:28
