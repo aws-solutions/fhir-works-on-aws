@@ -16,15 +16,16 @@ phases:
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-      - cd ./../solutions/swb-reference
-      - node ./../../common/scripts/install-run-rushx.js compile
-      - echo "Starting build `date` `pwd`"
-      - cd ../../deployment
-      - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
-      - echo "Build completed `date`"
-      - echo "Starting open-source-dist `date` `pwd`"
-      - chmod +x ./build-open-source-dist.sh && ./build-open-source-dist.sh $SOLUTION_NAME
-      - echo "Open Source Dist completed `date`"
+      - node ./../common/scripts/install-run-rushx.js compile
+#      - cd ./../solutions/rbac-reference
+#      - node ./../../common/scripts/install-run-rushx.js compile
+#      - echo "Starting build `date` `pwd`"
+#      - cd ../../deployment
+#      - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
+#      - echo "Build completed `date`"
+#      - echo "Starting open-source-dist `date` `pwd`"
+#      - chmod +x ./build-open-source-dist.sh && ./build-open-source-dist.sh $SOLUTION_NAME
+#      - echo "Open Source Dist completed `date`"
   post_build:
     commands:
       - echo "Retrieving next stage buildspec `date` `pwd`"
@@ -41,5 +42,5 @@ artifacts:
     - .gitignore
     - sonar-project.properties
     - buildspec.yml
-    - CHANGELOG.md
+#    - CHANGELOG.md
 #    - .cfnnag_*
