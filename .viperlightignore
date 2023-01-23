@@ -16,3 +16,6 @@ fwoa-core/interface/THIRD-PARTY
 # Line excludes
 solutions-pipelines-integration:49
 .github/temp-workflows/release-pr.yml:28
+fwoa-core/interface/package.json:13
+fwoa-core/interface/src/fhirConfig.ts:49
+fwoa-core/interface/openapi.yaml:7
