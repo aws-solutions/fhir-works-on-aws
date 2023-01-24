@@ -16,9 +16,8 @@ phases:
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-      - cd ./../fwoa-core/interface
-      - node ./../../common/scripts/install-run-rushx.js compile
-#      - cd ./../solutions/rbac-reference
+      - echo "Skip build step as no CDK construct has been added yet"
+#      - cd ./../fwoa-core/interface
 #      - node ./../../common/scripts/install-run-rushx.js compile
 #      - echo "Starting build `date` `pwd`"
 #      - cd ../../deployment
