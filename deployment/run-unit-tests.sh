@@ -9,7 +9,7 @@
 
 # Get reference for all important folders
 template_dir="$PWD"
-source_dir="$template_dir/../solutions/swb-reference"
+source_dir="$template_dir/../fwoa-core/interface"
 
 echo "------------------------------------------------------------------------------"
 echo "Install packages"
