@@ -16,7 +16,8 @@ phases:
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-      - node ./../common/scripts/install-run-rushx.js compile
+      - cd ./../fwoa-core/interface
+      - node ./../../common/scripts/install-run-rushx.js compile
 #      - cd ./../solutions/rbac-reference
 #      - node ./../../common/scripts/install-run-rushx.js compile
 #      - echo "Starting build `date` `pwd`"
