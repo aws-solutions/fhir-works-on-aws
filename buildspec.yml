@@ -38,6 +38,7 @@ artifacts:
     - common/**/*
 #    - solutions/**/*
     - fwoa-core/**/*
+    - core/**/*
     - deployment/**/*
     - .gitignore
     - sonar-project.properties
