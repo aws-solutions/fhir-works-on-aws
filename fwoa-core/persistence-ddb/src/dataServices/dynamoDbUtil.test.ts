@@ -12,7 +12,7 @@ import {
   VID_FIELD
 } from './dynamoDbUtil';
 import DOCUMENT_STATUS from './documentStatus';
-import { utcTimeRegExp } from '../../testUtilities/regExpressions';
+import { utcTimeRegExp } from '../testUtilities/regExpressions';
 
 describe('cleanItem', () => {
   const id = 'ee3928b9-8699-4970-ba49-8f41bd122f46';

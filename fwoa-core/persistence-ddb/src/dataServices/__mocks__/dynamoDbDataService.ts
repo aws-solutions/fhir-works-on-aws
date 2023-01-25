@@ -17,7 +17,7 @@ import {
   GenericResponse,
   clone
 } from 'fhir-works-on-aws-interface';
-import validPatient from '../../../sampleData/validV4Patient.json';
+import validPatient from '../../sampleData/validV4Patient.json';
 
 const DynamoDbDataService: Persistence = class {
   static updateCreateSupported: boolean = false;

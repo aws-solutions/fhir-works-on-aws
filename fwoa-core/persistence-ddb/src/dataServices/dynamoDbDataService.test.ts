@@ -23,13 +23,13 @@ import {
 } from 'fhir-works-on-aws-interface';
 import { TooManyConcurrentExportRequestsError } from 'fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
 import each from 'jest-each';
-import { utcTimeRegExp, uuidRegExp } from '../../testUtilities/regExpressions';
+import { utcTimeRegExp, uuidRegExp } from '../testUtilities/regExpressions';
 import { DynamoDbBundleService } from './dynamoDbBundleService';
 import { DynamoDbDataService } from './dynamoDbDataService';
 import { DynamoDBConverter } from './dynamoDb';
 import DynamoDbHelper from './dynamoDbHelper';
 import DynamoDbParamBuilder from './dynamoDbParamBuilder';
-import { ConditionalCheckFailedExceptionMock } from '../../testUtilities/ConditionalCheckFailedException';
+import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
 
 // eslint-disable-next-line import/order
 import sinon = require('sinon');

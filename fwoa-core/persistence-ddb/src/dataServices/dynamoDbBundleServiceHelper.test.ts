@@ -13,8 +13,8 @@ import sinon = require('sinon');
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
 import DynamoDbBundleServiceHelper from './dynamoDbBundleServiceHelper';
 import { DynamoDBConverter } from './dynamoDb';
-import GenerateStagingRequestsFactory from '../../testUtilities/GenerateStagingRequestsFactory';
-import GenerateRollbackRequestsFactory from '../../testUtilities/GenerateRollbackRequestsFactory';
+import GenerateStagingRequestsFactory from '../testUtilities/GenerateStagingRequestsFactory';
+import GenerateRollbackRequestsFactory from '../testUtilities/GenerateRollbackRequestsFactory';
 import DynamoDbHelper from './dynamoDbHelper';
 
 AWSMock.setSDKInstance(AWS);
@@ -182,7 +182,7 @@ describe('generateRollbackRequests', () => {
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedUpdateResult.itemsToRemoveFromLock);
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedDeleteResult.itemsToRemoveFromLock);
 
-    itemsToRemoveFromLock = itemsToRemoveFromLock.filter((item: any) => item !== []);
+    itemsToRemoveFromLock = itemsToRemoveFromLock.filter((item: any) => !!item.length);
 
     let transactionRequests: any = [];
     transactionRequests = transactionRequests.concat(expectedCreateResult.transactionRequests);
@@ -190,7 +190,7 @@ describe('generateRollbackRequests', () => {
     transactionRequests = transactionRequests.concat(expectedUpdateResult.transactionRequests);
     transactionRequests = transactionRequests.concat(expectedDeleteResult.transactionRequests);
 
-    transactionRequests = transactionRequests.filter((req: any) => req !== []);
+    transactionRequests = transactionRequests.filter((req: any) => !!req.length);
 
     expect(actualResult).toEqual({ itemsToRemoveFromLock, transactionRequests });
   });

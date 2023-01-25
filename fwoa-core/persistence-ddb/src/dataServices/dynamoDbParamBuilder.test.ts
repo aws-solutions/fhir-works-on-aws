@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { InitiateExportRequest } from 'fhir-works-on-aws-interface';
 import DynamoDbParamBuilder from './dynamoDbParamBuilder';
 import DOCUMENT_STATUS from './documentStatus';
-import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../../testUtilities/regExpressions';
+import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../testUtilities/regExpressions';
 import { BulkExportJob } from '../bulkExport/types';
 
 describe('buildUpdateDocumentStatusParam', () => {

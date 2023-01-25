@@ -74,7 +74,9 @@ export default class DynamoDbHelper {
     tenantId?: string
   ): Promise<GenericResponse> {
     const items = await this.getMostRecentResources(resourceType, id, 2, undefined, tenantId);
-    const latestItemDocStatus: DOCUMENT_STATUS = <DOCUMENT_STATUS>items[0][DOCUMENT_STATUS_FIELD];
+
+    // TODO: review type conversion
+    const latestItemDocStatus: DOCUMENT_STATUS = <DOCUMENT_STATUS>(<unknown>items[0][DOCUMENT_STATUS_FIELD]);
     if (latestItemDocStatus === DOCUMENT_STATUS.DELETED) {
       throw new ResourceNotFoundError(resourceType, id);
     }

@@ -455,7 +455,8 @@ export class DynamoDbBundleService implements Bundle {
       })
       .flatMap((request: BatchReadWriteRequest) => {
         const { resource } = request;
-        return Object.entries(flatten(resource)).map((entry) => {
+        const flattened: any = flatten(resource);
+        return Object.entries(flattened).map((entry) => {
           return {
             resource: request.resource,
             resourceType: request.resourceType,
