@@ -32,6 +32,12 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
+      "projectFolder": "fwoa-core/persistence-ddb",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@aws/eslint-config-fwoa-eslint-custom",
       "projectFolder": "core/eslint-custom",
       "reviewCategory": "tools",

@@ -1,0 +1,1 @@
+{"version":3,"file":"GenerateRollbackRequestsFactory.d.ts","sourceRoot":"","sources":["GenerateRollbackRequestsFactory.ts"],"names":[],"mappings":"AAMA,OAAO,EAAE,sBAAsB,EAAE,aAAa,EAAE,MAAM,6BAA6B,CAAC;AAGpF,MAAM,CAAC,OAAO,OAAO,+BAA+B;IAChD,MAAM,CAAC,wBAAwB,CAAC,SAAS,EAAE,aAAa,EAAE,GAAG,EAAE,MAAM,GAAG,sBAAsB;IA4C9F,MAAM,CAAC,8BAA8B,CAAC,mBAAmB,EAAE,sBAAsB;CAmBpF"}
