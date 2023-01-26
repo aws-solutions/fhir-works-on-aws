@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { GenericResponse } from 'fhir-works-on-aws-interface';
+import { GenericResponse } from '@aws/fhir-works-on-aws-interface';
 import getComponentLogger from '../loggerBuilder';
 import ObjectNotFoundError from './ObjectNotFoundError';
 import ObjectStorageInterface from './objectStorageInterface';

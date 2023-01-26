@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InitiateExportRequest } from 'fhir-works-on-aws-interface';
+import { InitiateExportRequest } from '@aws/fhir-works-on-aws-interface';
 import { cloneDeep } from 'lodash';
 import { BulkExportJob } from '../bulkExport/types';
 import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../testUtilities/regExpressions';

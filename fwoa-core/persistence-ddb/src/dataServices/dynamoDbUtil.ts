@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { clone, generateMeta } from 'fhir-works-on-aws-interface';
+import { clone, generateMeta } from '@aws/fhir-works-on-aws-interface';
 import flatten from 'flat';
 import { DDB_HASH_KEY_SEPARATOR, SEPARATOR } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';

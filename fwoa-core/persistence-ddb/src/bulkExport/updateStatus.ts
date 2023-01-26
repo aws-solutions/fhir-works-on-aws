@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { ExportJobStatus } from '@aws/fhir-works-on-aws-interface';
 import { Handler } from 'aws-lambda';
-import { ExportJobStatus } from 'fhir-works-on-aws-interface';
 import AWS from '../AWS';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 import { BulkExportStateMachineGlobalParameters } from './types';

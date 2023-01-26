@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { GenericResponse, ResourceNotFoundError } from '@aws/fhir-works-on-aws-interface';
 import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
-import { GenericResponse, ResourceNotFoundError } from 'fhir-works-on-aws-interface';
 import DOCUMENT_STATUS from './documentStatus';
 import { DynamoDBConverter } from './dynamoDb';
 import DynamoDbParamBuilder from './dynamoDbParamBuilder';

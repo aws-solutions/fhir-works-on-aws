@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { clone } from 'fhir-works-on-aws-interface';
+import { clone } from '@aws/fhir-works-on-aws-interface';
 import { utcTimeRegExp } from '../testUtilities/regExpressions';
 import DOCUMENT_STATUS from './documentStatus';
 import {

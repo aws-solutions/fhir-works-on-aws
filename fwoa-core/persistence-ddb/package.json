@@ -51,12 +51,12 @@
     "set-value": "^4.0.1"
   },
   "dependencies": {
+    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@elastic/elasticsearch": "7.13.0",
     "@types/aws-lambda": "^8.10.83",
     "aws-elasticsearch-connector": "^8.2.0",
     "aws-sdk": "^2.1000.0",
     "aws-xray-sdk": "^3.3.3",
-    "fhir-works-on-aws-interface": "^12.1.0",
     "flat": "^5.0.2",
     "lodash": "^4.17.20",
     "mime-types": "^2.1.26",

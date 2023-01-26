@@ -10,7 +10,7 @@ import {
   BundleResponse,
   BatchRequest,
   TransactionRequest
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 
 const DynamoDbBundleService: Bundle = class {
   static batch(request: BatchRequest): Promise<BundleResponse> {

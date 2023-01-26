@@ -1,7 +1,7 @@
+import { ResourceNotFoundError } from '@aws/fhir-works-on-aws-interface';
 import AWS from 'aws-sdk';
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
-import { ResourceNotFoundError } from 'fhir-works-on-aws-interface';
 import { cloneDeep } from 'lodash';
 import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
 import { utcTimeRegExp } from '../testUtilities/regExpressions';

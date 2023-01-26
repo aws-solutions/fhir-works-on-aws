@@ -4,7 +4,6 @@
  */
 
 /* eslint-disable class-methods-use-this */
-import DynamoDB from 'aws-sdk/clients/dynamodb';
 import {
   BatchRequest,
   TransactionRequest,
@@ -16,7 +15,8 @@ import {
   chunkArray,
   ResourceNotFoundError,
   GenericResponse
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import DynamoDB from 'aws-sdk/clients/dynamodb';
 import flatten from 'flat';
 import { chunk, set } from 'lodash';
 import mapValues from 'lodash/mapValues';

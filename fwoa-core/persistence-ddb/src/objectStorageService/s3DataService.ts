@@ -19,7 +19,7 @@ import {
   ResourceNotFoundError,
   InitiateExportRequest,
   GetExportStatusResponse
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import mime from 'mime-types';
 
 import { SEPARATOR } from '../constants';

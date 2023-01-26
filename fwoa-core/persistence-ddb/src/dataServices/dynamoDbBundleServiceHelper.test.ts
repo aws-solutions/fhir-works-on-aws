@@ -2,14 +2,14 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import AWS from 'aws-sdk';
-import { QueryInput } from 'aws-sdk/clients/dynamodb';
-import * as AWSMock from 'aws-sdk-mock';
 import {
   BatchReadWriteRequest,
   BatchReadWriteResponse,
   ResourceNotFoundError
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import AWS from 'aws-sdk';
+import { QueryInput } from 'aws-sdk/clients/dynamodb';
+import * as AWSMock from 'aws-sdk-mock';
 import sinon = require('sinon');
 import GenerateRollbackRequestsFactory from '../testUtilities/GenerateRollbackRequestsFactory';
 import GenerateStagingRequestsFactory from '../testUtilities/GenerateStagingRequestsFactory';

@@ -4,9 +4,6 @@
  */
 jest.mock('../bulkExport/bulkExport');
 // eslint-disable-next-line import/no-extraneous-dependencies
-import AWS from 'aws-sdk';
-import { GetItemInput, PutItemInput, QueryInput, UpdateItemInput } from 'aws-sdk/clients/dynamodb';
-import * as AWSMock from 'aws-sdk-mock';
 import {
   BundleResponse,
   InitiateExportRequest,
@@ -17,8 +14,11 @@ import {
   isResourceNotFoundError,
   isInvalidResourceError,
   UnauthorizedError
-} from 'fhir-works-on-aws-interface';
-import { TooManyConcurrentExportRequestsError } from 'fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
+} from '@aws/fhir-works-on-aws-interface';
+import { TooManyConcurrentExportRequestsError } from '@aws/fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
+import AWS from 'aws-sdk';
+import { GetItemInput, PutItemInput, QueryInput, UpdateItemInput } from 'aws-sdk/clients/dynamodb';
+import * as AWSMock from 'aws-sdk-mock';
 import each from 'jest-each';
 import { before } from 'lodash';
 import isEqual from 'lodash/isEqual';
