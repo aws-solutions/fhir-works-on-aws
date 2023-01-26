@@ -21,12 +21,12 @@ import flatten from 'flat';
 import { chunk, set } from 'lodash';
 import mapValues from 'lodash/mapValues';
 
+import getComponentLogger from '../loggerBuilder';
+import { captureFullUrlParts } from '../regExpressions';
 import DOCUMENT_STATUS from './documentStatus';
 import DynamoDbBundleServiceHelper, { ItemRequest } from './dynamoDbBundleServiceHelper';
-import DynamoDbParamBuilder from './dynamoDbParamBuilder';
 import DynamoDbHelper from './dynamoDbHelper';
-import { captureFullUrlParts } from '../regExpressions';
-import getComponentLogger from '../loggerBuilder';
+import DynamoDbParamBuilder from './dynamoDbParamBuilder';
 
 const logger = getComponentLogger();
 
@@ -48,7 +48,7 @@ export class DynamoDbBundleService implements Bundle {
 
   private static readonly dynamoDbMaxTransactionBundleSize = 100;
 
-  private readonly maxBatchSize: Number;
+  private readonly maxBatchSize: number;
 
   private readonly versionedLinks: Record<string, Set<string>> | undefined;
 
@@ -78,7 +78,7 @@ export class DynamoDbBundleService implements Bundle {
       enableMultiTenancy = false,
       versionedLinks,
       maxBatchSize = 750
-    }: { enableMultiTenancy?: boolean; versionedLinks?: Record<string, string[]>; maxBatchSize?: Number } = {}
+    }: { enableMultiTenancy?: boolean; versionedLinks?: Record<string, string[]>; maxBatchSize?: number } = {}
   ) {
     this.dynamoDbHelper = new DynamoDbHelper(dynamoDb);
     this.dynamoDb = dynamoDb;

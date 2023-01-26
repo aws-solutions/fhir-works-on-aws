@@ -5,7 +5,6 @@
 
 /* eslint-disable class-methods-use-this */
 
-import mime from 'mime-types';
 import {
   GenericResponse,
   Persistence,
@@ -21,11 +20,11 @@ import {
   InitiateExportRequest,
   GetExportStatusResponse
 } from 'fhir-works-on-aws-interface';
-
-import S3ObjectStorageService from './s3ObjectStorageService';
-import ObjectNotFoundError from './ObjectNotFoundError';
+import mime from 'mime-types';
 
 import { SEPARATOR } from '../constants';
+import ObjectNotFoundError from './ObjectNotFoundError';
+import S3ObjectStorageService from './s3ObjectStorageService';
 
 export class S3DataService implements Persistence {
   updateCreateSupported: boolean = false;

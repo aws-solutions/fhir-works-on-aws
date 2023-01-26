@@ -1,13 +1,13 @@
-import { QueryInput } from 'aws-sdk/clients/dynamodb';
 import AWS from 'aws-sdk';
+import { QueryInput } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
 import { ResourceNotFoundError } from 'fhir-works-on-aws-interface';
 import { cloneDeep } from 'lodash';
+import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
+import { utcTimeRegExp } from '../testUtilities/regExpressions';
+import DOCUMENT_STATUS from './documentStatus';
 import { DynamoDBConverter } from './dynamoDb';
 import DynamoDbHelper from './dynamoDbHelper';
-import { utcTimeRegExp } from '../testUtilities/regExpressions';
-import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
-import DOCUMENT_STATUS from './documentStatus';
 import { DOCUMENT_STATUS_FIELD, DynamoDbUtil } from './dynamoDbUtil';
 
 AWSMock.setSDKInstance(AWS);

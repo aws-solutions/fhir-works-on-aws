@@ -3,14 +3,14 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
+import * as AWSMock from 'aws-sdk-mock';
 import sinon from 'sinon';
-import { getJobStatusHandler } from './getJobStatus';
-import { BulkExportStateMachineGlobalParameters } from './types';
 import { DynamoDBConverter } from '../dataServices/dynamoDb';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
+import { getJobStatusHandler } from './getJobStatus';
+import { BulkExportStateMachineGlobalParameters } from './types';
 
 AWSMock.setSDKInstance(AWS);
 

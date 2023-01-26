@@ -10,10 +10,10 @@ import { Client } from '@elastic/elasticsearch';
 import { AmazonConnection, AmazonTransport } from 'aws-elasticsearch-connector';
 import { uniqWith, isEqual, partition, groupBy, zipObject } from 'lodash';
 import AWS from '../AWS';
-import ESBulkCommand, { OperationType } from './ESBulkCommand';
-import { DOCUMENT_STATUS_FIELD } from '../dataServices/dynamoDbUtil';
 import DOCUMENT_STATUS from '../dataServices/documentStatus';
+import { DOCUMENT_STATUS_FIELD } from '../dataServices/dynamoDbUtil';
 import getComponentLogger from '../loggerBuilder';
+import ESBulkCommand, { OperationType } from './ESBulkCommand';
 
 const REMOVE = 'REMOVE';
 const DELETED = 'DELETED';

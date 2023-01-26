@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import AWS from '../AWS';
-import { BulkExportJob } from './types';
 import { BulkExportResultsUrlGenerator } from './bulkExportResultsUrlGenerator';
+import { BulkExportJob } from './types';
 
 const EXPORT_RESULTS_BUCKET = process.env.EXPORT_RESULTS_BUCKET || ' ';
 const EXPORT_STATE_MACHINE_ARN = process.env.EXPORT_STATE_MACHINE_ARN || '';

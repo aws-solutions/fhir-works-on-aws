@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+jest.mock('./s3ObjectStorageService');
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line max-classes-per-file
 import {
@@ -16,15 +17,13 @@ import {
   ResourceNotFoundError,
   ResourceVersionNotFoundError
 } from 'fhir-works-on-aws-interface';
-import validV4PdfBinary from '../sampleData/validV4PdfBinary.json';
-import validV4JpegBinary from '../sampleData/validV4JpegBinary.json';
-import validV3JpegBinary from '../sampleData/validV3JpegBinary.json';
 import DynamoDbDataService from '../dataServices/__mocks__/dynamoDbDataService';
+import validV3JpegBinary from '../sampleData/validV3JpegBinary.json';
+import validV4JpegBinary from '../sampleData/validV4JpegBinary.json';
+import validV4PdfBinary from '../sampleData/validV4PdfBinary.json';
 import { S3DataService } from './s3DataService';
 
 import S3ObjectStorageService from './s3ObjectStorageService';
-
-jest.mock('./s3ObjectStorageService');
 
 describe('SUCCESS CASES: Testing create, read, update, delete of resources; version 4; multi-tenancy enabled', () => {
   const binaryJsonWithGetUrl = {

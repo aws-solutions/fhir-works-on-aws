@@ -2,19 +2,19 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
+import { QueryInput } from 'aws-sdk/clients/dynamodb';
+import * as AWSMock from 'aws-sdk-mock';
 import {
   BatchReadWriteRequest,
   BatchReadWriteResponse,
   ResourceNotFoundError
 } from 'fhir-works-on-aws-interface';
 import sinon = require('sinon');
-import { QueryInput } from 'aws-sdk/clients/dynamodb';
-import DynamoDbBundleServiceHelper from './dynamoDbBundleServiceHelper';
-import { DynamoDBConverter } from './dynamoDb';
-import GenerateStagingRequestsFactory from '../testUtilities/GenerateStagingRequestsFactory';
 import GenerateRollbackRequestsFactory from '../testUtilities/GenerateRollbackRequestsFactory';
+import GenerateStagingRequestsFactory from '../testUtilities/GenerateStagingRequestsFactory';
+import { DynamoDBConverter } from './dynamoDb';
+import DynamoDbBundleServiceHelper from './dynamoDbBundleServiceHelper';
 import DynamoDbHelper from './dynamoDbHelper';
 
 AWSMock.setSDKInstance(AWS);

@@ -3,12 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { cloneDeep } from 'lodash';
 import { InitiateExportRequest } from 'fhir-works-on-aws-interface';
-import DynamoDbParamBuilder from './dynamoDbParamBuilder';
-import DOCUMENT_STATUS from './documentStatus';
-import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../testUtilities/regExpressions';
+import { cloneDeep } from 'lodash';
 import { BulkExportJob } from '../bulkExport/types';
+import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../testUtilities/regExpressions';
+import DOCUMENT_STATUS from './documentStatus';
+import DynamoDbParamBuilder from './dynamoDbParamBuilder';
 
 describe('buildUpdateDocumentStatusParam', () => {
   const resourceType = 'Patient';

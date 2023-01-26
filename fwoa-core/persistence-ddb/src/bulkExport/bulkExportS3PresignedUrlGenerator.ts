@@ -5,8 +5,8 @@
  */
 
 import { STS } from 'aws-sdk';
-import { BulkExportResultsUrlGenerator } from './bulkExportResultsUrlGenerator';
 import AWS from '../AWS';
+import { BulkExportResultsUrlGenerator } from './bulkExportResultsUrlGenerator';
 
 const EXPIRATION_TIME_SECONDS = 1800;
 const EXPORT_CONTENT_TYPE = 'application/fhir+ndjson';

@@ -4,11 +4,11 @@
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk';
+import { QueryInput, TransactWriteItemsInput, TransactWriteItem } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
 
-import { QueryInput, TransactWriteItemsInput, TransactWriteItem } from 'aws-sdk/clients/dynamodb';
 // @ts-ignore
-import AWS from 'aws-sdk';
 import {
   BundleResponse,
   BatchReadWriteRequest,
@@ -16,9 +16,9 @@ import {
   ResourceNotFoundError
 } from 'fhir-works-on-aws-interface';
 import { range } from 'lodash';
-import { DynamoDbBundleService } from './dynamoDbBundleService';
-import { DynamoDBConverter } from './dynamoDb';
 import { timeFromEpochInMsRegExp, utcTimeRegExp, uuidRegExp } from '../testUtilities/regExpressions';
+import { DynamoDBConverter } from './dynamoDb';
+import { DynamoDbBundleService } from './dynamoDbBundleService';
 import DynamoDbHelper from './dynamoDbHelper';
 import { DOCUMENT_STATUS_FIELD, LOCK_END_TS_FIELD, REFERENCES_FIELD, VID_FIELD } from './dynamoDbUtil';
 // eslint-disable-next-line import/order

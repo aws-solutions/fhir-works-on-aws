@@ -5,12 +5,12 @@
 
 /* eslint-disable class-methods-use-this */
 import { BatchReadWriteRequest, BatchReadWriteResponse } from 'fhir-works-on-aws-interface';
-import { DynamoDBConverter } from '../dataServices/dynamoDb';
-import { DOCUMENT_STATUS_FIELD } from '../dataServices/dynamoDbUtil';
 import DOCUMENT_STATUS from '../dataServices/documentStatus';
-import { timeFromEpochInMsRegExp, utcTimeRegExp, uuidRegExp } from './regExpressions';
-import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
+import { DynamoDBConverter } from '../dataServices/dynamoDb';
 import { ItemRequest } from '../dataServices/dynamoDbBundleServiceHelper';
+import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
+import { DOCUMENT_STATUS_FIELD } from '../dataServices/dynamoDbUtil';
+import { timeFromEpochInMsRegExp, utcTimeRegExp, uuidRegExp } from './regExpressions';
 
 interface RequestResult {
   request: any;

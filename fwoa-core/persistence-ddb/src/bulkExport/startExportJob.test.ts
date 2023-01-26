@@ -2,10 +2,10 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
-import { BulkExportStateMachineGlobalParameters } from './types';
+import * as AWSMock from 'aws-sdk-mock';
 import { startExportJobHandler } from './startExportJob';
+import { BulkExportStateMachineGlobalParameters } from './types';
 
 AWSMock.setSDKInstance(AWS);
 

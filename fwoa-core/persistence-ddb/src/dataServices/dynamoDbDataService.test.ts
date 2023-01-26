@@ -2,14 +2,11 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-
+jest.mock('../bulkExport/bulkExport');
 // eslint-disable-next-line import/no-extraneous-dependencies
-import * as AWSMock from 'aws-sdk-mock';
-
-import { GetItemInput, PutItemInput, QueryInput, UpdateItemInput } from 'aws-sdk/clients/dynamodb';
 import AWS from 'aws-sdk';
-import isEqual from 'lodash/isEqual';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { GetItemInput, PutItemInput, QueryInput, UpdateItemInput } from 'aws-sdk/clients/dynamodb';
+import * as AWSMock from 'aws-sdk-mock';
 import {
   BundleResponse,
   InitiateExportRequest,
@@ -23,18 +20,20 @@ import {
 } from 'fhir-works-on-aws-interface';
 import { TooManyConcurrentExportRequestsError } from 'fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
 import each from 'jest-each';
+import { before } from 'lodash';
+import isEqual from 'lodash/isEqual';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
 import { utcTimeRegExp, uuidRegExp } from '../testUtilities/regExpressions';
+import { DynamoDBConverter } from './dynamoDb';
 import { DynamoDbBundleService } from './dynamoDbBundleService';
 import { DynamoDbDataService } from './dynamoDbDataService';
-import { DynamoDBConverter } from './dynamoDb';
 import DynamoDbHelper from './dynamoDbHelper';
 import DynamoDbParamBuilder from './dynamoDbParamBuilder';
-import { ConditionalCheckFailedExceptionMock } from '../testUtilities/ConditionalCheckFailedException';
 
 // eslint-disable-next-line import/order
 import sinon = require('sinon');
 
-jest.mock('../bulkExport/bulkExport');
 AWSMock.setSDKInstance(AWS);
 
 beforeEach(() => {

@@ -4,6 +4,8 @@
  */
 
 import { clone } from 'fhir-works-on-aws-interface';
+import { utcTimeRegExp } from '../testUtilities/regExpressions';
+import DOCUMENT_STATUS from './documentStatus';
 import {
   DOCUMENT_STATUS_FIELD,
   DynamoDbUtil,
@@ -11,8 +13,6 @@ import {
   REFERENCES_FIELD,
   VID_FIELD
 } from './dynamoDbUtil';
-import DOCUMENT_STATUS from './documentStatus';
-import { utcTimeRegExp } from '../testUtilities/regExpressions';
 
 describe('cleanItem', () => {
   const id = 'ee3928b9-8699-4970-ba49-8f41bd122f46';

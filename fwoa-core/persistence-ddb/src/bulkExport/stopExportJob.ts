@@ -5,8 +5,8 @@
 
 import { Handler } from 'aws-lambda';
 import AWS from '../AWS';
-import { BulkExportStateMachineGlobalParameters } from './types';
 import getComponentLogger from '../loggerBuilder';
+import { BulkExportStateMachineGlobalParameters } from './types';
 
 const logger = getComponentLogger();
 

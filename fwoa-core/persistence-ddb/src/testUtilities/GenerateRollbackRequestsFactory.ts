@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import uuidv4 from 'uuid/v4';
 import { BatchReadWriteResponse, TypeOperation } from 'fhir-works-on-aws-interface';
+import uuidv4 from 'uuid/v4';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 
 export default class GenerateRollbackRequestsFactory {

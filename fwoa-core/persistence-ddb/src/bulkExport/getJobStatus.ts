@@ -6,10 +6,10 @@
 import { Handler } from 'aws-lambda';
 
 import AWS from '../AWS';
-import { BulkExportStateMachineGlobalParameters } from './types';
-import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 import { DynamoDBConverter } from '../dataServices/dynamoDb';
+import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 import { buildHashKey } from '../dataServices/dynamoDbUtil';
+import { BulkExportStateMachineGlobalParameters } from './types';
 
 export const getJobStatusHandler: Handler<
   BulkExportStateMachineGlobalParameters,

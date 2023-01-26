@@ -3,8 +3,10 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ExportJobStatus, InitiateExportRequest } from 'fhir-works-on-aws-interface';
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
+import { ExportJobStatus, InitiateExportRequest } from 'fhir-works-on-aws-interface';
+import { BulkExportJob } from '../bulkExport/types';
+import DOCUMENT_STATUS from './documentStatus';
 import {
   DynamoDBConverter,
   EXPORT_REQUEST_TABLE,
@@ -18,8 +20,6 @@ import {
   LOCK_END_TS_FIELD,
   SUBSCRIPTION_FIELD
 } from './dynamoDbUtil';
-import DOCUMENT_STATUS from './documentStatus';
-import { BulkExportJob } from '../bulkExport/types';
 
 const EXPORT_INTERNAL_ID_FIELD = '_jobId';
 

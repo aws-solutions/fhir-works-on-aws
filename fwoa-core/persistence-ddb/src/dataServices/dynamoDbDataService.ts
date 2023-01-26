@@ -5,7 +5,7 @@
 
 /* eslint-disable class-methods-use-this */
 
-import uuidv4 from 'uuid/v4';
+import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
 import {
   BatchReadWriteRequest,
   BulkDataAccess,
@@ -30,18 +30,18 @@ import {
   UpdateResourceRequest,
   vReadResourceRequest
 } from 'fhir-works-on-aws-interface';
-import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
 import { difference } from 'lodash';
-import { DynamoDBConverter } from './dynamoDb';
-import DOCUMENT_STATUS from './documentStatus';
-import { DynamoDbBundleService } from './dynamoDbBundleService';
-import { DynamoDbUtil } from './dynamoDbUtil';
-import DynamoDbParamBuilder from './dynamoDbParamBuilder';
-import DynamoDbHelper from './dynamoDbHelper';
+import uuidv4 from 'uuid/v4';
 import { getBulkExportResults, startJobExecution } from '../bulkExport/bulkExport';
-import { BulkExportJob } from '../bulkExport/types';
 import { BulkExportResultsUrlGenerator } from '../bulkExport/bulkExportResultsUrlGenerator';
 import { BulkExportS3PresignedUrlGenerator } from '../bulkExport/bulkExportS3PresignedUrlGenerator';
+import { BulkExportJob } from '../bulkExport/types';
+import DOCUMENT_STATUS from './documentStatus';
+import { DynamoDBConverter } from './dynamoDb';
+import { DynamoDbBundleService } from './dynamoDbBundleService';
+import DynamoDbHelper from './dynamoDbHelper';
+import DynamoDbParamBuilder from './dynamoDbParamBuilder';
+import { DynamoDbUtil } from './dynamoDbUtil';
 
 export class DynamoDbDataService implements Persistence, BulkDataAccess {
   private readonly MAXIMUM_SYSTEM_LEVEL_CONCURRENT_REQUESTS = 2;

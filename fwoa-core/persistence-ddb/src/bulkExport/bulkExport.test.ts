@@ -5,8 +5,8 @@
 import * as AWSMock from 'aws-sdk-mock';
 import AWS from '../AWS';
 import { getBulkExportResults, startJobExecution } from './bulkExport';
-import { BulkExportJob } from './types';
 import { BulkExportS3PresignedUrlGenerator } from './bulkExportS3PresignedUrlGenerator';
+import { BulkExportJob } from './types';
 
 AWSMock.setSDKInstance(AWS);
 

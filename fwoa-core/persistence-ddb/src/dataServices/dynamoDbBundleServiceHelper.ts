@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import uuidv4 from 'uuid/v4';
+import { DynamoDB } from 'aws-sdk';
 import {
   BatchReadWriteRequest,
   BatchReadWriteResponse,
@@ -11,13 +11,13 @@ import {
   SystemOperation,
   isResourceNotFoundError
 } from 'fhir-works-on-aws-interface';
-import { DynamoDB } from 'aws-sdk';
-import { buildHashKey, DOCUMENT_STATUS_FIELD, DynamoDbUtil } from './dynamoDbUtil';
+import uuidv4 from 'uuid/v4';
+import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';
 import { DynamoDBConverter, RESOURCE_TABLE } from './dynamoDb';
-import DynamoDbParamBuilder from './dynamoDbParamBuilder';
-import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DynamoDbHelper from './dynamoDbHelper';
+import DynamoDbParamBuilder from './dynamoDbParamBuilder';
+import { buildHashKey, DOCUMENT_STATUS_FIELD, DynamoDbUtil } from './dynamoDbUtil';
 
 export interface ItemRequest {
   id: string;
