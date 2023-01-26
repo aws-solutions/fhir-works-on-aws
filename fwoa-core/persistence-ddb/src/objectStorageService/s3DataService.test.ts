@@ -17,7 +17,7 @@ import {
   ResourceNotFoundError,
   ResourceVersionNotFoundError
 } from 'fhir-works-on-aws-interface';
-import DynamoDbDataService from '../dataServices/__mocks__/dynamoDbDataService';
+import DynamoDbDataService from '../dataServices/__mock__dynamoDbDataService';
 import validV3JpegBinary from '../sampleData/validV3JpegBinary.json';
 import validV4JpegBinary from '../sampleData/validV4JpegBinary.json';
 import validV4PdfBinary from '../sampleData/validV4PdfBinary.json';
