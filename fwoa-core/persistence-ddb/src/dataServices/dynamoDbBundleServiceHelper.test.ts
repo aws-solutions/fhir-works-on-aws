@@ -177,20 +177,20 @@ describe('generateRollbackRequests', () => {
       GenerateRollbackRequestsFactory.buildExpectedBundleEntryResult(deleteBundleEntryResponse);
 
     let itemsToRemoveFromLock: any = [];
+
+    // array.concat will skip any empty arrays
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedCreateResult.itemsToRemoveFromLock);
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedReadResult.itemsToRemoveFromLock);
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedUpdateResult.itemsToRemoveFromLock);
     itemsToRemoveFromLock = itemsToRemoveFromLock.concat(expectedDeleteResult.itemsToRemoveFromLock);
 
-    itemsToRemoveFromLock = itemsToRemoveFromLock.filter((item: any) => !!item.length);
-
     let transactionRequests: any = [];
+
+    // array.concat will skip any empty arrays
     transactionRequests = transactionRequests.concat(expectedCreateResult.transactionRequests);
     transactionRequests = transactionRequests.concat(expectedReadResult.transactionRequests);
     transactionRequests = transactionRequests.concat(expectedUpdateResult.transactionRequests);
     transactionRequests = transactionRequests.concat(expectedDeleteResult.transactionRequests);
-
-    transactionRequests = transactionRequests.filter((req: any) => !!req.length);
 
     expect(actualResult).toEqual({ itemsToRemoveFromLock, transactionRequests });
   });
