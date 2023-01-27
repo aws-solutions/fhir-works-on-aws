@@ -1,0 +1,30 @@
+# Ignore any zip files
+**/.class
+**/.DS_Store
+**/node_modules/
+**/npm-debug.log
+**/pnpm-debug.log
+
+.build
+
+*.zip
+
+Info_Output.yml
+dist
+lib
+.build
+.idea
+yarn-error.log
+
+
+auditLogMover/.serverless
+auditLogMover/node_modules/
+
+coverage
+##############################
+## local Development
+##############################
+serverless-output.yml
+serverless-output.yaml
+serverless_config.json
+

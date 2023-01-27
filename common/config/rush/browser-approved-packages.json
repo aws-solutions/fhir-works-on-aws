@@ -31,8 +31,36 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "ajv",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "ajv-errors",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-sdk",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-sdk-mock",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-xray-sdk",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "cors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "errorhandler",
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint",
@@ -63,6 +91,22 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "express",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "fhir-works-on-aws-interface",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "flat",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "http-errors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "jest",
       "allowedCategories": ["production"]
     },
@@ -83,6 +127,18 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "lodash",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "mime-types",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "mock-req-res",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "npm-package-json-lint",
       "allowedCategories": ["production", "tools"]
     },
@@ -95,11 +151,27 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "sanitize-html",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "serverless-http",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "sinon",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "sort-package-json",
       "allowedCategories": ["production", "tools"]
     },
     {
       "name": "standard-version",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "supertest",
       "allowedCategories": ["production"]
     },
     {
@@ -109,6 +181,10 @@
     {
       "name": "typescript",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "uuid",
+      "allowedCategories": ["production"]
     },
     {
       "name": "winston",
