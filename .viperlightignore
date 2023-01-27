@@ -10,7 +10,7 @@ build
 lib
 
 #Third party file
-fwoa-core/*/THIRD-PARTY
+THIRD-PARTY$
 
 # NOTICE files
 .*/NOTICE
