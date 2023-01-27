@@ -8,7 +8,9 @@ common
 .next
 build
 lib
-fwoa-core/interface/THIRD-PARTY
+
+#Third party file
+fwoa-core/**/THIRD-PARTY
 
 # NOTICE files
 .*/NOTICE
@@ -19,3 +21,4 @@ solutions-pipelines-integration:49
 fwoa-core/interface/package.json:13
 fwoa-core/interface/src/fhirConfig.ts:49
 fwoa-core/interface/openapi.yaml:7
+fwoa-core/routing/package.json:13
