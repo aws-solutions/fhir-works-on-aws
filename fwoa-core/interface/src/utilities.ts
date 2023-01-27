@@ -6,6 +6,7 @@ import AWS from 'aws-sdk';
 import { BulkDataAuth } from './authorization';
 import { ExportType } from './bulkDataAccess';
 import { TypeOperation, SystemOperation } from './constants';
+import { InvalidResourceError } from './errors/InvalidResourceError';
 import { MethodNotAllowedError } from './errors/MethodNotAllowedError';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,7 +168,7 @@ export function getRequestInformation(
 }
 
 export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
-  //if ()
+  if (plaintext === '') throw new Error('Invalid input string');
   const kms = new AWS.KMS();
   const params = {
     KeyId: keyId,
