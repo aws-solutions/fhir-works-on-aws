@@ -3,9 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import AWS from 'aws-sdk';
+import * as AWSMock from 'aws-sdk-mock';
 import each from 'jest-each';
 import { ExportType } from './bulkDataAccess';
-import { getRequestInformation } from './utilities';
+import { getRequestInformation, encryptKMS } from './utilities';
 
 describe('getRequestInformation', () => {
   describe('verb: PUT', () => {
@@ -168,5 +170,20 @@ describe('getRequestInformation', () => {
         });
       });
     });
+  });
+});
+
+describe('encryptKMS', () => {
+  test('Success string encryption', async () => {
+    const encryptRes: string =
+      'AQICAHjcGHP1MkH7KGBnyHnq4XZ51xDg95nNn8z4adVcGyROBAEKAH777oJlzDgWqcoTpJyZAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDKxAIrGoAXjhz1C6zAIBEIA/WZ1Qqt0C7/mL1LMZ0lWw0T6pOP4P5+ZmiKnw/8N1BvVcuPuGiWqtEkftKDL/2fVKlt/x1SuMQXQ4O8e0ULQ8';
+    AWSMock.setSDKInstance(AWS);
+    //eslint-disable-next-line @typescript-eslint/ban-types
+    AWSMock.mock('KMS', 'encrypt', (params: never, callback: Function) => {
+      callback(null, {
+        CiphertextBlob: Buffer.from(encryptRes)
+      });
+    });
+    await expect(encryptKMS('', '')).resolves.toEqual(Buffer.from(encryptRes).toString('base64'));
   });
 });
