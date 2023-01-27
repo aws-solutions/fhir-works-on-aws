@@ -7,7 +7,7 @@ import express, { Router } from 'express';
 import { Authorization, TypeOperation } from 'fhir-works-on-aws-interface';
 import createError from 'http-errors';
 import { isEmpty, mergeWith } from 'lodash';
-import CrudHandlerInterface from '../handlers/CrudHandlerInterface';
+import CrudHandlerInterface from '../handlers/crudHandlerInterface';
 import RouteHelper from './routeHelper';
 
 export default class GenericResourceRoute {

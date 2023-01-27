@@ -15,7 +15,7 @@ import {
 import BundleGenerator from '../bundle/bundleGenerator';
 import OperationsGenerator from '../operationsGenerator';
 import { validateResource } from '../validation/validationUtilities';
-import CrudHandlerInterface from './CrudHandlerInterface';
+import CrudHandlerInterface from './crudHandlerInterface';
 import { hash } from './utils';
 
 export default class ResourceHandler implements CrudHandlerInterface {
