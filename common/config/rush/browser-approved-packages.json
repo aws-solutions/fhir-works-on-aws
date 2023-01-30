@@ -15,6 +15,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-interface",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@elastic/elasticsearch",
       "allowedCategories": ["production"]
     },
@@ -97,10 +101,6 @@
     {
       "name": "eslint-plugin-security",
       "allowedCategories": ["tools"]
-    },
-    {
-      "name": "fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
     },
     {
       "name": "flat",

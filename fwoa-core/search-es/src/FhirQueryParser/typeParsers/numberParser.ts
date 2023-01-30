@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
 import { parseNumber } from "../../QueryBuilder/typeQueries/common/number";
 
 export interface NumberSearchValue {

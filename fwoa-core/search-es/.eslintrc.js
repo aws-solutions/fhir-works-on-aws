@@ -6,7 +6,7 @@ module.exports = {
   parserOptions: { tsconfigRootDir: __dirname },
   overrides: [
     {
-      files: ["*.ts", "scripts/*.ts"],
+      files: ["*.ts"],
       rules: {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-member-accessibility": "off",

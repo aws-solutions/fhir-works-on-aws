@@ -1,4 +1,4 @@
-import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
 import each from "jest-each";
 import { FHIRSearchParametersRegistry } from "../FHIRSearchParametersRegistry";
 import {

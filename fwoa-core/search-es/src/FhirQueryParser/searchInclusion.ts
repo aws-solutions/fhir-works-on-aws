@@ -1,4 +1,4 @@
-import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
 import { uniq } from "lodash";
 import { FHIRSearchParametersRegistry } from "../FHIRSearchParametersRegistry";
 import {

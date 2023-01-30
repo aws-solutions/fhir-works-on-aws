@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from "fhir-works-on-aws-interface";
+import { ImplementationGuides } from "@aws/fhir-works-on-aws-interface";
 import { uniqBy } from "lodash";
 import { Parser, Grammar } from "nearley";
 import getComponentLogger from "../loggerBuilder";

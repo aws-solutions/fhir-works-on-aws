@@ -6,7 +6,7 @@
 import {
   FhirVersion,
   SearchCapabilityStatement,
-} from "fhir-works-on-aws-interface";
+} from "@aws/fhir-works-on-aws-interface";
 import compiledSearchParamsV3 from "../schema/compiledSearchParameters.3.0.1.json";
 import compiledSearchParamsV4 from "../schema/compiledSearchParameters.4.0.1.json";
 

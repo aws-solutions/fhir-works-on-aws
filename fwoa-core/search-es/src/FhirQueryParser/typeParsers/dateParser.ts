@@ -4,6 +4,7 @@
  *
  */
 
+import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
 import {
   lastDayOfMonth,
   lastDayOfYear,
@@ -11,7 +12,6 @@ import {
   parseISO,
   set,
 } from "date-fns";
-import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
 
 export interface DateSearchValue {
   prefix: string;

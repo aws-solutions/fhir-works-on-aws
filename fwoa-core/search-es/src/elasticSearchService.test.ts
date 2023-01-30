@@ -7,7 +7,7 @@ jest.mock("./elasticSearch");
 import {
   InvalidSearchParameterError,
   SearchFilter,
-} from "fhir-works-on-aws-interface";
+} from "@aws/fhir-works-on-aws-interface";
 import each from "jest-each";
 import { ElasticSearch } from "./elasticSearch";
 import { ElasticSearchService } from "./elasticSearchService";

@@ -6,8 +6,6 @@
 /* eslint-disable no-underscore-dangle */
 import URL from "url";
 
-import { Client, RequestParams } from "@elastic/elasticsearch";
-import { ResponseError } from "@elastic/elasticsearch/lib/errors";
 import {
   Search,
   TypeSearchRequest,
@@ -18,7 +16,9 @@ import {
   SearchFilter,
   FhirVersion,
   InvalidSearchParameterError,
-} from "fhir-works-on-aws-interface";
+} from "@aws/fhir-works-on-aws-interface";
+import { Client, RequestParams } from "@elastic/elasticsearch";
+import { ResponseError } from "@elastic/elasticsearch/lib/errors";
 import { partition, merge, isEmpty } from "lodash";
 import {
   DEFAULT_SEARCH_RESULTS_PER_PAGE,

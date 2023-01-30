@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
 import {
   COMPILED_CONDITION_OPERATOR_RESOLVE,
   NON_SEARCHABLE_PARAMETERS,
