@@ -3,7 +3,23 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@aws-sdk/client-sns",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws-sdk/node-http-handler",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@elastic/elasticsearch",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@elastic/elasticsearch-mock",
       "allowedCategories": ["production"]
     },
     {
@@ -29,6 +45,26 @@
     {
       "name": "@typescript-eslint/parser",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "aws-elasticsearch-connector",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-sdk",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-sdk-mock",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-xray-sdk",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "date-fns",
+      "allowedCategories": ["production"]
     },
     {
       "name": "depcheck",
@@ -63,6 +99,14 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "fhir-works-on-aws-interface",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "flat",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "jest",
       "allowedCategories": ["production"]
     },
@@ -75,12 +119,28 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "json-stringify-pretty-compact",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "license-check-and-add",
       "allowedCategories": ["tools"]
     },
     {
       "name": "license-checker",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "lodash",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "mime-types",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "nearley",
+      "allowedCategories": ["production"]
     },
     {
       "name": "npm-package-json-lint",
@@ -92,6 +152,18 @@
     },
     {
       "name": "prettier",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "promise.allsettled",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "qs",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "sinon",
       "allowedCategories": ["production"]
     },
     {
@@ -109,6 +181,10 @@
     {
       "name": "typescript",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "uuid",
+      "allowedCategories": ["production"]
     },
     {
       "name": "winston",

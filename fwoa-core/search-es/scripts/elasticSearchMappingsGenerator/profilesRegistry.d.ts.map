@@ -1,0 +1,1 @@
+{"version":3,"file":"profilesRegistry.d.ts","sourceRoot":"","sources":["profilesRegistry.ts"],"names":[],"mappings":"AAYA;;;;GAIG;AACH,qBAAa,gBAAgB;IACzB,OAAO,CAAC,QAAQ,CAAC,oBAAoB,CAAuB;IAE5D;;OAEG;gBACS,2BAA2B,EAAE,MAAM;IAW/C,eAAe,CAAC,YAAY,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,GAAG,MAAM,GAAG,SAAS;IAoBxE,cAAc,IAAI,MAAM;CAG3B"}

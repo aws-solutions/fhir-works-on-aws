@@ -1,0 +1,405 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compile .extension() function - DocumentReference.extension('http://example.org/fhir/StructureDefinition/participation-agreement') 1`] = `
+Array [
+  Object {
+    "base": "DocumentReference",
+    "compiled": Array [
+      Object {
+        "condition": Array [
+          "extension.url",
+          "=",
+          "http://example.org/fhir/StructureDefinition/participation-agreement",
+        ],
+        "path": "extension",
+        "resourceType": "DocumentReference",
+      },
+    ],
+    "description": "Search by url for a participation agreement, which is stored in a DocumentReference",
+    "name": "part-agree",
+    "target": Array [
+      "DocumentReference",
+    ],
+    "type": "reference",
+    "url": "http://hl7.org/fhir/SearchParameter/example-extension",
+  },
+]
+`;
+
+exports[`compile OR operator - CapabilityStatement.title | CodeSystem.title | ConceptMap.title | ImplementationGuide.title | MessageDefinition.title | OperationDefinition.title | StructureDefinition.title | StructureMap.title | TerminologyCapabilities.title | ValueSet.title 1`] = `
+Array [
+  Object {
+    "base": "CapabilityStatement",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "CapabilityStatement",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "CodeSystem",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "CodeSystem",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "ConceptMap",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "ConceptMap",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "ImplementationGuide",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "ImplementationGuide",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "MessageDefinition",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "MessageDefinition",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "OperationDefinition",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "OperationDefinition",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "StructureDefinition",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "StructureDefinition",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "StructureMap",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "StructureMap",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "TerminologyCapabilities",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "TerminologyCapabilities",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+  Object {
+    "base": "ValueSet",
+    "compiled": Array [
+      Object {
+        "path": "title",
+        "resourceType": "ValueSet",
+      },
+    ],
+    "description": "Multiple Resources...",
+    "name": "title",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/conformance-title",
+  },
+]
+`;
+
+exports[`compile OR operator with same base resource - (ExampleScenario.useContext.value as Quantity) | (ExampleScenario.useContext.value as Range) 1`] = `
+Array [
+  Object {
+    "base": "ExampleScenario",
+    "compiled": Array [
+      Object {
+        "path": "useContext.valueQuantity",
+        "resourceType": "ExampleScenario",
+      },
+      Object {
+        "path": "useContext.valueRange",
+        "resourceType": "ExampleScenario",
+      },
+    ],
+    "description": "A quantity- or range-valued use context assigned to the example scenario",
+    "name": "context-quantity",
+    "target": undefined,
+    "type": "quantity",
+    "url": "http://hl7.org/fhir/SearchParameter/ExampleScenario-context-quantity",
+  },
+]
+`;
+
+exports[`compile as - (ConceptMap.source as uri) 1`] = `
+Array [
+  Object {
+    "base": "ConceptMap",
+    "compiled": Array [
+      Object {
+        "path": "sourceUri",
+        "resourceType": "ConceptMap",
+      },
+    ],
+    "description": "The source value set that contains the concepts that are being mapped",
+    "name": "source-uri",
+    "target": Array [
+      "ValueSet",
+    ],
+    "type": "reference",
+    "url": "http://hl7.org/fhir/SearchParameter/ConceptMap-source-uri",
+  },
+]
+`;
+
+exports[`compile expression with extra whitespaces 1`] = `
+Array [
+  Object {
+    "base": "Patient",
+    "compiled": Array [
+      Object {
+        "condition": Array [
+          "x.field",
+          "=",
+          "value",
+        ],
+        "path": "x",
+        "resourceType": "Patient",
+      },
+    ],
+    "description": "test",
+    "name": "test",
+    "target": undefined,
+    "type": "token",
+    "url": "http://hl7.org/fhir/SearchParameter/test",
+  },
+]
+`;
+
+exports[`compile fhirPath with broader conditions than xPath 1`] = `
+Array [
+  Object {
+    "base": "Device",
+    "compiled": Array [
+      Object {
+        "path": "deviceName.name",
+        "resourceType": "Device",
+      },
+      Object {
+        "path": "type.coding.display",
+        "resourceType": "Device",
+      },
+      Object {
+        "path": "type.text",
+        "resourceType": "Device",
+      },
+      Object {
+        "path": "deviceName",
+        "resourceType": "Device",
+      },
+    ],
+    "description": "test",
+    "name": "device-name",
+    "target": undefined,
+    "type": "string",
+    "url": "http://hl7.org/fhir/SearchParameter/Device-device-name",
+  },
+]
+`;
+
+exports[`compile simple path - Patient.communication.language 1`] = `
+Array [
+  Object {
+    "base": "Patient",
+    "compiled": Array [
+      Object {
+        "path": "communication.language",
+        "resourceType": "Patient",
+      },
+    ],
+    "description": "Language code (irrespective of use value)",
+    "name": "language",
+    "target": undefined,
+    "type": "token",
+    "url": "http://hl7.org/fhir/SearchParameter/Patient-language",
+  },
+]
+`;
+
+exports[`compile simple where - Library.relatedArtifact.where(type='predecessor').resource 1`] = `
+Array [
+  Object {
+    "base": "Library",
+    "compiled": Array [
+      Object {
+        "condition": Array [
+          "relatedArtifact.type",
+          "=",
+          "predecessor",
+        ],
+        "path": "relatedArtifact.resource",
+        "resourceType": "Library",
+      },
+    ],
+    "description": "What resource is being referenced",
+    "name": "predecessor",
+    "target": Array [
+      "Account",
+      "ActivityDefinition",
+    ],
+    "type": "reference",
+    "url": "http://hl7.org/fhir/SearchParameter/Library-predecessor",
+  },
+]
+`;
+
+exports[`compile simple where url value - Patient.extension.where(url = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race').extension.value.code 1`] = `
+Array [
+  Object {
+    "base": "Patient",
+    "compiled": Array [
+      Object {
+        "condition": Array [
+          "extension.url",
+          "=",
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+        ],
+        "path": "extension.extension.value.code",
+        "resourceType": "Patient",
+      },
+      Object {
+        "condition": Array [
+          "extension.url",
+          "=",
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+        ],
+        "path": "extension.extension.valueCoding.code",
+        "resourceType": "Patient",
+      },
+    ],
+    "description": "test",
+    "name": "test",
+    "target": undefined,
+    "type": "token",
+    "url": "http://hl7.org/fhir/SearchParameter/test",
+  },
+]
+`;
+
+exports[`compile where with resolve() is - Person.link.target.where(resolve() is RelatedPerson) 1`] = `
+Array [
+  Object {
+    "base": "Person",
+    "compiled": Array [
+      Object {
+        "condition": Array [
+          "link.target",
+          "resolve",
+          "RelatedPerson",
+        ],
+        "path": "link.target",
+        "resourceType": "Person",
+      },
+    ],
+    "description": "The Person links to this RelatedPerson",
+    "name": "relatedperson",
+    "target": Array [
+      "RelatedPerson",
+    ],
+    "type": "reference",
+    "url": "http://hl7.org/fhir/SearchParameter/Person-relatedperson",
+  },
+]
+`;
+
+exports[`compile xpath explicitly expands choice of data types and fhirPath does not 1`] = `
+Array [
+  Object {
+    "base": "Consent",
+    "compiled": Array [
+      Object {
+        "path": "source",
+        "resourceType": "Consent",
+      },
+      Object {
+        "path": "sourceAttachment",
+        "resourceType": "Consent",
+      },
+      Object {
+        "path": "sourceReference",
+        "resourceType": "Consent",
+      },
+    ],
+    "description": "test",
+    "name": "source-reference",
+    "target": Array [
+      "ValueSet",
+    ],
+    "type": "reference",
+    "url": "http://hl7.org/fhir/SearchParameter/Consent-source-reference",
+  },
+]
+`;
