@@ -7,4 +7,5 @@ module.exports = {
     "\\.(ts)$": "ts-jest",
   },
   testRegex: ".test.(ts|js)$",
+  setupFilesAfterEnv: ["<rootDir>/jest.env.js"],
 };
