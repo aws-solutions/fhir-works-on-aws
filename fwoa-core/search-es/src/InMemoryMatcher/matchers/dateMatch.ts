@@ -4,8 +4,7 @@
  *
  */
 
-import isValid from "date-fns/isValid";
-import parseISO from "date-fns/parseISO";
+import { isValid, parseISO } from "date-fns";
 import { DateSearchValue } from "../../FhirQueryParser";
 
 import {

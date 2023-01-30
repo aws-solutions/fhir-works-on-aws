@@ -4,11 +4,13 @@
  *
  */
 
-import isValid from "date-fns/isValid";
-import lastDayOfMonth from "date-fns/lastDayOfMonth";
-import lastDayOfYear from "date-fns/lastDayOfYear";
-import parseISO from "date-fns/parseISO";
-import set from "date-fns/set";
+import {
+  lastDayOfMonth,
+  lastDayOfYear,
+  isValid,
+  parseISO,
+  set,
+} from "date-fns";
 import { InvalidSearchParameterError } from "fhir-works-on-aws-interface";
 
 export interface DateSearchValue {
