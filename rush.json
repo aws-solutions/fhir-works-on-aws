@@ -42,6 +42,12 @@
       "projectFolder": "core/eslint-custom",
       "reviewCategory": "tools",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "projectFolder": "fwoa-core/authz-smart",
+      "reviewCategory": "tools",
+      "shouldPublish": false
     }
   ]
 }
