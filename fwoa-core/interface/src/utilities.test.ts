@@ -3,9 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import AWS from 'aws-sdk';
+import * as AWSMock from 'aws-sdk-mock';
 import each from 'jest-each';
 import { ExportType } from './bulkDataAccess';
-import { getRequestInformation } from './utilities';
+import { getRequestInformation, encryptKMS } from './utilities';
 
 describe('getRequestInformation', () => {
   describe('verb: PUT', () => {
@@ -167,6 +169,46 @@ describe('getRequestInformation', () => {
           }
         });
       });
+    });
+  });
+  describe('encryptKMS', () => {
+    test('Success string encryption', async () => {
+      // BUILD
+      const encryptRes: string = 'ASDFGHJKLKJ';
+      AWSMock.setSDKInstance(AWS);
+      //eslint-disable-next-line @typescript-eslint/ban-types
+      AWSMock.mock('KMS', 'encrypt', (params: never, callback: Function) => {
+        callback(null, {
+          CiphertextBlob: Buffer.from(encryptRes),
+          KeyId: '1233424123312',
+          EncryptionAlgorithm: 'SYMMETRIC_DEFAULT'
+        });
+      });
+
+      // OPERATE
+      const result = await encryptKMS('example', '123456789012');
+
+      // CHECK
+      expect(result).toEqual(Buffer.from(encryptRes).toString('base64'));
+    });
+    test('Input string is empty', async () => {
+      // BUILD
+      const encryptRes: string = 'ASDFGHJKLKJ';
+      AWSMock.setSDKInstance(AWS);
+      //eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
+      AWSMock.mock('KMS', 'encrypt', (params, callback: Function) => {
+        if (params.Plaintext) {
+          callback(null, {
+            CiphertextBlob: encryptRes,
+            KeyId: '12314324324',
+            EncryptionAlgorithm: 'SYMMETRIC_DEFAULT'
+          });
+        }
+        callback(new Error('Invalid input'));
+      });
+
+      // CHECK
+      await expect(encryptKMS('', '123456789012')).rejects.toThrowError('Invalid input');
     });
   });
 });
