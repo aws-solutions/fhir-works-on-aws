@@ -10,7 +10,7 @@ build
 lib
 fwoa-core/interface/THIRD-PARTY
 fwoa-core/persistence-ddb/THIRD-PARTY 
-
+fwoa-core/persistence-ddb/package.json
 # NOTICE files
 .*/NOTICE
 
