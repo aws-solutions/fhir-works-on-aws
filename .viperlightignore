@@ -9,7 +9,9 @@ common
 build
 lib
 fwoa-core/interface/THIRD-PARTY
-
+fwoa-core/persistence-ddb/THIRD-PARTY 
+fwoa-core/persistence-ddb/package.json
+fwoa-core/persistence-ddb/src/ddbToEs/ddbToEsSync.test.ts
 # NOTICE files
 .*/NOTICE
 
