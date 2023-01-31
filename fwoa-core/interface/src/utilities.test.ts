@@ -191,7 +191,7 @@ describe('getRequestInformation', () => {
       // CHECK
       expect(result).toEqual(Buffer.from(encryptRes).toString('base64'));
     });
-    test('input string is empty', async () => {
+    test('Input string is empty', async () => {
       // BUILD
       const encryptRes: string = 'ASDFGHJKLKJ';
       AWSMock.setSDKInstance(AWS);
