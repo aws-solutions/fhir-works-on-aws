@@ -9,6 +9,7 @@ common
 build
 lib
 fwoa-core/interface/THIRD-PARTY
+fwoa-core/persistence-ddb/THIRD-PARTY 
 
 # NOTICE files
 .*/NOTICE
