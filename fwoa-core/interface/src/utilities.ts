@@ -6,7 +6,6 @@ import AWS from 'aws-sdk';
 import { BulkDataAuth } from './authorization';
 import { ExportType } from './bulkDataAccess';
 import { TypeOperation, SystemOperation } from './constants';
-import { InvalidResourceError } from './errors/InvalidResourceError';
 import { MethodNotAllowedError } from './errors/MethodNotAllowedError';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
