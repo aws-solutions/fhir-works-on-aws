@@ -171,19 +171,44 @@ describe('getRequestInformation', () => {
       });
     });
   });
-});
-
-describe('encryptKMS', () => {
-  test('Success string encryption', async () => {
-    const encryptRes: string =
-      'AQICAHjcGHP1MkH7KGBnyHnq4XZ51xDg95nNn8z4adVcGyROBAEKAH777oJlzDgWqcoTpJyZAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDKxAIrGoAXjhz1C6zAIBEIA/WZ1Qqt0C7/mL1LMZ0lWw0T6pOP4P5+ZmiKnw/8N1BvVcuPuGiWqtEkftKDL/2fVKlt/x1SuMQXQ4O8e0ULQ8';
-    AWSMock.setSDKInstance(AWS);
-    //eslint-disable-next-line @typescript-eslint/ban-types
-    AWSMock.mock('KMS', 'encrypt', (params: never, callback: Function) => {
-      callback(null, {
-        CiphertextBlob: Buffer.from(encryptRes)
+  describe('encryptKMS', () => {
+    test('Success string encryption', async () => {
+      // BUILD
+      const encryptRes: string = 'ASDFGHJKLKJ';
+      AWSMock.setSDKInstance(AWS);
+      //eslint-disable-next-line @typescript-eslint/ban-types
+      AWSMock.mock('KMS', 'encrypt', (params: never, callback: Function) => {
+        callback(null, {
+          CiphertextBlob: Buffer.from(encryptRes),
+          KeyId: '1233424123312',
+          EncryptionAlgorithm: 'SYMMETRIC_DEFAULT'
+        });
       });
+
+      // OPERATE
+      const result = await encryptKMS('example', '123456789012');
+
+      // CHECK
+      expect(result).toEqual(Buffer.from(encryptRes).toString('base64'));
     });
-    await expect(encryptKMS('', '')).resolves.toEqual(Buffer.from(encryptRes).toString('base64'));
+    test('input string is empty', async () => {
+      // BUILD
+      const encryptRes: string = 'ASDFGHJKLKJ';
+      AWSMock.setSDKInstance(AWS);
+      //eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
+      AWSMock.mock('KMS', 'encrypt', (params, callback: Function) => {
+        if (params.Plaintext) {
+          callback(null, {
+            CiphertextBlob: encryptRes,
+            KeyId: '12314324324',
+            EncryptionAlgorithm: 'SYMMETRIC_DEFAULT'
+          });
+        }
+        callback(new Error('Invalid input'));
+      });
+
+      // CHECK
+      await expect(encryptKMS('', '123456789012')).rejects.toThrowError('Invalid input');
+    });
   });
 });

@@ -31,14 +31,6 @@
       "allowedCategories": ["production", "tools"]
     },
     {
-      "name": "aws-sdk",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-sdk-mock",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
     },

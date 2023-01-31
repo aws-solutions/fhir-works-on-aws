@@ -168,7 +168,7 @@ export function getRequestInformation(
 }
 
 export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
-  if (plaintext === '') throw new Error('Invalid input string');
+  if (!plaintext) throw Error('Invalid input');
   const kms = new AWS.KMS();
   const params = {
     KeyId: keyId,
