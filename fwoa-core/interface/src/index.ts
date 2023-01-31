@@ -28,3 +28,4 @@ export * from './errors/BadRequestError';
 export * from './validator';
 export { makeLogger } from './loggerBuilder';
 export { stubs } from './stubs';
+export { makeEncryptLogger } from './encryptedLoggerBuilder';
