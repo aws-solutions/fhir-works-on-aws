@@ -7,18 +7,6 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "@aws/fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "@elastic/elasticsearch",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "@elastic/elasticsearch-mock",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": ["production", "tools"]
     },
@@ -41,22 +29,6 @@
     {
       "name": "@typescript-eslint/parser",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "aws-elasticsearch-connector",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-sdk",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-sdk-mock",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-xray-sdk",
-      "allowedCategories": ["production"]
     },
     {
       "name": "depcheck",
@@ -91,14 +63,6 @@
       "allowedCategories": ["tools"]
     },
     {
-      "name": "fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "flat",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "jest",
       "allowedCategories": ["production"]
     },
@@ -119,14 +83,6 @@
       "allowedCategories": ["tools"]
     },
     {
-      "name": "lodash",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "mime-types",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "npm-package-json-lint",
       "allowedCategories": ["production", "tools"]
     },
@@ -136,14 +92,6 @@
     },
     {
       "name": "prettier",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "promise.allsettled",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "sinon",
       "allowedCategories": ["production"]
     },
     {
@@ -161,10 +109,6 @@
     {
       "name": "typescript",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "uuid",
-      "allowedCategories": ["production"]
     },
     {
       "name": "winston",
