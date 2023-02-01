@@ -152,7 +152,7 @@
     },
     {
       "name": "jsonwebtoken",
-      "allowedCategories": ["tools"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jwks-rsa",
@@ -196,6 +196,10 @@
     },
     {
       "name": "serverless-http",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
     {

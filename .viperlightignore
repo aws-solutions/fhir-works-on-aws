@@ -25,6 +25,7 @@ fwoa-core/interface/package.json:13
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
+fwoa-core/authz-rbac/package.json:13
 
 # Dummy Email for Testing
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56

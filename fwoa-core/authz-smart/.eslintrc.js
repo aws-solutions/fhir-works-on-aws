@@ -4,7 +4,7 @@ require('@rushstack/eslint-config/patch/modern-module-resolution');
 module.exports = {
   extends: ['@aws/eslint-config-fwoa-eslint-custom'],
   parserOptions: { tsconfigRootDir: __dirname },
-  ignorePatterns: ['src/smartAuthorizationHelper.test.ts'],
+  ignorePatterns: ['src/smartAuthorizationHelper.test.ts', 'scripts/generateResourceReferenceMatrixFile.ts'],
   overrides: [
     {
       files: ['*.ts'],
