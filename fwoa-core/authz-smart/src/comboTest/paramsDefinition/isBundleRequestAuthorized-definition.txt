@@ -1,0 +1,27 @@
+[System]
+Name: isBundleRequestAuthorized
+
+[Parameter]
+patientContext(enum): patientIdentity, N/A
+fhirUser(enum): practitionerFhirUser,patientFhirUser,N/A 
+fhirServiceBaseUrl(enum): matchUrl,nonMatchUrl
+patient/Patient.read(enum): patient/Patient.read,N/A 
+patient/Patient.write(enum): patient/Patient.write,N/A 
+patient/Observation.read(enum): patient/Observation.read,N/A 
+patient/Observation.write(enum): patient/Observation.write,N/A 
+patient/Condition.read(enum): patient/Condition.read,N/A 
+patient/Condition.write(enum): patient/Condition.write,N/A 
+user/Patient.read(enum): user/Patient.read,N/A 
+user/Patient.write(enum): user/Patient.write,N/A 
+user/Observation.read(enum): user/Observation.read,N/A 
+user/Observation.write(enum): user/Observation.write,N/A 
+user/Condition.read(enum): user/Condition.read,N/A 
+user/Condition.write(enum): user/Condition.write,N/A 
+system/Patient.read(enum): system/Patient.read,N/A 
+system/Patient.write(enum): system/Patient.write,N/A 
+system/Observation.read(enum): system/Observation.read,N/A 
+system/Observation.write(enum): system/Observation.write,N/A 
+system/Condition.read(enum): system/Condition.read,N/A 
+system/Condition.write(enum): system/Condition.write,N/A
+
+[Constraint]
