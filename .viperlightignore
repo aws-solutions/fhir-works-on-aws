@@ -16,13 +16,17 @@ THIRD-PARTY$
 .*/NOTICE
 
 # Line excludes
-solutions-pipelines-integration:49
+# False positive
+fwoa-core/interface/src/fhirConfig.ts:49
+
+# Team Email
 .github/temp-workflows/release-pr.yml:28
 fwoa-core/interface/package.json:13
-fwoa-core/interface/src/fhirConfig.ts:49
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
+
+# Dummy Email for Testing
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
