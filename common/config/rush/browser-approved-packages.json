@@ -7,6 +7,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-interface",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": ["production", "tools"]
     },
@@ -119,6 +123,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "jsonwebtoken",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "license-check-and-add",
       "allowedCategories": ["tools"]
     },
@@ -156,6 +164,10 @@
     },
     {
       "name": "serverless-http",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
     {
