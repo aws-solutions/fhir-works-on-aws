@@ -1,0 +1,23 @@
+[System]
+Name: authorizeAndFilterReadResponse
+
+[Parameter]
+patientContext(enum): patientIdentity, N/A
+fhirUser(enum): practitionerFhirUser,patientFhirUser,N/A
+operation(enum): search-type, search-system, history-type, history-system, read
+fhirServiceBaseUrl(enum): matchUrl,nonMatchUrl
+patient/Patient.read(enum): patient/Patient.read,N/A 
+patient/MedicationRequest.read(enum): patient/MedicationRequest.read,N/A 
+patient/Condition.read(enum): patient/Condition.read,N/A 
+user/Patient.read(enum): user/Patient.read,N/A 
+user/MedicationRequest.read(enum): user/MedicationRequest.read,N/A 
+user/Condition.read(enum): user/Condition.read,N/A 
+system/Patient.read(enum): system/Patient.read,N/A 
+system/MedicationRequest.read(enum): system/MedicationRequest.read,N/A 
+system/Condition.read(enum): system/Condition.read,N/A
+matchMedicationRequest: matchMedicationRequest, N/A
+unmatchCondition: unmatchCondition, N/A
+matchPatient: matchPatient, N/A
+unmatchPatient: unmatchPatient, N/A
+
+[Constraint]

@@ -1,0 +1,19 @@
+[System]
+Name: VerifyAccessToken-BulkDataAuth
+
+[Parameter]
+patientContext(enum): patientIdentity,N/A
+fhirUser(enum): practitionerFhirUser,patientFhirUser,N/A
+operation(enum): read,delete
+BulkDataAuth.operation(enum): initiate-export,get-status-export,cancel-export
+BulkDataAuth.exportType(enum): system,group,patient
+fhirServiceBaseUrl(enum): matchUrl,nonMatchUrl
+isUserScopeAllowedForSystemExport(enum): true,false
+patient/Patient.read(enum): patient/Patient.read,N/A
+patient/*.read(enum): patient/*.read,N/A
+user/Patient.read(enum): user/Patient.read,N/A
+user/*.read(enum): user/*.read,N/A
+system/Patient.read(enum): system/Patient.read,N/A
+system/*.read(enum): system/*.read,N/A
+
+[Constraint]
