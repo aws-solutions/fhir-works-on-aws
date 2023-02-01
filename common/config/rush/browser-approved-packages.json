@@ -11,10 +11,6 @@
       "allowedCategories": ["production", "tools"]
     },
     {
-      "name": "@aws/fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "@elastic/elasticsearch",
       "allowedCategories": ["production"]
     },

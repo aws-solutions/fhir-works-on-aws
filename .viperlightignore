@@ -15,7 +15,9 @@ fwoa-core/persistence-ddb/package.json:18
 fwoa-core/persistence-ddb/package.json:19
 fwoa-core/persistence-ddb/src/ddbToEs/ddbToEsSync.test.ts
 fwoa-core/routing/THIRD-PARTY
-fwoa-core/routing/package.json
+fwoa-core/routing/package.json:13
+fwoa-core/authz-smart/THIRD-PARTY
+fwoa-core/persistence-ddb/package.json:13
 # NOTICE files
 .*/NOTICE
 
