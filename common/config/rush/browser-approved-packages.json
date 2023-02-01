@@ -43,6 +43,14 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "ajv",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "ajv-errors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "aws-elasticsearch-connector",
       "allowedCategories": ["production"]
     },
@@ -59,8 +67,16 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "cors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "errorhandler",
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint",
@@ -91,11 +107,19 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "express",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "fhir-works-on-aws-interface",
       "allowedCategories": ["production"]
     },
     {
       "name": "flat",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "http-errors",
       "allowedCategories": ["production"]
     },
     {
@@ -127,6 +151,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "mock-req-res",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "npm-package-json-lint",
       "allowedCategories": ["production", "tools"]
     },
@@ -143,6 +171,14 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "sanitize-html",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "serverless-http",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "sinon",
       "allowedCategories": ["production"]
     },
@@ -152,6 +188,10 @@
     },
     {
       "name": "standard-version",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "supertest",
       "allowedCategories": ["production"]
     },
     {
