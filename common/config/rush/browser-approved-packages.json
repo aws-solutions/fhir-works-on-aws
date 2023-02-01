@@ -4,11 +4,7 @@
   "packages": [
     {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
-      "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "@aws/fhir-works-on-aws-interface",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@rushstack/eslint-config",
@@ -55,24 +51,8 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "axios",
-      "allowedCategories": ["tools"]
-    },
-    {
-      "name": "axios-mock-adapter",
-      "allowedCategories": ["tools"]
-    },
-    {
       "name": "cors",
       "allowedCategories": ["production"]
-    },
-    {
-      "name": "csv-load-sync",
-      "allowedCategories": ["tools"]
-    },
-    {
-      "name": "csv-writer",
-      "allowedCategories": ["tools"]
     },
     {
       "name": "depcheck",
@@ -116,15 +96,11 @@
     },
     {
       "name": "fhir-works-on-aws-interface",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "flat",
       "allowedCategories": ["production"]
-    },
-    {
-      "name": "fs",
-      "allowedCategories": ["tools"]
     },
     {
       "name": "http-errors",
@@ -132,7 +108,7 @@
     },
     {
       "name": "jest",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "jest-each",
@@ -140,23 +116,7 @@
     },
     {
       "name": "jest-mock-extended",
-      "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "jose",
-      "allowedCategories": ["tools"]
-    },
-    {
-      "name": "json-2-csv",
-      "allowedCategories": ["tools"]
-    },
-    {
-      "name": "jsonwebtoken",
-      "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "jwks-rsa",
-      "allowedCategories": ["tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "license-check-and-add",
@@ -168,7 +128,7 @@
     },
     {
       "name": "lodash",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "mime-types",
@@ -188,7 +148,7 @@
     },
     {
       "name": "prettier",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "sanitize-html",
@@ -196,10 +156,6 @@
     },
     {
       "name": "serverless-http",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
     {
@@ -212,7 +168,7 @@
     },
     {
       "name": "standard-version",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "supertest",
@@ -220,7 +176,7 @@
     },
     {
       "name": "ts-jest",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["production"]
     },
     {
       "name": "typescript",
