@@ -1,0 +1,22 @@
+{
+  "extends": "@rushstack/heft-node-rig/profiles/default/config/jest.config.json",
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 50,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "coveragePathIgnorePatterns": ["<rootDir>/src/comboTest/"],
+  "testPathIgnorePatterns": [
+    "<rootDir>/src/comboTest/__snapshots__/",
+    "<rootDir>/node_modules/",
+    "<rootDir>/src/comboTest/testCaseUtil.test.ts"
+  ],
+  "coverageReporters": ["json-summary", "json", "lcov", "text"],
+  "moduleNameMapper": {
+    "^jose/(.*)$": "<rootDir>/node_modules/jose/dist/node/cjs/$1"
+  }
+}

@@ -1,0 +1,30 @@
+[System]
+Name: getAllowedResourceTypesForOperation
+
+[Parameter]
+patientContext(enum): patientIdentity, N/A
+fhirUser(enum): practitionerFhirUser,patientFhirUser,N/A
+operation(enum): search-type, search-system, history-type, history-system, read
+patient/Patient.read(enum): patient/Patient.read,N/A 
+patient/Patient.*(enum): patient/Patient.8,N/A 
+patient/Observation.read(enum): patient/Observation.read,N/A 
+patient/Observation.*(enum): patient/Observation.*,N/A 
+patient/Condition.write(enum): patient/Condition.write,N/A 
+patient/Condition.*(enum): patient/Condition.*,N/A
+patient/*.read(enum): patient/*.read,N/A 
+user/Patient.read(enum): user/Patient.read,N/A 
+user/Patient.*(enum): user/Patient.*,N/A 
+user/Observation.write(enum): user/Observation.write,N/A 
+user/Observation.*(enum): user/Observation.*,N/A 
+user/Condition.read(enum): user/Condition.read,N/A 
+user/Condition.*(enum): user/Condition.*,N/A
+user/*.read(enum): user/*.read,N/A
+system/Patient.write(enum): system/Patient.write,N/A 
+system/Patient.*(enum): system/Patient.*,N/A 
+system/Observation.read(enum): system/Observation.read,N/A 
+system/Observation.*(enum): system/Observation.*,N/A 
+system/Condition.read(enum): system/Condition.read,N/A 
+system/Condition.*(enum): system/Condition.*,N/A
+system/*.read(enum): system/*.read,N/A
+
+[Constraint]
