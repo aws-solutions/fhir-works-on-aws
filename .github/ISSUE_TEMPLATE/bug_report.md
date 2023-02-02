@@ -25,7 +25,9 @@ If applicable, add screenshots to help explain your problem.
 
 **Versions (please complete the following information):**
 
-- Release Version installed [e.g. v1.0.3]
+- Release Version installed or commit hash [e.g. v1.0.3, 1edf4]
+
+<!--- To get the version look at `package.json` -->
 
 **Additional context**
 Add any other context about the problem here.
