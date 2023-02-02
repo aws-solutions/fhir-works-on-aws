@@ -10,14 +10,8 @@ build
 lib
 fwoa-core/interface/THIRD-PARTY
 fwoa-core/persistence-ddb/THIRD-PARTY 
-fwoa-core/persistence-ddb/package.json:17
-fwoa-core/persistence-ddb/package.json:18
-fwoa-core/persistence-ddb/package.json:19
-fwoa-core/persistence-ddb/src/ddbToEs/ddbToEsSync.test.ts
 fwoa-core/routing/THIRD-PARTY
-fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/THIRD-PARTY
-fwoa-core/persistence-ddb/package.json:13
 # NOTICE files
 .*/NOTICE
 
@@ -28,13 +22,14 @@ fwoa-core/interface/src/fhirConfig.ts:49
 # Team Email
 .github/temp-workflows/release-pr.yml:28
 fwoa-core/interface/package.json:13
-fwoa-core/interface/src/fhirConfig.ts:49
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
+fwoa-core/persistence-ddb/package.json:13
 
 # Dummy Email for Testing
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
+fwoa-core/persistence-ddb/src/ddbToEs/ddbToEsSync.test.ts
