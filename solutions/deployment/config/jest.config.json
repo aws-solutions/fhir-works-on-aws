@@ -1,0 +1,15 @@
+{
+  "extends": "@rushstack/heft-node-rig/profiles/default/config/jest.config.json",
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "coveragePathIgnorePatterns": ["<rootDir>/src/index.ts", "<rootDir>/src/integration-tests/*"],
+  "testPathIgnorePatterns": ["/node_modules/", "/integration-tests/"],
+  "coverageReporters": ["json-summary", "json", "lcov", "text"]
+}
