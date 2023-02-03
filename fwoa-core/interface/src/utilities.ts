@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import AWS from 'aws-sdk';
+
 import { BulkDataAuth } from './authorization';
 import { ExportType } from './bulkDataAccess';
 import { TypeOperation, SystemOperation } from './constants';
@@ -164,16 +164,4 @@ export function getRequestInformation(
       throw new MethodNotAllowedError('Unable to parse the http verb');
     }
   }
-}
-
-export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
-  if (!plaintext) throw Error('Invalid input');
-  const kms = new AWS.KMS();
-  const params = {
-    KeyId: keyId,
-    Plaintext: plaintext
-  };
-  const encryptRes = await kms.encrypt(params).promise();
-  const encryptedstring = encryptRes.CiphertextBlob;
-  return Buffer.from(encryptedstring as Buffer).toString('base64');
 }

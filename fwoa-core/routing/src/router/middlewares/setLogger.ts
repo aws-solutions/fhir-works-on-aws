@@ -12,6 +12,7 @@ import express, { json } from 'express';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import getComponentLogger, { getEncryptLogger } from '../../loggerBuilder';
+import { captureResourceIdRegExp } from '../../regExpressions';
 /**
  * Set Logger'
  */
@@ -21,8 +22,8 @@ export interface metaDataAttribute {
   uid: string;
   timestamp: string;
   category: string;
-  EncryptedFields?: { [key: string]: boolean };
-  EncryptedPayLoad?: { [key: string]: string } | string;
+  encryptedFields?: { [key: string]: boolean };
+  encryptedPayLoad?: { [key: string]: string } | string;
 }
 
 export interface whoAttribute {
@@ -94,7 +95,7 @@ export interface responseOtherAttribute {
   };
 }
 
-export interface setLogger {
+export interface setEntireLogger {
   logMetadata: metaDataAttribute;
   who: whoAttribute;
   what: whatAttribute;
@@ -106,39 +107,108 @@ export interface setLogger {
 }
 
 function preprocessFieldsToEncrypted(
-  fieldsToEncrypted: { [key: string]: boolean },
-  logging: setLogger
-): setLogger {
+  fieldsToEncrypt: string[], // { [key: string]: boolean },
+  logging: setEntireLogger
+): setEntireLogger {
   // add encrypted for selected elements
   const fieldsToEncryptedObject: { [key: string]: string } = {};
-  const loggingPreproceesed = { ...logging };
+  const loggingPreprocessed = { ...logging };
+  const stringToReplace = 'encrypted';
+  const resourceIdRegx = /(\w{8}(-\w{4}){3}-\w{12})/;
+  fieldsToEncrypt.forEach((selectedField) => {
+    // const contentInField = _.get(logging, selectedField, undefined);
+    // if (contentInField) {
+    //     if (fieldsToEncrypt[selectedField] === false) {
+    //         const markedContent = contentInField.replace(captureResourceIdRegExp, stringToReplace);
+    //         _.set(loggingPreprocessed, selectedField, markedContent);
+    //     } else {
+    //         _.set(loggingPreprocessed, selectedField, stringToReplace);
+    //     }
+    //     _.set(fieldsToEncryptedObject, selectedField, contentInField);
+    // }
 
-  Object.keys(fieldsToEncrypted).forEach((key) => {
-    const keyArray = key.split('.');
-    const elementToEncrypted = _.get(logging, keyArray);
-    if (elementToEncrypted) {
-      if (fieldsToEncrypted[key] === false) {
-        const elementArray = elementToEncrypted.split('/');
-        let elementResourceId = `${elementArray.pop()}`;
-        if (elementResourceId.includes('-')) {
-          elementResourceId = 'encrypted';
+    let contentInField: string | { [key: string]: string } | undefined;
+    let markedContent: string | undefined;
+    // eslint-disable-next-line default-case
+    switch (selectedField) {
+      case 'who.userIdentity.sub': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = stringToReplace;
+        } else {
+          markedContent = contentInField;
         }
-        elementArray.push(elementResourceId);
-        const encryptElement = elementArray.join('/');
-        _.set(loggingPreproceesed, keyArray, encryptElement);
-      } else {
-        _.set(loggingPreproceesed, keyArray, 'encrypted');
+        break;
       }
-    } else {
-      _.set(loggingPreproceesed, keyArray, '');
+      case 'who.userIdentity.fhirUser': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      case 'what.apiGateway.event.queryStringParameters': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = stringToReplace;
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      case 'what.requestContext.path': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      case 'what.apiGateway.event.pathParameters.proxy': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      case 'where.requestContext.sourceIp': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = stringToReplace;
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      case 'responseOther.userIdentity.launch-response-patient': {
+        contentInField = _.get(logging, selectedField, undefined);
+        if (contentInField) {
+          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
+        break;
+      }
+      default:
+        throw new Error('Field to encrypt must be the existing cases');
     }
-    _.set(fieldsToEncryptedObject, keyArray, elementToEncrypted);
+    if (contentInField) {
+      _.set(loggingPreprocessed, selectedField, markedContent);
+      _.set(fieldsToEncryptedObject, selectedField, contentInField);
+    } else {
+      throw new Error('No existing case field in logger');
+    }
   });
   if (Object.keys(fieldsToEncryptedObject).length !== 0) {
-    _.set(loggingPreproceesed, ['logMetadata', 'EncryptedFields'], Object.keys(fieldsToEncrypted));
-    _.set(loggingPreproceesed, ['logMetadata', 'EncryptedPayLoad'], fieldsToEncryptedObject);
+    _.set(loggingPreprocessed, 'logMetadata.encryptedFields', fieldsToEncrypt);
+    _.set(loggingPreprocessed, 'logMetadata.encryptedPayLoad', fieldsToEncryptedObject);
   }
-  return loggingPreproceesed;
+  return loggingPreprocessed;
 }
 
 // define logger middleware
@@ -147,22 +217,17 @@ export const setLoggerMiddleware = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
+  const encryptedField = ['logMetadata.encryptedPayLoad'];
+  const logger = getEncryptLogger(encryptedField);
   try {
-    const requestTimeEpochDate = new Date((req as any).requestContext.requestTimeEpoch);
+    const response = res as any;
+    const request = req as any;
+    const requestTimeEpochDate = new Date(request.requestContext.requestTimeEpoch);
     const iatDate = new Date(res.locals.userIdentity.iat * 1000);
     const expDate = new Date(res.locals.userIdentity.exp * 1000);
     const authTimeDate = new Date(res.locals.userIdentity.auth_time * 1000);
     const timestampDate = new Date();
-    // initialize encrypt elements
-    let encryptSub: string;
-    let encryptfhirUser: string;
-    let encryptPath: string;
-    let encryptPathParameterProxy: string;
-    let encryptlaunchResponsePatient: string;
-    let encryptSourceIp: string;
-    let queryStringParametersObject: { [keys: string]: string };
-
-    let loggerDesign: setLogger = {
+    let loggerDesign: setEntireLogger = {
       logMetadata: {
         uid: uuidv4(),
         timestamp: timestampDate.toISOString(),
@@ -170,25 +235,25 @@ export const setLoggerMiddleware = async (
       },
       who: {
         userIdentity: {
-          sub: (res as any).locals.userIdentity.sub,
-          fhirUser: (res as any).locals.userIdentity.fhirUser,
-          'cognito:groups': (res as any).locals.userIdentity['cognito:groups'],
-          'cognito:username': (res as any).locals.userIdentity['cognito:username'],
-          'custom:tenantId': (res as any).locals.userIdentity['custom:tenantId']
+          sub: response.locals.userIdentity.sub,
+          fhirUser: response.locals.userIdentity.fhirUser,
+          'cognito:groups': response.locals.userIdentity['cognito:groups'],
+          'cognito:username': response.locals.userIdentity['cognito:username'],
+          'custom:tenantId': response.locals.userIdentity['custom:tenantId']
         },
-        apiKeyId: (req as any).requestContext.identity.apiKeyId
+        apiKeyId: request.requestContext.identity.apiKeyId
       },
       what: {
         userIdentity: (({ scopes, usableScopes }) => ({ scopes, usableScopes }))(
-          (res as any).locals.userIdentity
+          response.locals.userIdentity
         ),
-        requestContext: (({ path, httpMethod }) => ({ path, httpMethod }))((req as any).requestContext),
+        requestContext: (({ path, httpMethod }) => ({ path, httpMethod }))(request.requestContext),
         apiGateway: {
           event: (({ httpMethod, queryStringParameters, pathParameters }) => ({
             httpMethod,
             queryStringParameters,
             pathParameters
-          }))((req as any).apiGateway.event)
+          }))(request.apiGateway.event)
         }
       },
       when: {
@@ -197,54 +262,64 @@ export const setLoggerMiddleware = async (
       where: {
         apiGateway: {
           Context: (({ logGroupName, logStreamName }) => ({ logGroupName, logStreamName }))(
-            (req as any).apiGateway.context
+            request.apiGateway.context
           )
         },
-        domainName: (req as any).requestContext.domainName,
-        'User-agent': (req as any).headers['user-agent'],
-        requestContext: (({ sourceIp }) => ({ sourceIp }))((req as any).requestContext.identity)
+        domainName: request.requestContext.domainName,
+        'User-agent': request.headers['user-agent'],
+        requestContext: (({ sourceIp }) => ({ sourceIp }))(request.requestContext.identity)
       },
       how: {
-        apiGateway: { context: (({ awsRequestId }) => ({ awsRequestId }))((req as any).apiGateway.context) },
-        userIdentity: (({ jti }) => ({ jti }))((res as any).locals.userIdentity)
+        apiGateway: { context: (({ awsRequestId }) => ({ awsRequestId }))(request.apiGateway.context) },
+        userIdentity: (({ jti }) => ({ jti }))(response.locals.userIdentity)
       },
       requestOther: {
         requestContext: {
-          stage: (req as any).requestContext.stage
+          stage: request.requestContext.stage
         }
       },
       responseOther: {
         userIdentity: {
-          ...{ 'launch-response-patient': (res as any).locals.userIdentity.launch_response_patient },
+          ...{ 'launch-response-patient': response.locals.userIdentity.launch_response_patient },
           ...(({ iss, aud, scp }) => ({
             iss,
             aud,
             scp
-          }))((res as any).locals.userIdentity),
+          }))(response.locals.userIdentity),
           iat: iatDate.toISOString(),
           exp: expDate.toISOString(),
           'auth-time': authTimeDate.toISOString()
         }
       }
     };
-    let encryptedFileds: string[];
-    console.log(process.env.LOGGING_MIDDLEWARE_KMS_KEY);
+    let encryptedField: string[];
     let logger: any;
     if (process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION === 'true') {
+      // true or false means if a field is selected to replace the whole field with 'encrypted' or add 'encrypted' partially.
+      // Examples: https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"
       loggerDesign = preprocessFieldsToEncrypted(
-        {
-          'who.userIdentity.sub': true,
-          'who.userIdentity.fhirUser': false,
-          'what.apiGateway.event.queryStringParameters': true,
-          'what.requestContext.path': false,
-          'what.apiGateway.event.pathParameters.proxy': false,
-          'where.requestContext.sourceIp': true,
-          'responseOther.userIdentity.launch-response-patient': false
-        },
+        // {
+        //     'who.userIdentity.sub': true,
+        //     'who.userIdentity.fhirUser': false,
+        //     'what.apiGateway.event.queryStringParameters': true,
+        //     'what.requestContext.path': false,
+        //     'what.apiGateway.event.pathParameters.proxy': false,
+        //     'where.requestContext.sourceIp': true,
+        //     'responseOther.userIdentity.launch-response-patient': false,
+        // },
+        [
+          'who.userIdentity.sub',
+          'who.userIdentity.fhirUser',
+          'what.apiGateway.event.queryStringParameters',
+          'what.requestContext.path',
+          'what.apiGateway.event.pathParameters.proxy',
+          'where.requestContext.sourceIp',
+          'responseOther.userIdentity.launch-response-patient'
+        ],
         loggerDesign
       );
-      encryptedFileds = ['logMetadata.EncryptedPayLoad'];
-      logger = getEncryptLogger(encryptedFileds);
+      encryptedField = ['logMetadata.encryptedPayLoad'];
+      logger = getEncryptLogger(encryptedField);
       logger.error(loggerDesign);
     } else {
       logger = getComponentLogger();

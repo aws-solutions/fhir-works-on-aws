@@ -1,29 +1,17 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import { createLogger, Logger } from 'winston';
 import Transport from 'winston-transport';
-import { encryptKMS } from './utilities';
+import { encryptSelectedField } from './encryptLoggerUtilities';
 
 class SimpleEncryptConsole extends Transport {
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
   async log(info: any, callback: () => void) {
     try {
       setImmediate(() => this.emit('logged', info));
-
       // encrypt
-      const msg = [info.meta, info.message];
-      const fieldToEncryptArray = info.meta.metaData ? info.meta.metaData[0].split('.') : '';
-      if (fieldToEncryptArray[0]) {
-        const fieldsContentsStringToEncrypt = JSON.stringify(
-          _.get(info.message, fieldToEncryptArray),
-          null,
-          ' '
-        );
-        const encryptedFieldsContentsString = await encryptKMS(
-          fieldsContentsStringToEncrypt,
-          `${process.env.LOGGING_MIDDLEWARE_KMS_KEY}`
-        );
-        _.set(info.message, fieldToEncryptArray, encryptedFieldsContentsString);
-      }
-      msg[1] = JSON.stringify(info.message, null, ' ');
+      const encryptedMessage = await encryptSelectedField(info);
+
+      const msg = [info.meta, JSON.stringify(encryptedMessage, null, ' ')];
       if (info[Symbol.for('splat')]) {
         msg.push(...info[Symbol.for('splat')]);
       }
@@ -57,7 +45,7 @@ class SimpleEncryptConsole extends Transport {
     }
   }
 }
-// eslint-disable-next-line import/prefer-default-export
+
 export function makeEncryptLogger(
   metadata?: any,
   logLevel: string | undefined = process.env.LOG_LEVEL

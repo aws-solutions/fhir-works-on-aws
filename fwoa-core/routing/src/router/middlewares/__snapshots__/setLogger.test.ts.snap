@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createServerUrlMiddleware test logger designed for encryption case 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "how": Object {
+          "apiGateway": Object {
+            "context": Object {
+              "awsRequestId": "asdasdsa",
+            },
+          },
+          "userIdentity": Object {
+            "jti": "AT.ASDFGHJKL",
+          },
+        },
+        "logMetadata": Object {
+          "category": "Audit Event",
+          "encryptedFields": Array [
+            "who.userIdentity.sub",
+            "who.userIdentity.fhirUser",
+            "what.apiGateway.event.queryStringParameters",
+            "what.requestContext.path",
+            "what.apiGateway.event.pathParameters.proxy",
+            "where.requestContext.sourceIp",
+            "responseOther.userIdentity.launch-response-patient",
+          ],
+          "encryptedPayLoad": Object {
+            "responseOther": Object {
+              "userIdentity": Object {
+                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212",
+              },
+            },
+            "what": Object {
+              "apiGateway": Object {
+                "event": Object {
+                  "pathParameters": Object {
+                    "proxy": "asfdsfdsf",
+                  },
+                  "queryStringParameters": "fadfdas",
+                },
+              },
+              "requestContext": Object {
+                "path": "asdas",
+              },
+            },
+            "where": Object {
+              "requestContext": Object {
+                "sourceIp": "asdad",
+              },
+            },
+            "who": Object {
+              "userIdentity": Object {
+                "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876",
+                "sub": "example@amazon.com",
+              },
+            },
+          },
+          "timestamp": "2023-02-03T21:55:21.399Z",
+          "uid": "bc4489ad-eeb8-4952-ba17-dd5f595536bf",
+        },
+        "requestOther": Object {
+          "requestContext": Object {
+            "stage": "dev",
+          },
+        },
+        "responseOther": Object {
+          "userIdentity": Object {
+            "aud": 167337144,
+            "auth-time": "2023-01-10T21:40:22.000Z",
+            "exp": "1975-04-21T19:04:04.000Z",
+            "iat": "1975-04-21T18:47:24.000Z",
+            "iss": 167337044,
+            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212",
+            "scp": Array [
+              "fhirUser",
+              "openid",
+              "patient/*.*",
+              "launch/patient",
+              "profile",
+              "user/*.*",
+              "patient_selection",
+            ],
+          },
+        },
+        "what": Object {
+          "apiGateway": Object {
+            "event": Object {
+              "httpMethod": "asdas",
+              "pathParameters": Object {
+                "proxy": "asfdsfdsf",
+              },
+              "queryStringParameters": "encrypted",
+            },
+          },
+          "requestContext": Object {
+            "httpMethod": "asdasda",
+            "path": "asdas",
+          },
+          "userIdentity": Object {
+            "scopes": undefined,
+            "usableScopes": Array [
+              "patient/*.*",
+              "user/*.*",
+            ],
+          },
+        },
+        "when": Object {
+          "requestContext": Object {
+            "requestTimeEpoch": "1970-01-20T08:49:29.044Z",
+          },
+        },
+        "where": Object {
+          "User-agent": "PostmanRuntime/7.30.0",
+          "apiGateway": Object {
+            "Context": Object {
+              "logGroupName": "asd",
+              "logStreamName": "asdsa",
+            },
+          },
+          "domainName": undefined,
+          "requestContext": Object {
+            "sourceIp": "encrypted",
+          },
+        },
+        "who": Object {
+          "apiKeyId": "asdasd",
+          "userIdentity": Object {
+            "cognito:groups": undefined,
+            "cognito:username": undefined,
+            "custom:tenantId": undefined,
+            "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876",
+            "sub": "encrypted",
+          },
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`createServerUrlMiddleware test no encrypt case 1`] = `[MockFunction]`;

@@ -26,7 +26,7 @@
   "variants": [],
   "projects": [
     {
-      "packageName": "@aws/fhir-works-on-aws-interface",
+      "packageName": "fhir-works-on-aws-interface",
       "projectFolder": "fwoa-core/interface",
       "reviewCategory": "production",
       "shouldPublish": true
