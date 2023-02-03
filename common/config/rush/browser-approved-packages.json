@@ -12,7 +12,11 @@
     },
     {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-interface",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@aws/fhir-works-on-aws-interface",
@@ -67,8 +71,28 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "axios",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "axios-mock-adapter",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "cors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "date-fns",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "csv-load-sync",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "csv-writer",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "depcheck",
@@ -103,12 +127,28 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "express",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "fhir-works-on-aws-interface",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "flat",
       "allowedCategories": ["production"]
     },
     {
-      "name": "jest",
+      "name": "fs",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "http-errors",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "jest",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-each",
@@ -116,7 +156,23 @@
     },
     {
       "name": "jest-mock-extended",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jose",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "json-2-csv",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "jsonwebtoken",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jwks-rsa",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "json-stringify-pretty-compact",
@@ -132,7 +188,7 @@
     },
     {
       "name": "lodash",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "mime-types",
@@ -152,7 +208,7 @@
     },
     {
       "name": "prettier",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "promise.allsettled",
@@ -160,6 +216,10 @@
     },
     {
       "name": "qs",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
     {
@@ -172,11 +232,11 @@
     },
     {
       "name": "standard-version",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "ts-jest",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "typescript",

@@ -38,10 +38,22 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@aws/fhir-works-on-aws-authz-rbac",
+      "projectFolder": "fwoa-core/authz-rbac",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@aws/eslint-config-fwoa-eslint-custom",
       "projectFolder": "core/eslint-custom",
       "reviewCategory": "tools",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "projectFolder": "fwoa-core/authz-smart",
+      "reviewCategory": "tools",
+      "shouldPublish": true
     }
   ]
 }

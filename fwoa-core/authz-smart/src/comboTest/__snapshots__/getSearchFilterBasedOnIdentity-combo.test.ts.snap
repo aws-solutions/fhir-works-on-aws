@@ -1,0 +1,4310 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 0",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 1",
+  "request": {
+    "userIdentity": {
+      "scopes": [],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 2",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 3",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 4",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 5",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "operation": "search-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 6",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.read",
+        "user/Binary.read"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Practitioner/id",
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 7",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 8",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 9",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 10",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 11",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "operation": "search-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 12",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "user/Patient.read",
+        "user/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-type",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 13",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 14",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-type",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 15",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 16",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "user/Patient.read"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 17",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "operation": "search-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 18",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 19",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 20",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 21",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 22",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.read",
+        "patient/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 23",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "operation": "search-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 24",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 25",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 26",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 27",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 28",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 29",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "operation": "search-system",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 30",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "user/Patient.read"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Practitioner/id",
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 31",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 32",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "user/Patient.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 33",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 34",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "history-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 35",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "operation": "history-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 36",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.read",
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 37",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Binary.*",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 38",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "operation": "history-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 39",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 40",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 41",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.*",
+        "user/Binary.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "operation": "history-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 42",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 43",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "user/Binary.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-type",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 44",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-type",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 45",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Practitioner/id",
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 46",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "user/Patient.*",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 47",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-system",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 48",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 49",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 50",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "operation": "history-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 51",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "user/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 52",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.read",
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 53",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "operation": "history-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 54",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 55",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 56",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "operation": "history-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 57",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-system",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 58",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 59",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-system",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 60",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 61",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Binary.read"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Patient.read",
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 62",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "patient/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-instance",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 63",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 64",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 65",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "operation": "history-instance",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 66",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Practitioner",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Binary.read"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Practitioner/id",
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 67",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Binary.*",
+        "system/Patient.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 68",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "operation": "history-instance",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 69",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 70",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 71",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-instance",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 72",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-instance",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 73",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 74",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "operation": "history-instance",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 75",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.read",
+        "system/Patient.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 76",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "history-system",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 77",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "fhirUser": "patientFhirUser",
+    "operation": "history-instance",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 78",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.read",
+        "user/Binary.read",
+        "user/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-system",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "system/MedicationRequest.read",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 79",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Observation"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "history-type",
+    "resourceType": "Observation",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 80",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.*",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Patient.*",
+        "system/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "operation": "search-type",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 81",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Patient.*",
+        "patient/Binary.read",
+        "user/Patient.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "system/Binary.*"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://random.server.com/dev",
+    "resourceType": "Invalid"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "search-system",
+    "resourceType": "Invalid",
+    "fhirServiceBaseUrl": "nonMatchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "patient/Patient.*",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "patient/MedicationRequest.*",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "user/Patient.read",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "N/A",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 82",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "patient/Binary.read",
+        "user/Patient.*",
+        "user/Binary.read",
+        "user/Binary.*",
+        "system/Binary.read"
+      ],
+      "usableScopes": []
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev"
+  },
+  "rawCsvRow": {
+    "fhirUser": "practitionerFhirUser",
+    "operation": "search-system",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "N/A",
+    "user/Binary.read": "user/Binary.read",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "system/Binary.read",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `Array []`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 83",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Binary.read",
+        "patient/Binary.*",
+        "user/Binary.*",
+        "system/Patient.*"
+      ],
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Binary.read",
+        "patient/Binary.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Binary"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "operation": "history-type",
+    "resourceType": "Binary",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "N/A",
+    "patient/Patient.read": "N/A",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "N/A",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "patient/Binary.read",
+    "patient/Binary.*": "patient/Binary.*",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "N/A",
+    "user/Observation.read": "user/MedicationRequest.read",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "N/A",
+    "system/Patient.*": "system/Patient.*",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "system/MedicationRequest.*",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "N/A"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+]
+`;
+
+exports[`getSearchFilterBasedOnIdentity-combo CASE: {
+  "testName": "Combo Test Row 84",
+  "request": {
+    "userIdentity": {
+      "scopes": [
+        "patient/Patient.read",
+        "user/Patient.*",
+        "user/Binary.*",
+        "system/Patient.read",
+        "system/Binary.*"
+      ],
+      "fhirUserObject": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "patientLaunchContext": {
+        "hostname": "https://fhir.server.com/dev",
+        "resourceType": "Patient",
+        "id": "id"
+      },
+      "usableScopes": [
+        "patient/Patient.read",
+        "user/Patient.*"
+      ]
+    },
+    "fhirServiceBaseUrl": "https://fhir.server.com/dev",
+    "resourceType": "Patient"
+  },
+  "rawCsvRow": {
+    "patientContext": "patientIdentity",
+    "fhirUser": "patientFhirUser",
+    "operation": "search-type",
+    "resourceType": "Patient",
+    "fhirServiceBaseUrl": "matchUrl",
+    "id": "12345",
+    "patient/Patient.read": "patient/Patient.read",
+    "patient/Patient.*": "N/A",
+    "patient/Observation.read": "patient/MedicationRequest.read",
+    "patient/Observation.*": "N/A",
+    "patient/Binary.read": "N/A",
+    "patient/Binary.*": "N/A",
+    "user/Patient.read": "N/A",
+    "user/Patient.*": "user/Patient.*",
+    "user/Observation.read": "N/A",
+    "user/Observation.*": "user/MedicationRequest.*",
+    "user/Binary.read": "N/A",
+    "user/Binary.*": "user/Binary.*",
+    "system/Patient.read": "system/Patient.read",
+    "system/Patient.*": "N/A",
+    "system/Observation.read": "N/A",
+    "system/Observation.*": "N/A",
+    "system/Binary.read": "N/A",
+    "system/Binary.*": "system/Binary.*"
+  }
+} 1`] = `
+Array [
+  Object {
+    "comparisonOperator": "==",
+    "key": "_references",
+    "logicalOperator": "OR",
+    "value": Array [
+      "https://fhir.server.com/dev/Patient/id",
+      "Patient/id",
+    ],
+  },
+  Object {
+    "comparisonOperator": "==",
+    "key": "id",
+    "logicalOperator": "OR",
+    "value": Array [
+      "id",
+    ],
+  },
+]
+`;
