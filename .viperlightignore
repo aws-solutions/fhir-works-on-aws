@@ -8,10 +8,14 @@ common
 .next
 build
 lib
+
+# Third Party files
 fwoa-core/interface/THIRD-PARTY
 fwoa-core/persistence-ddb/THIRD-PARTY 
 fwoa-core/routing/THIRD-PARTY
 fwoa-core/authz-smart/THIRD-PARTY
+fwoa-core/authz-rbac/THIRD-PARTY
+
 # NOTICE files
 .*/NOTICE
 

@@ -42,7 +42,7 @@
     "aws-sdk": "^2.1000.0",
     "aws-xray-sdk": "^3.3.3",
     "flat": "^5.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "mime-types": "^2.1.26",
     "promise.allsettled": "^1.0.2",
     "uuid": "^3.4.0"
@@ -57,7 +57,7 @@
     "@types/flat": "^5.0.1",
     "@types/heft-jest": "^1.0.3",
     "@types/jest": "^26.0.19",
-    "@types/lodash": "^4.14.157",
+    "@types/lodash": "^4.14.161",
     "@types/mime-types": "^2.1.0",
     "@types/node": "^14",
     "@types/promise.allsettled": "^1.0.3",
