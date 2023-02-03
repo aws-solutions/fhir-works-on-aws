@@ -7,8 +7,16 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-authz-rbac",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-routing",
+      "allowedCategories": ["production"]
     },
     {
       "name": "@rushstack/eslint-config",

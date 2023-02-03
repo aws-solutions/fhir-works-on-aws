@@ -322,6 +322,9 @@ importers:
   ../../solutions/deployment:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
+      '@aws/fhir-works-on-aws-authz-rbac': workspace:*
+      '@aws/fhir-works-on-aws-interface': workspace:*
+      '@aws/fhir-works-on-aws-routing': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': ^0.49.0
       '@rushstack/heft-jest-plugin': ^0.4.2
@@ -350,10 +353,7 @@ importers:
       constructs: ^10.0.0
       esbuild: ^0.14.39
       eslint: ^8.7.0
-      fhir-works-on-aws-authz-rbac: 5.0.0
-      fhir-works-on-aws-interface: ^12.1.1
       fhir-works-on-aws-persistence-ddb: 3.12.0
-      fhir-works-on-aws-routing: 6.6.1
       fhir-works-on-aws-search-es: 3.12.0
       fs-extra: ^10.1.0
       inquirer: ^5.0.0
@@ -387,6 +387,9 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
+      '@aws/fhir-works-on-aws-authz-rbac': link:../../fwoa-core/authz-rbac
+      '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
+      '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@types/aws-lambda': 8.10.110
       aws-cdk-lib: 2.45.0_constructs@10.1.239
       aws-embedded-metrics: 2.0.6
@@ -394,10 +397,7 @@ importers:
       axios: 0.21.4
       cdk-nag: 2.21.82_la7ozd5jq5dfu62l4yyx5y6f5i
       constructs: 10.1.239
-      fhir-works-on-aws-authz-rbac: 5.0.0
-      fhir-works-on-aws-interface: 12.1.1
       fhir-works-on-aws-persistence-ddb: 3.12.0
-      fhir-works-on-aws-routing: 6.6.1
       fhir-works-on-aws-search-es: 3.12.0
       fs-extra: 10.1.0
       inquirer: 5.2.0
@@ -2909,6 +2909,13 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
+
+  /@balena/dockerignore/1.0.2:
+    resolution:
+      {
+        integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==
+      }
+    dev: false
 
   /@bcoe/v8-coverage/0.2.3:
     resolution:
@@ -7361,7 +7368,6 @@ packages:
         integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
       }
     engines: { node: '>= 4.0.0' }
-    dev: true
 
   /atob/2.1.2:
     resolution:
@@ -7395,7 +7401,16 @@ packages:
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@balena/dockerignore': 1.0.2
+      case: 1.6.3
       constructs: 10.1.239
+      fs-extra: 9.1.0
+      ignore: 5.2.4
+      jsonschema: 1.4.1
+      minimatch: 3.1.2
+      punycode: 2.3.0
+      semver: 7.3.8
+      yaml: 1.10.2
     dev: false
     bundledDependencies:
       - '@balena/dockerignore'
@@ -8512,6 +8527,14 @@ packages:
     dependencies:
       rsvp: 4.8.5
     dev: true
+
+  /case/1.6.3:
+    resolution:
+      {
+        integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
+      }
+    engines: { node: '>= 0.8.0' }
+    dev: false
 
   /cdk-nag/2.21.82_la7ozd5jq5dfu62l4yyx5y6f5i:
     resolution:
@@ -12188,29 +12211,6 @@ packages:
         integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==
       }
 
-  /fhir-works-on-aws-authz-rbac/5.0.0:
-    resolution:
-      {
-        integrity: sha512-ZYy5A1aHU2xFBDTEtHSYdj8dA7vvbB3vD2wu0+ttGX5iOnV1J8EeTGX+kXtVky/nlm43qKrPxb5RbPHIUJiQWg==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      fhir-works-on-aws-interface: 10.0.0
-      jsonwebtoken: 8.5.1
-      lodash: 4.17.21
-    dev: false
-
-  /fhir-works-on-aws-interface/10.0.0:
-    resolution:
-      {
-        integrity: sha512-JQ/eICquJlI5P6s7e1xiuABnPuhh4d7VeyPFc5OFHgpLbyBCTrbyz0gVMc3BdlQVXQ7IAa0HYgjNsLMoeFt2JA==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      winston: 3.8.2
-      winston-transport: 4.5.0
-    dev: false
-
   /fhir-works-on-aws-interface/12.1.1:
     resolution:
       {
@@ -12242,31 +12242,6 @@ packages:
       uuid: 3.4.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /fhir-works-on-aws-routing/6.6.1:
-    resolution:
-      {
-        integrity: sha512-50a/yZ23eVFtcH5NKW6V3lTI8BKaUC8pYM4N/g8dD+OhN7CYFCv0SV8mJe1jqI0uAKzkEs09zdCElQ+RLkX+pw==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      '@types/cors': 2.8.13
-      '@types/express-serve-static-core': 4.17.33
-      ajv: 6.12.6
-      ajv-errors: 1.0.1_ajv@6.12.6
-      aws-sdk: 2.1309.0
-      aws-xray-sdk: 3.4.1
-      cors: 2.8.5
-      errorhandler: 1.5.1
-      express: 4.18.2
-      fhir-works-on-aws-interface: 12.1.1
-      flat: 5.0.2
-      http-errors: 1.8.1
-      lodash: 4.17.21
-      mime-types: 2.1.35
-      serverless-http: 2.7.0
-      uuid: 3.4.0
     dev: false
 
   /fhir-works-on-aws-search-es/3.12.0:
@@ -12813,7 +12788,6 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs-minipass/2.1.0:
     resolution:
@@ -17060,7 +17034,6 @@ packages:
       {
         integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
       }
-    dev: true
 
   /jsonwebtoken/8.5.1:
     resolution:
@@ -24546,7 +24519,6 @@ packages:
         integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
       }
     engines: { node: '>= 6' }
-    dev: true
 
   /yamljs/0.3.0:
     resolution:

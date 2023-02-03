@@ -1,7 +1,7 @@
 import { existsSync, PathLike, readdir, readFile, writeFile, realpathSync, statSync } from 'fs';
 import path from 'path';
 import util from 'util';
-import { ImplementationGuides } from 'fhir-works-on-aws-interface';
+import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
 
 /* eslint no-restricted-syntax: 0 */
 /* eslint no-await-in-loop: 0 */
@@ -121,7 +121,7 @@ export class IGCompiler {
       compiledSearchParams
     );
     await storeJson(
-      path.join(outputPath.toString(), 'fhir-works-on-aws-routing.json'),
+      path.join(outputPath.toString(), '@aws/fhir-works-on-aws-routing.json'),
       compiledRoutingDefinitions
     );
   }

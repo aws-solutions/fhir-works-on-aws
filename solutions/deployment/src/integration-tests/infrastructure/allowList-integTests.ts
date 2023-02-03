@@ -8,7 +8,7 @@
  * This file will overwrite the default src/subscriptions/allowList.ts when deploying to integ test environments.
  */
 
-import { SubscriptionEndpoint } from 'fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
+import { SubscriptionEndpoint } from '@aws/fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
 
 const getAllowListedSubscriptionEndpoints = async (): Promise<SubscriptionEndpoint[]> => {
   // any API Gateway endpoint

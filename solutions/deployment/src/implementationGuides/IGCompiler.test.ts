@@ -4,7 +4,7 @@
 
 import { existsSync, mkdirSync, PathLike } from 'fs';
 import { join } from 'path';
-import { ImplementationGuides } from 'fhir-works-on-aws-interface';
+import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
 import { dir, DirectoryResult } from 'tmp-promise';
 import { IGCompiler, IGCompilerOptions, loadJson, storeJson } from './IGCompiler';
 
@@ -151,7 +151,7 @@ describe('IGCompiler tests', () => {
       ]
     });
 
-    expect(await loadJson(join(outputDir, 'fhir-works-on-aws-routing.json'))).toEqual({
+    expect(await loadJson(join(outputDir, '@aws/fhir-works-on-aws-routing.json'))).toEqual({
       input: [
         { igName: 'hl7.fhir.us.carin-bb', name: 'structureDefinition1' },
         { igName: 'hl7.fhir.us.core', name: 'structureDefinition1' },

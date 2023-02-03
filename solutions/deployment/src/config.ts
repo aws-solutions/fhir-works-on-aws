@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { RBACHandler } from 'fhir-works-on-aws-authz-rbac';
+import { RBACHandler } from '@aws/fhir-works-on-aws-authz-rbac';
 import {
   FhirConfig,
   FhirVersion,
@@ -11,7 +11,10 @@ import {
   BASE_R4_RESOURCES,
   BASE_STU3_RESOURCES,
   Validator
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import HapiFhirLambdaValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/hapiFhirLambdaValidator';
+import JsonSchemaValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/jsonSchemaValidator';
+import SubscriptionValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
 import {
   DynamoDb,
   DynamoDbDataService,
@@ -19,9 +22,6 @@ import {
   S3DataService,
   DynamoDbUtil
 } from 'fhir-works-on-aws-persistence-ddb';
-import HapiFhirLambdaValidator from 'fhir-works-on-aws-routing/lib/router/validation/hapiFhirLambdaValidator';
-import JsonSchemaValidator from 'fhir-works-on-aws-routing/lib/router/validation/jsonSchemaValidator';
-import SubscriptionValidator from 'fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
 import { ElasticSearchService } from 'fhir-works-on-aws-search-es';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import RBACRules from './RBACRules';
@@ -119,7 +119,7 @@ export const getFhirConfig = async (): Promise<FhirConfig> => {
     profile: {
       systemOperations: ['transaction'],
       bundle: dynamoDbBundleService,
-      compiledImplementationGuides: loadImplementationGuides('fhir-works-on-aws-routing'),
+      compiledImplementationGuides: loadImplementationGuides('@aws/fhir-works-on-aws-routing'),
       systemHistory: stubs.history,
       systemSearch: stubs.search,
       bulkDataAccess: dynamoDbDataService,

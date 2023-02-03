@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { RBACConfig } from 'fhir-works-on-aws-authz-rbac';
+import { RBACConfig } from '@aws/fhir-works-on-aws-authz-rbac';
 
 export const financialResources: string[] = [
   'Coverage',
