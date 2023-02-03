@@ -4,7 +4,11 @@
   "packages": [
     {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-interface",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@rushstack/eslint-config",
@@ -64,7 +68,11 @@
     },
     {
       "name": "axios",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "axios-mock-adapter",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "cdk-nag",
@@ -81,6 +89,14 @@
     {
       "name": "cors",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "csv-load-sync",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "csv-writer",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "depcheck",
@@ -132,7 +148,7 @@
     },
     {
       "name": "fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "fhir-works-on-aws-persistence-ddb",
@@ -151,6 +167,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "fs",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "fs-extra",
       "allowedCategories": ["production"]
     },
@@ -164,7 +184,7 @@
     },
     {
       "name": "jest",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-circus",
@@ -176,11 +196,23 @@
     },
     {
       "name": "jest-mock-extended",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jose",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "json-2-csv",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "jsonwebtoken",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jwks-rsa",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "license-check-and-add",
@@ -192,7 +224,7 @@
     },
     {
       "name": "lodash",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "mime-types",
@@ -220,7 +252,7 @@
     },
     {
       "name": "prettier",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "qs",
@@ -259,6 +291,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "shuffle-array",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "sinon",
       "allowedCategories": ["production"]
     },
@@ -272,7 +308,7 @@
     },
     {
       "name": "standard-version",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "supertest",
@@ -284,7 +320,7 @@
     },
     {
       "name": "ts-jest",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "ts-node",

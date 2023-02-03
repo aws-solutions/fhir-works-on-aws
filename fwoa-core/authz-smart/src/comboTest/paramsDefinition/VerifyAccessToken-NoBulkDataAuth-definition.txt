@@ -1,0 +1,31 @@
+[System]
+Name: VerifyAccessToken-NoBulkDataAuth
+
+[Parameter]
+patientContext(enum): patientIdentity,N/A
+fhirUser(enum): practitionerFhirUser,patientFhirUser,N/A
+operation(enum): create,read,vread,update,delete,patch,history-type,history-instance,search-type,transaction,batch,search-system,history-system
+resourceType(enum): Patient,MedicationRequest,Binary,Invalid,N/A
+id(enum): fake-patient-id-12345,fake-medication-id-12345,fake-medication-id-no-access-12345
+vid(enum): 0,1
+fhirServiceBaseUrl(enum): matchUrl,nonMatchUrl,N/A
+patient/Patient.read(enum): patient/Patient.read,N/A
+patient/Patient.write(enum): patient/Patient.write,N/A
+patient/MedicationRequest.read(enum): patient/MedicationRequest.read,N/A
+patient/MedicationRequest.write(enum): patient/MedicationRequest.write,N/A
+patient/Binary.read(enum): patient/Binary.read,N/A
+patient/Binary.write(enum): patient/Binary.write,N/A
+user/Patient.read(enum): user/Patient.read,N/A
+user/Patient.write(enum): user/Patient.write,N/A
+user/MedicationRequest.read(enum): user/MedicationRequest.read,N/A
+user/MedicationRequest.write(enum): user/MedicationRequest.write,N/A
+user/Binary.read(enum): user/Binary.read,N/A
+user/Binary.write(enum): user/Binary.write,N/A
+system/Patient.read(enum): system/Patient.read,N/A
+system/Patient.write(enum): system/Patient.write,N/A
+system/MedicationRequest.read(enum): system/MedicationRequest.read,N/A
+system/MedicationRequest.write(enum): system/MedicationRequest.write,N/A
+system/Binary.read(enum): system/Binary.read,N/A
+system/Binary.write(enum): system/Binary.write,N/A
+
+[Constraint]

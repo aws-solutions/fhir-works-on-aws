@@ -1,11 +1,11 @@
 {
-  "name": "@aws/fhir-works-on-aws-interface",
-  "version": "12.1.0",
-  "description": "FHIR Works on AWS hosted on AWS Lambda",
-  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/interface",
+  "name": "@aws/fhir-works-on-aws-authz-rbac",
+  "version": "5.0.0",
+  "description": "FHIR Works on AWS role base access control",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/authz-rbac",
   "repository": {
     "type": "git",
-    "url": "git://github.com/awslabs/fhir-works-on-aws-interface.git"
+    "url": "git://github.com/awslabs/fhir-works-on-aws-authz-rbac.git"
   },
   "license": "Apache-2.0",
   "author": {
@@ -29,8 +29,9 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "winston": "^3.3.3",
-    "winston-transport": "^4.4.0"
+    "@aws/fhir-works-on-aws-interface": "workspace:*",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
@@ -40,16 +41,17 @@
     "@rushstack/heft-node-rig": "^1.11.11",
     "@types/heft-jest": "^1.0.3",
     "@types/jest": "^26.0.19",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^14",
-    "aws-sdk": "^2.1000.0",
-    "aws-sdk-mock": "^5.1.0",
+    "@types/shuffle-array": "^1.0.0",
     "eslint": "^8.7.0",
     "jest": "^26.6.3",
-    "jest-each": "^26.6.2",
     "jest-mock-extended": "^1.0.8",
     "npm-package-json-lint": "^6.3.0",
     "npm-package-json-lint-config-default": "^5.0.0",
     "prettier": "^2.4.1",
+    "shuffle-array": "^1.0.1",
     "sort-package-json": "^1.57.0",
     "standard-version": "^9.3.2",
     "ts-jest": "^26.4.4",
