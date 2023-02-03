@@ -39,7 +39,7 @@
     },
     {
       "packageName": "@aws/fhir-works-on-aws-deployment",
-      "projectFolder": "fwoa-core/deployment",
+      "projectFolder": "solutions/deployment",
       "reviewCategory": "production",
       "shouldPublish": true
     },
