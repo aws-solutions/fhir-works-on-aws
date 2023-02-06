@@ -151,7 +151,7 @@ describe('IGCompiler tests', () => {
       ]
     });
 
-    expect(await loadJson(join(outputDir, '@aws/fhir-works-on-aws-routing.json'))).toEqual({
+    expect(await loadJson(join(outputDir, 'fhir-works-on-aws-routing.json'))).toEqual({
       input: [
         { igName: 'hl7.fhir.us.carin-bb', name: 'structureDefinition1' },
         { igName: 'hl7.fhir.us.core', name: 'structureDefinition1' },

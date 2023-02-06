@@ -121,7 +121,7 @@ export class IGCompiler {
       compiledSearchParams
     );
     await storeJson(
-      path.join(outputPath.toString(), '@aws/fhir-works-on-aws-routing.json'),
+      path.join(outputPath.toString(), 'fhir-works-on-aws-routing.json'),
       compiledRoutingDefinitions
     );
   }
