@@ -5,7 +5,7 @@
  *
  */
 
-import express from "express";
+import express from 'express';
 
 /**
  * Set default content-type to 'application/fhir+json'
@@ -16,11 +16,7 @@ export const setContentTypeMiddleware = (
   next: express.NextFunction
 ) => {
   try {
-    res.contentType(
-      req.headers.accept === "application/json"
-        ? "application/json"
-        : "application/fhir+json"
-    );
+    res.contentType(req.headers.accept === 'application/json' ? 'application/json' : 'application/fhir+json');
     next();
   } catch (e) {
     next(e);

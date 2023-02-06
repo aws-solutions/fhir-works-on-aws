@@ -3,15 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import URL from "url";
-import {
-  SearchResult,
-  BatchReadWriteResponse,
-} from "fhir-works-on-aws-interface";
-import { isEmpty } from "lodash";
-import uuidv4 from "uuid/v4";
+import URL from 'url';
+import { SearchResult, BatchReadWriteResponse } from 'fhir-works-on-aws-interface';
+import { isEmpty } from 'lodash';
+import uuidv4 from 'uuid/v4';
 
-type LinkType = "self" | "previous" | "next" | "first" | "last";
+type LinkType = 'self' | 'previous' | 'next' | 'first' | 'last';
 
 export default class BundleGenerator {
   // https://www.hl7.org/fhir/search.html
@@ -19,46 +16,37 @@ export default class BundleGenerator {
     baseUrl: string,
     queryParams: any,
     searchResult: SearchResult,
-    bundleType: "searchset" | "history",
+    bundleType: 'searchset' | 'history',
     resourceType?: string,
     id?: string
   ) {
     const currentDateTime = new Date();
 
     const bundle = {
-      resourceType: "Bundle",
+      resourceType: 'Bundle',
       id: uuidv4(),
       meta: {
-        lastUpdated: currentDateTime.toISOString(),
+        lastUpdated: currentDateTime.toISOString()
       },
       type: bundleType,
       total: searchResult.numberOfResults, // Total number of search results, not total of results on page
       link: [
-        this.createLinkWithQuery(
-          "self",
-          baseUrl,
-          bundleType === "history",
-          resourceType,
-          id,
-          queryParams
-        ),
+        this.createLinkWithQuery('self', baseUrl, bundleType === 'history', resourceType, id, queryParams)
       ],
-      entry: searchResult.entries,
+      entry: searchResult.entries
     };
 
     if (searchResult.previousResultUrl) {
-      bundle.link.push(
-        this.createLink("previous", searchResult.previousResultUrl)
-      );
+      bundle.link.push(this.createLink('previous', searchResult.previousResultUrl));
     }
     if (searchResult.nextResultUrl) {
-      bundle.link.push(this.createLink("next", searchResult.nextResultUrl));
+      bundle.link.push(this.createLink('next', searchResult.nextResultUrl));
     }
     if (searchResult.firstResultUrl) {
-      bundle.link.push(this.createLink("first", searchResult.firstResultUrl));
+      bundle.link.push(this.createLink('first', searchResult.firstResultUrl));
     }
     if (searchResult.lastResultUrl) {
-      bundle.link.push(this.createLink("last", searchResult.lastResultUrl));
+      bundle.link.push(this.createLink('last', searchResult.lastResultUrl));
     }
 
     return bundle;
@@ -72,7 +60,7 @@ export default class BundleGenerator {
     id?: string,
     query?: any
   ) {
-    let pathname = "";
+    let pathname = '';
     if (resourceType) {
       pathname += `/${resourceType}`;
     }
@@ -80,22 +68,22 @@ export default class BundleGenerator {
       pathname += `/${id}`;
     }
     if (isHistory) {
-      pathname += "/_history";
+      pathname += '/_history';
     }
     return {
       relation: linkType,
       url: URL.format({
         host,
         pathname,
-        query,
-      }),
+        query
+      })
     };
   }
 
   static createLink(linkType: LinkType, url: string) {
     return {
       relation: linkType,
-      url,
+      url
     };
   }
 
@@ -106,40 +94,40 @@ export default class BundleGenerator {
   ) {
     const id = uuidv4();
     const response = {
-      resourceType: "Bundle",
+      resourceType: 'Bundle',
       id,
       type: bundleType,
       link: [
         {
-          relation: "self",
-          url: baseUrl,
-        },
+          relation: 'self',
+          url: baseUrl
+        }
       ],
-      entry: [],
+      entry: []
     };
 
     const entries: any = [];
     bundleEntryResponses.forEach((bundleEntryResponse) => {
-      let status = "200 OK";
+      let status = '200 OK';
       if (bundleEntryResponse.error) {
         status = bundleEntryResponse.error;
-      } else if (bundleEntryResponse.operation === "create") {
-        status = "201 Created";
+      } else if (bundleEntryResponse.operation === 'create') {
+        status = '201 Created';
       } else if (
-        ["read", "vread"].includes(bundleEntryResponse.operation) &&
+        ['read', 'vread'].includes(bundleEntryResponse.operation) &&
         isEmpty(bundleEntryResponse.resource)
       ) {
-        status = "403 Forbidden";
+        status = '403 Forbidden';
       }
       const entry: any = {
         response: {
           status,
           location: `${bundleEntryResponse.resourceType}/${bundleEntryResponse.id}`,
           etag: bundleEntryResponse.vid,
-          lastModified: bundleEntryResponse.lastModified,
-        },
+          lastModified: bundleEntryResponse.lastModified
+        }
       };
-      if (bundleEntryResponse.operation === "read") {
+      if (bundleEntryResponse.operation === 'read') {
         entry.resource = bundleEntryResponse.resource;
       }
 
@@ -150,25 +138,11 @@ export default class BundleGenerator {
     return response;
   }
 
-  static generateTransactionBundle(
-    baseUrl: string,
-    bundleEntryResponses: BatchReadWriteResponse[]
-  ) {
-    return this.generateGenericBundle(
-      baseUrl,
-      bundleEntryResponses,
-      "transaction-response"
-    );
+  static generateTransactionBundle(baseUrl: string, bundleEntryResponses: BatchReadWriteResponse[]) {
+    return this.generateGenericBundle(baseUrl, bundleEntryResponses, 'transaction-response');
   }
 
-  static generateBatchBundle(
-    baseUrl: string,
-    bundleEntryResponses: BatchReadWriteResponse[]
-  ) {
-    return this.generateGenericBundle(
-      baseUrl,
-      bundleEntryResponses,
-      "batch-response"
-    );
+  static generateBatchBundle(baseUrl: string, bundleEntryResponses: BatchReadWriteResponse[]) {
+    return this.generateGenericBundle(baseUrl, bundleEntryResponses, 'batch-response');
   }
 }

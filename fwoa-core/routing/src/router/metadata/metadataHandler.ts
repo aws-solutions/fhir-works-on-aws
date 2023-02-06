@@ -3,23 +3,15 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  Capabilities,
-  CapabilitiesRequest,
-  FhirVersion,
-  GenericResponse,
-} from "fhir-works-on-aws-interface";
-import createError from "http-errors";
-import ConfigHandler from "../../configHandler";
-import { OperationDefinitionRegistry } from "../../operationDefinitions/OperationDefinitionRegistry";
-import { FHIRStructureDefinitionRegistry } from "../../registry";
-import {
-  makeGenericResources,
-  makeResource,
-} from "./cap.rest.resource.template";
-import makeSecurity from "./cap.rest.security.template";
-import makeRest from "./cap.rest.template";
-import makeStatement from "./cap.template";
+import { Capabilities, CapabilitiesRequest, FhirVersion, GenericResponse } from 'fhir-works-on-aws-interface';
+import createError from 'http-errors';
+import ConfigHandler from '../../configHandler';
+import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
+import { FHIRStructureDefinitionRegistry } from '../../registry';
+import { makeGenericResources, makeResource } from './cap.rest.resource.template';
+import makeSecurity from './cap.rest.security.template';
+import makeRest from './cap.rest.template';
+import makeStatement from './cap.template';
 
 export default class MetadataHandler implements Capabilities {
   configHandler: ConfigHandler;
@@ -43,13 +35,11 @@ export default class MetadataHandler implements Capabilities {
   }
 
   private async generateResources(fhirVersion: FhirVersion) {
-    const specialResourceTypes =
-      this.configHandler.getSpecialResourceTypes(fhirVersion);
+    const specialResourceTypes = this.configHandler.getSpecialResourceTypes(fhirVersion);
     let generatedResources = [];
     if (this.configHandler.config.profile.genericResource) {
       const updateCreate =
-        this.configHandler.config.profile.genericResource.persistence
-          .updateCreateSupported;
+        this.configHandler.config.profile.genericResource.persistence.updateCreateSupported;
       const generatedResourcesTypes = this.configHandler.getGenericResources(
         fhirVersion,
         specialResourceTypes
@@ -68,10 +58,7 @@ export default class MetadataHandler implements Capabilities {
     generatedResources.push(
       ...(await Promise.all(
         specialResourceTypes.map((resourceType) =>
-          makeResource(
-            resourceType,
-            this.configHandler.config.profile.resources![resourceType]
-          )
+          makeResource(resourceType, this.configHandler.config.profile.resources![resourceType])
         )
       ))
     );
@@ -83,31 +70,17 @@ export default class MetadataHandler implements Capabilities {
     const { auth, productInfo, server, profile } = this.configHandler.config;
 
     if (!this.configHandler.isVersionSupported(request.fhirVersion)) {
-      throw new createError.NotFound(
-        `FHIR version ${request.fhirVersion} is not supported`
-      );
+      throw new createError.NotFound(`FHIR version ${request.fhirVersion} is not supported`);
     }
 
-    const generatedResources = await this.generateResources(
-      request.fhirVersion
-    );
+    const generatedResources = await this.generateResources(request.fhirVersion);
     const security = makeSecurity(auth, this.hasCORSEnabled);
-    const rest = makeRest(
-      generatedResources,
-      security,
-      profile.systemOperations,
-      !!profile.bulkDataAccess
-    );
-    const capStatement = makeStatement(
-      rest,
-      productInfo,
-      server.url,
-      request.fhirVersion
-    );
+    const rest = makeRest(generatedResources, security, profile.systemOperations, !!profile.bulkDataAccess);
+    const capStatement = makeStatement(rest, productInfo, server.url, request.fhirVersion);
 
     return {
-      message: "success",
-      resource: capStatement,
+      message: 'success',
+      resource: capStatement
     };
   }
 }

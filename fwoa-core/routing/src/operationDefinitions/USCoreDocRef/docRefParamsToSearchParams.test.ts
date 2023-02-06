@@ -4,12 +4,11 @@
  *
  */
 
-import { convertDocRefParamsToSearchParams } from "./convertDocRefParamsToSearchParams";
+import { convertDocRefParamsToSearchParams } from './convertDocRefParamsToSearchParams';
 
-describe("docRefParamsToSearchParams", () => {
-  test("minimal params ", () => {
-    expect(convertDocRefParamsToSearchParams({ patient: "Patient/1" }))
-      .toMatchInlineSnapshot(`
+describe('docRefParamsToSearchParams', () => {
+  test('minimal params ', () => {
+    expect(convertDocRefParamsToSearchParams({ patient: 'Patient/1' })).toMatchInlineSnapshot(`
             Object {
               "_count": "1",
               "_sort": "-period,-date",
@@ -18,17 +17,17 @@ describe("docRefParamsToSearchParams", () => {
             }
         `);
   });
-  test("all params ", () => {
+  test('all params ', () => {
     expect(
       convertDocRefParamsToSearchParams({
-        patient: "Patient/1",
-        start: "1990-10-10",
-        end: "1995-10-10",
+        patient: 'Patient/1',
+        start: '1990-10-10',
+        end: '1995-10-10',
         type: {
-          system: "https://fwoa.com",
-          code: "code123",
+          system: 'https://fwoa.com',
+          code: 'code123'
         },
-        onDemand: false,
+        onDemand: false
       })
     ).toMatchInlineSnapshot(`
             Object {
@@ -42,11 +41,11 @@ describe("docRefParamsToSearchParams", () => {
         `);
   });
 
-  test("on demand", () => {
+  test('on demand', () => {
     expect(
       convertDocRefParamsToSearchParams({
-        patient: "Patient/1",
-        onDemand: true,
+        patient: 'Patient/1',
+        onDemand: true
       })
     ).toMatchInlineSnapshot(`
             Object {
@@ -55,11 +54,11 @@ describe("docRefParamsToSearchParams", () => {
         `);
   });
 
-  test("only start", () => {
+  test('only start', () => {
     expect(
       convertDocRefParamsToSearchParams({
-        patient: "Patient/1",
-        start: "1990",
+        patient: 'Patient/1',
+        start: '1990'
       })
     ).toMatchInlineSnapshot(`
             Object {
@@ -72,11 +71,11 @@ describe("docRefParamsToSearchParams", () => {
         `);
   });
 
-  test("only end", () => {
+  test('only end', () => {
     expect(
       convertDocRefParamsToSearchParams({
-        patient: "Patient/1",
-        end: "2000",
+        patient: 'Patient/1',
+        end: '2000'
       })
     ).toMatchInlineSnapshot(`
             Object {

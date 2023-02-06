@@ -3,14 +3,10 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Lambda } from "aws-sdk";
-import {
-  InvalidResourceError,
-  TypeOperation,
-  Validator,
-} from "fhir-works-on-aws-interface";
-import AWS from "../../AWS";
-import getComponentLogger from "../../loggerBuilder";
+import { Lambda } from 'aws-sdk';
+import { InvalidResourceError, TypeOperation, Validator } from 'fhir-works-on-aws-interface';
+import AWS from '../../AWS';
+import getComponentLogger from '../../loggerBuilder';
 
 interface ErrorMessage {
   severity: string;
@@ -34,8 +30,8 @@ export default class HapiFhirLambdaValidator implements Validator {
     this.hapiValidatorLambdaArn = hapiValidatorLambdaArn;
     this.lambdaClient = new AWS.Lambda({
       httpOptions: {
-        timeout: TIMEOUT_MILLISECONDS,
-      },
+        timeout: TIMEOUT_MILLISECONDS
+      }
     });
   }
 
@@ -46,13 +42,11 @@ export default class HapiFhirLambdaValidator implements Validator {
   ): Promise<void> {
     const lambdaParams = {
       FunctionName: this.hapiValidatorLambdaArn,
-      InvocationType: "RequestResponse",
-      Payload: JSON.stringify(JSON.stringify(resource)),
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify(JSON.stringify(resource))
     };
 
-    const lambdaResponse = await this.lambdaClient
-      .invoke(lambdaParams)
-      .promise();
+    const lambdaResponse = await this.lambdaClient.invoke(lambdaParams).promise();
 
     if (lambdaResponse.FunctionError) {
       // this means that the lambda function crashed, not necessarily that the resource is invalid.
@@ -61,17 +55,15 @@ export default class HapiFhirLambdaValidator implements Validator {
       throw new Error(msg);
     }
     // response payload is always a string. the Payload type is also used for invoke parameters
-    const hapiValidatorResponse = JSON.parse(
-      lambdaResponse.Payload as string
-    ) as HapiValidatorResponse;
+    const hapiValidatorResponse = JSON.parse(lambdaResponse.Payload as string) as HapiValidatorResponse;
     if (hapiValidatorResponse.successful) {
       return;
     }
 
     const allErrorMessages = hapiValidatorResponse.errorMessages
-      .filter((e) => e.severity === "error")
+      .filter((e) => e.severity === 'error')
       .map((e) => e.msg)
-      .join("\n");
+      .join('\n');
 
     throw new InvalidResourceError(allErrorMessages);
   }

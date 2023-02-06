@@ -3,14 +3,14 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from "fhir-works-on-aws-interface";
+import { ImplementationGuides } from 'fhir-works-on-aws-interface';
 
 /**
  * Based on the FHIR StructuredDefinition. This type only includes the fields that are required for the compile process.
  * See: http://www.hl7.org/fhir/structuredefinition.html
  */
 export interface FhirStructureDefinition {
-  resourceType: "StructureDefinition";
+  resourceType: 'StructureDefinition';
   url: string;
   name: string;
   description: string;
@@ -23,7 +23,7 @@ export interface FhirStructureDefinition {
  * See: https://www.hl7.org/fhir/operationdefinition.html
  */
 export interface FhirOperationDefinition {
-  resourceType: "OperationDefinition";
+  resourceType: 'OperationDefinition';
   url: string;
   name: string;
   description: string;
@@ -40,10 +40,7 @@ export class RoutingImplementationGuides implements ImplementationGuides {
    */
   // eslint-disable-next-line class-methods-use-this
   async compile(resources: any[]): Promise<any> {
-    const validDefinitions: (
-      | FhirStructureDefinition
-      | FhirOperationDefinition
-    )[] = [];
+    const validDefinitions: (FhirStructureDefinition | FhirOperationDefinition)[] = [];
     resources.forEach((s) => {
       if (
         RoutingImplementationGuides.isFhirStructureDefinition(s) ||
@@ -59,54 +56,50 @@ export class RoutingImplementationGuides implements ImplementationGuides {
 
     return validDefinitions.map((fhirDefinition) => {
       switch (fhirDefinition.resourceType) {
-        case "StructureDefinition":
+        case 'StructureDefinition':
           return {
             name: fhirDefinition.name,
             url: fhirDefinition.url,
             type: fhirDefinition.type,
             resourceType: fhirDefinition.resourceType,
             description: fhirDefinition.description,
-            baseDefinition: fhirDefinition.baseDefinition,
+            baseDefinition: fhirDefinition.baseDefinition
           };
-        case "OperationDefinition":
+        case 'OperationDefinition':
           return {
             name: fhirDefinition.name,
             url: fhirDefinition.url,
             resourceType: fhirDefinition.resourceType,
-            description: fhirDefinition.description,
+            description: fhirDefinition.description
           };
         default:
           // this should never happen
-          throw new Error("Unexpected error");
+          throw new Error('Unexpected error');
       }
     });
   }
 
-  private static isFhirStructureDefinition(
-    x: any
-  ): x is FhirStructureDefinition {
+  private static isFhirStructureDefinition(x: any): x is FhirStructureDefinition {
     return (
-      typeof x === "object" &&
+      typeof x === 'object' &&
       x &&
-      x.resourceType === "StructureDefinition" &&
-      typeof x.url === "string" &&
-      typeof x.name === "string" &&
-      typeof x.description === "string" &&
-      typeof x.baseDefinition === "string" &&
-      typeof x.type === "string"
+      x.resourceType === 'StructureDefinition' &&
+      typeof x.url === 'string' &&
+      typeof x.name === 'string' &&
+      typeof x.description === 'string' &&
+      typeof x.baseDefinition === 'string' &&
+      typeof x.type === 'string'
     );
   }
 
-  private static isFhirOperationDefinition(
-    x: any
-  ): x is FhirOperationDefinition {
+  private static isFhirOperationDefinition(x: any): x is FhirOperationDefinition {
     return (
-      typeof x === "object" &&
+      typeof x === 'object' &&
       x &&
-      x.resourceType === "OperationDefinition" &&
-      typeof x.url === "string" &&
-      typeof x.name === "string" &&
-      typeof x.description === "string"
+      x.resourceType === 'OperationDefinition' &&
+      typeof x.url === 'string' &&
+      typeof x.name === 'string' &&
+      typeof x.description === 'string'
     );
   }
 }

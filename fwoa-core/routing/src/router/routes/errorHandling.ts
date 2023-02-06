@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import {
   isInvalidResourceError,
   isResourceNotFoundError,
@@ -10,10 +10,10 @@ import {
   isInvalidSearchParameterError,
   isResourceConflictError,
   isBadRequestError,
-  isMethodNotAllowed,
-} from "fhir-works-on-aws-interface";
-import createError from "http-errors";
-import OperationsGenerator from "../operationsGenerator";
+  isMethodNotAllowed
+} from 'fhir-works-on-aws-interface';
+import createError from 'http-errors';
+import OperationsGenerator from '../operationsGenerator';
 
 export const applicationErrorMapper = (
   err: any,
@@ -43,11 +43,7 @@ export const applicationErrorMapper = (
     return;
   }
   if (isTooManyConcurrentExportRequestsError(err)) {
-    next(
-      new createError.TooManyRequests(
-        "There is currently too many requests. Please try again later"
-      )
-    );
+    next(new createError.TooManyRequests('There is currently too many requests. Please try again later'));
     return;
   }
   if (isInvalidSearchParameterError(err)) {
@@ -61,17 +57,14 @@ export const applicationErrorMapper = (
   next(err);
 };
 
-const statusToOutcome: Record<
-  number,
-  { severity: IssueSeverity; code: IssueCode }
-> = {
-  400: { severity: "error", code: "invalid" },
-  401: { severity: "error", code: "security" },
-  403: { severity: "error", code: "security" },
-  404: { severity: "error", code: "not-found" },
-  409: { severity: "error", code: "conflict" },
-  429: { severity: "error", code: "throttled" },
-  500: { severity: "error", code: "exception" },
+const statusToOutcome: Record<number, { severity: IssueSeverity; code: IssueCode }> = {
+  400: { severity: 'error', code: 'invalid' },
+  401: { severity: 'error', code: 'security' },
+  403: { severity: 'error', code: 'security' },
+  404: { severity: 'error', code: 'not-found' },
+  409: { severity: 'error', code: 'conflict' },
+  429: { severity: 'error', code: 'throttled' },
+  500: { severity: 'error', code: 'exception' }
 };
 
 export const httpErrorHandler = (
@@ -82,23 +75,14 @@ export const httpErrorHandler = (
 ) => {
   if (err instanceof createError.TooManyRequests) {
     const RETRY_AGAIN_IN_SECONDS = 15 * 60; // 15 Minutes
-    res.header("Retry-After", RETRY_AGAIN_IN_SECONDS.toString(10));
+    res.header('Retry-After', RETRY_AGAIN_IN_SECONDS.toString(10));
   }
   if (createError.isHttpError(err)) {
-    console.error("HttpError", err);
-    const { severity, code } = statusToOutcome[err.statusCode] ?? {
-      severity: "error",
-      code: "processing",
-    };
+    console.error('HttpError', err);
+    const { severity, code } = statusToOutcome[err.statusCode] ?? { severity: 'error', code: 'processing' };
     res
       .status(err.statusCode)
-      .send(
-        OperationsGenerator.generateOperationOutcomeIssue(
-          severity,
-          code,
-          err.message
-        )
-      );
+      .send(OperationsGenerator.generateOperationOutcomeIssue(severity, code, err.message));
     return;
   }
   next(err);
@@ -111,15 +95,7 @@ export const unknownErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: express.NextFunction
 ) => {
-  console.error("Unhandled Error", err);
-  const msg = "Internal server error";
-  res
-    .status(500)
-    .send(
-      OperationsGenerator.generateOperationOutcomeIssue(
-        "error",
-        "exception",
-        msg
-      )
-    );
+  console.error('Unhandled Error', err);
+  const msg = 'Internal server error';
+  res.status(500).send(OperationsGenerator.generateOperationOutcomeIssue('error', 'exception', msg));
 };

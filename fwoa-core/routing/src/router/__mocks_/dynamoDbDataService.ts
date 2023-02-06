@@ -13,64 +13,54 @@ import {
   GenericResponse,
   clone,
   InitiateExportRequest,
-  GetExportStatusResponse,
-} from "fhir-works-on-aws-interface";
-import validPatient from "../../sampleData/validV4Patient.json";
+  GetExportStatusResponse
+} from 'fhir-works-on-aws-interface';
+import validPatient from '../../sampleData/validV4Patient.json';
 
 const DynamoDbDataService: Persistence = class {
   static updateCreateSupported: boolean = false;
 
-  static async createResource(
-    request: CreateResourceRequest
-  ): Promise<GenericResponse> {
+  static async createResource(request: CreateResourceRequest): Promise<GenericResponse> {
     const resourceCopy: any = clone(request.resource);
-    resourceCopy.id = request.id || "id";
-    resourceCopy.meta = generateMeta("1");
+    resourceCopy.id = request.id || 'id';
+    resourceCopy.meta = generateMeta('1');
     return {
-      message: "Resource created",
-      resource: resourceCopy,
+      message: 'Resource created',
+      resource: resourceCopy
     };
   }
 
-  static async updateResource(
-    request: UpdateResourceRequest
-  ): Promise<GenericResponse> {
+  static async updateResource(request: UpdateResourceRequest): Promise<GenericResponse> {
     const resourceCopy: any = clone(request.resource);
     resourceCopy.id = request.id;
-    resourceCopy.meta = generateMeta("2");
+    resourceCopy.meta = generateMeta('2');
     return {
-      message: "Resource updated",
-      resource: resourceCopy,
+      message: 'Resource updated',
+      resource: resourceCopy
     };
   }
 
-  static async patchResource(
-    request: PatchResourceRequest
-  ): Promise<GenericResponse> {
+  static async patchResource(request: PatchResourceRequest): Promise<GenericResponse> {
     const resourceCopy: any = clone(request.resource);
     resourceCopy.id = request.id;
-    resourceCopy.meta = generateMeta("2");
+    resourceCopy.meta = generateMeta('2');
     return {
-      message: "Resource patched",
-      resource: resourceCopy,
+      message: 'Resource patched',
+      resource: resourceCopy
     };
   }
 
-  static async readResource(
-    request: ReadResourceRequest
-  ): Promise<GenericResponse> {
+  static async readResource(request: ReadResourceRequest): Promise<GenericResponse> {
     const resourceCopy: any = clone(validPatient);
     resourceCopy.id = request.id;
-    resourceCopy.meta = generateMeta("1");
+    resourceCopy.meta = generateMeta('1');
     return {
-      message: "Resource found",
-      resource: resourceCopy,
+      message: 'Resource found',
+      resource: resourceCopy
     };
   }
 
-  static async vReadResource(
-    request: vReadResourceRequest
-  ): Promise<GenericResponse> {
+  static async vReadResource(request: vReadResourceRequest): Promise<GenericResponse> {
     const resourceCopy: any = clone(validPatient);
     resourceCopy.id = request.id;
     if (request.vid) {
@@ -78,17 +68,15 @@ const DynamoDbDataService: Persistence = class {
     }
     resourceCopy.meta = generateMeta(request.vid);
     return {
-      message: "Resource found",
-      resource: resourceCopy,
+      message: 'Resource found',
+      resource: resourceCopy
     };
   }
 
-  static async deleteResource(
-    request: DeleteResourceRequest
-  ): Promise<GenericResponse> {
+  static async deleteResource(request: DeleteResourceRequest): Promise<GenericResponse> {
     return {
       message: `Successfully deleted ResourceType: ${request.resourceType}, Id: ${request.id}`,
-      resource: { count: 3 },
+      resource: { count: 3 }
     };
   }
 
@@ -99,7 +87,7 @@ const DynamoDbDataService: Persistence = class {
   ): Promise<GenericResponse> {
     return {
       message: `Successfully deleted ResourceType: ${resourceType}, Id: ${id}, VersionId: ${versionId}`,
-      resource: { count: 1 },
+      resource: { count: 1 }
     };
   }
 
@@ -107,46 +95,41 @@ const DynamoDbDataService: Persistence = class {
     request: CreateResourceRequest,
     queryParams: any
   ): Promise<GenericResponse> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   static conditionalUpdateResource(
     request: UpdateResourceRequest,
     queryParams: any
   ): Promise<GenericResponse> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
-  static conditionalPatchResource(
-    request: PatchResourceRequest,
-    queryParams: any
-  ): Promise<GenericResponse> {
-    throw new Error("Method not implemented.");
+  static conditionalPatchResource(request: PatchResourceRequest, queryParams: any): Promise<GenericResponse> {
+    throw new Error('Method not implemented.');
   }
 
   static conditionalDeleteResource(
     request: ConditionalDeleteResourceRequest,
     queryParams: any
   ): Promise<GenericResponse> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   static initiateExport(request: InitiateExportRequest): Promise<string> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   static cancelExport(jobId: string): Promise<void> {
-    throw new Error("Method not implemented");
+    throw new Error('Method not implemented');
   }
 
   static getExportStatus(jobId: string): Promise<GetExportStatusResponse> {
-    throw new Error("Method not implemented");
+    throw new Error('Method not implemented');
   }
 
-  static getActiveSubscriptions(params: {
-    tenantId?: string;
-  }): Promise<Record<string, any>[]> {
-    throw new Error("Method not implemented");
+  static getActiveSubscriptions(params: { tenantId?: string }): Promise<Record<string, any>[]> {
+    throw new Error('Method not implemented');
   }
 };
 export default DynamoDbDataService;

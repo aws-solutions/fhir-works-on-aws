@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FhirStructureDefinition } from "../implementationGuides";
-import { ResourceCapabilityStatement } from "./ResourceCapabilityInterface";
+import { FhirStructureDefinition } from '../implementationGuides';
+import { ResourceCapabilityStatement } from './ResourceCapabilityInterface';
 
 /**
  * This class is the single authority over the supported FHIR StructuredDefinition and their definitions
@@ -17,26 +17,23 @@ export class FHIRStructureDefinitionRegistry {
 
     if (compiledImplementationGuides !== undefined) {
       compiledStructureDefinitions = [
-        ...compiledImplementationGuides.filter(
-          (x) => x.resourceType === "StructureDefinition"
-        ),
+        ...compiledImplementationGuides.filter((x) => x.resourceType === 'StructureDefinition')
       ];
     }
 
     this.capabilityStatement = {};
 
     compiledStructureDefinitions.forEach((compiledStructureDefinition) => {
-      const structuredDefinition =
-        this.capabilityStatement[compiledStructureDefinition.type];
+      const structuredDefinition = this.capabilityStatement[compiledStructureDefinition.type];
 
       if (structuredDefinition) {
-        this.capabilityStatement[
-          compiledStructureDefinition.type
-        ].supportedProfile.push(compiledStructureDefinition.url);
+        this.capabilityStatement[compiledStructureDefinition.type].supportedProfile.push(
+          compiledStructureDefinition.url
+        );
       } else {
         this.capabilityStatement[compiledStructureDefinition.type] = {
           type: compiledStructureDefinition.type,
-          supportedProfile: [compiledStructureDefinition.url],
+          supportedProfile: [compiledStructureDefinition.url]
         };
       }
     });

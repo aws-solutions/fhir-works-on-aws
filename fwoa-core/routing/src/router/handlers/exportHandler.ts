@@ -10,9 +10,9 @@ import {
   GetExportStatusResponse,
   InitiateExportRequest,
   KeyValueMap,
-  RequestContext,
-} from "fhir-works-on-aws-interface";
-import createError from "http-errors";
+  RequestContext
+} from 'fhir-works-on-aws-interface';
+import createError from 'http-errors';
 
 export default class ExportHandler {
   private bulkDataAccess: BulkDataAccess;
@@ -24,9 +24,7 @@ export default class ExportHandler {
     this.authService = authService;
   }
 
-  async initiateExport(
-    initiateExportRequest: InitiateExportRequest
-  ): Promise<string> {
+  async initiateExport(initiateExportRequest: InitiateExportRequest): Promise<string> {
     return this.bulkDataAccess.initiateExport(initiateExportRequest);
   }
 
@@ -36,15 +34,8 @@ export default class ExportHandler {
     requestContext: RequestContext,
     tenantId?: string
   ): Promise<GetExportStatusResponse> {
-    const jobDetails = await this.bulkDataAccess.getExportStatus(
-      jobId,
-      tenantId
-    );
-    await this.checkIfRequesterHasAccessToJob(
-      jobDetails,
-      userIdentity,
-      requestContext
-    );
+    const jobDetails = await this.bulkDataAccess.getExportStatus(jobId, tenantId);
+    await this.checkIfRequesterHasAccessToJob(jobDetails, userIdentity, requestContext);
     return jobDetails;
   }
 
@@ -54,16 +45,9 @@ export default class ExportHandler {
     requestContext: RequestContext,
     tenantId?: string
   ): Promise<void> {
-    const jobDetails = await this.bulkDataAccess.getExportStatus(
-      jobId,
-      tenantId
-    );
-    await this.checkIfRequesterHasAccessToJob(
-      jobDetails,
-      userIdentity,
-      requestContext
-    );
-    if (["completed", "failed"].includes(jobDetails.jobStatus)) {
+    const jobDetails = await this.bulkDataAccess.getExportStatus(jobId, tenantId);
+    await this.checkIfRequesterHasAccessToJob(jobDetails, userIdentity, requestContext);
+    if (['completed', 'failed'].includes(jobDetails.jobStatus)) {
       throw new createError.BadRequest(
         `Job cannot be canceled because job is already in ${jobDetails.jobStatus} state`
       );
@@ -78,11 +62,7 @@ export default class ExportHandler {
     requestContext: RequestContext
   ) {
     const { jobOwnerId } = jobDetails;
-    const accessBulkDataJobRequest: AccessBulkDataJobRequest = {
-      userIdentity,
-      requestContext,
-      jobOwnerId,
-    };
+    const accessBulkDataJobRequest: AccessBulkDataJobRequest = { userIdentity, requestContext, jobOwnerId };
     await this.authService.isAccessBulkDataJobAllowed(accessBulkDataJobRequest);
   }
 }

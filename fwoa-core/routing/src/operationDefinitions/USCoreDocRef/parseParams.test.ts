@@ -4,17 +4,17 @@
  *
  */
 
-import { parsePostParams, parseQueryParams } from "./parseParams";
+import { parsePostParams, parseQueryParams } from './parseParams';
 
-describe("parseQueryParams", () => {
-  describe("valid params", () => {
-    test("all params", () => {
+describe('parseQueryParams', () => {
+  describe('valid params', () => {
+    test('all params', () => {
       expect(
         parseQueryParams({
-          patient: "patient/111",
-          start: "1990",
-          end: "2000",
-          "on-demand": "true",
+          patient: 'patient/111',
+          start: '1990',
+          end: '2000',
+          'on-demand': 'true'
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -26,11 +26,11 @@ describe("parseQueryParams", () => {
             `);
     });
 
-    test("some params", () => {
+    test('some params', () => {
       expect(
         parseQueryParams({
-          patient: "patient/111",
-          start: "1990",
+          patient: 'patient/111',
+          start: '1990'
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -40,10 +40,10 @@ describe("parseQueryParams", () => {
             `);
     });
 
-    test("patient only", () => {
+    test('patient only', () => {
       expect(
         parseQueryParams({
-          patient: "patient/111",
+          patient: 'patient/111'
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -53,53 +53,49 @@ describe("parseQueryParams", () => {
     });
   });
 
-  describe("invalid params", () => {
-    test("unknown param", () => {
+  describe('invalid params', () => {
+    test('unknown param', () => {
       expect(() =>
-        parseQueryParams({ patient: "Patient/111", someUnknownParam: 1 })
+        parseQueryParams({ patient: 'Patient/111', someUnknownParam: 1 })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/someUnknownParam Invalid parameter: \\"someUnknownParam\\""`
       );
     });
 
-    test("missing patient", () => {
-      expect(() =>
-        parseQueryParams({ start: "1990" })
-      ).toThrowErrorMatchingInlineSnapshot(
+    test('missing patient', () => {
+      expect(() => parseQueryParams({ start: '1990' })).toThrowErrorMatchingInlineSnapshot(
         `"params should have required property 'patient'"`
       );
     });
 
-    test("bad types", () => {
+    test('bad types', () => {
       expect(() =>
-        parseQueryParams({ patient: 23, start: ["1990", "1991"] })
+        parseQueryParams({ patient: 23, start: ['1990', '1991'] })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/patient should be string, params/start should be string"`
       );
     });
 
-    test("bad on-demand", () => {
+    test('bad on-demand', () => {
       expect(() =>
-        parseQueryParams({ patient: "Patient/111", "on-demand": "notABoolean" })
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"params/on-demand should be true or false"`
-      );
+        parseQueryParams({ patient: 'Patient/111', 'on-demand': 'notABoolean' })
+      ).toThrowErrorMatchingInlineSnapshot(`"params/on-demand should be true or false"`);
     });
   });
 });
 
-describe("parsePostParams", () => {
-  describe("valid params", () => {
-    test("only patient", () => {
+describe('parsePostParams', () => {
+  describe('valid params', () => {
+    test('only patient', () => {
       expect(
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueId: "Patient/123",
-            },
-          ],
+              name: 'patient',
+              valueId: 'Patient/123'
+            }
+          ]
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -108,38 +104,38 @@ describe("parsePostParams", () => {
             `);
     });
 
-    test("all params", () => {
+    test('all params', () => {
       expect(
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueId: "Patient/123",
+              name: 'patient',
+              valueId: 'Patient/123'
             },
             {
-              name: "codeableConcept",
+              name: 'codeableConcept',
               valueCodeableConcept: {
                 coding: {
-                  system: "http://example.org",
-                  code: "code",
-                  display: "test",
-                },
-              },
+                  system: 'http://example.org',
+                  code: 'code',
+                  display: 'test'
+                }
+              }
             },
             {
-              name: "start",
-              valueDate: "1990",
+              name: 'start',
+              valueDate: '1990'
             },
             {
-              name: "end",
-              valueDate: "2000",
+              name: 'end',
+              valueDate: '2000'
             },
             {
-              name: "on-demand",
-              valueBoolean: true,
-            },
-          ],
+              name: 'on-demand',
+              valueBoolean: true
+            }
+          ]
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -155,24 +151,24 @@ describe("parsePostParams", () => {
             `);
     });
 
-    test("some params", () => {
+    test('some params', () => {
       expect(
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueId: "Patient/123",
+              name: 'patient',
+              valueId: 'Patient/123'
             },
             {
-              name: "start",
-              valueDate: "1990",
+              name: 'start',
+              valueDate: '1990'
             },
             {
-              name: "end",
-              valueDate: "2000",
-            },
-          ],
+              name: 'end',
+              valueDate: '2000'
+            }
+          ]
         })
       ).toMatchInlineSnapshot(`
                 Object {
@@ -184,91 +180,91 @@ describe("parsePostParams", () => {
     });
   });
 
-  describe("invalid params", () => {
-    test("nonsense", () => {
+  describe('invalid params', () => {
+    test('nonsense', () => {
       expect(() =>
         parsePostParams({
-          someKey: "someValue",
-          someOtherKey: ["someOtherValue"],
+          someKey: 'someValue',
+          someOtherKey: ['someOtherValue']
         })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/someKey is not a valid property, params/someOtherKey is not a valid property, params should have required property 'resourceType', params should have required property 'parameter'"`
       );
     });
 
-    test("no params", () => {
+    test('no params', () => {
       expect(() =>
         parsePostParams({
-          resourceType: "Parameters",
-          parameter: [],
+          resourceType: 'Parameters',
+          parameter: []
         })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/parameter must be an array of parameters with names and types as specified on http://www.hl7.org/fhir/us/core/OperationDefinition-docref.html"`
       );
     });
 
-    test("missing patient", () => {
+    test('missing patient', () => {
       expect(() =>
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "start",
-              valueDate: "1990",
-            },
-          ],
+              name: 'start',
+              valueDate: '1990'
+            }
+          ]
         })
       ).toThrowErrorMatchingInlineSnapshot(`"patient parameter is required"`);
     });
 
-    test("duplicate param name", () => {
+    test('duplicate param name', () => {
       expect(() =>
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueId: "Patient/111",
+              name: 'patient',
+              valueId: 'Patient/111'
             },
             {
-              name: "patient",
-              valueId: "Patient/222",
-            },
-          ],
+              name: 'patient',
+              valueId: 'Patient/222'
+            }
+          ]
         })
       ).toThrowErrorMatchingInlineSnapshot(`"parameter names cannot repeat"`);
     });
 
-    test("bad param name", () => {
+    test('bad param name', () => {
       expect(() =>
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueId: "Patient/123",
+              name: 'patient',
+              valueId: 'Patient/123'
             },
             {
-              name: "SomeBadName",
-              valueDate: "a",
-            },
-          ],
+              name: 'SomeBadName',
+              valueDate: 'a'
+            }
+          ]
         })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/parameter must be an array of parameters with names and types as specified on http://www.hl7.org/fhir/us/core/OperationDefinition-docref.html"`
       );
     });
 
-    test("type mismatch", () => {
+    test('type mismatch', () => {
       expect(() =>
         parsePostParams({
-          resourceType: "Parameters",
+          resourceType: 'Parameters',
           parameter: [
             {
-              name: "patient",
-              valueDate: "2000",
-            },
-          ],
+              name: 'patient',
+              valueDate: '2000'
+            }
+          ]
         })
       ).toThrowErrorMatchingInlineSnapshot(
         `"params/parameter must be an array of parameters with names and types as specified on http://www.hl7.org/fhir/us/core/OperationDefinition-docref.html"`

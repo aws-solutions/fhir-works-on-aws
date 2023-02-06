@@ -10,27 +10,24 @@ import {
   Persistence,
   TypeOperation,
   SystemOperation,
-  getRequestInformation,
-} from "fhir-works-on-aws-interface";
-import flatten from "flat";
-import get from "lodash/get";
-import set from "lodash/set";
-import uuidv4 from "uuid/v4";
+  getRequestInformation
+} from 'fhir-works-on-aws-interface';
+import flatten from 'flat';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import uuidv4 from 'uuid/v4';
 
-import {
-  MAX_BUNDLE_ENTRY_URL_LENGTH,
-  MAX_REFERENCE_URL_LENGTH,
-} from "../../constants";
+import { MAX_BUNDLE_ENTRY_URL_LENGTH, MAX_REFERENCE_URL_LENGTH } from '../../constants';
 
 import {
   captureFullUrlParts,
   captureIdFromUrn,
   captureResourceIdRegExp,
-  captureResourceTypeRegExp,
-} from "../../regExpressions";
+  captureResourceTypeRegExp
+} from '../../regExpressions';
 
 export default class BundleParser {
-  static SELF_CONTAINED_REFERENCE = "SELF_CONTAINED_REFERENCE";
+  static SELF_CONTAINED_REFERENCE = 'SELF_CONTAINED_REFERENCE';
 
   /**
    * Parse a Bundle request to make sure the request is valid, and update the internal references
@@ -51,9 +48,9 @@ export default class BundleParser {
       const request: BatchReadWriteRequest = {
         operation,
         resource: entry.resource || entry.request.url, // GET requests, only contains the URL of the resource
-        fullUrl: entry.fullUrl || "",
+        fullUrl: entry.fullUrl || '',
         resourceType: this.getResourceType(entry, operation),
-        id: this.getResourceId(entry, operation),
+        id: this.getResourceId(entry, operation)
       };
 
       const references = this.getReferences(entry);
@@ -67,7 +64,7 @@ export default class BundleParser {
       requests,
       dataService,
       serverUrl,
-      bundleRequestJson.type === "batch"
+      bundleRequestJson.type === 'batch'
     );
   }
 
@@ -79,38 +76,21 @@ export default class BundleParser {
    * @throws Error
    */
   private static getOperation(entry: any): TypeOperation {
-    const { operation } = getRequestInformation(
-      entry.request.method,
-      entry.request.url
-    );
-    if (operation === "vread") {
-      throw new Error(
-        "We currently do not support V_READ entries in the Bundle"
-      );
+    const { operation } = getRequestInformation(entry.request.method, entry.request.url);
+    if (operation === 'vread') {
+      throw new Error('We currently do not support V_READ entries in the Bundle');
     }
-    if (operation === "search-system" || operation === "search-type") {
-      throw new Error(
-        "We currently do not support SEARCH entries in the Bundle"
-      );
+    if (operation === 'search-system' || operation === 'search-type') {
+      throw new Error('We currently do not support SEARCH entries in the Bundle');
     }
-    if (
-      operation === "history-system" ||
-      operation === "history-type" ||
-      operation === "history-instance"
-    ) {
-      throw new Error(
-        "We currently do not support HISTORY entries in the Bundle"
-      );
+    if (operation === 'history-system' || operation === 'history-type' || operation === 'history-instance') {
+      throw new Error('We currently do not support HISTORY entries in the Bundle');
     }
-    if (operation === "transaction" || operation === "batch") {
-      throw new Error(
-        "We currently do not support Bundle entries in the Bundle"
-      );
+    if (operation === 'transaction' || operation === 'batch') {
+      throw new Error('We currently do not support Bundle entries in the Bundle');
     }
-    if (operation === "patch") {
-      throw new Error(
-        "We currently do not support PATCH entries in the Bundle"
-      );
+    if (operation === 'patch') {
+      throw new Error('We currently do not support PATCH entries in the Bundle');
     }
     return operation;
   }
@@ -122,9 +102,7 @@ export default class BundleParser {
    * @param bundleRequestJson - the full Bundle json request as a JS object
    * @return Record with resourceType as the key, and an array of TypeOperations as the value
    */
-  public static getResourceTypeOperationsInBundle(
-    bundleRequestJson: any
-  ): Record<string, TypeOperation[]> {
+  public static getResourceTypeOperationsInBundle(bundleRequestJson: any): Record<string, TypeOperation[]> {
     const resourceTypeToOperations: Record<string, TypeOperation[]> = {};
     bundleRequestJson.entry.forEach((entry: any) => {
       const operation = this.getOperation(entry);
@@ -226,10 +204,7 @@ export default class BundleParser {
 
           let referenceIsFound = false;
           if (reference.referenceFullUrl === this.SELF_CONTAINED_REFERENCE) {
-            referenceIsFound = this.checkReferencesForContainedResources(
-              requestWithRef,
-              reference
-            );
+            referenceIsFound = this.checkReferencesForContainedResources(requestWithRef, reference);
           }
 
           // If reference refers to another resource in the bundle, change the id of the reference to match the
@@ -237,12 +212,9 @@ export default class BundleParser {
           if (reference.referenceFullUrl in fullUrlToRequest) {
             if (isBatchRequest) {
               // Batch requests are non-conformant if referencing another resource within the bundle
-              throw new Error(
-                `Batch does not allow references to resources within the bundle`
-              );
+              throw new Error(`Batch does not allow references to resources within the bundle`);
             }
-            const reqBeingReferenced: BatchReadWriteRequest =
-              fullUrlToRequest[reference.referenceFullUrl];
+            const reqBeingReferenced: BatchReadWriteRequest = fullUrlToRequest[reference.referenceFullUrl];
             const { id } = reqBeingReferenced;
 
             set(
@@ -257,16 +229,13 @@ export default class BundleParser {
           // If references in the Bundle entries does not match the fullUrl of any entries in the Bundle and the reference has the same
           // rootUrl as the server, we check if the server has that reference. If the server does not have the
           // reference we throw an error
-          if (
-            !referenceIsFound &&
-            [serverUrl, `${serverUrl}/`].includes(reference.rootUrl)
-          ) {
+          if (!referenceIsFound && [serverUrl, `${serverUrl}/`].includes(reference.rootUrl)) {
             let parsedVid = reference.vid;
             let vidWithHistory = false;
             try {
               if (parsedVid) {
-                if (reference.vid.startsWith("/_history")) {
-                  const parts = parsedVid.split("/");
+                if (reference.vid.startsWith('/_history')) {
+                  const parts = parsedVid.split('/');
                   parsedVid = parts[parts.length - 1];
                   vidWithHistory = true;
                 }
@@ -274,13 +243,13 @@ export default class BundleParser {
                 await dataService.vReadResource({
                   resourceType: reference.resourceType,
                   id: reference.id,
-                  vid: parsedVid,
+                  vid: parsedVid
                 });
               } else {
                 // eslint-disable-next-line no-await-in-loop
                 await dataService.readResource({
                   resourceType: reference.resourceType,
-                  id: reference.id,
+                  id: reference.id
                 });
               }
             } catch (e) {
@@ -295,10 +264,7 @@ export default class BundleParser {
             referenceIsFound = true;
           }
           if (!referenceIsFound) {
-            console.log(
-              "This resource has a reference to an external server",
-              requestWithRef.fullUrl
-            );
+            console.log('This resource has a reference to an external server', requestWithRef.fullUrl);
           }
         }
         allRequests.push(requestWithRef);
@@ -316,12 +282,11 @@ export default class BundleParser {
     });
 
     // @ts-ignore
-    const orderedAllRequests: BatchReadWriteRequest[] =
-      orderedBundleEntriesId.map((id) => {
-        return allRequests.find((request) => {
-          return id === request.id;
-        });
+    const orderedAllRequests: BatchReadWriteRequest[] = orderedBundleEntriesId.map((id) => {
+      return allRequests.find((request) => {
+        return id === request.id;
       });
+    });
 
     return Object.values(orderedAllRequests).map((request) => {
       const updatedRequest = request;
@@ -344,11 +309,9 @@ export default class BundleParser {
     // https://www.hl7.org/fhir/references.html#contained
     let isFound: boolean = false;
     if (requestWithRef.resource.contained) {
-      const containedIds = requestWithRef.resource.contained.map(
-        (containedResource: any) => {
-          return containedResource.id;
-        }
-      );
+      const containedIds = requestWithRef.resource.contained.map((containedResource: any) => {
+        return containedResource.id;
+      });
       isFound = containedIds.includes(reference.id);
     }
     if (!isFound) {
@@ -365,10 +328,8 @@ export default class BundleParser {
    * @return - any references that the entry contains
    */
   private static getReferences(entry: any): Reference[] {
-    const flattenResource: any = flatten(get(entry, "resource", {}));
-    const referencePaths: string[] = Object.keys(flattenResource).filter(
-      (key) => key.endsWith(".reference")
-    );
+    const flattenResource: any = flatten(get(entry, 'resource', {}));
+    const referencePaths: string[] = Object.keys(flattenResource).filter((key) => key.endsWith('.reference'));
     if (referencePaths.length === 0) {
       return [];
     }
@@ -382,13 +343,13 @@ export default class BundleParser {
       if (idFromUrnMatch) {
         const urlRoot = idFromUrnMatch[1];
         return {
-          resourceType: "",
+          resourceType: '',
           id: idFromUrnMatch[2],
-          vid: "",
+          vid: '',
           rootUrl: urlRoot,
           referenceFullUrl: `${urlRoot}${idFromUrnMatch[2]}`,
           referencePath,
-          referenceIsValidated: false,
+          referenceIsValidated: false
         };
       }
 
@@ -419,19 +380,19 @@ export default class BundleParser {
           rootUrl,
           referenceFullUrl: fullUrl,
           referencePath,
-          referenceIsValidated: false,
+          referenceIsValidated: false
         };
       }
       // https://www.hl7.org/fhir/references.html#contained
-      if (entryReference.substring(0, 1) === "#") {
+      if (entryReference.substring(0, 1) === '#') {
         return {
-          resourceType: "",
+          resourceType: '',
           id: entryReference.substring(1, entryReference.length),
-          vid: "",
-          rootUrl: "",
+          vid: '',
+          rootUrl: '',
           referenceFullUrl: this.SELF_CONTAINED_REFERENCE,
           referencePath,
-          referenceIsValidated: false,
+          referenceIsValidated: false
         };
       }
 
@@ -448,20 +409,17 @@ export default class BundleParser {
    * @param entry - Entry to parse
    * @param operation - Operation specified in the entry
    */
-  private static getResourceId(
-    entry: any,
-    operation: TypeOperation | SystemOperation
-  ) {
-    let id = "";
-    if (operation === "create") {
+  private static getResourceId(entry: any, operation: TypeOperation | SystemOperation) {
+    let id = '';
+    if (operation === 'create') {
       id = uuidv4();
-    } else if (operation === "update" || operation === "patch") {
+    } else if (operation === 'update' || operation === 'patch') {
       id = entry.resource.id;
     } else if (
-      operation === "read" ||
-      operation === "vread" ||
-      operation === "history-instance" ||
-      operation === "delete"
+      operation === 'read' ||
+      operation === 'vread' ||
+      operation === 'history-instance' ||
+      operation === 'delete'
     ) {
       const { url } = entry.request;
       const match = url.match(captureResourceIdRegExp);
@@ -482,31 +440,22 @@ export default class BundleParser {
    * @param entry - Entry to parse
    * @param operation - Operation speficied in the entry
    */
-  private static getResourceType(
-    entry: any,
-    operation: TypeOperation | SystemOperation
-  ) {
-    let resourceType = "";
-    if (
-      operation === "create" ||
-      operation === "update" ||
-      operation === "patch"
-    ) {
+  private static getResourceType(entry: any, operation: TypeOperation | SystemOperation) {
+    let resourceType = '';
+    if (operation === 'create' || operation === 'update' || operation === 'patch') {
       resourceType = entry.resource.resourceType;
     } else if (
-      operation === "read" ||
-      operation === "vread" ||
-      operation === "search-type" ||
-      operation === "history-type" ||
-      operation === "history-instance" ||
-      operation === "delete"
+      operation === 'read' ||
+      operation === 'vread' ||
+      operation === 'search-type' ||
+      operation === 'history-type' ||
+      operation === 'history-instance' ||
+      operation === 'delete'
     ) {
       const { url } = entry.request;
       const match = url.match(captureResourceTypeRegExp);
       if (!match) {
-        throw new Error(
-          `Bundle entry does not contain valid url format: ${url}`
-        );
+        throw new Error(`Bundle entry does not contain valid url format: ${url}`);
       }
       // IDs are in the form <resource-type>/id
       // exp. Patient/abcd1234

@@ -4,33 +4,27 @@
  *
  */
 
-import express from "express";
-import { FhirConfig, UnauthorizedError } from "fhir-works-on-aws-interface";
-import { get, uniq } from "lodash";
-import RouteHelper from "../routes/routeHelper";
+import express from 'express';
+import { FhirConfig, UnauthorizedError } from 'fhir-works-on-aws-interface';
+import { get, uniq } from 'lodash';
+import RouteHelper from '../routes/routeHelper';
 
 const tenantIdRegex = /^[a-zA-Z0-9\-_]{1,64}$/;
 
-const getTenantIdFromAudString = (
-  audClaim: string,
-  baseUrl: string
-): string | undefined => {
+const getTenantIdFromAudString = (audClaim: string, baseUrl: string): string | undefined => {
   if (audClaim.startsWith(`${baseUrl}/tenant/`)) {
     return audClaim.substring(`${baseUrl}/tenant/`.length);
   }
   return undefined;
 };
 
-const getTenantIdFromAudClaim = (
-  audClaim: any,
-  baseUrl: string
-): string | undefined => {
+const getTenantIdFromAudClaim = (audClaim: any, baseUrl: string): string | undefined => {
   if (!audClaim) {
     return undefined;
   }
   let audClaimAsArray: string[] = [];
 
-  if (typeof audClaim === "string") {
+  if (typeof audClaim === 'string') {
     audClaimAsArray = [audClaim];
   }
 
@@ -60,17 +54,11 @@ const getTenantIdFromAudClaim = (
  */
 export const setTenantIdMiddleware: (
   fhirConfig: FhirConfig
-) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => void = (fhirConfig: FhirConfig) => {
+) => (req: express.Request, res: express.Response, next: express.NextFunction) => void = (
+  fhirConfig: FhirConfig
+) => {
   return RouteHelper.wrapAsync(
-    async (
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ) => {
+    async (req: express.Request, res: express.Response, next: express.NextFunction) => {
       // Find tenantId from custom claim and aud claim
       const tenantIdFromCustomClaim = get(
         res.locals.userIdentity,
@@ -83,22 +71,18 @@ export const setTenantIdMiddleware: (
 
       // TenantId should exist in at least one claim, if exist in both claims, they should be equal
       if (
-        (tenantIdFromCustomClaim === undefined &&
-          tenantIdFromAudClaim === undefined) ||
-        (tenantIdFromCustomClaim &&
-          tenantIdFromAudClaim &&
-          tenantIdFromCustomClaim !== tenantIdFromAudClaim)
+        (tenantIdFromCustomClaim === undefined && tenantIdFromAudClaim === undefined) ||
+        (tenantIdFromCustomClaim && tenantIdFromAudClaim && tenantIdFromCustomClaim !== tenantIdFromAudClaim)
       ) {
-        throw new UnauthorizedError("Unauthorized");
+        throw new UnauthorizedError('Unauthorized');
       }
       const tenantId = tenantIdFromCustomClaim || tenantIdFromAudClaim;
 
       if (
         !tenantIdRegex.test(tenantId) ||
-        (req.params.tenantIdFromPath !== undefined &&
-          req.params.tenantIdFromPath !== tenantId)
+        (req.params.tenantIdFromPath !== undefined && req.params.tenantIdFromPath !== tenantId)
       ) {
-        throw new UnauthorizedError("Unauthorized");
+        throw new UnauthorizedError('Unauthorized');
       }
       res.locals.tenantId = tenantId;
       next();

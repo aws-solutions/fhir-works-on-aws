@@ -2366,15 +2366,7 @@
         },
         "use": {
           "description": "Identifies the purpose for this name.",
-          "enum": [
-            "usual",
-            "official",
-            "temp",
-            "nickname",
-            "anonymous",
-            "old",
-            "maiden"
-          ]
+          "enum": ["usual", "official", "temp", "nickname", "anonymous", "old", "maiden"]
         },
         "_use": {
           "description": "Extensions for use",
@@ -6063,13 +6055,7 @@
         },
         "status": {
           "description": "Indicates whether the account is presently used/usable or not.",
-          "enum": [
-            "active",
-            "inactive",
-            "entered-in-error",
-            "on-hold",
-            "unknown"
-          ]
+          "enum": ["active", "inactive", "entered-in-error", "on-hold", "unknown"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -9568,12 +9554,7 @@
         },
         "conditionalRead": {
           "description": "A code that indicates how the server supports conditional read.",
-          "enum": [
-            "not-supported",
-            "modified-since",
-            "not-match",
-            "full-support"
-          ]
+          "enum": ["not-supported", "modified-since", "not-match", "full-support"]
         },
         "_conditionalRead": {
           "description": "Extensions for conditionalRead",
@@ -10523,13 +10504,7 @@
         },
         "status": {
           "description": "Indicates the current state of the care team.",
-          "enum": [
-            "proposed",
-            "active",
-            "suspended",
-            "inactive",
-            "entered-in-error"
-          ]
+          "enum": ["proposed", "active", "suspended", "inactive", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -10920,15 +10895,7 @@
         },
         "status": {
           "description": "The current state of the ChargeItem.",
-          "enum": [
-            "planned",
-            "billable",
-            "not-billable",
-            "aborted",
-            "billed",
-            "entered-in-error",
-            "unknown"
-          ]
+          "enum": ["planned", "billable", "not-billable", "aborted", "billed", "entered-in-error", "unknown"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -11681,14 +11648,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "insurance",
-        "provider",
-        "patient",
-        "type",
-        "priority",
-        "resourceType"
-      ]
+      "required": ["insurance", "provider", "patient", "type", "priority", "resourceType"]
     },
     "Claim_Related": {
       "description": "A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.",
@@ -14016,13 +13976,7 @@
         },
         "content": {
           "description": "The extent of the content of the code system (the concepts and codes it defines) are represented in this resource instance.",
-          "enum": [
-            "not-present",
-            "example",
-            "fragment",
-            "complete",
-            "supplement"
-          ]
+          "enum": ["not-present", "example", "fragment", "complete", "supplement"]
         },
         "_content": {
           "description": "Extensions for content",
@@ -14174,15 +14128,7 @@
         },
         "type": {
           "description": "The type of the property value. Properties of type \"code\" contain a code defined by the code system (e.g. a reference to another defined concept).",
-          "enum": [
-            "code",
-            "Coding",
-            "string",
-            "integer",
-            "boolean",
-            "dateTime",
-            "decimal"
-          ]
+          "enum": ["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"]
         },
         "_type": {
           "description": "Extensions for type",
@@ -15043,13 +14989,7 @@
         },
         "code": {
           "description": "Which compartment this definition describes.",
-          "enum": [
-            "Patient",
-            "Encounter",
-            "RelatedPerson",
-            "Practitioner",
-            "Device"
-          ]
+          "enum": ["Patient", "Encounter", "RelatedPerson", "Practitioner", "Device"]
         },
         "_code": {
           "description": "Extensions for code",
@@ -16349,14 +16289,7 @@
         },
         "status": {
           "description": "Indicates the current state of this consent.",
-          "enum": [
-            "draft",
-            "proposed",
-            "active",
-            "rejected",
-            "inactive",
-            "entered-in-error"
-          ]
+          "enum": ["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -19715,14 +19648,7 @@
         },
         "entryType": {
           "description": "A coded entry to indicate how the data was entered.",
-          "enum": [
-            "barcode",
-            "rfid",
-            "manual",
-            "card",
-            "self-reported",
-            "unknown"
-          ]
+          "enum": ["barcode", "rfid", "manual", "card", "self-reported", "unknown"]
         },
         "_entryType": {
           "description": "Extensions for entryType",
@@ -20461,16 +20387,7 @@
         },
         "color": {
           "description": "Describes the color representation for the metric. This is often used to aid clinicians to track and identify parameter types by color. In practice, consider a Patient Monitor that has ECG/HR and Pleth for example; the parameters are displayed in different characteristic colors, such as HR-blue, BP-green, and PR and SpO2- magenta.",
-          "enum": [
-            "black",
-            "red",
-            "green",
-            "yellow",
-            "blue",
-            "magenta",
-            "cyan",
-            "white"
-          ]
+          "enum": ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
         },
         "_color": {
           "description": "Extensions for color",
@@ -20530,12 +20447,7 @@
         },
         "state": {
           "description": "Describes the state of the calibration.",
-          "enum": [
-            "not-calibrated",
-            "calibration-required",
-            "calibrated",
-            "unspecified"
-          ]
+          "enum": ["not-calibrated", "calibration-required", "calibrated", "unspecified"]
         },
         "_state": {
           "description": "Extensions for state",
@@ -20905,14 +20817,7 @@
         },
         "status": {
           "description": "A code representing the patient or other source\u0027s judgment about the state of the device used that this statement is about.  Generally this will be active or completed.",
-          "enum": [
-            "active",
-            "completed",
-            "entered-in-error",
-            "intended",
-            "stopped",
-            "on-hold"
-          ]
+          "enum": ["active", "completed", "entered-in-error", "intended", "stopped", "on-hold"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -21961,13 +21866,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "exposureAlternative",
-        "exposure",
-        "outcome",
-        "resourceType",
-        "population"
-      ]
+      "required": ["exposureAlternative", "exposure", "outcome", "resourceType", "population"]
     },
     "EffectEvidenceSynthesis_SampleSize": {
       "description": "The EffectEvidenceSynthesis resource describes the difference in an outcome between exposures states in a population where the effect estimate is derived from a combination of research studies.",
@@ -22808,14 +22707,7 @@
         },
         "status": {
           "description": "active | suspended | error | off | test.",
-          "enum": [
-            "active",
-            "suspended",
-            "error",
-            "off",
-            "entered-in-error",
-            "test"
-          ]
+          "enum": ["active", "suspended", "error", "off", "entered-in-error", "test"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -23170,15 +23062,7 @@
         },
         "status": {
           "description": "planned | waitlist | active | onhold | finished | cancelled.",
-          "enum": [
-            "planned",
-            "waitlist",
-            "active",
-            "onhold",
-            "finished",
-            "cancelled",
-            "entered-in-error"
-          ]
+          "enum": ["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -23269,15 +23153,7 @@
         },
         "status": {
           "description": "planned | waitlist | active | onhold | finished | cancelled.",
-          "enum": [
-            "planned",
-            "waitlist",
-            "active",
-            "onhold",
-            "finished",
-            "cancelled",
-            "entered-in-error"
-          ]
+          "enum": ["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -24224,14 +24100,7 @@
         },
         "groupMeasure": {
           "description": "Indicates how elements are aggregated within the study effective period.",
-          "enum": [
-            "mean",
-            "median",
-            "mean-of-mean",
-            "mean-of-median",
-            "median-of-mean",
-            "median-of-median"
-          ]
+          "enum": ["mean", "median", "mean-of-mean", "mean-of-median", "median-of-mean", "median-of-median"]
         },
         "_groupMeasure": {
           "description": "Extensions for groupMeasure",
@@ -25196,14 +25065,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "insurance",
-        "provider",
-        "patient",
-        "insurer",
-        "type",
-        "resourceType"
-      ]
+      "required": ["insurance", "provider", "patient", "insurer", "type", "resourceType"]
     },
     "ExplanationOfBenefit_Related": {
       "description": "This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.",
@@ -27822,14 +27684,7 @@
         },
         "type": {
           "description": "Identifies the broad classification of the kind of resources the group includes.",
-          "enum": [
-            "person",
-            "animal",
-            "practitioner",
-            "device",
-            "medication",
-            "substance"
-          ]
+          "enum": ["person", "animal", "practitioner", "device", "medication", "substance"]
         },
         "_type": {
           "description": "Extensions for type",
@@ -28083,14 +27938,7 @@
         },
         "status": {
           "description": "The status of the response. If the evaluation is completed successfully, the status will indicate success. However, in order to complete the evaluation, the engine may require more information. In this case, the status will be data-required, and the response will contain a description of the additional required information. If the evaluation completed successfully, but the engine determines that a potentially more accurate response could be provided if more data was available, the status will be data-requested, and the response will contain a description of the additional requested information.",
-          "enum": [
-            "success",
-            "data-requested",
-            "data-required",
-            "in-progress",
-            "failure",
-            "entered-in-error"
-          ]
+          "enum": ["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -28590,13 +28438,7 @@
         },
         "status": {
           "description": "The current state of the ImagingStudy.",
-          "enum": [
-            "registered",
-            "available",
-            "cancelled",
-            "entered-in-error",
-            "unknown"
-          ]
+          "enum": ["registered", "available", "cancelled", "entered-in-error", "unknown"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -29524,13 +29366,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "doseStatus",
-        "patient",
-        "targetDisease",
-        "immunizationEvent",
-        "resourceType"
-      ]
+      "required": ["doseStatus", "patient", "targetDisease", "immunizationEvent", "resourceType"]
     },
     "ImmunizationRecommendation": {
       "description": "A patient\u0027s point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.",
@@ -31611,13 +31447,7 @@
         },
         "status": {
           "description": "The current state of the Invoice.",
-          "enum": [
-            "draft",
-            "issued",
-            "balanced",
-            "cancelled",
-            "entered-in-error"
-          ]
+          "enum": ["draft", "issued", "balanced", "cancelled", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -31810,14 +31640,7 @@
         },
         "type": {
           "description": "This code identifies the type of the component.",
-          "enum": [
-            "base",
-            "surcharge",
-            "deduction",
-            "discount",
-            "tax",
-            "informational"
-          ]
+          "enum": ["base", "surcharge", "deduction", "discount", "tax", "informational"]
         },
         "_type": {
           "description": "Extensions for type",
@@ -37882,11 +37705,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "administrableDoseForm",
-        "routeOfAdministration",
-        "resourceType"
-      ]
+      "required": ["administrableDoseForm", "routeOfAdministration", "resourceType"]
     },
     "MedicinalProductPharmaceutical_Characteristics": {
       "description": "A pharmaceutical product described in terms of its composition and dose form.",
@@ -43766,14 +43585,7 @@
         },
         "selectionBehavior": {
           "description": "Defines the selection behavior for the action and its children.",
-          "enum": [
-            "any",
-            "all",
-            "all-or-none",
-            "exactly-one",
-            "at-most-one",
-            "one-or-more"
-          ]
+          "enum": ["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]
         },
         "_selectionBehavior": {
           "description": "Extensions for selectionBehavior",
@@ -45412,15 +45224,7 @@
         },
         "operator": {
           "description": "Specifies the criteria by which the question is enabled.",
-          "enum": [
-            "exists",
-            "\u003d",
-            "!\u003d",
-            "\u003e",
-            "\u003c",
-            "\u003e\u003d",
-            "\u003c\u003d"
-          ]
+          "enum": ["exists", "\u003d", "!\u003d", "\u003e", "\u003c", "\u003e\u003d", "\u003c\u003d"]
         },
         "_operator": {
           "description": "Extensions for operator",
@@ -45772,13 +45576,7 @@
         },
         "status": {
           "description": "The position of the questionnaire response within its overall lifecycle.",
-          "enum": [
-            "in-progress",
-            "completed",
-            "amended",
-            "entered-in-error",
-            "stopped"
-          ]
+          "enum": ["in-progress", "completed", "amended", "entered-in-error", "stopped"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -47351,14 +47149,7 @@
         },
         "studyEffectiveGroupMeasure": {
           "description": "Indicates how elements are aggregated within the study effective period.",
-          "enum": [
-            "mean",
-            "median",
-            "mean-of-mean",
-            "mean-of-median",
-            "median-of-mean",
-            "median-of-median"
-          ]
+          "enum": ["mean", "median", "mean-of-mean", "mean-of-median", "median-of-mean", "median-of-median"]
         },
         "_studyEffectiveGroupMeasure": {
           "description": "Extensions for studyEffectiveGroupMeasure",
@@ -47399,14 +47190,7 @@
         },
         "participantEffectiveGroupMeasure": {
           "description": "Indicates how elements are aggregated within the study effective period.",
-          "enum": [
-            "mean",
-            "median",
-            "mean-of-mean",
-            "mean-of-median",
-            "median-of-mean",
-            "median-of-median"
-          ]
+          "enum": ["mean", "median", "mean-of-mean", "mean-of-median", "median-of-mean", "median-of-median"]
         },
         "_participantEffectiveGroupMeasure": {
           "description": "Extensions for participantEffectiveGroupMeasure",
@@ -49461,13 +49245,7 @@
         },
         "status": {
           "description": "busy | free | busy-unavailable | busy-tentative | entered-in-error.",
-          "enum": [
-            "busy",
-            "free",
-            "busy-unavailable",
-            "busy-tentative",
-            "entered-in-error"
-          ]
+          "enum": ["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -49578,12 +49356,7 @@
         },
         "status": {
           "description": "The availability of the specimen.",
-          "enum": [
-            "available",
-            "unavailable",
-            "unsatisfactory",
-            "entered-in-error"
-          ]
+          "enum": ["available", "unavailable", "unsatisfactory", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -54522,15 +54295,7 @@
         },
         "status": {
           "description": "Status of the supply request.",
-          "enum": [
-            "draft",
-            "active",
-            "suspended",
-            "cancelled",
-            "completed",
-            "entered-in-error",
-            "unknown"
-          ]
+          "enum": ["draft", "active", "suspended", "cancelled", "completed", "entered-in-error", "unknown"]
         },
         "_status": {
           "description": "Extensions for status",
@@ -56376,13 +56141,7 @@
         },
         "status": {
           "description": "The current state of this test report.",
-          "enum": [
-            "completed",
-            "in-progress",
-            "waiting",
-            "stopped",
-            "entered-in-error"
-          ]
+          "enum": ["completed", "in-progress", "waiting", "stopped", "entered-in-error"]
         },
         "_status": {
           "description": "Extensions for status",

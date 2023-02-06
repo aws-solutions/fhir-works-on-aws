@@ -3,4 +3,4 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-export { generateServerlessRouter } from "./app";
+export { generateServerlessRouter } from './app';

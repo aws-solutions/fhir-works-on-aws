@@ -4,9 +4,9 @@
  *
  */
 
-import { Router } from "express";
-import ConfigHandler from "../configHandler";
-import { OperationDefinitionImplementation } from "./types";
+import { Router } from 'express';
+import ConfigHandler from '../configHandler';
+import { OperationDefinitionImplementation } from './types';
 
 export interface OperationCapability {
   operation: {
@@ -25,35 +25,23 @@ export class OperationDefinitionRegistry {
 
   private readonly routers: Router[];
 
-  constructor(
-    configHandler: ConfigHandler,
-    operations: OperationDefinitionImplementation[]
-  ) {
+  constructor(configHandler: ConfigHandler, operations: OperationDefinitionImplementation[]) {
     this.operations = operations;
 
     this.routers = operations.map((operation) => {
-      const resourceHandler = configHandler.getResourceHandler(
-        operation.targetResourceType
-      );
+      const resourceHandler = configHandler.getResourceHandler(operation.targetResourceType);
       if (!resourceHandler) {
         throw new Error(
           `Failed to initialize operation ${operation.canonicalUrl}. Is your FhirConfig correct?`
         );
       }
-      console.log(
-        `Enabling operation ${operation.canonicalUrl} at ${operation.path}`
-      );
+      console.log(`Enabling operation ${operation.canonicalUrl} at ${operation.path}`);
       return operation.buildRouter(resourceHandler);
     });
   }
 
-  getOperation(
-    method: string,
-    path: string
-  ): OperationDefinitionImplementation | undefined {
-    return this.operations.find(
-      (o) => o.path === path && o.httpVerbs.includes(method)
-    );
+  getOperation(method: string, path: string): OperationDefinitionImplementation | undefined {
+    return this.operations.find((o) => o.path === path && o.httpVerbs.includes(method));
   }
 
   getAllRouters(): Router[] {
@@ -66,13 +54,13 @@ export class OperationDefinitionRegistry {
     this.operations.forEach((operation) => {
       if (!capabilities[operation.targetResourceType]) {
         capabilities[operation.targetResourceType] = {
-          operation: [],
+          operation: []
         };
       }
       capabilities[operation.targetResourceType].operation.push({
         name: operation.name,
         definition: operation.canonicalUrl,
-        documentation: operation.documentation,
+        documentation: operation.documentation
       });
     });
 

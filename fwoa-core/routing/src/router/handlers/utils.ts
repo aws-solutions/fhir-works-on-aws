@@ -4,11 +4,10 @@
  *
  */
 
-import { createHash } from "crypto";
-import sanitizeHTML, { defaults } from "sanitize-html";
+import { createHash } from 'crypto';
+import sanitizeHTML, { defaults } from 'sanitize-html';
 
-export const hash = (o: any): any =>
-  createHash("sha256").update(JSON.stringify(o)).digest("hex");
+export const hash = (o: any): any => createHash('sha256').update(JSON.stringify(o)).digest('hex');
 
 export const validateXHTMLResource = (resource: any): boolean => {
   // we want to ignore the text field as it requires unencoded html as per the FHIR spec
@@ -17,8 +16,8 @@ export const validateXHTMLResource = (resource: any): boolean => {
   const validatedResource = sanitizeHTML(originalResource, {
     allowedAttributes: {
       ...defaults.allowedAttributes,
-      div: ["xmlns"],
-    },
+      div: ['xmlns']
+    }
   });
   return originalResource === validatedResource;
 };

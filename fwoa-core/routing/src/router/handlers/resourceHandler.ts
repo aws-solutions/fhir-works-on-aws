@@ -10,13 +10,13 @@ import {
   Authorization,
   KeyValueMap,
   Validator,
-  RequestContext,
-} from "fhir-works-on-aws-interface";
-import BundleGenerator from "../bundle/bundleGenerator";
-import OperationsGenerator from "../operationsGenerator";
-import { validateResource } from "../validation/validationUtilities";
-import CrudHandlerInterface from "./crudHandlerInterface";
-import { hash } from "./utils";
+  RequestContext
+} from 'fhir-works-on-aws-interface';
+import BundleGenerator from '../bundle/bundleGenerator';
+import OperationsGenerator from '../operationsGenerator';
+import { validateResource } from '../validation/validationUtilities';
+import CrudHandlerInterface from './crudHandlerInterface';
+import { hash } from './utils';
 
 export default class ResourceHandler implements CrudHandlerInterface {
   private validators: Validator[];
@@ -45,52 +45,31 @@ export default class ResourceHandler implements CrudHandlerInterface {
   }
 
   async create(resourceType: string, resource: any, tenantId?: string) {
-    await validateResource(this.validators, resourceType, resource, {
-      tenantId,
-      typeOperation: "create",
-    });
+    await validateResource(this.validators, resourceType, resource, { tenantId, typeOperation: 'create' });
 
     const createResponse = await this.dataService.createResource({
       resourceType,
       resource,
-      tenantId,
+      tenantId
     });
     return createResponse.resource;
   }
 
-  async update(
-    resourceType: string,
-    id: string,
-    resource: any,
-    tenantId?: string
-  ) {
-    await validateResource(this.validators, resourceType, resource, {
-      tenantId,
-      typeOperation: "update",
-    });
+  async update(resourceType: string, id: string, resource: any, tenantId?: string) {
+    await validateResource(this.validators, resourceType, resource, { tenantId, typeOperation: 'update' });
 
     const updateResponse = await this.dataService.updateResource({
       resourceType,
       id,
       resource,
-      tenantId,
+      tenantId
     });
     return updateResponse.resource;
   }
 
-  async patch(
-    resourceType: string,
-    id: string,
-    resource: any,
-    tenantId?: string
-  ) {
+  async patch(resourceType: string, id: string, resource: any, tenantId?: string) {
     // TODO Add request validation around patching
-    const patchResponse = await this.dataService.patchResource({
-      resourceType,
-      id,
-      resource,
-      tenantId,
-    });
+    const patchResponse = await this.dataService.patchResource({ resourceType, id, resource, tenantId });
 
     return patchResponse.resource;
   }
@@ -103,22 +82,19 @@ export default class ResourceHandler implements CrudHandlerInterface {
     serverUrl: string,
     tenantId?: string
   ) {
-    const allowedResourceTypes =
-      await this.authService.getAllowedResourceTypesForOperation({
-        operation: "search-type",
-        userIdentity,
-        requestContext,
-      });
+    const allowedResourceTypes = await this.authService.getAllowedResourceTypesForOperation({
+      operation: 'search-type',
+      userIdentity,
+      requestContext
+    });
 
-    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity(
-      {
-        userIdentity,
-        requestContext,
-        operation: "search-type",
-        resourceType,
-        fhirServiceBaseUrl: serverUrl,
-      }
-    );
+    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity({
+      userIdentity,
+      requestContext,
+      operation: 'search-type',
+      resourceType,
+      fhirServiceBaseUrl: serverUrl
+    });
 
     const searchResponse = await this.searchService.typeSearch({
       resourceType,
@@ -127,22 +103,22 @@ export default class ResourceHandler implements CrudHandlerInterface {
       allowedResourceTypes,
       searchFilters,
       tenantId,
-      sessionId: hash(userIdentity),
+      sessionId: hash(userIdentity)
     });
     const bundle = BundleGenerator.generateBundle(
       serverUrl,
       queryParams,
       searchResponse.result,
-      "searchset",
+      'searchset',
       resourceType
     );
 
     return this.authService.authorizeAndFilterReadResponse({
-      operation: "search-type",
+      operation: 'search-type',
       userIdentity,
       requestContext,
       readResponse: bundle,
-      fhirServiceBaseUrl: serverUrl,
+      fhirServiceBaseUrl: serverUrl
     });
   }
 
@@ -154,28 +130,26 @@ export default class ResourceHandler implements CrudHandlerInterface {
     serverUrl: string,
     tenantId?: string
   ) {
-    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity(
-      {
-        userIdentity,
-        requestContext,
-        operation: "history-type",
-        resourceType,
-        fhirServiceBaseUrl: serverUrl,
-      }
-    );
+    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity({
+      userIdentity,
+      requestContext,
+      operation: 'history-type',
+      resourceType,
+      fhirServiceBaseUrl: serverUrl
+    });
 
     const historyResponse = await this.historyService.typeHistory({
       resourceType,
       queryParams,
       baseUrl: serverUrl,
       searchFilters,
-      tenantId,
+      tenantId
     });
     return BundleGenerator.generateBundle(
       serverUrl,
       queryParams,
       historyResponse.result,
-      "history",
+      'history',
       resourceType
     );
   }
@@ -189,16 +163,14 @@ export default class ResourceHandler implements CrudHandlerInterface {
     serverUrl: string,
     tenantId?: string
   ) {
-    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity(
-      {
-        userIdentity,
-        requestContext,
-        operation: "history-instance",
-        resourceType,
-        id,
-        fhirServiceBaseUrl: serverUrl,
-      }
-    );
+    const searchFilters = await this.authService.getSearchFilterBasedOnIdentity({
+      userIdentity,
+      requestContext,
+      operation: 'history-instance',
+      resourceType,
+      id,
+      fhirServiceBaseUrl: serverUrl
+    });
 
     const historyResponse = await this.historyService.instanceHistory({
       id,
@@ -206,39 +178,25 @@ export default class ResourceHandler implements CrudHandlerInterface {
       queryParams,
       baseUrl: serverUrl,
       searchFilters,
-      tenantId,
+      tenantId
     });
     return BundleGenerator.generateBundle(
       serverUrl,
       queryParams,
       historyResponse.result,
-      "history",
+      'history',
       resourceType,
       id
     );
   }
 
   async read(resourceType: string, id: string, tenantId?: string) {
-    const getResponse = await this.dataService.readResource({
-      resourceType,
-      id,
-      tenantId,
-    });
+    const getResponse = await this.dataService.readResource({ resourceType, id, tenantId });
     return getResponse.resource;
   }
 
-  async vRead(
-    resourceType: string,
-    id: string,
-    vid: string,
-    tenantId?: string
-  ) {
-    const getResponse = await this.dataService.vReadResource({
-      resourceType,
-      id,
-      vid,
-      tenantId,
-    });
+  async vRead(resourceType: string, id: string, vid: string, tenantId?: string) {
+    const getResponse = await this.dataService.vReadResource({ resourceType, id, vid, tenantId });
     return getResponse.resource;
   }
 

@@ -4,10 +4,10 @@
  *
  */
 
-import ConfigHandler from "../configHandler";
-import { OperationDefinitionRegistry } from "./OperationDefinitionRegistry";
-import { OperationDefinitionImplementation } from "./types";
-import { USCoreDocRef } from "./USCoreDocRef";
+import ConfigHandler from '../configHandler';
+import { OperationDefinitionRegistry } from './OperationDefinitionRegistry';
+import { OperationDefinitionImplementation } from './types';
+import { USCoreDocRef } from './USCoreDocRef';
 
 export const initializeOperationRegistry = (configHandler: ConfigHandler) => {
   const { compiledImplementationGuides } = configHandler.config.profile;
@@ -19,9 +19,7 @@ export const initializeOperationRegistry = (configHandler: ConfigHandler) => {
   if (
     compiledImplementationGuides &&
     compiledImplementationGuides.find(
-      (x: any) =>
-        x.resourceType === "OperationDefinition" &&
-        x.url === USCoreDocRef.canonicalUrl
+      (x: any) => x.resourceType === 'OperationDefinition' && x.url === USCoreDocRef.canonicalUrl
     )
   ) {
     operations.push(USCoreDocRef);

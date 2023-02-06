@@ -5,9 +5,9 @@
  *
  */
 
-import express from "express";
-import { FhirConfig } from "fhir-works-on-aws-interface";
-import RouteHelper from "../routes/routeHelper";
+import express from 'express';
+import { FhirConfig } from 'fhir-works-on-aws-interface';
+import RouteHelper from '../routes/routeHelper';
 
 /**
  * Sets the value of `res.locals.serverUrl`
@@ -15,18 +15,12 @@ import RouteHelper from "../routes/routeHelper";
  */
 export const setServerUrlMiddleware: (
   fhirConfig: FhirConfig
-) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => void = (fhirConfig: FhirConfig) => {
+) => (req: express.Request, res: express.Response, next: express.NextFunction) => void = (
+  fhirConfig: FhirConfig
+) => {
   return RouteHelper.wrapAsync(
-    async (
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ) => {
-      if (req.baseUrl && req.baseUrl !== "/") {
+    async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+      if (req.baseUrl && req.baseUrl !== '/') {
         res.locals.serverUrl = fhirConfig.server.url + req.baseUrl;
       } else {
         res.locals.serverUrl = fhirConfig.server.url;

@@ -8,16 +8,13 @@ import {
   SystemOperation,
   SearchCapabilityStatement,
   SearchCapabilities,
-  Resource,
-} from "fhir-works-on-aws-interface";
+  Resource
+} from 'fhir-works-on-aws-interface';
 import {
   OperationCapability,
-  OperationCapabilityStatement,
-} from "../../operationDefinitions/OperationDefinitionRegistry";
-import {
-  ResourceCapabilityStatement,
-  ResourceCapability,
-} from "../../registry/ResourceCapabilityInterface";
+  OperationCapabilityStatement
+} from '../../operationDefinitions/OperationDefinitionRegistry';
+import { ResourceCapabilityStatement, ResourceCapability } from '../../registry/ResourceCapabilityInterface';
 
 function makeResourceObject(
   resourceType: string,
@@ -31,13 +28,13 @@ function makeResourceObject(
   const result: any = {
     type: resourceType,
     interaction: resourceOperations,
-    versioning: "versioned",
+    versioning: 'versioned',
     readHistory: false,
     updateCreate,
     conditionalCreate: false,
-    conditionalRead: "not-supported",
+    conditionalRead: 'not-supported',
     conditionalUpdate: false,
-    conditionalDelete: "not-supported",
+    conditionalDelete: 'not-supported'
   };
 
   if (hasTypeSearch && searchCapabilities !== undefined) {
@@ -76,7 +73,7 @@ export function makeGenericResources(
   const resources: any[] = [];
 
   const resourceOperations: any[] = makeOperation(operations);
-  const hasTypeSearch: boolean = operations.includes("search-type");
+  const hasTypeSearch: boolean = operations.includes('search-type');
 
   fhirResourcesToMake.forEach((resourceType: string) => {
     resources.push(
@@ -97,7 +94,7 @@ export function makeGenericResources(
 
 export async function makeResource(resourceType: string, resource: Resource) {
   const resourceOperations: any[] = makeOperation(resource.operations);
-  const hasTypeSearch: boolean = resource.operations.includes("search-type");
+  const hasTypeSearch: boolean = resource.operations.includes('search-type');
   const updateCreate = resource.persistence.updateCreateSupported;
   const capabilities: SearchCapabilityStatement = hasTypeSearch
     ? await resource.typeSearch.getCapabilities()

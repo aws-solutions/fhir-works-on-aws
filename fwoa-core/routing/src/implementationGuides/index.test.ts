@@ -3,51 +3,50 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { RoutingImplementationGuides } from "./index";
+import { RoutingImplementationGuides } from './index';
 
-describe("RoutingImplementationGuides", () => {
+describe('RoutingImplementationGuides', () => {
   describe(`compile`, () => {
     test(`valid input`, async () => {
       const compiled = new RoutingImplementationGuides().compile([
         {
-          resourceType: "StructureDefinition",
-          id: "CARIN-BB-Organization",
-          url: "http://hl7.org/fhir/us/carin/StructureDefinition/carin-bb-organization",
-          version: "0.1.0",
-          name: "CARINBBOrganization",
-          title: "CARIN Blue Button Organization Profile",
-          status: "active",
-          date: "2019-12-23T19:40:59+00:00",
-          publisher: "CARIN Alliance",
+          resourceType: 'StructureDefinition',
+          id: 'CARIN-BB-Organization',
+          url: 'http://hl7.org/fhir/us/carin/StructureDefinition/carin-bb-organization',
+          version: '0.1.0',
+          name: 'CARINBBOrganization',
+          title: 'CARIN Blue Button Organization Profile',
+          status: 'active',
+          date: '2019-12-23T19:40:59+00:00',
+          publisher: 'CARIN Alliance',
           description:
-            "This profile builds on the USCoreOrganization Profile. It includes additional constraints relevant for the use cases addressed by this IG.",
-          fhirVersion: "4.0.1",
-          kind: "resource",
+            'This profile builds on the USCoreOrganization Profile. It includes additional constraints relevant for the use cases addressed by this IG.',
+          fhirVersion: '4.0.1',
+          kind: 'resource',
           abstract: false,
-          type: "Organization",
-          baseDefinition:
-            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization",
-          derivation: "constraint",
+          type: 'Organization',
+          baseDefinition: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization',
+          derivation: 'constraint'
         },
         {
-          resourceType: "OperationDefinition",
-          id: "docref",
-          url: "http://hl7.org/fhir/us/core/OperationDefinition/docref",
-          version: "3.1.1",
-          name: "USCoreFetchDocumentReferences",
-          title: "US Core Fetch DocumentReferences",
-          status: "active",
-          kind: "operation",
-          date: "2019-05-21",
-          publisher: "US Core Project",
+          resourceType: 'OperationDefinition',
+          id: 'docref',
+          url: 'http://hl7.org/fhir/us/core/OperationDefinition/docref',
+          version: '3.1.1',
+          name: 'USCoreFetchDocumentReferences',
+          title: 'US Core Fetch DocumentReferences',
+          status: 'active',
+          kind: 'operation',
+          date: '2019-05-21',
+          publisher: 'US Core Project',
           description:
-            "This operation is used to return all the references to documents related to a patient...",
-          code: "docref",
+            'This operation is used to return all the references to documents related to a patient...',
+          code: 'docref',
           system: false,
           type: true,
           instance: false,
-          parameter: [],
-        },
+          parameter: []
+        }
       ]);
 
       await expect(compiled).resolves.toMatchInlineSnapshot(`
@@ -73,8 +72,8 @@ describe("RoutingImplementationGuides", () => {
     test(`invalid input`, async () => {
       const compiled = new RoutingImplementationGuides().compile([
         {
-          foo: "bar",
-        },
+          foo: 'bar'
+        }
       ]);
       await expect(compiled).rejects.toThrowError();
     });

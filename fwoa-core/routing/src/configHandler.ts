@@ -3,12 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  FhirConfig,
-  FhirVersion,
-  TypeOperation,
-} from "fhir-works-on-aws-interface";
-import ResourceHandler from "./router/handlers/resourceHandler";
+import { FhirConfig, FhirVersion, TypeOperation } from 'fhir-works-on-aws-interface';
+import ResourceHandler from './router/handlers/resourceHandler';
 
 export default class ConfigHandler {
   readonly config: FhirConfig;
@@ -27,10 +23,10 @@ export default class ConfigHandler {
   getExcludedResourceTypes(fhirVersion: FhirVersion): string[] {
     const { genericResource } = this.config.profile;
     if (genericResource && genericResource.fhirVersions.includes(fhirVersion)) {
-      if (fhirVersion === "3.0.1") {
+      if (fhirVersion === '3.0.1') {
         return genericResource.excludedSTU3Resources || [];
       }
-      if (fhirVersion === "4.0.1") {
+      if (fhirVersion === '4.0.1') {
         return genericResource.excludedR4Resources || [];
       }
     }
@@ -41,24 +37,15 @@ export default class ConfigHandler {
     const { resources } = this.config.profile;
     if (resources) {
       let specialResources = Object.keys(resources);
-      specialResources = specialResources.filter((r) =>
-        resources[r].fhirVersions.includes(fhirVersion)
-      );
+      specialResources = specialResources.filter((r) => resources[r].fhirVersions.includes(fhirVersion));
       return specialResources;
     }
     return [];
   }
 
-  getSpecialResourceOperations(
-    resourceType: string,
-    fhirVersion: FhirVersion
-  ): TypeOperation[] {
+  getSpecialResourceOperations(resourceType: string, fhirVersion: FhirVersion): TypeOperation[] {
     const { resources } = this.config.profile;
-    if (
-      resources &&
-      resources[resourceType] &&
-      resources[resourceType].fhirVersions.includes(fhirVersion)
-    ) {
+    if (resources && resources[resourceType] && resources[resourceType].fhirVersions.includes(fhirVersion)) {
       return resources[resourceType].operations;
     }
     return [];
@@ -72,10 +59,7 @@ export default class ConfigHandler {
     return [];
   }
 
-  getGenericResources(
-    fhirVersion: FhirVersion,
-    specialResources: string[] = []
-  ): string[] {
+  getGenericResources(fhirVersion: FhirVersion, specialResources: string[] = []): string[] {
     const excludedResources = this.getExcludedResourceTypes(fhirVersion);
     const resources = this.supportedGenericResources.filter(
       (r) => !excludedResources.includes(r) && !specialResources.includes(r)
@@ -92,8 +76,7 @@ export default class ConfigHandler {
    */
   getResourceHandler(resourceType: string): ResourceHandler | undefined {
     if (this.config.profile.resources?.[resourceType]) {
-      const { persistence, typeSearch, typeHistory } =
-        this.config.profile.resources[resourceType];
+      const { persistence, typeSearch, typeHistory } = this.config.profile.resources[resourceType];
       return new ResourceHandler(
         persistence,
         typeSearch,
@@ -105,13 +88,10 @@ export default class ConfigHandler {
     }
 
     if (
-      this.getGenericResources(this.config.profile.fhirVersion).includes(
-        resourceType
-      ) &&
+      this.getGenericResources(this.config.profile.fhirVersion).includes(resourceType) &&
       this.config.profile.genericResource
     ) {
-      const { persistence, typeSearch, typeHistory } =
-        this.config.profile.genericResource;
+      const { persistence, typeSearch, typeHistory } = this.config.profile.genericResource;
 
       return new ResourceHandler(
         persistence,

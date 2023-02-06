@@ -5,28 +5,28 @@
  *
  */
 
-import express from "express";
-import { FhirConfig } from "fhir-works-on-aws-interface";
-import { setServerUrlMiddleware } from "./setServerUrl";
+import express from 'express';
+import { FhirConfig } from 'fhir-works-on-aws-interface';
+import { setServerUrlMiddleware } from './setServerUrl';
 
 async function sleep(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-describe("createServerUrlMiddleware", () => {
-  test("root baseUrl", async () => {
+describe('createServerUrlMiddleware', () => {
+  test('root baseUrl', async () => {
     const fhirConfig = {
       server: {
-        url: "https://fwoa.com",
-      },
+        url: 'https://fwoa.com'
+      }
     } as FhirConfig;
 
     const serverUrlMiddleware = setServerUrlMiddleware(fhirConfig);
 
     const nextMock = jest.fn();
-    const req = { baseUrl: "/" } as unknown as express.Request;
+    const req = { baseUrl: '/' } as unknown as express.Request;
     const res = {
-      locals: {},
+      locals: {}
     } as unknown as express.Response;
 
     serverUrlMiddleware(req, res, nextMock);
@@ -34,22 +34,22 @@ describe("createServerUrlMiddleware", () => {
 
     expect(nextMock).toHaveBeenCalledTimes(1);
     expect(nextMock).toHaveBeenCalledWith();
-    expect(res.locals.serverUrl).toEqual("https://fwoa.com");
+    expect(res.locals.serverUrl).toEqual('https://fwoa.com');
   });
 
-  test("path base url", async () => {
+  test('path base url', async () => {
     const fhirConfig = {
       server: {
-        url: "https://fwoa.com",
-      },
+        url: 'https://fwoa.com'
+      }
     } as FhirConfig;
 
     const serverUrlMiddleware = setServerUrlMiddleware(fhirConfig);
 
     const nextMock = jest.fn();
-    const req = { baseUrl: "/some/path" } as unknown as express.Request;
+    const req = { baseUrl: '/some/path' } as unknown as express.Request;
     const res = {
-      locals: {},
+      locals: {}
     } as unknown as express.Response;
 
     serverUrlMiddleware(req, res, nextMock);
@@ -57,6 +57,6 @@ describe("createServerUrlMiddleware", () => {
 
     expect(nextMock).toHaveBeenCalledTimes(1);
     expect(nextMock).toHaveBeenCalledWith();
-    expect(res.locals.serverUrl).toEqual("https://fwoa.com/some/path");
+    expect(res.locals.serverUrl).toEqual('https://fwoa.com/some/path');
   });
 });

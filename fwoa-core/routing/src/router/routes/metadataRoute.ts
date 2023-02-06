@@ -3,12 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import express, { Router } from "express";
-import { CapabilityMode, FhirVersion } from "fhir-works-on-aws-interface";
-import ConfigHandler from "../../configHandler";
-import { OperationDefinitionRegistry } from "../../operationDefinitions/OperationDefinitionRegistry";
-import { FHIRStructureDefinitionRegistry } from "../../registry";
-import MetadataHandler from "../metadata/metadataHandler";
+import express, { Router } from 'express';
+import { CapabilityMode, FhirVersion } from 'fhir-works-on-aws-interface';
+import ConfigHandler from '../../configHandler';
+import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
+import { FHIRStructureDefinitionRegistry } from '../../registry';
+import MetadataHandler from '../metadata/metadataHandler';
 
 export default class MetadataRoute {
   readonly fhirVersion: FhirVersion;
@@ -37,17 +37,13 @@ export default class MetadataRoute {
 
   private init() {
     // READ
-    this.router.get(
-      "/",
-      async (req: express.Request, res: express.Response) => {
-        const mode: CapabilityMode =
-          (req.query.mode as CapabilityMode) || "full";
-        const response = await this.metadataHandler.capabilities({
-          fhirVersion: this.fhirVersion,
-          mode,
-        });
-        res.send(response.resource);
-      }
-    );
+    this.router.get('/', async (req: express.Request, res: express.Response) => {
+      const mode: CapabilityMode = (req.query.mode as CapabilityMode) || 'full';
+      const response = await this.metadataHandler.capabilities({
+        fhirVersion: this.fhirVersion,
+        mode
+      });
+      res.send(response.resource);
+    });
   }
 }

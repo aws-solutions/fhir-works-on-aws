@@ -14,15 +14,15 @@ import {
   KeyValueMap,
   isUnauthorizedError,
   Validator,
-  RequestContext,
-} from "fhir-works-on-aws-interface";
-import createError from "http-errors";
-import isEmpty from "lodash/isEmpty";
-import { MAX_BUNDLE_ENTRIES } from "../../constants";
-import { validateResource } from "../validation/validationUtilities";
-import BundleGenerator from "./bundleGenerator";
-import BundleHandlerInterface from "./bundleHandlerInterface";
-import BundleParser from "./bundleParser";
+  RequestContext
+} from 'fhir-works-on-aws-interface';
+import createError from 'http-errors';
+import isEmpty from 'lodash/isEmpty';
+import { MAX_BUNDLE_ENTRIES } from '../../constants';
+import { validateResource } from '../validation/validationUtilities';
+import BundleGenerator from './bundleGenerator';
+import BundleHandlerInterface from './bundleHandlerInterface';
+import BundleParser from './bundleParser';
 
 export default class BundleHandler implements BundleHandlerInterface {
   private bundleService: Bundle;
@@ -75,11 +75,7 @@ export default class BundleHandler implements BundleHandlerInterface {
       tenantId
     );
 
-    let bundleServiceResponse = await this.bundleService.batch({
-      requests,
-      startTime,
-      tenantId,
-    });
+    let bundleServiceResponse = await this.bundleService.batch({ requests, startTime, tenantId });
     bundleServiceResponse = await this.filterBundleResult(
       bundleServiceResponse,
       requests,
@@ -88,21 +84,14 @@ export default class BundleHandler implements BundleHandlerInterface {
       serverUrl
     );
 
-    return BundleGenerator.generateBatchBundle(
-      this.serverUrl,
-      bundleServiceResponse.batchReadWriteResponses
-    );
+    return BundleGenerator.generateBatchBundle(this.serverUrl, bundleServiceResponse.batchReadWriteResponses);
   }
 
   resourcesInBundleThatServerDoesNotSupport(
     bundleRequestJson: any
   ): { resource: string; operations: TypeOperation[] }[] {
-    const bundleEntriesNotSupported: {
-      resource: string;
-      operations: TypeOperation[];
-    }[] = [];
-    const resourceTypeToOperations =
-      BundleParser.getResourceTypeOperationsInBundle(bundleRequestJson);
+    const bundleEntriesNotSupported: { resource: string; operations: TypeOperation[] }[] = [];
+    const resourceTypeToOperations = BundleParser.getResourceTypeOperationsInBundle(bundleRequestJson);
     if (isEmpty(resourceTypeToOperations)) {
       return [];
     }
@@ -111,24 +100,22 @@ export default class BundleHandler implements BundleHandlerInterface {
     // bundleParser
     for (let i = 0; i < Object.keys(resourceTypeToOperations).length; i += 1) {
       const bundleResourceType = Object.keys(resourceTypeToOperations)[i];
-      const bundleResourceOperations =
-        resourceTypeToOperations[bundleResourceType];
+      const bundleResourceOperations = resourceTypeToOperations[bundleResourceType];
       // 'Generic resource' includes bundle resourceType and Operation
       if (this.supportedGenericResources.includes(bundleResourceType)) {
-        const operationsInBundleThatServerDoesNotSupport =
-          bundleResourceOperations.filter((operation) => {
-            return !this.genericResource?.operations.includes(operation);
-          });
+        const operationsInBundleThatServerDoesNotSupport = bundleResourceOperations.filter((operation) => {
+          return !this.genericResource?.operations.includes(operation);
+        });
         if (operationsInBundleThatServerDoesNotSupport.length > 0) {
           bundleEntriesNotSupported.push({
             resource: bundleResourceType,
-            operations: operationsInBundleThatServerDoesNotSupport,
+            operations: operationsInBundleThatServerDoesNotSupport
           });
         }
       } else {
         bundleEntriesNotSupported.push({
           resource: bundleResourceType,
-          operations: bundleResourceOperations,
+          operations: bundleResourceOperations
         });
       }
     }
@@ -158,11 +145,7 @@ export default class BundleHandler implements BundleHandlerInterface {
       );
     }
 
-    let bundleServiceResponse = await this.bundleService.transaction({
-      requests,
-      startTime,
-      tenantId,
-    });
+    let bundleServiceResponse = await this.bundleService.transaction({ requests, startTime, tenantId });
     bundleServiceResponse = await this.filterBundleResult(
       bundleServiceResponse,
       requests,
@@ -184,24 +167,19 @@ export default class BundleHandler implements BundleHandlerInterface {
     serverUrl: string,
     tenantId?: string
   ) {
-    await validateResource(this.validators, "Bundle", bundleRequestJson, {
-      tenantId,
-    });
+    await validateResource(this.validators, 'Bundle', bundleRequestJson, { tenantId });
 
     let requests: BatchReadWriteRequest[];
     try {
       // TODO use the correct persistence layer
-      const resourcesServerDoesNotSupport =
-        this.resourcesInBundleThatServerDoesNotSupport(bundleRequestJson);
+      const resourcesServerDoesNotSupport = this.resourcesInBundleThatServerDoesNotSupport(bundleRequestJson);
       if (resourcesServerDoesNotSupport.length > 0) {
-        let message = "";
+        let message = '';
         resourcesServerDoesNotSupport.forEach(({ resource, operations }) => {
           message += `${resource}: ${operations},`;
         });
         message = message.substring(0, message.length - 1);
-        throw new Error(
-          `Server does not support these resource and operations: {${message}}`
-        );
+        throw new Error(`Server does not support these resource and operations: {${message}}`);
       }
       if (this.genericResource) {
         requests = await BundleParser.parseResource(
@@ -210,7 +188,7 @@ export default class BundleHandler implements BundleHandlerInterface {
           this.serverUrl
         );
       } else {
-        throw new Error("Cannot process bundle");
+        throw new Error('Cannot process bundle');
       }
     } catch (e) {
       throw new createError.BadRequest((e as any).message);
@@ -220,7 +198,7 @@ export default class BundleHandler implements BundleHandlerInterface {
       userIdentity,
       requestContext,
       requests,
-      fhirServiceBaseUrl: serverUrl,
+      fhirServiceBaseUrl: serverUrl
     });
 
     return requests;
@@ -234,25 +212,23 @@ export default class BundleHandler implements BundleHandlerInterface {
     serverUrl: string
   ) {
     if (!bundleServiceResponse.success) {
-      if (bundleServiceResponse.errorType === "SYSTEM_ERROR") {
-        throw new createError.InternalServerError(
-          bundleServiceResponse.message
-        );
-      } else if (bundleServiceResponse.errorType === "USER_ERROR") {
+      if (bundleServiceResponse.errorType === 'SYSTEM_ERROR') {
+        throw new createError.InternalServerError(bundleServiceResponse.message);
+      } else if (bundleServiceResponse.errorType === 'USER_ERROR') {
         throw new createError.BadRequest(bundleServiceResponse.message);
-      } else if (bundleServiceResponse.errorType === "CONFLICT_ERROR") {
+      } else if (bundleServiceResponse.errorType === 'CONFLICT_ERROR') {
         throw new createError.Conflict(bundleServiceResponse.message);
       }
     }
 
     const readOperations = [
-      "read",
-      "vread",
-      "history-type",
-      "history-instance",
-      "history-system",
-      "search-type",
-      "search-system",
+      'read',
+      'vread',
+      'history-type',
+      'history-instance',
+      'history-system',
+      'search-type',
+      'search-system'
     ];
 
     const authAndFilterReadPromises = requests.map((request, index) => {
@@ -261,9 +237,8 @@ export default class BundleHandler implements BundleHandlerInterface {
           operation: request.operation,
           userIdentity,
           requestContext,
-          readResponse:
-            bundleServiceResponse.batchReadWriteResponses[index].resource,
-          fhirServiceBaseUrl: serverUrl,
+          readResponse: bundleServiceResponse.batchReadWriteResponses[index].resource,
+          fhirServiceBaseUrl: serverUrl
         });
       }
       return Promise.resolve();
@@ -272,11 +247,9 @@ export default class BundleHandler implements BundleHandlerInterface {
     const readResponses = await Promise.allSettled(authAndFilterReadPromises);
 
     requests.forEach((request, index) => {
-      const entryResponse =
-        bundleServiceResponse.batchReadWriteResponses[index];
+      const entryResponse = bundleServiceResponse.batchReadWriteResponses[index];
       if (readOperations.includes(request.operation)) {
-        const readResponse: { status: string; reason?: any; value?: any } =
-          readResponses[index];
+        const readResponse: { status: string; reason?: any; value?: any } = readResponses[index];
         if (readResponse.reason && isUnauthorizedError(readResponse.reason)) {
           entryResponse.resource = {};
         } else {

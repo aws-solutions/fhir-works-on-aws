@@ -5,20 +5,20 @@
  *
  */
 
-import express from "express";
-import { setContentTypeMiddleware } from "./setContentType";
+import express from 'express';
+import { setContentTypeMiddleware } from './setContentType';
 
 async function sleep(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-describe("setContentTypeMiddleware", () => {
-  test("Request should return application/fhir+json by default", async () => {
+describe('setContentTypeMiddleware', () => {
+  test('Request should return application/fhir+json by default', async () => {
     const nextMock = jest.fn();
     const req = { headers: {} } as unknown as express.Request;
     const contentType = jest.fn();
     const res = {
-      contentType,
+      contentType
     } as unknown as express.Response;
 
     setContentTypeMiddleware(req, res, nextMock);
@@ -26,19 +26,19 @@ describe("setContentTypeMiddleware", () => {
 
     expect(nextMock).toHaveBeenCalledTimes(1);
     expect(nextMock).toHaveBeenCalledWith();
-    expect(contentType).toHaveBeenCalledWith("application/fhir+json");
+    expect(contentType).toHaveBeenCalledWith('application/fhir+json');
   });
 
-  test("request should return application/json if user request application/json in accept header", async () => {
+  test('request should return application/json if user request application/json in accept header', async () => {
     const nextMock = jest.fn();
     const req = {
       headers: {
-        accept: "application/json",
-      },
+        accept: 'application/json'
+      }
     } as unknown as express.Request;
     const contentType = jest.fn();
     const res = {
-      contentType,
+      contentType
     } as unknown as express.Response;
 
     setContentTypeMiddleware(req, res, nextMock);
@@ -46,6 +46,6 @@ describe("setContentTypeMiddleware", () => {
 
     expect(nextMock).toHaveBeenCalledTimes(1);
     expect(nextMock).toHaveBeenCalledWith();
-    expect(contentType).toHaveBeenCalledWith("application/json");
+    expect(contentType).toHaveBeenCalledWith('application/json');
   });
 });

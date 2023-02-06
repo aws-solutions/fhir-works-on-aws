@@ -3,8 +3,8 @@ import {
   SearchResponse,
   GlobalSearchRequest,
   TypeSearchRequest,
-  SearchCapabilityStatement,
-} from "fhir-works-on-aws-interface";
+  SearchCapabilityStatement
+} from 'fhir-works-on-aws-interface';
 
 const ElasticSearchService: Search = class {
   /*
@@ -16,19 +16,19 @@ const ElasticSearchService: Search = class {
       success: true,
       result: {
         numberOfResults: 0,
-        message: "",
-        entries: [],
-      },
+        message: '',
+        entries: []
+      }
     };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static globalSearch(request: GlobalSearchRequest): Promise<SearchResponse> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   static async getCapabilities(): Promise<SearchCapabilityStatement> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   static validateSubscriptionSearchCriteria(searchCriteria: string): void {

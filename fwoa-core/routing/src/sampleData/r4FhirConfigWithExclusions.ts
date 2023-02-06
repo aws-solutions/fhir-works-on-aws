@@ -6,8 +6,8 @@ import {
   History,
   Persistence,
   Search,
-  stubs as fwoaStubs,
-} from "fhir-works-on-aws-interface";
+  stubs as fwoaStubs
+} from 'fhir-works-on-aws-interface';
 
 const config = (stubs: {
   bundle: Bundle;
@@ -20,49 +20,49 @@ const config = (stubs: {
   configVersion: 1,
   validators: [],
   productInfo: {
-    orgName: "Organization Name",
+    orgName: 'Organization Name'
   },
   auth: {
     strategy: {
       oauthPolicy: {
-        authorizationEndpoint: "http://example.com/authorization",
-        tokenEndpoint: "http://example.com/oauth2/token",
+        authorizationEndpoint: 'http://example.com/authorization',
+        tokenEndpoint: 'http://example.com/oauth2/token'
       },
-      service: "SMART-on-FHIR",
+      service: 'SMART-on-FHIR'
     },
-    authorization: stubs.passThroughAuthz,
+    authorization: stubs.passThroughAuthz
   },
   server: {
-    url: "http://example.com",
+    url: 'http://example.com'
   },
   //
   // Add any profiles you want to support.  Each profile can support multiple fhirVersions
   // This 'resource*' defaults to ALL resources not called out in excludedResources or resources array
   //
   profile: {
-    fhirVersion: "4.0.1",
-    systemOperations: ["search-system"],
+    fhirVersion: '4.0.1',
+    systemOperations: ['search-system'],
     bundle: stubs.bundle,
     systemSearch: stubs.search,
     systemHistory: stubs.history,
     genericResource: {
-      operations: ["read", "history-instance", "history-type"],
-      excludedR4Resources: ["Organization", "Account", "Patient"],
-      fhirVersions: ["4.0.1"],
+      operations: ['read', 'history-instance', 'history-type'],
+      excludedR4Resources: ['Organization', 'Account', 'Patient'],
+      fhirVersions: ['4.0.1'],
       persistence: stubs.persistence,
       typeSearch: stubs.search,
-      typeHistory: stubs.history,
+      typeHistory: stubs.history
     },
     resources: {
       AllergyIntolerance: {
-        operations: ["create", "update"],
-        fhirVersions: ["4.0.1"],
+        operations: ['create', 'update'],
+        fhirVersions: ['4.0.1'],
         persistence: stubs.persistence,
         typeSearch: stubs.search,
-        typeHistory: stubs.history,
-      },
-    },
-  },
+        typeHistory: stubs.history
+      }
+    }
+  }
 });
 
 const configFn = (overrideStubs?: any) => {
