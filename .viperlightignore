@@ -15,6 +15,7 @@ fwoa-core/persistence-ddb/THIRD-PARTY
 fwoa-core/routing/THIRD-PARTY
 fwoa-core/authz-smart/THIRD-PARTY
 fwoa-core/authz-rbac/THIRD-PARTY
+solutions/smart-deployment/THIRD-PARTY
 
 # NOTICE files
 .*/NOTICE
@@ -22,6 +23,8 @@ fwoa-core/authz-rbac/THIRD-PARTY
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
+solutions/smart-deployment/README.md:67
+solutions/smart-deployment/README.md:111
 
 # Team Email
 .github/temp-workflows/release-pr.yml:28
@@ -31,9 +34,14 @@ fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
 fwoa-core/persistence-ddb/package.json:13
 fwoa-core/authz-rbac/package.json:13
+solutions/smart-deployment/INSTALL.md
 
-# Dummy Email for Testing
+# Dummy Email
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
-
+solutions/smart-deployment/scripts/install.sh:338
+solutions/smart-deployment/scripts/win_install.ps1:318
+solutions/smart-deployment/src/integration-tests/search.test.ts:378
+solutions/smart-deployment/src/integration-tests/search.test.ts:408
+solutions/smart-deployment/src/integration-tests/search.test.ts:424
