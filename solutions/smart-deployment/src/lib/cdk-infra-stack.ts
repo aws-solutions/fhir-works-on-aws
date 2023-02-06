@@ -563,7 +563,7 @@ export default class FhirWorksStack extends Stack {
       role: bulkExportResources.uploadGlueScriptsLambdaRole,
       description: 'Upload glue scripts to s3',
       handler: 'handler',
-      entry: path.join(__dirname, '../bulkExport/uploadGlueScriptsToS3.ts'),
+      entry: path.join(__dirname, '../../bulkExport/uploadGlueScriptsToS3.ts'),
       deadLetterQueue: uploadGlueScriptsLambdaFunctionDLQ,
       bundling: {
         ...defaultLambdaBundlingOptions,
