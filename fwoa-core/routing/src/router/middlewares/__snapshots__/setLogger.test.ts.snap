@@ -8,11 +8,11 @@ exports[`createServerUrlMiddleware test logger designed for encryption case 1`] 
         "how": Object {
           "apiGateway": Object {
             "context": Object {
-              "awsRequestId": "asdasdsa",
+              "awsRequestId": "11111111-1111-1111-1111-111111111111",
             },
           },
           "userIdentity": Object {
-            "jti": "AT.ASDFGHJKL",
+            "jti": "AT.FakeJTIValue",
           },
         },
         "logMetadata": Object {
@@ -29,36 +29,38 @@ exports[`createServerUrlMiddleware test logger designed for encryption case 1`] 
           "encryptedPayLoad": Object {
             "responseOther": Object {
               "userIdentity": Object {
-                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212",
+                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
               },
             },
             "what": Object {
               "apiGateway": Object {
                 "event": Object {
                   "pathParameters": Object {
-                    "proxy": "asfdsfdsf",
+                    "proxy": "patient/00000000-0000-0000-0000-000000000000",
                   },
-                  "queryStringParameters": "fadfdas",
+                  "queryStringParameters": Object {
+                    "name": "FakeName",
+                  },
                 },
               },
               "requestContext": Object {
-                "path": "asdas",
+                "path": "/dev/Patient",
               },
             },
             "where": Object {
               "requestContext": Object {
-                "sourceIp": "asdad",
+                "sourceIp": "0.0.0.0",
               },
             },
             "who": Object {
               "userIdentity": Object {
-                "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876",
+                "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
                 "sub": "example@amazon.com",
               },
             },
           },
-          "timestamp": "2023-02-03T21:55:21.399Z",
-          "uid": "bc4489ad-eeb8-4952-ba17-dd5f595536bf",
+          "timestamp": "2023-02-06T19:01:35.171Z",
+          "uid": "d7b334cc-9f4a-4b08-b8d7-e861c7987c69",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -67,36 +69,32 @@ exports[`createServerUrlMiddleware test logger designed for encryption case 1`] 
         },
         "responseOther": Object {
           "userIdentity": Object {
-            "aud": 167337144,
+            "aud": "FakeAudience",
             "auth-time": "2023-01-10T21:40:22.000Z",
             "exp": "1975-04-21T19:04:04.000Z",
             "iat": "1975-04-21T18:47:24.000Z",
-            "iss": 167337044,
-            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212",
+            "iss": "FakeIssuer",
+            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
             "scp": Array [
-              "fhirUser",
-              "openid",
-              "patient/*.*",
-              "launch/patient",
-              "profile",
-              "user/*.*",
-              "patient_selection",
+              "FakeScope1",
+              "FakeScope2",
+              "FakeScope3",
             ],
           },
         },
         "what": Object {
           "apiGateway": Object {
             "event": Object {
-              "httpMethod": "asdas",
+              "httpMethod": "GET",
               "pathParameters": Object {
-                "proxy": "asfdsfdsf",
+                "proxy": "patient/encrypted",
               },
               "queryStringParameters": "encrypted",
             },
           },
           "requestContext": Object {
-            "httpMethod": "asdasda",
-            "path": "asdas",
+            "httpMethod": "GET",
+            "path": "/dev/Patient",
           },
           "userIdentity": Object {
             "scopes": undefined,
@@ -112,11 +110,11 @@ exports[`createServerUrlMiddleware test logger designed for encryption case 1`] 
           },
         },
         "where": Object {
-          "User-agent": "PostmanRuntime/7.30.0",
+          "User-agent": "FakeUserAgent",
           "apiGateway": Object {
             "Context": Object {
-              "logGroupName": "asd",
-              "logStreamName": "asdsa",
+              "logGroupName": "FakeLogGroupName",
+              "logStreamName": "FakeLogStreamName",
             },
           },
           "domainName": undefined,
@@ -125,12 +123,12 @@ exports[`createServerUrlMiddleware test logger designed for encryption case 1`] 
           },
         },
         "who": Object {
-          "apiKeyId": "asdasd",
+          "apiKeyId": "FakeApiKeyId",
           "userIdentity": Object {
             "cognito:groups": undefined,
             "cognito:username": undefined,
             "custom:tenantId": undefined,
-            "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876",
+            "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
             "sub": "encrypted",
           },
         },

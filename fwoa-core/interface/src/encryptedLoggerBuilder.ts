@@ -47,6 +47,7 @@ class SimpleEncryptConsole extends Transport {
 }
 
 export function makeEncryptLogger(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   metadata?: any,
   logLevel: string | undefined = process.env.LOG_LEVEL
 ): Logger {

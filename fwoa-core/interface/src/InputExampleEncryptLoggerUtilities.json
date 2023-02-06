@@ -1,6 +1,6 @@
 {
   "logMetadata": {
-    "uid": "7833bf63-6a8f-44a2-84ec-94e2b0a7e74b",
+    "uid": "11111111-1111-1111-1111-111111111111",
     "timestamp": "2023-02-01T17:23:54.905Z",
     "category": "Audit Event",
     "EncryptedFields": [
@@ -15,15 +15,15 @@
     "EncryptedPayLoad": {
       "who": {
         "userIdentity": {
-          "sub": "jqluo+josephBell@amazon.com",
-          "fhirUser": "https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Practitioner/7cbe5ea4-826d-4de6-86d9-18644b1cc5b7"
+          "sub": "ExampleEmail@email.com",
+          "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000"
         }
       },
       "what": {
         "apiGateway": {
           "event": {
             "queryStringParameters": {
-              "name": "Sherlock"
+              "name": "FakeName"
             },
             "pathParameters": {
               "proxy": "Patient"
@@ -36,12 +36,12 @@
       },
       "where": {
         "requestContext": {
-          "sourceIp": "72.21.198.66"
+          "sourceIp": "0.0.0.0"
         }
       },
       "responseOther": {
         "userIdentity": {
-          "launch-response-patient": "https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Patient/cf52937f-a28f-437e-bfac-2228f5db6801"
+          "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/00000000-0000-0000-0000-000000000000"
         }
       }
     }
@@ -49,22 +49,14 @@
   "who": {
     "userIdentity": {
       "sub": "encrypted",
-      "fhirUser": "https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted"
+      "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted"
     },
     "apiKeyId": "x1siojg81g"
   },
   "what": {
     "userIdentity": {
-      "scopes": [
-        "fhirUser",
-        "patient/*.*",
-        "launch/patient",
-        "user/*.*",
-        "patient_selection",
-        "openid",
-        "profile"
-      ],
-      "usableScopes": ["patient/*.*", "user/*.*"]
+      "scopes": ["FakeScope1", "FakeScope2", "FakeScope3"],
+      "usableScopes": ["FakeScope2", "FakeScope3"]
     },
     "requestContext": {
       "path": "/dev/Patient",
@@ -88,12 +80,12 @@
   "where": {
     "apiGateway": {
       "Context": {
-        "logGroupName": "/aws/lambda/smart-fhir-service-dev-fhirServer7884A170-CrRTKgUTr9Ll",
-        "logStreamName": "2023/02/01/[$LATEST]e09e3004675841dabb289cdda40be1e8"
+        "logGroupName": "/aws/lambda/smart-fhir-service-dev-fhirServer00000000-AAAAAAAAAAAA",
+        "logStreamName": "2023/02/01/[$LATEST]FakeLogStreamId"
       }
     },
-    "domainName": "ygvm00kbzl.execute-api.us-east-1.amazonaws.com",
-    "User-agent": "PostmanRuntime/7.30.0",
+    "domainName": "example.execute-api.us-east-1.amazonaws.com",
+    "User-agent": "FakeUserAgent",
     "requestContext": {
       "sourceIp": "encrypted"
     }
@@ -101,11 +93,11 @@
   "how": {
     "apiGateway": {
       "context": {
-        "awsRequestId": "69b05b69-7ea6-46e1-ad4c-54ba8c4bcdf3"
+        "awsRequestId": "11111111-1111-1111-1111-111111111111"
       }
     },
     "userIdentity": {
-      "jti": "AT.sdswjJBx7PVXWbWs1sC3G2GrNqj1Yx3qlFtnj-Xn0b4"
+      "jti": "AT.FakeJtiValue"
     }
   },
   "requestOther": {
@@ -115,18 +107,10 @@
   },
   "responseOther": {
     "userIdentity": {
-      "launch-response-patient": "https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted",
-      "iss": "https://dev-44142793.okta.com/oauth2/aus7j8ulrovP5Ppzb5d7",
-      "aud": "https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev",
-      "scp": [
-        "fhirUser",
-        "patient/*.*",
-        "launch/patient",
-        "user/*.*",
-        "patient_selection",
-        "openid",
-        "profile"
-      ],
+      "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted",
+      "iss": "https://dev-00000000.okta.com/oauth2/FakeIssuer",
+      "aud": "https://example.execute-api.us-east-1.amazonaws.com/dev",
+      "scp": ["FakeScope1", "FakeScope2", "FakeScope3"],
       "iat": "2023-02-01T17:14:28.000Z",
       "exp": "2023-02-01T18:14:28.000Z",
       "auth-time": "2023-02-01T17:14:05.000Z"

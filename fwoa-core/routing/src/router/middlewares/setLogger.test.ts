@@ -22,6 +22,9 @@ async function sleep(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 describe('createServerUrlMiddleware', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   test('test logger designed for encryption case', async () => {
     process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'true';
     const nextMock = jest.fn();
@@ -29,62 +32,49 @@ describe('createServerUrlMiddleware', () => {
       requestContext: {
         requestTimeEpoch: 1673369044,
         identity: {
-          apiKeyId: 'asdasd',
-          sourceIp: 'asdad'
+          apiKeyId: 'FakeApiKeyId',
+          sourceIp: '0.0.0.0'
         },
-        path: 'asdas',
-        httpMethod: 'asdasda',
+        path: '/dev/Patient',
+        httpMethod: 'GET',
         stage: 'dev'
       },
       apiGateway: {
         event: {
-          httpMethod: 'asdas',
-          queryStringParameters: 'fadfdas',
-          pathParameters: { proxy: 'asfdsfdsf' }
+          httpMethod: 'GET',
+          queryStringParameters: {
+            name: 'FakeName'
+          },
+          pathParameters: { proxy: 'patient/00000000-0000-0000-0000-000000000000' }
         },
         context: {
-          logGroupName: 'asd',
-          logStreamName: 'asdsa',
-          domainName: 'asdas',
-          awsRequestId: 'asdasdsa'
+          logGroupName: 'FakeLogGroupName',
+          logStreamName: 'FakeLogStreamName',
+          domainName: 'FakeDomainName',
+          awsRequestId: '11111111-1111-1111-1111-111111111111'
         }
       },
       headers: {
-        'user-agent': 'PostmanRuntime/7.30.0'
+        'user-agent': 'FakeUserAgent'
       }
     } as unknown as express.Request;
     const res = {
       locals: {
         userIdentity: {
           sub: 'example@amazon.com',
-          fhirUser: 'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876',
-          scope: [
-            'fhirUser',
-            'openid',
-            'patient/*.*',
-            'launch/patient',
-            'profile',
-            'user/*.*',
-            'patient_selection'
-          ],
+          fhirUser:
+            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
+          scope: ['FakeScope1', 'FakeScope2', 'FakeScope3'],
           usableScopes: ['patient/*.*', 'user/*.*'],
           launch_response_patient:
-            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212',
-          jti: 'AT.ASDFGHJKL',
-          iss: 167337044,
-          aud: 167337144,
+            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
+          jti: 'AT.FakeJTIValue',
+          iss: 'FakeIssuer',
+          aud: 'FakeAudience',
           iat: 167338044,
           exp: 167339044,
           auth_time: 1673386822,
-          scp: [
-            'fhirUser',
-            'openid',
-            'patient/*.*',
-            'launch/patient',
-            'profile',
-            'user/*.*',
-            'patient_selection'
-          ]
+          scp: ['FakeScope1', 'FakeScope2', 'FakeScope3']
         }
       }
     } as unknown as express.Response;
@@ -103,62 +93,49 @@ describe('createServerUrlMiddleware', () => {
       requestContext: {
         requestTimeEpoch: 1673369044,
         identity: {
-          apiKeyId: 'asdasd',
-          sourceIp: 'asdad'
+          apiKeyId: 'FakeApiKeyId',
+          sourceIp: '0.0.0.0'
         },
-        path: 'asdas',
-        httpMethod: 'asdasda',
+        path: '/dev/Patient',
+        httpMethod: 'GET',
         stage: 'dev'
       },
       apiGateway: {
         event: {
-          httpMethod: 'asdas',
-          queryStringParameters: 'fadfdas',
-          pathParameters: { proxy: 'asfdsfdsf' }
+          httpMethod: 'GET',
+          queryStringParameters: {
+            name: 'FakeName'
+          },
+          pathParameters: { proxy: 'patient/00000000-0000-0000-0000-000000000000' }
         },
         context: {
-          logGroupName: 'asd',
-          logStreamName: 'asdsa',
-          domainName: 'asdas',
-          awsRequestId: 'asdasdsa'
+          logGroupName: 'FakeLogGroupName',
+          logStreamName: 'FakeLogStreamName',
+          domainName: 'FakeDomainName',
+          awsRequestId: '11111111-1111-1111-1111-111111111111'
         }
       },
       headers: {
-        'user-agent': 'PostmanRuntime/7.30.0'
+        'user-agent': 'FakeUserAgent'
       }
     } as unknown as express.Request;
     const res = {
       locals: {
         userIdentity: {
           sub: 'example@amazon.com',
-          fhirUser: 'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/1234567876',
-          scope: [
-            'fhirUser',
-            'openid',
-            'patient/*.*',
-            'launch/patient',
-            'profile',
-            'user/*.*',
-            'patient_selection'
-          ],
+          fhirUser:
+            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
+          scope: ['FakeScope1', 'FakeScope2', 'FakeScope3'],
           usableScopes: ['patient/*.*', 'user/*.*'],
           launch_response_patient:
-            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/9876543212',
-          jti: 'AT.ASDFGHJKL',
-          iss: 167337044,
-          aud: 167337144,
+            'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
+          jti: 'AT.FakeJTIValue',
+          iss: 'FakeIssuer',
+          aud: 'FakeAudience',
           iat: 167338044,
           exp: 167339044,
           auth_time: 1673386822,
-          scp: [
-            'fhirUser',
-            'openid',
-            'patient/*.*',
-            'launch/patient',
-            'profile',
-            'user/*.*',
-            'patient_selection'
-          ]
+          scp: ['FakeScope1', 'FakeScope2', 'FakeScope3']
         }
       }
     } as unknown as express.Response;
@@ -167,6 +144,7 @@ describe('createServerUrlMiddleware', () => {
     await sleep(1);
 
     expect(nextMock).toBeCalledTimes(1);
+    expect(nextMock).toHaveBeenCalledWith();
     expect(mLogger.error).toMatchSnapshot();
   });
 });

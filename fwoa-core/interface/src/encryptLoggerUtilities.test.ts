@@ -4,21 +4,17 @@
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
 import { encryptKMS, encryptSelectedField } from './encryptLoggerUtilities';
-import inputLogger from './InputExampleEncryptedLoggerBuilder.json';
-
-//use jest.fn mock for class
+import inputLogger from './InputExampleEncryptLoggerUtilities.json';
 
 describe('test logger utilities', () => {
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   describe('encryptSelectedField', () => {
-    // const mockConsoleLog = jest.spyOn(console,'error');
-    test('happy case"', async () => {
+    test('test happy case"', async () => {
       //BUILD
       const exampleMessage = inputLogger;
-      const encryptRes: string =
-        'AQICAHjcGHP1MkH7KGBnyHnq4XZ51xDg95nNn8z4adVcGyROBAEKAH777oJlzDgWqcoTpJyZAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDKxAIrGoAXjhz1C6zAIBEIA/WZ1Qqt0C7/mL1LMZ0lWw0T6pOP4P5+ZmiKnw/8N1BvVcuPuGiWqtEkftKDL/2fVKlt/x1SuMQXQ4O8e0ULQ8';
+      const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,13 +30,9 @@ describe('test logger utilities', () => {
 
       //OPERATION
       const result = await encryptSelectedField(info);
-      // // console.error(exampleInfo);
-      // const encryptedComponentLogger = makeEncryptLogger({ metaData: ['logMetadata.EncryptedPayLoad'], componenet: 'routing' })
-      // encryptedComponentLogger.log(exampleMessage);
 
       //CHECK
       expect(result).toMatchSnapshot();
-      // expect(encrptLogger.log).toMatchInlineSnapshot();
     });
     test('test error: Invalid data input to encrypt', async () => {
       //BUILD
@@ -49,6 +41,7 @@ describe('test logger utilities', () => {
         meta: { metaData: 'safasdfa', componenet: 'routing' },
         message: exampleMessage
       };
+
       //CHECK
       await expect(encryptSelectedField(info)).rejects.toThrow('Invalid data input to encrypt');
     });
@@ -76,8 +69,7 @@ describe('test logger utilities', () => {
   describe('encryptKMS', () => {
     test('Success string encryption', async () => {
       // BUILD
-      const encryptRes: string =
-        'AQICAHjcGHP1MkH7KGBnyHnq4XZ51xDg95nNn8z4adVcGyROBAEKAH777oJlzDgWqcoTpJyZAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDKxAIrGoAXjhz1C6zAIBEIA/WZ1Qqt0C7/mL1LMZ0lWw0T6pOP4P5+ZmiKnw/8N1BvVcuPuGiWqtEkftKDL/2fVKlt/x1SuMQXQ4O8e0ULQ8';
+      const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
       //eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: any, callback: Function) => {
@@ -96,7 +88,7 @@ describe('test logger utilities', () => {
     });
     test('Input string is empty', async () => {
       // BUILD
-      const encryptRes: string = 'ASDFGHJKLKJ';
+      const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
       //eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params, callback: Function) => {

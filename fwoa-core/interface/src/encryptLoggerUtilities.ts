@@ -1,5 +1,17 @@
 import AWS from 'aws-sdk';
 
+export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
+  if (!plaintext) throw Error('Invalid input');
+  const kms = new AWS.KMS();
+  const params = {
+    KeyId: keyId,
+    Plaintext: plaintext
+  };
+  const encryptRes = await kms.encrypt(params).promise();
+  const encryptedstring = encryptRes.CiphertextBlob;
+  return Buffer.from(encryptedstring as Buffer).toString('base64');
+}
+
 export async function encryptSelectedField(info: any): Promise<string> {
   if (!Array.isArray(info.meta.metaData) || !info.meta.metaData.length) {
     throw new Error('Invalid data input to encrypt');
@@ -27,16 +39,4 @@ export async function encryptSelectedField(info: any): Promise<string> {
   } else {
     throw new Error('Invalid field to encrypt');
   }
-}
-
-export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
-  if (!plaintext) throw Error('Invalid input');
-  const kms = new AWS.KMS();
-  const params = {
-    KeyId: keyId,
-    Plaintext: plaintext
-  };
-  const encryptRes = await kms.encrypt(params).promise();
-  const encryptedstring = encryptRes.CiphertextBlob;
-  return Buffer.from(encryptedstring as Buffer).toString('base64');
 }

@@ -5,14 +5,11 @@
  *
  */
 
-import { Console } from 'console';
-import { promises } from 'dns';
-import { Agent } from 'http';
 import express, { json } from 'express';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import getComponentLogger, { getEncryptLogger } from '../../loggerBuilder';
-import { captureResourceIdRegExp } from '../../regExpressions';
+
 /**
  * Set Logger'
  */
@@ -116,82 +113,43 @@ function preprocessFieldsToEncrypted(
   const stringToReplace = 'encrypted';
   const resourceIdRegx = /(\w{8}(-\w{4}){3}-\w{12})/;
   fieldsToEncrypt.forEach((selectedField) => {
-    // const contentInField = _.get(logging, selectedField, undefined);
-    // if (contentInField) {
-    //     if (fieldsToEncrypt[selectedField] === false) {
-    //         const markedContent = contentInField.replace(captureResourceIdRegExp, stringToReplace);
-    //         _.set(loggingPreprocessed, selectedField, markedContent);
-    //     } else {
-    //         _.set(loggingPreprocessed, selectedField, stringToReplace);
-    //     }
-    //     _.set(fieldsToEncryptedObject, selectedField, contentInField);
-    // }
-
-    let contentInField: string | { [key: string]: string } | undefined;
+    let contentInField: string | { [key: string]: string };
     let markedContent: string | undefined;
     // eslint-disable-next-line default-case
     switch (selectedField) {
       case 'who.userIdentity.sub': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = stringToReplace;
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = stringToReplace;
         break;
       }
       case 'who.userIdentity.fhirUser': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
         break;
       }
       case 'what.apiGateway.event.queryStringParameters': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = stringToReplace;
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = stringToReplace;
         break;
       }
       case 'what.requestContext.path': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
         break;
       }
       case 'what.apiGateway.event.pathParameters.proxy': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
         break;
       }
       case 'where.requestContext.sourceIp': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = stringToReplace;
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = stringToReplace;
         break;
       }
       case 'responseOther.userIdentity.launch-response-patient': {
-        contentInField = _.get(logging, selectedField, undefined);
-        if (contentInField) {
-          markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
-        }
+        contentInField = _.get(logging, selectedField, '');
+        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
         break;
       }
       default:
@@ -201,7 +159,7 @@ function preprocessFieldsToEncrypted(
       _.set(loggingPreprocessed, selectedField, markedContent);
       _.set(fieldsToEncryptedObject, selectedField, contentInField);
     } else {
-      throw new Error('No existing case field in logger');
+      throw new Error('case field is undefined in logger');
     }
   });
   if (Object.keys(fieldsToEncryptedObject).length !== 0) {
@@ -296,17 +254,8 @@ export const setLoggerMiddleware = async (
     let logger: any;
     if (process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION === 'true') {
       // true or false means if a field is selected to replace the whole field with 'encrypted' or add 'encrypted' partially.
-      // Examples: https://ygvm00kbzl.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"
+      // Examples: https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"
       loggerDesign = preprocessFieldsToEncrypted(
-        // {
-        //     'who.userIdentity.sub': true,
-        //     'who.userIdentity.fhirUser': false,
-        //     'what.apiGateway.event.queryStringParameters': true,
-        //     'what.requestContext.path': false,
-        //     'what.apiGateway.event.pathParameters.proxy': false,
-        //     'where.requestContext.sourceIp': true,
-        //     'responseOther.userIdentity.launch-response-patient': false,
-        // },
         [
           'who.userIdentity.sub',
           'who.userIdentity.fhirUser',

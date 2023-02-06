@@ -15,7 +15,8 @@
     "<rootDir>/src/constants.ts",
     "<rootDir>/src/resourceMeta.ts",
     "<rootDir>/src/stubs.ts",
-    "<rootDir>/src/loggerBuilder.ts"
+    "<rootDir>/src/loggerBuilder.ts",
+    "<rootDir>/src/encryptedLoggerBuilder.ts"
   ],
   "coverageReporters": ["json-summary", "json", "lcov", "text"]
 }
