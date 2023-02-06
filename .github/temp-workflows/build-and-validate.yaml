@@ -1,0 +1,37 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Build and validate
+on:
+  pull_request:
+    branches:
+      - develop
+      - smart-develop
+      - authz-smart
+jobs:
+  build-validate:
+    name: Build and validate
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: |
+          cd auditLogMover
+          yarn install
+          cd ..
+          yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Build, lint, and run unit tests
+        run: |
+          cd auditLogMover
+          yarn release
+          cd ..
+          yarn release

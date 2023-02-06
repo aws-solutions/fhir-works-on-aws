@@ -4,8 +4,8 @@
  *
  */
 
+import { KeyValueMap, RequestContext, TypeOperation } from '@aws/fhir-works-on-aws-interface';
 import express from 'express';
-import { KeyValueMap, RequestContext, TypeOperation } from 'fhir-works-on-aws-interface';
 import ResourceHandler from '../../router/handlers/resourceHandler';
 import RouteHelper from '../../router/routes/routeHelper';
 import { OperationDefinitionImplementation } from '../types';

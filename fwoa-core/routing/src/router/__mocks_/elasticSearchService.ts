@@ -4,7 +4,7 @@ import {
   GlobalSearchRequest,
   TypeSearchRequest,
   SearchCapabilityStatement
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 
 const ElasticSearchService: Search = class {
   /*

@@ -14,9 +14,9 @@ import {
   UnauthorizedError,
   AccessBulkDataJobRequest,
   RequestContext
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import createError from 'http-errors';
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 import ConfigHandler from '../../configHandler';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';
 import { uuidRegExp, utcTimeRegExp } from '../../regExpressions';
@@ -531,7 +531,7 @@ describe('ERROR Cases: Validation of Bundle request', () => {
       const readRequest = {
         request: {
           method: 'GET',
-          url: `Patient/${uuidv4()}`
+          url: `Patient/${v4()}`
         }
       };
       bundleRequestJSON.entry.push(readRequest);

@@ -75,15 +75,33 @@ common/autoinstallers/*/.npmrc
 /build
 Info_Output.yml
 dist
-lib
 .build
 .idea
 yarn-error.log
 
 coverage
+
+# Implementation guides
+/solutions/smart-on-fhir/implementationGuides
+/solutions/smart-on-fhir/compiledImplementationGuides/*
+!/solutions/smart-on-fhir/compiledImplementationGuides/gitkeep
+/solutions/smart-on-fhir/.webpack/
+
+# CDK
+**/.cdk.staging
+**/cdk.out
+**/build
+**/dist
+**/Info_Output.log
+
 ##############################
 ## local Development
 ##############################
 serverless-output.yml
 serverless-output.yaml
 serverless_config.json
+
+**/lib/**/*.js
+**/lib/**/*.map
+**/lib/**/*d.ts
+**/lib/**/*.json

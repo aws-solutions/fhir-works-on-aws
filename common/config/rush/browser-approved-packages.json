@@ -43,8 +43,20 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "aws-cdk",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "aws-cdk-lib",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "aws-embedded-metrics",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "aws-sdk",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-sdk-mock",
@@ -60,6 +72,18 @@
     },
     {
       "name": "axios-mock-adapter",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "cdk-nag",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "chance",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "constructs",
       "allowedCategories": ["tools"]
     },
     {
@@ -81,6 +105,14 @@
     {
       "name": "errorhandler",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "esbuild",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "escape-string-regexp",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "eslint",
@@ -115,8 +147,24 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "fhir-works-on-aws-authz-smart",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "fhir-works-on-aws-persistence-ddb",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "fhir-works-on-aws-routing",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "fhir-works-on-aws-search-es",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "flat",
@@ -127,12 +175,20 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "fs-extra",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "http-errors",
       "allowedCategories": ["production"]
     },
     {
       "name": "jest",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jest-circus",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "jest-each",
@@ -187,8 +243,24 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "p-settle",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "path",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "prettier",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "qs",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "query-string",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "sanitize-html",
@@ -196,7 +268,7 @@
     },
     {
       "name": "serverless-http",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "shuffle-array",
@@ -204,11 +276,15 @@
     },
     {
       "name": "sinon",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "sort-package-json",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "source-map-support",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "standard-version",
@@ -219,8 +295,20 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "tmp-promise",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "ts-jest",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "ts-node",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "tslib",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "typescript",
@@ -228,7 +316,11 @@
     },
     {
       "name": "uuid",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "wait-for-expect",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "winston",
@@ -237,6 +329,10 @@
     {
       "name": "winston-transport",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "yargs",
+      "allowedCategories": ["tools"]
     }
   ]
 }
