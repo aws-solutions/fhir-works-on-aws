@@ -4,7 +4,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Aspects } from 'aws-cdk-lib';
 import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { HIPAASecurityChecks, NagSuppressions } from 'cdk-nag';
-import FhirWorksStack from '../lib/cdk-infra-stack';
+import FhirWorksStack from '../src/lib/cdk-infra-stack';
 
 // initialize with defaults
 const app = new cdk.App();

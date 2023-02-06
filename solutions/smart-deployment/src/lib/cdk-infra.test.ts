@@ -1,7 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as assertions from 'aws-cdk-lib/assertions';
 import * as cdknag from 'cdk-nag';
-import FhirWorksStack from '../lib/cdk-infra-stack';
+import FhirWorksStack from './cdk-infra-stack';
 
 describe('cdk-nag AwsSolutions Pack', () => {
   let stack: cdk.Stack;

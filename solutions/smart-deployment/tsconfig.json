@@ -12,8 +12,7 @@
     "outDir": "dist",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
-    "types": ["jest", "node"]
+    "baseUrl": "."
   },
   "include": ["src/**/*", "src/integration-tests/**/*"]
 }
