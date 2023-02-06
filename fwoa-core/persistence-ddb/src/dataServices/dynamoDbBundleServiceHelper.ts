@@ -11,7 +11,7 @@ import {
   isResourceNotFoundError
 } from '@aws/fhir-works-on-aws-interface';
 import { DynamoDB } from 'aws-sdk';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';
 import { DynamoDBConverter, RESOURCE_TABLE } from './dynamoDb';
