@@ -52,7 +52,7 @@ const EVENT = {
         StreamViewType: 'NEW_AND_OLD_IMAGES'
       },
       eventSourceARN:
-        'arn:aws:dynamodb:us-west-2:494110835610:table/resource-db-dev/stream/2021-06-17T09:08:31.388'
+        'arn:aws:dynamodb:us-west-2:123456789012:table/resource-db-dev/stream/2021-06-17T09:08:31.388'
     }
   ]
 };
@@ -100,7 +100,7 @@ const EVENT_MULTITENANCY = {
         StreamViewType: 'NEW_AND_OLD_IMAGES'
       },
       eventSourceARN:
-        'arn:aws:dynamodb:us-west-2:494110835610:table/resource-db-dev/stream/2021-06-17T09:08:31.388'
+        'arn:aws:dynamodb:us-west-2:123456789012:table/resource-db-dev/stream/2021-06-17T09:08:31.388'
     }
   ]
 };
