@@ -14,18 +14,17 @@ jest.mock('../../loggerBuilder', () => {
 });
 
 import express from 'express';
-import { Logger } from 'winston';
-import * as loggerBuilder from '../../loggerBuilder';
 import { setLoggerMiddleware } from './setLogger';
 
 async function sleep(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
-describe('createServerUrlMiddleware', () => {
+describe('createLoggerMiddleware', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('test logger designed for encryption case', async () => {
+  test('test logger middleware use for encryption case', async () => {
+    //BUILD
     process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'true';
     const nextMock = jest.fn();
     const req = {
@@ -79,14 +78,17 @@ describe('createServerUrlMiddleware', () => {
       }
     } as unknown as express.Response;
 
+    //OPERATE
     await setLoggerMiddleware(req, res, nextMock);
     await sleep(1);
 
+    //CHECK
     expect(nextMock).toBeCalledTimes(1);
     expect(mLogger.error).toBeCalledTimes(1);
     expect(mLogger.error).toMatchSnapshot();
   });
   test('test no encrypt case', async () => {
+    //BUILD
     process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'false';
     const nextMock = jest.fn();
     const req = {
@@ -140,9 +142,11 @@ describe('createServerUrlMiddleware', () => {
       }
     } as unknown as express.Response;
 
+    //OPERATE
     await setLoggerMiddleware(req, res, nextMock);
     await sleep(1);
 
+    //CHECK
     expect(nextMock).toBeCalledTimes(1);
     expect(nextMock).toHaveBeenCalledWith();
     expect(mLogger.error).toMatchSnapshot();
