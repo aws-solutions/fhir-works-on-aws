@@ -211,6 +211,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "sanitize-html",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "qs",
       "allowedCategories": ["production"]
     },

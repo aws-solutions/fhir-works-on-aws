@@ -16,8 +16,12 @@ fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json
 fwoa-core/search-es/package.json
 fwoa-core/search-es/THIRD-PARTY
 
-#Third party file
-THIRD-PARTY$
+# Third Party files
+fwoa-core/interface/THIRD-PARTY
+fwoa-core/persistence-ddb/THIRD-PARTY 
+fwoa-core/routing/THIRD-PARTY
+fwoa-core/authz-smart/THIRD-PARTY
+fwoa-core/authz-rbac/THIRD-PARTY
 
 # NOTICE files
 .*/NOTICE
@@ -32,9 +36,11 @@ fwoa-core/interface/package.json:13
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
+fwoa-core/persistence-ddb/package.json:13
 fwoa-core/authz-rbac/package.json:13
 
 # Dummy Email for Testing
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
+
