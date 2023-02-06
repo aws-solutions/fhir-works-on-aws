@@ -11,6 +11,14 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "@elastic/elasticsearch",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@elastic/elasticsearch-mock",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": ["production", "tools"]
     },
@@ -49,6 +57,10 @@
     {
       "name": "aws-cdk-lib",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "aws-elasticsearch-connector",
+      "allowedCategories": ["production"]
     },
     {
       "name": "aws-embedded-metrics",
@@ -253,6 +265,10 @@
     {
       "name": "prettier",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "promise.allsettled",
+      "allowedCategories": ["production"]
     },
     {
       "name": "qs",
