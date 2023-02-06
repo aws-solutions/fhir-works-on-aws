@@ -4,7 +4,7 @@
  *
  */
 
-import { DynamoDb, DynamoDbDataService } from 'fhir-works-on-aws-persistence-ddb';
+import { DynamoDb, DynamoDbDataService } from '@aws/fhir-works-on-aws-persistence-ddb';
 import { StreamSubscriptionMatcher } from 'fhir-works-on-aws-search-es';
 
 import { fhirVersion } from '../../config';

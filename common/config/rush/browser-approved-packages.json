@@ -15,6 +15,10 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-persistence-ddb",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/fhir-works-on-aws-routing",
       "allowedCategories": ["production"]
     },
