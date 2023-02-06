@@ -13,11 +13,6 @@
     "email": "fhir-works-on-aws-dev@amazon.com",
     "url": "https://aws.amazon.com/"
   },
-  "contributors": [
-    "Robert Smayda <smayda@amazon.com>",
-    "Tim Nguyen <thingut@amazon.com>",
-    "Nestor Carvantes <nestorba@amazon.com>"
-  ],
   "main": "src/index.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",

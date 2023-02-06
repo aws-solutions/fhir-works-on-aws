@@ -35,6 +35,7 @@ fwoa-core/authz-smart/package.json:13
 fwoa-core/persistence-ddb/package.json:13
 fwoa-core/authz-rbac/package.json:13
 solutions/smart-deployment/INSTALL.md
+solutions/smart-deployment/package.json:13
 
 # Dummy Email
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
