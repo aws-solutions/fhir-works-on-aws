@@ -946,7 +946,7 @@ export default class FhirWorksStack extends Stack {
         })
       );
     }
-    fhirServerLambda.currentVersion.addAlias(`fhir-server-lambda-${props!.stage}`);
+    fhirServerLambda.addAlias(`fhir-server-lambda-${props!.stage}`);
 
     const apiGatewayApiKey = apiGatewayRestApi.addApiKey('developerApiKey', {
       description: 'Key for developer access to the FHIR Api',
