@@ -7,20 +7,8 @@
       "allowedCategories": ["production", "tools"]
     },
     {
-      "name": "@aws/fhir-works-on-aws-authz-rbac",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "@aws/fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "@aws/fhir-works-on-aws-persistence-ddb",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "@aws/fhir-works-on-aws-routing",
-      "allowedCategories": ["production"]
     },
     {
       "name": "@elastic/elasticsearch",
@@ -63,19 +51,7 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "aws-cdk",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-cdk-lib",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "aws-elasticsearch-connector",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "aws-embedded-metrics",
       "allowedCategories": ["production"]
     },
     {
@@ -92,23 +68,11 @@
     },
     {
       "name": "axios",
-      "allowedCategories": ["production", "tools"]
+      "allowedCategories": ["tools"]
     },
     {
       "name": "axios-mock-adapter",
       "allowedCategories": ["tools"]
-    },
-    {
-      "name": "cdk-nag",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "chance",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "constructs",
-      "allowedCategories": ["production"]
     },
     {
       "name": "cors",
@@ -128,10 +92,6 @@
     },
     {
       "name": "errorhandler",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "esbuild",
       "allowedCategories": ["production"]
     },
     {
@@ -167,24 +127,8 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "fhir-works-on-aws-authz-rbac",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "fhir-works-on-aws-persistence-ddb",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "fhir-works-on-aws-routing",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "fhir-works-on-aws-search-es",
-      "allowedCategories": ["production"]
     },
     {
       "name": "flat",
@@ -195,24 +139,12 @@
       "allowedCategories": ["tools"]
     },
     {
-      "name": "fs-extra",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "http-errors",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "inquirer",
       "allowedCategories": ["production"]
     },
     {
       "name": "jest",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "jest-circus",
-      "allowedCategories": ["production"]
     },
     {
       "name": "jest-each",
@@ -267,14 +199,6 @@
       "allowedCategories": ["production", "tools"]
     },
     {
-      "name": "p-settle",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "path",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "prettier",
       "allowedCategories": ["production", "tools"]
     },
@@ -283,39 +207,11 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "qs",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "react",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "react-dom",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "sanitize-html",
       "allowedCategories": ["production"]
     },
     {
-      "name": "serverless",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "serverless-bundle",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "serverless-http",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "serverless-offline",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "serverless-step-functions",
       "allowedCategories": ["production"]
     },
     {
@@ -331,10 +227,6 @@
       "allowedCategories": ["production", "tools"]
     },
     {
-      "name": "source-map-support",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "standard-version",
       "allowedCategories": ["production", "tools"]
     },
@@ -343,20 +235,8 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "tmp-promise",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "ts-jest",
       "allowedCategories": ["production", "tools"]
-    },
-    {
-      "name": "ts-node",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "tslib",
-      "allowedCategories": ["production"]
     },
     {
       "name": "typescript",
@@ -367,19 +247,11 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "wait-for-expect",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "winston",
       "allowedCategories": ["production"]
     },
     {
       "name": "winston-transport",
-      "allowedCategories": ["production"]
-    },
-    {
-      "name": "yargs",
       "allowedCategories": ["production"]
     }
   ]

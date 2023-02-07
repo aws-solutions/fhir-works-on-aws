@@ -6,7 +6,7 @@
 import URL from 'url';
 import { SearchResult, BatchReadWriteResponse } from 'fhir-works-on-aws-interface';
 import { isEmpty } from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+import uuidv4 from 'uuid/v4';
 
 type LinkType = 'self' | 'previous' | 'next' | 'first' | 'last';
 

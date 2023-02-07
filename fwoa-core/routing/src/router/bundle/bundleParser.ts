@@ -15,7 +15,7 @@ import {
 import flatten from 'flat';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import { v4 as uuidv4 } from 'uuid';
+import uuidv4 from 'uuid/v4';
 
 import { MAX_BUNDLE_ENTRY_URL_LENGTH, MAX_REFERENCE_URL_LENGTH } from '../../constants';
 

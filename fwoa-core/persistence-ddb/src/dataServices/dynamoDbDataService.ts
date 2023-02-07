@@ -31,7 +31,7 @@ import {
 } from '@aws/fhir-works-on-aws-interface';
 import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
 import { difference } from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+import uuidv4 from 'uuid/v4';
 import { getBulkExportResults, startJobExecution } from '../bulkExport/bulkExport';
 import { BulkExportResultsUrlGenerator } from '../bulkExport/bulkExportResultsUrlGenerator';
 import { BulkExportS3PresignedUrlGenerator } from '../bulkExport/bulkExportS3PresignedUrlGenerator';

@@ -51,9 +51,6 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# CDK output
-cdk.out
-
 # dotenv environment variables file
 .env
 
@@ -78,10 +75,7 @@ common/autoinstallers/*/.npmrc
 /build
 Info_Output.yml
 dist
-**/lib/**/*.js
-**/lib/**/*.map
-**/lib/**/*d.ts
-**/lib/**/*.json
+lib
 .build
 .idea
 yarn-error.log
