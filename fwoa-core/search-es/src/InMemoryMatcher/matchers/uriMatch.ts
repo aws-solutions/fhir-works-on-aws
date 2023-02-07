@@ -4,12 +4,9 @@
  *
  */
 
-import { StringLikeSearchValue } from "../../FhirQueryParser";
+import { StringLikeSearchValue } from '../../FhirQueryParser';
 
 // eslint-disable-next-line import/prefer-default-export
-export const uriMatch = (
-  searchValue: StringLikeSearchValue,
-  resourceValue: any
-): boolean => {
+export const uriMatch = (searchValue: StringLikeSearchValue, resourceValue: any): boolean => {
   return searchValue === resourceValue;
 };

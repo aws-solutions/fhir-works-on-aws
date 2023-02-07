@@ -4,21 +4,16 @@
  *
  */
 
-import { TokenSearchValue } from "../../FhirQueryParser";
+import { TokenSearchValue } from '../../FhirQueryParser';
 
 // eslint-disable-next-line import/prefer-default-export
-export const tokenMatch = (
-  searchValue: TokenSearchValue,
-  resourceValue: any
-): boolean => {
+export const tokenMatch = (searchValue: TokenSearchValue, resourceValue: any): boolean => {
   const { system, code, explicitNoSystemProperty } = searchValue;
 
   // CodeableConcept may have several Codings
   if (resourceValue?.coding) {
     if (Array.isArray(resourceValue?.coding)) {
-      return resourceValue?.coding.some((coding: any) =>
-        tokenMatch(searchValue, coding)
-      );
+      return resourceValue?.coding.some((coding: any) => tokenMatch(searchValue, coding));
     }
     return tokenMatch(searchValue, resourceValue?.coding);
   }
@@ -26,7 +21,7 @@ export const tokenMatch = (
   const codeValues = [
     resourceValue?.code, // Coding
     resourceValue?.value, // Identifier, ContactPoint
-    resourceValue, // code, uri, string, boolean
+    resourceValue // code, uri, string, boolean
   ];
 
   const systemValue = resourceValue?.system;
@@ -42,10 +37,8 @@ export const tokenMatch = (
   if (
     code !== undefined &&
     codeValues.every((codeValue) => {
-      if (typeof codeValue === "boolean") {
-        return (
-          (code === "true" && !codeValue) || (code === "false" && codeValue)
-        );
+      if (typeof codeValue === 'boolean') {
+        return (code === 'true' && !codeValue) || (code === 'false' && codeValue);
       }
       return codeValue !== code;
     })

@@ -5,7 +5,7 @@
  */
 
 // eslint-disable-next-line import/prefer-default-export
-import { isPresent } from "./tsUtils";
+import { isPresent } from './tsUtils';
 
 /**
  * Gets all values in the given FHIRPath. This function properly handles intermediate array fields.
@@ -22,14 +22,13 @@ import { isPresent } from "./tsUtils";
  */
 // eslint-disable-next-line import/prefer-default-export
 export const getAllValuesForFHIRPath = (resource: any, path: string): any[] => {
-  const pathParts = path.split(".");
+  const pathParts = path.split('.');
 
   let values: any[] = [resource];
-  let pathTraversed = "";
+  let pathTraversed = '';
 
   pathParts.forEach((pathPart) => {
-    pathTraversed =
-      pathTraversed === "" ? pathPart : `${pathTraversed}.${pathPart}`;
+    pathTraversed = pathTraversed === '' ? pathPart : `${pathTraversed}.${pathPart}`;
     values = values.flatMap((value) => value[pathPart]).filter(isPresent);
   });
 

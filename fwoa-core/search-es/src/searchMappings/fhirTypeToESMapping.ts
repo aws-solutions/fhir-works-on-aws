@@ -9,33 +9,33 @@
  ************************************ */
 
 const STRING_MAPPING = {
-  type: "text",
+  type: 'text',
   fields: {
     keyword: {
-      type: "keyword",
-      ignore_above: 256,
-    },
-  },
+      type: 'keyword',
+      ignore_above: 256
+    }
+  }
 };
 
 const KEYWORD_MAPPING = {
-  type: "keyword",
+  type: 'keyword'
 };
 
 const DOUBLE_MAPPING = {
-  type: "float",
+  type: 'float'
 };
 
 const INTEGER_MAPPING = {
-  type: "long",
+  type: 'long'
 };
 
 const DATE_MAPPING = {
-  type: "date",
+  type: 'date'
 };
 
 const BOOLEAN_MAPPING = {
-  type: "boolean",
+  type: 'boolean'
 };
 
 /** ************************************
@@ -51,11 +51,11 @@ const codeableConceptMapping = {
       properties: {
         code: STRING_MAPPING,
         display: STRING_MAPPING,
-        system: STRING_MAPPING,
-      },
+        system: STRING_MAPPING
+      }
     },
-    text: STRING_MAPPING,
-  },
+    text: STRING_MAPPING
+  }
 };
 
 /**
@@ -65,8 +65,8 @@ const codingMapping = {
   properties: {
     code: STRING_MAPPING,
     system: STRING_MAPPING,
-    display: STRING_MAPPING,
-  },
+    display: STRING_MAPPING
+  }
 };
 
 /**
@@ -75,8 +75,8 @@ const codingMapping = {
 const contactPointMapping = {
   properties: {
     system: STRING_MAPPING,
-    value: STRING_MAPPING,
-  },
+    value: STRING_MAPPING
+  }
 };
 
 /**
@@ -85,8 +85,8 @@ const contactPointMapping = {
 const identifierMapping = {
   properties: {
     system: STRING_MAPPING,
-    value: STRING_MAPPING,
-  },
+    value: STRING_MAPPING
+  }
 };
 
 /**
@@ -97,8 +97,8 @@ const quantityMapping = {
     value: DOUBLE_MAPPING,
     system: STRING_MAPPING,
     code: STRING_MAPPING,
-    unit: STRING_MAPPING,
-  },
+    unit: STRING_MAPPING
+  }
 };
 
 /**
@@ -116,8 +116,8 @@ const moneyMapping = quantityMapping;
 const periodMapping = {
   properties: {
     end: DATE_MAPPING,
-    start: DATE_MAPPING,
-  },
+    start: DATE_MAPPING
+  }
 };
 
 /**
@@ -126,8 +126,8 @@ const periodMapping = {
 const rangeMapping = {
   properties: {
     low: quantityMapping,
-    high: quantityMapping,
-  },
+    high: quantityMapping
+  }
 };
 
 /**
@@ -140,10 +140,10 @@ const timingMapping = {
     repeat: {
       properties: {
         boundsRange: rangeMapping,
-        boundsPeriod: periodMapping,
-      },
-    },
-  },
+        boundsPeriod: periodMapping
+      }
+    }
+  }
 };
 
 /**
@@ -159,8 +159,8 @@ const sampledDataMapping = {
     lowerLimit: DOUBLE_MAPPING,
     upperLimit: DOUBLE_MAPPING,
     dimensions: INTEGER_MAPPING,
-    data: STRING_MAPPING,
-  },
+    data: STRING_MAPPING
+  }
 };
 
 /**
@@ -170,8 +170,8 @@ const referenceMapping = {
   properties: {
     reference: STRING_MAPPING,
     type: STRING_MAPPING,
-    identifier: identifierMapping,
-  },
+    identifier: identifierMapping
+  }
 };
 
 /**
@@ -184,8 +184,8 @@ const addressMapping = {
     city: STRING_MAPPING,
     district: STRING_MAPPING,
     state: STRING_MAPPING,
-    postalCode: STRING_MAPPING,
-  },
+    postalCode: STRING_MAPPING
+  }
 };
 
 /**
@@ -197,8 +197,8 @@ const humanNameMapping = {
     family: STRING_MAPPING,
     given: STRING_MAPPING,
     prefix: STRING_MAPPING,
-    suffix: STRING_MAPPING,
-  },
+    suffix: STRING_MAPPING
+  }
 };
 
 const fhirTypeMapping: Record<string, any> = {
@@ -226,7 +226,7 @@ const fhirTypeMapping: Record<string, any> = {
   date: DATE_MAPPING,
   dateTime: DATE_MAPPING,
   decimal: DOUBLE_MAPPING,
-  "http://hl7.org/fhirpath/System.String": STRING_MAPPING,
+  'http://hl7.org/fhirpath/System.String': STRING_MAPPING,
   id: STRING_MAPPING,
   instant: DATE_MAPPING,
   integer: INTEGER_MAPPING,
@@ -236,7 +236,7 @@ const fhirTypeMapping: Record<string, any> = {
   string: STRING_MAPPING,
   time: undefined, // time alone without a date cannot be mapped to the date type. Not truly used by any search parameter
   uri: STRING_MAPPING,
-  url: STRING_MAPPING,
+  url: STRING_MAPPING
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -245,13 +245,11 @@ export function fhirToESMapping(searchField: { field: string; type: string }): {
   mapping: any;
 } {
   if (!(searchField.type in fhirTypeMapping)) {
-    throw new Error(
-      `There is not a mapping available for the type: ${searchField.type}`
-    );
+    throw new Error(`There is not a mapping available for the type: ${searchField.type}`);
   }
 
   return {
     field: searchField.field,
-    mapping: fhirTypeMapping[searchField.type],
+    mapping: fhirTypeMapping[searchField.type]
   };
 }

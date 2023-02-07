@@ -3,10 +3,10 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { DateSearchValue } from "../../FhirQueryParser";
-import { CompiledSearchParam } from "../../FHIRSearchParametersRegistry";
-import { prefixRangeDate } from "./common/prefixRange";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { DateSearchValue } from '../../FhirQueryParser';
+import { CompiledSearchParam } from '../../FHIRSearchParametersRegistry';
+import { prefixRangeDate } from './common/prefixRange';
 
 const SUPPORTED_MODIFIERS: string[] = [];
 
@@ -17,9 +17,7 @@ export const dateQuery = (
   modifier?: string
 ): any => {
   if (modifier && !SUPPORTED_MODIFIERS.includes(modifier)) {
-    throw new InvalidSearchParameterError(
-      `Unsupported date search modifier: ${modifier}`
-    );
+    throw new InvalidSearchParameterError(`Unsupported date search modifier: ${modifier}`);
   }
   const { prefix, range } = value;
   return prefixRangeDate(prefix, range, compiledSearchParam.path);

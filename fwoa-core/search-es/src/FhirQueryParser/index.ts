@@ -3,57 +3,27 @@
  *  SPDX-License-Identifier: Apache-2.0
  *
  */
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { isEmpty } from "lodash";
-import * as qs from "qs";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { isEmpty } from 'lodash';
+import * as qs from 'qs';
 import {
   INCLUSION_PARAMETERS,
   NON_SEARCHABLE_PARAMETERS,
-  UNSUPPORTED_GENERAL_PARAMETERS,
-} from "../constants";
-import {
-  FHIRSearchParametersRegistry,
-  SearchParam,
-} from "../FHIRSearchParametersRegistry";
-import getComponentLogger from "../loggerBuilder";
-import {
-  InclusionSearchParameter,
-  WildcardInclusionSearchParameter,
-} from "../searchInclusions";
-import { parseInclusionParams } from "./searchInclusion";
-import getOrSearchValues from "./searchOR";
-import {
-  DateSearchValue,
-  parseDateSearchValue,
-} from "./typeParsers/dateParser";
-import {
-  NumberSearchValue,
-  parseNumberSearchValue,
-} from "./typeParsers/numberParser";
-import {
-  parseQuantitySearchValue,
-  QuantitySearchValue,
-} from "./typeParsers/quantityParser";
-import {
-  parseReferenceSearchValue,
-  ReferenceSearchValue,
-} from "./typeParsers/referenceParser";
-import {
-  parseTokenSearchValue,
-  TokenSearchValue,
-} from "./typeParsers/tokenParser";
-import {
-  isChainedParameter,
-  normalizeQueryParams,
-  parseSearchModifiers,
-} from "./util";
+  UNSUPPORTED_GENERAL_PARAMETERS
+} from '../constants';
+import { FHIRSearchParametersRegistry, SearchParam } from '../FHIRSearchParametersRegistry';
+import getComponentLogger from '../loggerBuilder';
+import { InclusionSearchParameter, WildcardInclusionSearchParameter } from '../searchInclusions';
+import { parseInclusionParams } from './searchInclusion';
+import getOrSearchValues from './searchOR';
+import { DateSearchValue, parseDateSearchValue } from './typeParsers/dateParser';
+import { NumberSearchValue, parseNumberSearchValue } from './typeParsers/numberParser';
+import { parseQuantitySearchValue, QuantitySearchValue } from './typeParsers/quantityParser';
+import { parseReferenceSearchValue, ReferenceSearchValue } from './typeParsers/referenceParser';
+import { parseTokenSearchValue, TokenSearchValue } from './typeParsers/tokenParser';
+import { isChainedParameter, normalizeQueryParams, parseSearchModifiers } from './util';
 
-export {
-  DateSearchValue,
-  TokenSearchValue,
-  NumberSearchValue,
-  QuantitySearchValue,
-};
+export { DateSearchValue, TokenSearchValue, NumberSearchValue, QuantitySearchValue };
 
 export type StringLikeSearchValue = string;
 
@@ -64,47 +34,47 @@ interface BaseQueryParam {
 }
 
 export interface StringQueryParam extends BaseQueryParam {
-  type: "string";
+  type: 'string';
   parsedSearchValues: StringLikeSearchValue[];
 }
 
 export interface CompositeQueryParam extends BaseQueryParam {
-  type: "composite";
+  type: 'composite';
   parsedSearchValues: StringLikeSearchValue[];
 }
 
 export interface SpecialQueryParam extends BaseQueryParam {
-  type: "special";
+  type: 'special';
   parsedSearchValues: StringLikeSearchValue[];
 }
 
 export interface UriQueryParam extends BaseQueryParam {
-  type: "uri";
+  type: 'uri';
   parsedSearchValues: StringLikeSearchValue[];
 }
 
 export interface DateQueryParam extends BaseQueryParam {
-  type: "date";
+  type: 'date';
   parsedSearchValues: DateSearchValue[];
 }
 
 export interface NumberQueryParam extends BaseQueryParam {
-  type: "number";
+  type: 'number';
   parsedSearchValues: NumberSearchValue[];
 }
 
 export interface QuantityQueryParam extends BaseQueryParam {
-  type: "quantity";
+  type: 'quantity';
   parsedSearchValues: QuantitySearchValue[];
 }
 
 export interface ReferenceQueryParam extends BaseQueryParam {
-  type: "reference";
+  type: 'reference';
   parsedSearchValues: ReferenceSearchValue[];
 }
 
 export interface TokenQueryParam extends BaseQueryParam {
-  type: "token";
+  type: 'token';
   parsedSearchValues: TokenSearchValue[];
 }
 
@@ -122,90 +92,82 @@ export type QueryParam =
 export interface ParsedFhirQueryParams {
   resourceType: string;
   searchParams: QueryParam[];
-  inclusionSearchParams?: (
-    | InclusionSearchParameter
-    | WildcardInclusionSearchParameter
-  )[];
+  inclusionSearchParams?: (InclusionSearchParameter | WildcardInclusionSearchParameter)[];
   chainedSearchParams?: { [name: string]: string[] };
   otherParams?: { [name: string]: string[] };
 }
 
-const parseStringLikeSearchValue = (
-  rawSearchValue: string
-): StringLikeSearchValue => rawSearchValue;
+const parseStringLikeSearchValue = (rawSearchValue: string): StringLikeSearchValue => rawSearchValue;
 
-const parseSearchQueryParam = (
-  searchParam: SearchParam,
-  rawSearchValue: string
-): QueryParam => {
+const parseSearchQueryParam = (searchParam: SearchParam, rawSearchValue: string): QueryParam => {
   const orSearchValues = getOrSearchValues(rawSearchValue);
   switch (searchParam.type) {
-    case "date":
+    case 'date':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseDateSearchValue),
+        parsedSearchValues: orSearchValues.map(parseDateSearchValue)
       };
-    case "number":
+    case 'number':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseNumberSearchValue),
+        parsedSearchValues: orSearchValues.map(parseNumberSearchValue)
       };
-    case "quantity":
+    case 'quantity':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseQuantitySearchValue),
+        parsedSearchValues: orSearchValues.map(parseQuantitySearchValue)
       };
-    case "reference":
+    case 'reference':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
         parsedSearchValues: orSearchValues.map((searchValue) =>
           parseReferenceSearchValue(searchParam, searchValue)
-        ),
+        )
       };
-    case "string":
+    case 'string':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue),
+        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue)
       };
-    case "composite":
+    case 'composite':
       // composite is not supported at this time and we just treat them as string params
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue),
+        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue)
       };
-    case "special":
+    case 'special':
       // special is not supported at this time and we just treat them as string params
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue),
+        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue)
       };
-    case "token":
+    case 'token':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseTokenSearchValue),
+        parsedSearchValues: orSearchValues.map(parseTokenSearchValue)
       };
-    case "uri":
+    case 'uri':
       return {
         type: searchParam.type,
         name: searchParam.name,
         searchParam,
-        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue),
+        parsedSearchValues: orSearchValues.map(parseStringLikeSearchValue)
       };
     default:
       // eslint-disable-next-line no-case-declarations
@@ -216,15 +178,9 @@ const parseSearchQueryParam = (
 
 const validateModifiers = ({ type, modifier }: QueryParam): void => {
   // There are other valid modifiers in the FHIR spec, but this validation only accepts the modifiers currently implemented in FWoA
-  const SUPPORTED_MODIFIERS: string[] = ["exact", "contains"];
-  if (
-    type === "string" &&
-    modifier !== undefined &&
-    !SUPPORTED_MODIFIERS.includes(modifier)
-  ) {
-    throw new InvalidSearchParameterError(
-      `Unsupported string search modifier: ${modifier}`
-    );
+  const SUPPORTED_MODIFIERS: string[] = ['exact', 'contains'];
+  if (type === 'string' && modifier !== undefined && !SUPPORTED_MODIFIERS.includes(modifier)) {
+    throw new InvalidSearchParameterError(`Unsupported string search modifier: ${modifier}`);
   }
 };
 
@@ -239,82 +195,67 @@ export const parseQuery = (
   resourceType: string,
   queryParams: any
 ): ParsedFhirQueryParams => {
-  const normalizedQueryParams: { [name: string]: string[] } =
-    normalizeQueryParams(queryParams);
+  const normalizedQueryParams: { [name: string]: string[] } = normalizeQueryParams(queryParams);
 
-  const inclusionSearchParams: (
-    | InclusionSearchParameter
-    | WildcardInclusionSearchParameter
-  )[] = [];
+  const inclusionSearchParams: (InclusionSearchParameter | WildcardInclusionSearchParameter)[] = [];
   const chainedSearchParams: { [name: string]: string[] } = {};
   const otherParams: { [name: string]: string[] } = {};
 
-  const searchableParams: [string, string[]][] = Object.entries(
-    normalizedQueryParams
-  ).filter(([searchParameter, value]) => {
-    if (isChainedParameter(searchParameter)) {
-      chainedSearchParams[searchParameter] = value;
-      return false;
-    }
-
-    if (INCLUSION_PARAMETERS.includes(searchParameter)) {
-      inclusionSearchParams.push(
-        ...parseInclusionParams(
-          fhirSearchParametersRegistry,
-          searchParameter,
-          value
-        )
-      );
-      return false;
-    }
-
-    if (UNSUPPORTED_GENERAL_PARAMETERS.includes(searchParameter)) {
-      // since we don't support any of these at the moment, just log a message instead of ignoring and continue.
-      getComponentLogger().info(
-        `Search parameter ${searchParameter} is not currently supported.`
-      );
-      otherParams[searchParameter] = value;
-      return false;
-    }
-
-    if (NON_SEARCHABLE_PARAMETERS.includes(searchParameter)) {
-      otherParams[searchParameter] = value;
-      return false;
-    }
-
-    return true;
-  });
-
-  const parsedParams = searchableParams.flatMap(
-    ([searchParameter, searchValues]) => {
-      const searchModifier = parseSearchModifiers(searchParameter);
-      const fhirSearchParam = fhirSearchParametersRegistry.getSearchParameter(
-        resourceType,
-        searchModifier.parameterName
-      );
-      if (fhirSearchParam === undefined) {
-        throw new InvalidSearchParameterError(
-          `Invalid search parameter '${searchModifier.parameterName}' for resource type ${resourceType}`
-        );
+  const searchableParams: [string, string[]][] = Object.entries(normalizedQueryParams).filter(
+    ([searchParameter, value]) => {
+      if (isChainedParameter(searchParameter)) {
+        chainedSearchParams[searchParameter] = value;
+        return false;
       }
-      return searchValues.map((searchValue) => {
-        const parsedQueryParam = parseSearchQueryParam(
-          fhirSearchParam,
-          searchValue
+
+      if (INCLUSION_PARAMETERS.includes(searchParameter)) {
+        inclusionSearchParams.push(
+          ...parseInclusionParams(fhirSearchParametersRegistry, searchParameter, value)
         );
-        parsedQueryParam.modifier = searchModifier.modifier;
-        validateModifiers(parsedQueryParam);
-        return parsedQueryParam;
-      });
+        return false;
+      }
+
+      if (UNSUPPORTED_GENERAL_PARAMETERS.includes(searchParameter)) {
+        // since we don't support any of these at the moment, just log a message instead of ignoring and continue.
+        getComponentLogger().info(`Search parameter ${searchParameter} is not currently supported.`);
+        otherParams[searchParameter] = value;
+        return false;
+      }
+
+      if (NON_SEARCHABLE_PARAMETERS.includes(searchParameter)) {
+        otherParams[searchParameter] = value;
+        return false;
+      }
+
+      return true;
     }
   );
+
+  const parsedParams = searchableParams.flatMap(([searchParameter, searchValues]) => {
+    const searchModifier = parseSearchModifiers(searchParameter);
+    const fhirSearchParam = fhirSearchParametersRegistry.getSearchParameter(
+      resourceType,
+      searchModifier.parameterName
+    );
+    if (fhirSearchParam === undefined) {
+      throw new InvalidSearchParameterError(
+        `Invalid search parameter '${searchModifier.parameterName}' for resource type ${resourceType}`
+      );
+    }
+    return searchValues.map((searchValue) => {
+      const parsedQueryParam = parseSearchQueryParam(fhirSearchParam, searchValue);
+      parsedQueryParam.modifier = searchModifier.modifier;
+      validateModifiers(parsedQueryParam);
+      return parsedQueryParam;
+    });
+  });
 
   return {
     resourceType,
     searchParams: parsedParams,
     ...(!isEmpty(inclusionSearchParams) && { inclusionSearchParams }),
     ...(!isEmpty(chainedSearchParams) && { chainedSearchParams }),
-    ...(!isEmpty(otherParams) && { otherParams }),
+    ...(!isEmpty(otherParams) && { otherParams })
   };
 };
 
@@ -328,14 +269,8 @@ export const parseQueryString = (
   searchCriteria: string
 ): ParsedFhirQueryParams => {
   const questionMarkIndex =
-    searchCriteria.indexOf("?") === -1
-      ? searchCriteria.length
-      : searchCriteria.indexOf("?");
+    searchCriteria.indexOf('?') === -1 ? searchCriteria.length : searchCriteria.indexOf('?');
   const resourceType = searchCriteria.substring(0, questionMarkIndex);
   const queryString = searchCriteria.substring(questionMarkIndex + 1);
-  return parseQuery(
-    fhirSearchParametersRegistry,
-    resourceType,
-    qs.parse(queryString)
-  );
+  return parseQuery(fhirSearchParametersRegistry, resourceType, qs.parse(queryString));
 };

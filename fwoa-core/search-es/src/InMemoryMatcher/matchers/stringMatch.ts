@@ -4,19 +4,18 @@
  *
  */
 
-import { StringLikeSearchValue } from "../../FhirQueryParser";
-import { CompiledSearchParam } from "../../FHIRSearchParametersRegistry";
-import { getAllValuesForFHIRPath } from "../../getAllValuesForFHIRPath";
+import { StringLikeSearchValue } from '../../FhirQueryParser';
+import { CompiledSearchParam } from '../../FHIRSearchParametersRegistry';
+import { getAllValuesForFHIRPath } from '../../getAllValuesForFHIRPath';
 
 const comparisons = {
-  eq: (a: unknown, b: string) =>
-    typeof a === "string" && a.split(/[ \-,.]/).includes(b), // simple approximation of the way OpenSearch matches text fields.
+  eq: (a: unknown, b: string) => typeof a === 'string' && a.split(/[ \-,.]/).includes(b), // simple approximation of the way OpenSearch matches text fields.
   exact: (a: unknown, b: string) => a === b,
-  contains: (a: unknown, b: string) => typeof a === "string" && a.includes(b),
+  contains: (a: unknown, b: string) => typeof a === 'string' && a.includes(b)
 };
 
 function isUsableType(x: unknown): x is string | Record<string, unknown> {
-  return x !== null && (typeof x === "string" || typeof x === "object");
+  return x !== null && (typeof x === 'string' || typeof x === 'object');
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -33,10 +32,10 @@ export const stringMatch = (
   let op: (a: unknown, b: string) => boolean;
 
   switch (modifier) {
-    case "exact":
+    case 'exact':
       op = comparisons.exact;
       break;
-    case "contains":
+    case 'contains':
       op = comparisons.contains;
       break;
     case undefined:
@@ -48,31 +47,21 @@ export const stringMatch = (
 
   let valuesFromResource: unknown[] = [];
 
-  if (typeof resourceValue === "string") {
+  if (typeof resourceValue === 'string') {
     valuesFromResource = [resourceValue];
   } else {
     let fieldsToMatch: string[] = [];
 
-    if (compiledSearchParam.path === "name") {
+    if (compiledSearchParam.path === 'name') {
       // name is a special parameter.
-      fieldsToMatch = ["family", "given", "text", "prefix", "suffix"];
+      fieldsToMatch = ['family', 'given', 'text', 'prefix', 'suffix'];
     }
-    if (compiledSearchParam.path === "address") {
+    if (compiledSearchParam.path === 'address') {
       // address is a special parameter.
-      fieldsToMatch = [
-        "city",
-        "country",
-        "district",
-        "line",
-        "postalCode",
-        "state",
-        "text",
-      ];
+      fieldsToMatch = ['city', 'country', 'district', 'line', 'postalCode', 'state', 'text'];
     }
 
-    valuesFromResource = fieldsToMatch.flatMap((field) =>
-      getAllValuesForFHIRPath(resourceValue, field)
-    );
+    valuesFromResource = fieldsToMatch.flatMap((field) => getAllValuesForFHIRPath(resourceValue, field));
   }
 
   return valuesFromResource.some((f) => op(f, value));

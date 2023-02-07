@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
 
 export interface TokenSearchValue {
   system?: string;
@@ -14,16 +14,12 @@ export interface TokenSearchValue {
 
 // eslint-disable-next-line import/prefer-default-export
 export const parseTokenSearchValue = (param: string): TokenSearchValue => {
-  if (param === "|") {
-    throw new InvalidSearchParameterError(
-      `Invalid token search parameter: ${param}`
-    );
+  if (param === '|') {
+    throw new InvalidSearchParameterError(`Invalid token search parameter: ${param}`);
   }
-  const parts = param.split("|");
+  const parts = param.split('|');
   if (parts.length > 2) {
-    throw new InvalidSearchParameterError(
-      `Invalid token search parameter: ${param}`
-    );
+    throw new InvalidSearchParameterError(`Invalid token search parameter: ${param}`);
   }
   let system;
   let code;
@@ -32,11 +28,11 @@ export const parseTokenSearchValue = (param: string): TokenSearchValue => {
     [code] = parts;
   } else {
     [system, code] = parts;
-    if (system === "") {
+    if (system === '') {
       system = undefined;
       explicitNoSystemProperty = true;
     }
-    if (code === "") {
+    if (code === '') {
       code = undefined;
     }
   }

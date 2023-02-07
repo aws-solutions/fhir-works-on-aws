@@ -4,11 +4,11 @@
  *
  */
 
-import { getAllValuesForFHIRPath } from "./getAllValuesForFHIRPath";
+import { getAllValuesForFHIRPath } from './getAllValuesForFHIRPath';
 
-describe("getAllValuesForFHIRPath", () => {
-  test("simple path", () => {
-    const values = getAllValuesForFHIRPath({ a: { b: { c: 1 } } }, "a.b.c");
+describe('getAllValuesForFHIRPath', () => {
+  test('simple path', () => {
+    const values = getAllValuesForFHIRPath({ a: { b: { c: 1 } } }, 'a.b.c');
     expect(values).toMatchInlineSnapshot(`
             Array [
               1,
@@ -16,11 +16,8 @@ describe("getAllValuesForFHIRPath", () => {
         `);
   });
 
-  test("intermediate array", () => {
-    const values = getAllValuesForFHIRPath(
-      { a: [{ b: { c: 1 } }, { b: { c: 2 } }] },
-      "a.b.c"
-    );
+  test('intermediate array', () => {
+    const values = getAllValuesForFHIRPath({ a: [{ b: { c: 1 } }, { b: { c: 2 } }] }, 'a.b.c');
     expect(values).toMatchInlineSnapshot(`
             Array [
               1,
@@ -29,11 +26,8 @@ describe("getAllValuesForFHIRPath", () => {
         `);
   });
 
-  test("all arrays", () => {
-    const values = getAllValuesForFHIRPath(
-      { a: [{ b: { c: [1, 2] } }, { b: { c: [3, 4] } }] },
-      "a.b.c"
-    );
+  test('all arrays', () => {
+    const values = getAllValuesForFHIRPath({ a: [{ b: { c: [1, 2] } }, { b: { c: [3, 4] } }] }, 'a.b.c');
     expect(values).toMatchInlineSnapshot(`
             Array [
               1,
@@ -44,16 +38,13 @@ describe("getAllValuesForFHIRPath", () => {
         `);
   });
 
-  test("non-existent path", () => {
-    const values = getAllValuesForFHIRPath(
-      { a: { b: { c: 1 } } },
-      "some.path.x"
-    );
+  test('non-existent path', () => {
+    const values = getAllValuesForFHIRPath({ a: { b: { c: 1 } } }, 'some.path.x');
     expect(values).toMatchInlineSnapshot(`Array []`);
   });
 
-  test("empty resource", () => {
-    const values = getAllValuesForFHIRPath({}, "a.b.c");
+  test('empty resource', () => {
+    const values = getAllValuesForFHIRPath({}, 'a.b.c');
     expect(values).toMatchInlineSnapshot(`Array []`);
   });
 });

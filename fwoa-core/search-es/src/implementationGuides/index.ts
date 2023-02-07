@@ -3,12 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from "@aws/fhir-works-on-aws-interface";
-import { uniqBy } from "lodash";
-import { Parser, Grammar } from "nearley";
-import getComponentLogger from "../loggerBuilder";
-import fhirPathGrammar from "./reducedFHIRPath";
-import xPathGrammar from "./reducedXPath";
+import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
+import { uniqBy } from 'lodash';
+import { Parser, Grammar } from 'nearley';
+import getComponentLogger from '../loggerBuilder';
+import fhirPathGrammar from './reducedFHIRPath';
+import xPathGrammar from './reducedXPath';
 
 const logger = getComponentLogger();
 
@@ -17,7 +17,7 @@ const logger = getComponentLogger();
  * See: https://www.hl7.org/fhir/searchparameter.html
  */
 interface FhirSearchParam {
-  resourceType: "SearchParameter";
+  resourceType: 'SearchParameter';
   url: string;
   name: string;
   code: string;
@@ -31,27 +31,25 @@ interface FhirSearchParam {
 
 const isFhirSearchParam = (x: any): x is FhirSearchParam => {
   return (
-    typeof x === "object" &&
+    typeof x === 'object' &&
     x &&
-    x.resourceType === "SearchParameter" &&
-    typeof x.url === "string" &&
-    typeof x.name === "string" &&
-    typeof x.code === "string" &&
-    typeof x.description === "string" &&
+    x.resourceType === 'SearchParameter' &&
+    typeof x.url === 'string' &&
+    typeof x.name === 'string' &&
+    typeof x.code === 'string' &&
+    typeof x.description === 'string' &&
     Array.isArray(x.base) &&
-    x.base.every((y: any) => typeof y === "string") &&
-    typeof x.type === "string" &&
-    (x.expression === undefined || typeof x.expression === "string") &&
-    (x.xpath === undefined || typeof x.xpath === "string") &&
-    (x.target === undefined ||
-      (Array.isArray(x.target) &&
-        x.target.every((y: any) => typeof y === "string")))
+    x.base.every((y: any) => typeof y === 'string') &&
+    typeof x.type === 'string' &&
+    (x.expression === undefined || typeof x.expression === 'string') &&
+    (x.xpath === undefined || typeof x.xpath === 'string') &&
+    (x.target === undefined || (Array.isArray(x.target) && x.target.every((y: any) => typeof y === 'string')))
   );
 };
 
 // validates any semantic necessities of FHIR Search Parameters
 const validateSearchParam = (param: FhirSearchParam) => {
-  if (param.type === "reference") {
+  if (param.type === 'reference') {
     if (!param.target || param.target?.length === 0) {
       throw new Error(
         `Search Parameter of type reference must have a specified target. Error in ${JSON.stringify(
@@ -65,13 +63,13 @@ const validateSearchParam = (param: FhirSearchParam) => {
 };
 
 const UNSUPPORTED_SEARCH_PARAMS = [
-  "http://hl7.org/fhir/SearchParameter/Bundle-composition", // Uses "Bundle.entry[0]". We have no way of searching the nth element of an array
-  "http://hl7.org/fhir/SearchParameter/Bundle-message", // Uses "Bundle.entry[0]". We have no way of searching the nth element of an array
+  'http://hl7.org/fhir/SearchParameter/Bundle-composition', // Uses "Bundle.entry[0]". We have no way of searching the nth element of an array
+  'http://hl7.org/fhir/SearchParameter/Bundle-message', // Uses "Bundle.entry[0]". We have no way of searching the nth element of an array
 
-  "http://hl7.org/fhir/SearchParameter/Patient-deceased", // Does not define a proper path "Patient.deceased.exists() and Patient.deceased != false"
+  'http://hl7.org/fhir/SearchParameter/Patient-deceased', // Does not define a proper path "Patient.deceased.exists() and Patient.deceased != false"
 
-  "http://hl7.org/fhir/SearchParameter/Organization-phonetic", // Requires custom code for phonetic matching
-  "http://hl7.org/fhir/SearchParameter/individual-phonetic", // Requires custom code for phonetic matching
+  'http://hl7.org/fhir/SearchParameter/Organization-phonetic', // Requires custom code for phonetic matching
+  'http://hl7.org/fhir/SearchParameter/individual-phonetic' // Requires custom code for phonetic matching
 ];
 
 const isParamSupported = (searchParam: FhirSearchParam) => {
@@ -79,18 +77,14 @@ const isParamSupported = (searchParam: FhirSearchParam) => {
     return false;
   }
 
-  if (searchParam.type === "composite") {
-    logger.warn(
-      `search parameters of type "composite" are not supported. Skipping ${searchParam.url}`
-    );
+  if (searchParam.type === 'composite') {
+    logger.warn(`search parameters of type "composite" are not supported. Skipping ${searchParam.url}`);
     return false;
   }
 
-  if (searchParam.type === "special") {
+  if (searchParam.type === 'special') {
     // requires custom code. i.e. Location.near is supposed to do a geospatial search.
-    logger.warn(
-      `search parameters of type "special" are not supported. Skipping ${searchParam.url}`
-    );
+    logger.warn(`search parameters of type "special" are not supported. Skipping ${searchParam.url}`);
     return false;
   }
 
@@ -108,7 +102,7 @@ function mergeParserResults(primaryParser: Parser, secondaryParser: Parser) {
   return uniqBy(
     [
       ...primaryParser.results[0], // nearley returns an array of results. The array always has exactly one element for non ambiguous grammars
-      ...secondaryParser.results[0],
+      ...secondaryParser.results[0]
     ],
     (x) => `${x.resourceType}.${x.path}`
   );
@@ -126,13 +120,7 @@ const compile = async (searchParams: any[]): Promise<any> => {
       validateSearchParam(s);
       validFhirSearchParams.push(s);
     } else {
-      throw new Error(
-        `The following input is not a search parameter: ${JSON.stringify(
-          s,
-          null,
-          2
-        )}`
-      );
+      throw new Error(`The following input is not a search parameter: ${JSON.stringify(s, null, 2)}`);
     }
   });
 
@@ -152,7 +140,7 @@ ${JSON.stringify(
     name: searchParam.name,
     url: searchParam.url,
     expression: searchParam.expression,
-    xpath: searchParam.xpath,
+    xpath: searchParam.xpath
   },
   null,
   2
@@ -170,7 +158,7 @@ Original error message was: ${(e as any).message}`
 
       return {
         ...searchParam,
-        compiled,
+        compiled
       };
     })
     .flatMap((searchParam) => {
@@ -184,9 +172,7 @@ Original error message was: ${(e as any).message}`
         description: searchParam.description,
         base,
         target: searchParam.target,
-        compiled: searchParam.compiled.filter(
-          (x: any) => x.resourceType === base
-        ),
+        compiled: searchParam.compiled.filter((x: any) => x.resourceType === base)
       }));
     });
 
@@ -195,5 +181,5 @@ Original error message was: ${(e as any).message}`
 
 // eslint-disable-next-line import/prefer-default-export
 export const SearchImplementationGuides: ImplementationGuides = {
-  compile,
+  compile
 };

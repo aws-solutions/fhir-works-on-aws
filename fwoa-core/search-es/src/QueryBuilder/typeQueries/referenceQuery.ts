@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { ReferenceSearchValue } from "../../FhirQueryParser/typeParsers/referenceParser";
-import { CompiledSearchParam } from "../../FHIRSearchParametersRegistry";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { ReferenceSearchValue } from '../../FhirQueryParser/typeParsers/referenceParser';
+import { CompiledSearchParam } from '../../FHIRSearchParametersRegistry';
 
 const SUPPORTED_MODIFIERS: string[] = [];
 
@@ -20,34 +20,27 @@ export function referenceQuery(
   modifier?: string
 ): any {
   if (modifier && !SUPPORTED_MODIFIERS.includes(modifier)) {
-    throw new InvalidSearchParameterError(
-      `Unsupported reference search modifier: ${modifier}`
-    );
+    throw new InvalidSearchParameterError(`Unsupported reference search modifier: ${modifier}`);
   }
 
   let references: string[] = [];
   switch (value.referenceType) {
-    case "idOnly":
+    case 'idOnly':
       references = target.flatMap((targetType: string) => {
-        return [
-          `${baseUrl}/${targetType}/${value.id}`,
-          `${targetType}/${value.id}`,
-        ];
+        return [`${baseUrl}/${targetType}/${value.id}`, `${targetType}/${value.id}`];
       });
       break;
-    case "relative":
+    case 'relative':
       references.push(`${value.resourceType}/${value.id}`);
       references.push(`${baseUrl}/${value.resourceType}/${value.id}`);
       break;
-    case "url":
+    case 'url':
       if (value.fhirServiceBaseUrl === baseUrl) {
         references.push(`${value.resourceType}/${value.id}`);
       }
-      references.push(
-        `${value.fhirServiceBaseUrl}/${value.resourceType}/${value.id}`
-      );
+      references.push(`${value.fhirServiceBaseUrl}/${value.resourceType}/${value.id}`);
       break;
-    case "unparseable":
+    case 'unparseable':
       references.push(value.rawValue);
       break;
     default:
@@ -56,8 +49,8 @@ export function referenceQuery(
       return exhaustiveCheck;
   }
 
-  const keywordSuffix = useKeywordSubFields ? ".keyword" : "";
+  const keywordSuffix = useKeywordSubFields ? '.keyword' : '';
   return {
-    terms: { [`${compiled.path}.reference${keywordSuffix}`]: references },
+    terms: { [`${compiled.path}.reference${keywordSuffix}`]: references }
   };
 }

@@ -4,7 +4,7 @@
  *
  */
 
-import { ReferenceSearchValue } from "../../FhirQueryParser/typeParsers/referenceParser";
+import { ReferenceSearchValue } from '../../FhirQueryParser/typeParsers/referenceParser';
 
 /**
  * @param searchValue - parsed search value
@@ -17,38 +17,32 @@ import { ReferenceSearchValue } from "../../FhirQueryParser/typeParsers/referenc
 export const referenceMatch = (
   searchValue: ReferenceSearchValue,
   resourceValue: any,
-  {
-    fhirServiceBaseUrl,
-    target = [],
-  }: { fhirServiceBaseUrl?: string; target?: string[] }
+  { fhirServiceBaseUrl, target = [] }: { fhirServiceBaseUrl?: string; target?: string[] }
 ): boolean => {
   const reference = resourceValue?.reference;
 
   switch (searchValue.referenceType) {
-    case "idOnly":
+    case 'idOnly':
       return target.some(
         (targetType) =>
           (fhirServiceBaseUrl !== undefined &&
-            `${fhirServiceBaseUrl}/${targetType}/${searchValue.id}` ===
-              reference) ||
+            `${fhirServiceBaseUrl}/${targetType}/${searchValue.id}` === reference) ||
           `${targetType}/${searchValue.id}` === reference
       );
-    case "relative":
+    case 'relative':
       return (
         (fhirServiceBaseUrl !== undefined &&
-          `${fhirServiceBaseUrl}/${searchValue.resourceType}/${searchValue.id}` ===
-            reference) ||
+          `${fhirServiceBaseUrl}/${searchValue.resourceType}/${searchValue.id}` === reference) ||
         `${searchValue.resourceType}/${searchValue.id}` === reference
       );
-    case "url":
+    case 'url':
       return (
-        `${searchValue.fhirServiceBaseUrl}/${searchValue.resourceType}/${searchValue.id}` ===
-          reference ||
+        `${searchValue.fhirServiceBaseUrl}/${searchValue.resourceType}/${searchValue.id}` === reference ||
         (fhirServiceBaseUrl !== undefined &&
           searchValue.fhirServiceBaseUrl === fhirServiceBaseUrl &&
           `${searchValue.resourceType}/${searchValue.id}` === reference)
       );
-    case "unparseable":
+    case 'unparseable':
       return reference === searchValue.rawValue;
     default:
       // eslint-disable-next-line no-case-declarations

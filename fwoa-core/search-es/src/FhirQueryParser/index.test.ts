@@ -4,15 +4,15 @@
  *
  */
 
-import { FHIRSearchParametersRegistry } from "../FHIRSearchParametersRegistry";
-import { parseQuery } from "./index";
+import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
+import { parseQuery } from './index';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
 
-describe("queryParser", () => {
-  test("string with modifier", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      "name:exact": "John",
+describe('queryParser', () => {
+  test('string with modifier', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      'name:exact': 'John'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -44,19 +44,17 @@ describe("queryParser", () => {
         `);
   });
 
-  test("string with unknown modifier", () => {
+  test('string with unknown modifier', () => {
     expect(() =>
-      parseQuery(fhirSearchParametersRegistry, "Patient", {
-        "name:unknownModifier": "John",
+      parseQuery(fhirSearchParametersRegistry, 'Patient', {
+        'name:unknownModifier': 'John'
       })
-    ).toThrowErrorMatchingInlineSnapshot(
-      `"Unsupported string search modifier: unknownModifier"`
-    );
+    ).toThrowErrorMatchingInlineSnapshot(`"Unsupported string search modifier: unknownModifier"`);
   });
 
-  test("string OR", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      "name:exact": "John,Anna",
+  test('string OR', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      'name:exact': 'John,Anna'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -89,9 +87,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("string AND", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      "name:exact": ["John", "Anna"],
+  test('string AND', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      'name:exact': ['John', 'Anna']
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -144,9 +142,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("number", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "ChargeItem", {
-      "factor-override": "10",
+  test('number', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'ChargeItem', {
+      'factor-override': '10'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -185,9 +183,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("date", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      birthdate: "1999-09-09",
+  test('date', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      birthdate: '1999-09-09'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -230,9 +228,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("quantity", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Observation", {
-      "value-quantity": "5.4|http://unitsofmeasure.org|mg",
+  test('quantity', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Observation', {
+      'value-quantity': '5.4|http://unitsofmeasure.org|mg'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -313,9 +311,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("token", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      identifier: "http://acme.org/patient|2345",
+  test('token', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      identifier: 'http://acme.org/patient|2345'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -351,9 +349,9 @@ describe("queryParser", () => {
         `);
   });
 
-  test("chained params", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "DiagnosticReport", {
-      "subject.name": "DiagnosticReport?subject.name=peter",
+  test('chained params', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'DiagnosticReport', {
+      'subject.name': 'DiagnosticReport?subject.name=peter'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -368,10 +366,10 @@ describe("queryParser", () => {
         `);
   });
 
-  test("inclusion params", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "MedicationRequest", {
-      _include: "MedicationRequest:patient",
-      _revinclude: "Provenance:target",
+  test('inclusion params', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'MedicationRequest', {
+      _include: 'MedicationRequest:patient',
+      _revinclude: 'Provenance:target'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {
@@ -399,10 +397,10 @@ describe("queryParser", () => {
         `);
   });
 
-  test("other params", () => {
-    const q = parseQuery(fhirSearchParametersRegistry, "Patient", {
-      _count: "10",
-      _sort: "_lastUpdated",
+  test('other params', () => {
+    const q = parseQuery(fhirSearchParametersRegistry, 'Patient', {
+      _count: '10',
+      _sort: '_lastUpdated'
     });
     expect(q).toMatchInlineSnapshot(`
             Object {

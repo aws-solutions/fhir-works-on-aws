@@ -10,23 +10,23 @@
 // eslint-disable-next-line import/prefer-default-export
 export const CUSTOM_MAPPINGS = {
   id: {
-    type: "keyword",
-    index: true,
+    type: 'keyword',
+    index: true
   },
   resourceType: {
-    type: "keyword",
-    index: true,
+    type: 'keyword',
+    index: true
   },
   _references: {
-    type: "keyword",
-    index: true,
+    type: 'keyword',
+    index: true
   },
   documentStatus: {
-    type: "keyword",
-    index: true,
+    type: 'keyword',
+    index: true
   },
   _tenantId: {
-    type: "keyword",
-    index: true,
-  },
+    type: 'keyword',
+    index: true
+  }
 };

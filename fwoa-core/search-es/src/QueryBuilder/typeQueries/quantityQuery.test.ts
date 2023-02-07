@@ -3,26 +3,19 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { parseQuantitySearchValue } from "../../FhirQueryParser/typeParsers/quantityParser";
-import { FHIRSearchParametersRegistry } from "../../FHIRSearchParametersRegistry";
-import { quantityQuery } from "./quantityQuery";
+import { parseQuantitySearchValue } from '../../FhirQueryParser/typeParsers/quantityParser';
+import { FHIRSearchParametersRegistry } from '../../FHIRSearchParametersRegistry';
+import { quantityQuery } from './quantityQuery';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
-const quantityParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Observation",
-  "value-quantity"
-)!.compiled[0];
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
+const quantityParam = fhirSearchParametersRegistry.getSearchParameter('Observation', 'value-quantity')!
+  .compiled[0];
 
-describe("quantityQuery", () => {
-  describe("valid inputs", () => {
-    test("5.4|http://unitsofmeasure.org|mg", () => {
-      expect(
-        quantityQuery(
-          quantityParam,
-          parseQuantitySearchValue("5.4|http://unitsofmeasure.org|mg"),
-          true
-        )
-      ).toMatchInlineSnapshot(`
+describe('quantityQuery', () => {
+  describe('valid inputs', () => {
+    test('5.4|http://unitsofmeasure.org|mg', () => {
+      expect(quantityQuery(quantityParam, parseQuantitySearchValue('5.4|http://unitsofmeasure.org|mg'), true))
+        .toMatchInlineSnapshot(`
                 Object {
                   "bool": Object {
                     "must": Array [
@@ -57,13 +50,9 @@ describe("quantityQuery", () => {
                 }
             `);
     });
-    test("5.40e-3|http://unitsofmeasure.org|g", () => {
+    test('5.40e-3|http://unitsofmeasure.org|g', () => {
       expect(
-        quantityQuery(
-          quantityParam,
-          parseQuantitySearchValue("5.40e-3|http://unitsofmeasure.org|g"),
-          true
-        )
+        quantityQuery(quantityParam, parseQuantitySearchValue('5.40e-3|http://unitsofmeasure.org|g'), true)
       ).toMatchInlineSnapshot(`
                 Object {
                   "bool": Object {
@@ -99,10 +88,8 @@ describe("quantityQuery", () => {
                 }
             `);
     });
-    test("5.4||mg", () => {
-      expect(
-        quantityQuery(quantityParam, parseQuantitySearchValue("5.4||mg"), true)
-      ).toMatchInlineSnapshot(`
+    test('5.4||mg', () => {
+      expect(quantityQuery(quantityParam, parseQuantitySearchValue('5.4||mg'), true)).toMatchInlineSnapshot(`
                 Object {
                   "bool": Object {
                     "must": Array [
@@ -129,10 +116,8 @@ describe("quantityQuery", () => {
                 }
             `);
     });
-    test("5.4", () => {
-      expect(
-        quantityQuery(quantityParam, parseQuantitySearchValue("5.4"), true)
-      ).toMatchInlineSnapshot(`
+    test('5.4', () => {
+      expect(quantityQuery(quantityParam, parseQuantitySearchValue('5.4'), true)).toMatchInlineSnapshot(`
                 Object {
                   "range": Object {
                     "valueQuantity.value": Object {
@@ -143,13 +128,9 @@ describe("quantityQuery", () => {
                 }
             `);
     });
-    test("le5.4|http://unitsofmeasure.org|mg", () => {
+    test('le5.4|http://unitsofmeasure.org|mg', () => {
       expect(
-        quantityQuery(
-          quantityParam,
-          parseQuantitySearchValue("le5.4|http://unitsofmeasure.org|mg"),
-          true
-        )
+        quantityQuery(quantityParam, parseQuantitySearchValue('le5.4|http://unitsofmeasure.org|mg'), true)
       ).toMatchInlineSnapshot(`
                 Object {
                   "bool": Object {
@@ -184,13 +165,9 @@ describe("quantityQuery", () => {
                 }
             `);
     });
-    test("le5.4|http://unitsofmeasure.org|mg with no keyword", () => {
+    test('le5.4|http://unitsofmeasure.org|mg with no keyword', () => {
       expect(
-        quantityQuery(
-          quantityParam,
-          parseQuantitySearchValue("le5.4|http://unitsofmeasure.org|mg"),
-          false
-        )
+        quantityQuery(quantityParam, parseQuantitySearchValue('le5.4|http://unitsofmeasure.org|mg'), false)
       ).toMatchInlineSnapshot(`
                 Object {
                   "bool": Object {

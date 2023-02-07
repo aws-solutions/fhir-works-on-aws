@@ -3,26 +3,17 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FHIRSearchParametersRegistry } from "../../FHIRSearchParametersRegistry";
-import { stringQuery } from "./stringQuery";
+import { FHIRSearchParametersRegistry } from '../../FHIRSearchParametersRegistry';
+import { stringQuery } from './stringQuery';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
-const nameParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "name"
-)!.compiled[0];
-const addressParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "address"
-)!.compiled[0];
-const givenParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "given"
-)!.compiled[0];
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
+const nameParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'name')!.compiled[0];
+const addressParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'address')!.compiled[0];
+const givenParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'given')!.compiled[0];
 
-describe("stringQuery", () => {
-  test("simple value", () => {
-    expect(stringQuery(nameParam, "Robert Bell")).toMatchInlineSnapshot(`
+describe('stringQuery', () => {
+  test('simple value', () => {
+    expect(stringQuery(nameParam, 'Robert Bell')).toMatchInlineSnapshot(`
             Object {
               "multi_match": Object {
                 "fields": Array [
@@ -35,8 +26,8 @@ describe("stringQuery", () => {
             }
         `);
   });
-  test("simple value; with forward slash", () => {
-    expect(stringQuery(nameParam, "Robert/Bobby Bell")).toMatchInlineSnapshot(`
+  test('simple value; with forward slash', () => {
+    expect(stringQuery(nameParam, 'Robert/Bobby Bell')).toMatchInlineSnapshot(`
             Object {
               "multi_match": Object {
                 "fields": Array [
@@ -49,8 +40,8 @@ describe("stringQuery", () => {
             }
         `);
   });
-  test("simple value; with backwards slash", () => {
-    expect(stringQuery(nameParam, "Robert\\Bobby Bell")).toMatchInlineSnapshot(`
+  test('simple value; with backwards slash', () => {
+    expect(stringQuery(nameParam, 'Robert\\Bobby Bell')).toMatchInlineSnapshot(`
             Object {
               "multi_match": Object {
                 "fields": Array [
@@ -63,8 +54,8 @@ describe("stringQuery", () => {
             }
         `);
   });
-  test("simple value; with characters", () => {
-    expect(stringQuery(nameParam, "平仮名")).toMatchInlineSnapshot(`
+  test('simple value; with characters', () => {
+    expect(stringQuery(nameParam, '平仮名')).toMatchInlineSnapshot(`
             Object {
               "multi_match": Object {
                 "fields": Array [
@@ -78,11 +69,10 @@ describe("stringQuery", () => {
         `);
   });
 
-  describe("modifiers", () => {
-    describe(":exact", () => {
-      test("simple value", () => {
-        expect(stringQuery(nameParam, "Robert Bell", "exact"))
-          .toMatchInlineSnapshot(`
+  describe('modifiers', () => {
+    describe(':exact', () => {
+      test('simple value', () => {
+        expect(stringQuery(nameParam, 'Robert Bell', 'exact')).toMatchInlineSnapshot(`
                       Object {
                         "multi_match": Object {
                           "fields": Array [
@@ -95,9 +85,8 @@ describe("stringQuery", () => {
                       }
               `);
       });
-      test("simple value withcase differences", () => {
-        expect(stringQuery(nameParam, "RoBeRt BeLL", "exact"))
-          .toMatchInlineSnapshot(`
+      test('simple value withcase differences', () => {
+        expect(stringQuery(nameParam, 'RoBeRt BeLL', 'exact')).toMatchInlineSnapshot(`
                       Object {
                         "multi_match": Object {
                           "fields": Array [
@@ -112,10 +101,9 @@ describe("stringQuery", () => {
       });
     });
 
-    describe(":contains", () => {
-      test("simple parameter", () => {
-        expect(stringQuery(givenParam, "anne", "contains"))
-          .toMatchInlineSnapshot(`
+    describe(':contains', () => {
+      test('simple parameter', () => {
+        expect(stringQuery(givenParam, 'anne', 'contains')).toMatchInlineSnapshot(`
                                 Object {
                                   "wildcard": Object {
                                     "name.given": Object {
@@ -126,9 +114,8 @@ describe("stringQuery", () => {
                         `);
       });
 
-      test("name parameter", () => {
-        expect(stringQuery(nameParam, "anne", "contains"))
-          .toMatchInlineSnapshot(`
+      test('name parameter', () => {
+        expect(stringQuery(nameParam, 'anne', 'contains')).toMatchInlineSnapshot(`
                     Object {
                       "bool": Object {
                         "should": Array [
@@ -180,9 +167,8 @@ describe("stringQuery", () => {
                 `);
       });
 
-      test("address parameter", () => {
-        expect(stringQuery(addressParam, "new", "contains"))
-          .toMatchInlineSnapshot(`
+      test('address parameter', () => {
+        expect(stringQuery(addressParam, 'new', 'contains')).toMatchInlineSnapshot(`
                     Object {
                       "bool": Object {
                         "should": Array [

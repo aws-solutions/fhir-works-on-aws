@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { TypeSearchRequest } from "@aws/fhir-works-on-aws-interface";
-import { isEmpty } from "lodash";
+import { TypeSearchRequest } from '@aws/fhir-works-on-aws-interface';
+import { isEmpty } from 'lodash';
 import {
   DateSearchValue,
   NumberSearchValue,
@@ -12,21 +12,21 @@ import {
   parseQuery,
   QuantitySearchValue,
   QueryParam,
-  TokenSearchValue,
-} from "../FhirQueryParser";
-import { ReferenceSearchValue } from "../FhirQueryParser/typeParsers/referenceParser";
+  TokenSearchValue
+} from '../FhirQueryParser';
+import { ReferenceSearchValue } from '../FhirQueryParser/typeParsers/referenceParser';
 import {
   CompiledSearchParam,
   FHIRSearchParametersRegistry,
-  SearchParam,
-} from "../FHIRSearchParametersRegistry";
-import { dateQuery } from "./typeQueries/dateQuery";
-import { numberQuery } from "./typeQueries/numberQuery";
-import { quantityQuery } from "./typeQueries/quantityQuery";
-import { referenceQuery } from "./typeQueries/referenceQuery";
-import { stringQuery } from "./typeQueries/stringQuery";
-import { tokenQuery } from "./typeQueries/tokenQuery";
-import { uriQuery } from "./typeQueries/uriQuery";
+  SearchParam
+} from '../FHIRSearchParametersRegistry';
+import { dateQuery } from './typeQueries/dateQuery';
+import { numberQuery } from './typeQueries/numberQuery';
+import { quantityQuery } from './typeQueries/quantityQuery';
+import { referenceQuery } from './typeQueries/referenceQuery';
+import { stringQuery } from './typeQueries/stringQuery';
+import { tokenQuery } from './typeQueries/tokenQuery';
+import { uriQuery } from './typeQueries/uriQuery';
 
 function typeQueryWithConditions(
   searchParam: SearchParam,
@@ -38,21 +38,13 @@ function typeQueryWithConditions(
 ): any {
   let typeQuery: any;
   switch (searchParam.type) {
-    case "string":
-      typeQuery = stringQuery(
-        compiledSearchParam,
-        searchValue as string,
-        modifier
-      );
+    case 'string':
+      typeQuery = stringQuery(compiledSearchParam, searchValue as string, modifier);
       break;
-    case "date":
-      typeQuery = dateQuery(
-        compiledSearchParam,
-        searchValue as DateSearchValue,
-        modifier
-      );
+    case 'date':
+      typeQuery = dateQuery(compiledSearchParam, searchValue as DateSearchValue, modifier);
       break;
-    case "token":
+    case 'token':
       typeQuery = tokenQuery(
         compiledSearchParam,
         searchValue as TokenSearchValue,
@@ -60,14 +52,10 @@ function typeQueryWithConditions(
         modifier
       );
       break;
-    case "number":
-      typeQuery = numberQuery(
-        compiledSearchParam,
-        searchValue as NumberSearchValue,
-        modifier
-      );
+    case 'number':
+      typeQuery = numberQuery(compiledSearchParam, searchValue as NumberSearchValue, modifier);
       break;
-    case "quantity":
+    case 'quantity':
       typeQuery = quantityQuery(
         compiledSearchParam,
         searchValue as QuantitySearchValue,
@@ -75,7 +63,7 @@ function typeQueryWithConditions(
         modifier
       );
       break;
-    case "reference":
+    case 'reference':
       typeQuery = referenceQuery(
         compiledSearchParam,
         searchValue as ReferenceSearchValue,
@@ -86,22 +74,13 @@ function typeQueryWithConditions(
         modifier
       );
       break;
-    case "uri":
-      typeQuery = uriQuery(
-        compiledSearchParam,
-        searchValue as string,
-        useKeywordSubFields,
-        modifier
-      );
+    case 'uri':
+      typeQuery = uriQuery(compiledSearchParam, searchValue as string, useKeywordSubFields, modifier);
       break;
-    case "composite":
-    case "special":
+    case 'composite':
+    case 'special':
     default:
-      typeQuery = stringQuery(
-        compiledSearchParam,
-        searchValue as string,
-        modifier
-      );
+      typeQuery = stringQuery(compiledSearchParam, searchValue as string, modifier);
   }
   // In most cases conditions are used for fields that are an array of objects
   // Ideally we should be using a nested query, but that'd require to update the index mappings.
@@ -115,16 +94,13 @@ function typeQueryWithConditions(
           typeQuery,
           {
             multi_match: {
-              fields: [
-                compiledSearchParam.condition[0],
-                `${compiledSearchParam.condition[0]}.*`,
-              ],
+              fields: [compiledSearchParam.condition[0], `${compiledSearchParam.condition[0]}.*`],
               query: compiledSearchParam.condition[2],
-              lenient: true,
-            },
-          },
-        ],
-      },
+              lenient: true
+            }
+          }
+        ]
+      }
     };
   }
   return typeQuery;
@@ -160,8 +136,8 @@ function searchParamQuery(
   }
   return {
     bool: {
-      should: queryList,
-    },
+      should: queryList
+    }
   };
 }
 
@@ -190,28 +166,27 @@ export const buildQueryForAllSearchParameters = (
       request.resourceType,
       chainedParameterQuery
     );
-    const ESChainedParamQuery =
-      parsedFhirQueryForChainedParams.searchParams.map((queryParam) => {
-        return searchParamQuery(
-          queryParam.searchParam,
-          queryParam.parsedSearchValues,
-          useKeywordSubFields,
-          request.baseUrl,
-          queryParam.modifier
-        );
-      });
+    const ESChainedParamQuery = parsedFhirQueryForChainedParams.searchParams.map((queryParam) => {
+      return searchParamQuery(
+        queryParam.searchParam,
+        queryParam.parsedSearchValues,
+        useKeywordSubFields,
+        request.baseUrl,
+        queryParam.modifier
+      );
+    });
     esQuery.push({
       bool: {
-        should: ESChainedParamQuery,
-      },
+        should: ESChainedParamQuery
+      }
     });
   }
   return {
     bool: {
       filter: additionalFilters,
-      must: esQuery,
-    },
+      must: esQuery
+    }
   };
 };
 
-export { buildSortClause } from "./sort";
+export { buildSortClause } from './sort';

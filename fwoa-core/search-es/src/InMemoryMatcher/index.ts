@@ -11,18 +11,18 @@ import {
   QuantitySearchValue,
   QueryParam,
   StringLikeSearchValue,
-  TokenSearchValue,
-} from "../FhirQueryParser";
-import { ReferenceSearchValue } from "../FhirQueryParser/typeParsers/referenceParser";
-import { CompiledSearchParam } from "../FHIRSearchParametersRegistry";
-import { getAllValuesForFHIRPath } from "../getAllValuesForFHIRPath";
-import { dateMatch } from "./matchers/dateMatch";
-import { numberMatch } from "./matchers/numberMatch";
-import { quantityMatch } from "./matchers/quantityMatch";
-import { referenceMatch } from "./matchers/referenceMatcher";
-import { stringMatch } from "./matchers/stringMatch";
-import { tokenMatch } from "./matchers/tokenMatch";
-import { uriMatch } from "./matchers/uriMatch";
+  TokenSearchValue
+} from '../FhirQueryParser';
+import { ReferenceSearchValue } from '../FhirQueryParser/typeParsers/referenceParser';
+import { CompiledSearchParam } from '../FHIRSearchParametersRegistry';
+import { getAllValuesForFHIRPath } from '../getAllValuesForFHIRPath';
+import { dateMatch } from './matchers/dateMatch';
+import { numberMatch } from './matchers/numberMatch';
+import { quantityMatch } from './matchers/quantityMatch';
+import { referenceMatch } from './matchers/referenceMatcher';
+import { stringMatch } from './matchers/stringMatch';
+import { tokenMatch } from './matchers/tokenMatch';
+import { uriMatch } from './matchers/uriMatch';
 
 const typeMatcher = (
   queryParam: QueryParam,
@@ -34,35 +34,26 @@ const typeMatcher = (
   const { searchParam, modifier } = queryParam;
 
   switch (searchParam.type) {
-    case "string":
-      return stringMatch(
-        compiledSearchParam,
-        searchValue as StringLikeSearchValue,
-        resourceValue,
-        modifier
-      );
-    case "date":
+    case 'string':
+      return stringMatch(compiledSearchParam, searchValue as StringLikeSearchValue, resourceValue, modifier);
+    case 'date':
       return dateMatch(searchValue as DateSearchValue, resourceValue);
-    case "number":
+    case 'number':
       return numberMatch(searchValue as NumberSearchValue, resourceValue);
-    case "quantity":
+    case 'quantity':
       return quantityMatch(searchValue as QuantitySearchValue, resourceValue);
-    case "reference":
-      return referenceMatch(
-        searchValue as ReferenceSearchValue,
-        resourceValue,
-        {
-          target: searchParam.target,
-          fhirServiceBaseUrl,
-        }
-      );
-    case "token":
+    case 'reference':
+      return referenceMatch(searchValue as ReferenceSearchValue, resourceValue, {
+        target: searchParam.target,
+        fhirServiceBaseUrl
+      });
+    case 'token':
       return tokenMatch(searchValue as TokenSearchValue, resourceValue);
-    case "composite":
+    case 'composite':
       break;
-    case "special":
+    case 'special':
       break;
-    case "uri":
+    case 'uri':
       return uriMatch(searchValue as StringLikeSearchValue, resourceValue);
     default:
       // eslint-disable-next-line no-case-declarations
@@ -73,30 +64,24 @@ const typeMatcher = (
   return false;
 };
 
-function evaluateCompiledCondition(
-  condition: string[] | undefined,
-  resource: any
-): boolean {
+function evaluateCompiledCondition(condition: string[] | undefined, resource: any): boolean {
   if (condition === undefined) {
     return true;
   }
 
   const resourceValues = getAllValuesForFHIRPath(resource, condition[0]);
 
-  if (condition[1] === "=") {
-    return resourceValues.some(
-      (resourceValue) => resourceValue === condition[2]
-    );
+  if (condition[1] === '=') {
+    return resourceValues.some((resourceValue) => resourceValue === condition[2]);
   }
 
-  if (condition[1] === "resolve") {
+  if (condition[1] === 'resolve') {
     const resourceType = condition[2];
     return resourceValues.some((resourceValue) => {
       const referenceField = resourceValue?.reference;
       return (
         resourceValue?.type === resourceType ||
-        (typeof referenceField === "string" &&
-          referenceField.startsWith(`${resourceType}/`))
+        (typeof referenceField === 'string' && referenceField.startsWith(`${resourceType}/`))
       );
     });
   }
@@ -115,7 +100,7 @@ function evaluateQueryParam(
         evaluateCompiledCondition(compiled.condition, resource) &&
         getAllValuesForFHIRPath(resource, compiled.path).some((resourceValue) =>
           typeMatcher(queryParam, compiled, parsedSearchValue, resourceValue, {
-            fhirServiceBaseUrl,
+            fhirServiceBaseUrl
           })
         )
     )

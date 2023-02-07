@@ -4,108 +4,108 @@
  *
  */
 
-import { QuantitySearchValue } from "../../FhirQueryParser";
-import { quantityMatch } from "./quantityMatch";
+import { QuantitySearchValue } from '../../FhirQueryParser';
+import { quantityMatch } from './quantityMatch';
 
-describe("quantityMatch", () => {
-  test("only number", () => {
+describe('quantityMatch', () => {
+  test('only number', () => {
     const quantitySearchValue: QuantitySearchValue = {
-      prefix: "eq",
-      system: "",
-      code: "",
+      prefix: 'eq',
+      system: '',
+      code: '',
       number: 10,
-      implicitRange: { start: 9.5, end: 10.5 },
+      implicitRange: { start: 9.5, end: 10.5 }
     };
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "SYSTEM",
-        code: "CODE",
-        unit: "U",
+        system: 'SYSTEM',
+        code: 'CODE',
+        unit: 'U'
       })
     ).toBe(true);
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 999,
-        system: "SYSTEM",
-        code: "CODE",
-        unit: "U",
+        system: 'SYSTEM',
+        code: 'CODE',
+        unit: 'U'
       })
     ).toBe(false);
   });
 
-  test("system and code", () => {
+  test('system and code', () => {
     const quantitySearchValue: QuantitySearchValue = {
-      prefix: "eq",
-      system: "SYSTEM",
-      code: "CODE",
+      prefix: 'eq',
+      system: 'SYSTEM',
+      code: 'CODE',
       number: 10,
-      implicitRange: { start: 9.5, end: 10.5 },
+      implicitRange: { start: 9.5, end: 10.5 }
     };
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "SYSTEM",
-        code: "CODE",
-        unit: "U",
+        system: 'SYSTEM',
+        code: 'CODE',
+        unit: 'U'
       })
     ).toBe(true);
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "xxxx",
-        code: "CODE",
-        unit: "U",
+        system: 'xxxx',
+        code: 'CODE',
+        unit: 'U'
       })
     ).toBe(false);
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "SYSTEM",
-        code: "xxxx",
-        unit: "U",
+        system: 'SYSTEM',
+        code: 'xxxx',
+        unit: 'U'
       })
     ).toBe(false);
   });
 
-  test("only code", () => {
+  test('only code', () => {
     const quantitySearchValue: QuantitySearchValue = {
-      prefix: "eq",
-      system: "",
-      code: "CODE",
+      prefix: 'eq',
+      system: '',
+      code: 'CODE',
       number: 10,
-      implicitRange: { start: 9.5, end: 10.5 },
+      implicitRange: { start: 9.5, end: 10.5 }
     };
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "xxxx",
-        code: "CODE",
-        unit: "U",
+        system: 'xxxx',
+        code: 'CODE',
+        unit: 'U'
       })
     ).toBe(true);
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "xxxx",
-        code: "xxxx",
-        unit: "CODE",
+        system: 'xxxx',
+        code: 'xxxx',
+        unit: 'CODE'
       })
     ).toBe(true);
 
     expect(
       quantityMatch(quantitySearchValue, {
         value: 10,
-        system: "xxxx",
-        code: "xxxx",
-        unit: "xxxx",
+        system: 'xxxx',
+        code: 'xxxx',
+        unit: 'xxxx'
       })
     ).toBe(false);
   });

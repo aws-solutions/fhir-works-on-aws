@@ -4,29 +4,29 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import getComponentLogger from "../../loggerBuilder";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import getComponentLogger from '../../loggerBuilder';
 
 export interface ReferenceSearchValueIdOnly {
-  referenceType: "idOnly";
+  referenceType: 'idOnly';
   id: string;
 }
 
 export interface ReferenceSearchValueRelative {
-  referenceType: "relative";
+  referenceType: 'relative';
   id: string;
   resourceType: string;
 }
 
 export interface ReferenceSearchValueUrl {
-  referenceType: "url";
+  referenceType: 'url';
   fhirServiceBaseUrl: string;
   id: string;
   resourceType: string;
 }
 
 export interface ReferenceSearchValueUnparseable {
-  referenceType: "unparseable";
+  referenceType: 'unparseable';
   rawValue: string;
 }
 
@@ -50,16 +50,16 @@ export const parseReferenceSearchValue = (
     const { fhirServiceBaseUrl, resourceType, id } = match.groups!;
     if (fhirServiceBaseUrl) {
       return {
-        referenceType: "url",
+        referenceType: 'url',
         id,
         resourceType,
-        fhirServiceBaseUrl,
+        fhirServiceBaseUrl
       };
     }
     return {
-      referenceType: "relative",
+      referenceType: 'relative',
       id,
-      resourceType,
+      resourceType
     };
   }
   if (ID_ONLY_REGEX.test(param)) {
@@ -73,13 +73,13 @@ export const parseReferenceSearchValue = (
     }
 
     return {
-      referenceType: "idOnly",
-      id: param,
+      referenceType: 'idOnly',
+      id: param
     };
   }
 
   return {
-    referenceType: "unparseable",
-    rawValue: param,
+    referenceType: 'unparseable',
+    rawValue: param
   };
 };

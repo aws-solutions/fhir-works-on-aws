@@ -2,12 +2,12 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { get, groupBy, mapValues, uniqBy } from "lodash";
+import { get, groupBy, mapValues, uniqBy } from 'lodash';
 
-import { MAX_INCLUSION_PARAM_RESULTS } from "./constants";
-import { Query } from "./elasticSearchService";
-import { FHIRSearchParametersRegistry } from "./FHIRSearchParametersRegistry";
-import { getAllValuesForFHIRPath } from "./getAllValuesForFHIRPath";
+import { MAX_INCLUSION_PARAM_RESULTS } from './constants';
+import { Query } from './elasticSearchService';
+import { FHIRSearchParametersRegistry } from './FHIRSearchParametersRegistry';
+import { getAllValuesForFHIRPath } from './getAllValuesForFHIRPath';
 
 /**
  * @example
@@ -27,7 +27,7 @@ import { getAllValuesForFHIRPath } from "./getAllValuesForFHIRPath";
  * path is optional since InclusionSearchParameter is first built from the query params and the path is added afterwards if it is indeed a valid search parameter.
  */
 
-export type InclusionSearchParameterType = "_include" | "_revinclude";
+export type InclusionSearchParameterType = '_include' | '_revinclude';
 
 export interface InclusionSearchParameter {
   type: InclusionSearchParameterType;
@@ -50,18 +50,16 @@ const expandRevIncludeWildcard = (
   fhirSearchParametersRegistry: FHIRSearchParametersRegistry
 ): InclusionSearchParameter[] => {
   return resourceTypes.flatMap((resourceType) => {
-    return fhirSearchParametersRegistry
-      .getRevIncludeSearchParameters(resourceType)
-      .flatMap((searchParam) => {
-        return searchParam.target!.map((target) => ({
-          type: "_revinclude",
-          isWildcard: false,
-          sourceResource: searchParam.base,
-          searchParameter: searchParam.name,
-          path: searchParam.compiled[0].path,
-          targetResourceType: target,
-        }));
-      });
+    return fhirSearchParametersRegistry.getRevIncludeSearchParameters(resourceType).flatMap((searchParam) => {
+      return searchParam.target!.map((target) => ({
+        type: '_revinclude',
+        isWildcard: false,
+        sourceResource: searchParam.base,
+        searchParameter: searchParam.name,
+        path: searchParam.compiled[0].path,
+        targetResourceType: target
+      }));
+    });
   });
 };
 
@@ -70,18 +68,16 @@ const expandIncludeWildcard = (
   fhirSearchParametersRegistry: FHIRSearchParametersRegistry
 ): InclusionSearchParameter[] => {
   return resourceTypes.flatMap((resourceType) => {
-    return fhirSearchParametersRegistry
-      .getIncludeSearchParameters(resourceType)
-      .flatMap((searchParam) => {
-        return searchParam.target!.map((target) => ({
-          type: "_include",
-          isWildcard: false,
-          sourceResource: searchParam.base,
-          searchParameter: searchParam.name,
-          path: searchParam.compiled[0].path,
-          targetResourceType: target,
-        }));
-      });
+    return fhirSearchParametersRegistry.getIncludeSearchParameters(resourceType).flatMap((searchParam) => {
+      return searchParam.target!.map((target) => ({
+        type: '_include',
+        isWildcard: false,
+        sourceResource: searchParam.base,
+        searchParameter: searchParam.name,
+        path: searchParam.compiled[0].path,
+        targetResourceType: target
+      }));
+    });
   });
 };
 
@@ -93,25 +89,21 @@ export const getIncludeReferencesFromResources = (
   const references = includes.flatMap((include) => {
     return resources
       .filter((resource) => resource.resourceType === include.sourceResource)
-      .flatMap((resource) =>
-        getAllValuesForFHIRPath(resource, `${include.path}`)
-      )
+      .flatMap((resource) => getAllValuesForFHIRPath(resource, `${include.path}`))
       .flatMap((valueAtPath) => {
         if (Array.isArray(valueAtPath)) {
-          return valueAtPath.map((v) => get(v, "reference"));
+          return valueAtPath.map((v) => get(v, 'reference'));
         }
-        return [get(valueAtPath, "reference")];
+        return [get(valueAtPath, 'reference')];
       })
-      .filter((reference): reference is string => typeof reference === "string")
+      .filter((reference): reference is string => typeof reference === 'string')
       .filter((reference) => RELATIVE_URL_REGEX.test(reference))
       .map((relativeUrl) => {
-        const [resourceType, id] = relativeUrl.split("/");
+        const [resourceType, id] = relativeUrl.split('/');
         return { resourceType, id };
       })
       .filter(
-        ({ resourceType }) =>
-          !include.targetResourceType ||
-          include.targetResourceType === resourceType
+        ({ resourceType }) => !include.targetResourceType || include.targetResourceType === resourceType
       );
   });
 
@@ -150,15 +142,15 @@ export const buildIncludeQuery = (
           filter: [
             {
               terms: {
-                id: resourceIds,
-              },
+                id: resourceIds
+              }
             },
-            ...filterRulesForActiveResources,
-          ],
-        },
-      },
-    },
-  },
+            ...filterRulesForActiveResources
+          ]
+        }
+      }
+    }
+  }
 });
 
 export const buildRevIncludeQuery = (
@@ -167,7 +159,7 @@ export const buildRevIncludeQuery = (
   filterRulesForActiveResources: any[],
   useKeywordSubFields: boolean
 ): Query => {
-  const keywordSuffix = useKeywordSubFields ? ".keyword" : "";
+  const keywordSuffix = useKeywordSubFields ? '.keyword' : '';
   const { sourceResource, path } = revIncludeSearchParameter;
   return {
     resourceType: sourceResource,
@@ -179,30 +171,27 @@ export const buildRevIncludeQuery = (
             filter: [
               {
                 terms: {
-                  [`${path}.reference${keywordSuffix}`]: references,
-                },
+                  [`${path}.reference${keywordSuffix}`]: references
+                }
               },
-              ...filterRulesForActiveResources,
-            ],
-          },
-        },
-      },
-    },
+              ...filterRulesForActiveResources
+            ]
+          }
+        }
+      }
+    }
   };
 };
 
 export const buildIncludeQueries = (
-  inclusionSearchParameters: (
-    | InclusionSearchParameter
-    | WildcardInclusionSearchParameter
-  )[],
+  inclusionSearchParameters: (InclusionSearchParameter | WildcardInclusionSearchParameter)[],
   resources: any[],
   filterRulesForActiveResources: any[],
   fhirSearchParametersRegistry: FHIRSearchParametersRegistry,
   iterate?: true
 ): Query[] => {
   const allIncludeParameters = inclusionSearchParameters.filter(
-    (param) => param.type === "_include" && param.isIterate === iterate
+    (param) => param.type === '_include' && param.isIterate === iterate
   ) as InclusionSearchParameter[];
 
   const includeParameters = allIncludeParameters.some((x) => x.isWildcard)
@@ -211,20 +200,19 @@ export const buildIncludeQueries = (
           ...resources.reduce(
             (acc: Set<string>, resource) => acc.add(resource.resourceType),
             new Set() as Set<string>
-          ),
+          )
         ],
         fhirSearchParametersRegistry
       )
     : allIncludeParameters;
 
-  const resourceReferences: { resourceType: string; id: string }[] =
-    getIncludeReferencesFromResources(includeParameters, resources);
+  const resourceReferences: { resourceType: string; id: string }[] = getIncludeReferencesFromResources(
+    includeParameters,
+    resources
+  );
 
   const resourceTypeToIds: { [resourceType: string]: string[] } = mapValues(
-    groupBy(
-      resourceReferences,
-      (resourcReference) => resourcReference.resourceType
-    ),
+    groupBy(resourceReferences, (resourcReference) => resourcReference.resourceType),
     (arr) => arr.map((x) => x.id)
   );
 
@@ -234,10 +222,7 @@ export const buildIncludeQueries = (
 };
 
 export const buildRevIncludeQueries = (
-  inclusionSearchParameters: (
-    | InclusionSearchParameter
-    | WildcardInclusionSearchParameter
-  )[],
+  inclusionSearchParameters: (InclusionSearchParameter | WildcardInclusionSearchParameter)[],
   resources: any[],
   filterRulesForActiveResources: any[],
   fhirSearchParametersRegistry: FHIRSearchParametersRegistry,
@@ -245,7 +230,7 @@ export const buildRevIncludeQueries = (
   iterate?: true
 ): Query[] => {
   const allRevincludeParameters = inclusionSearchParameters.filter(
-    (param) => param.type === "_revinclude" && param.isIterate === iterate
+    (param) => param.type === '_revinclude' && param.isIterate === iterate
   ) as InclusionSearchParameter[];
 
   const revIncludeParameters = allRevincludeParameters.some((x) => x.isWildcard)
@@ -254,23 +239,15 @@ export const buildRevIncludeQueries = (
           ...resources.reduce(
             (acc: Set<string>, resource) => acc.add(resource.resourceType),
             new Set() as Set<string>
-          ),
+          )
         ],
         fhirSearchParametersRegistry
       )
     : allRevincludeParameters;
 
-  const revincludeReferences = getRevincludeReferencesFromResources(
-    revIncludeParameters,
-    resources
-  );
+  const revincludeReferences = getRevincludeReferencesFromResources(revIncludeParameters, resources);
 
   return revincludeReferences.map(({ revinclude, references }) =>
-    buildRevIncludeQuery(
-      revinclude,
-      references,
-      filterRulesForActiveResources,
-      useKeywordSubFields
-    )
+    buildRevIncludeQuery(revinclude, references, filterRulesForActiveResources, useKeywordSubFields)
   );
 };

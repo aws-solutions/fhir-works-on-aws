@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable no-underscore-dangle */
-import URL from "url";
+import URL from 'url';
 
 import {
   Search,
@@ -15,38 +15,31 @@ import {
   SearchEntry,
   SearchFilter,
   FhirVersion,
-  InvalidSearchParameterError,
-} from "@aws/fhir-works-on-aws-interface";
-import { Client, RequestParams } from "@elastic/elasticsearch";
-import { ResponseError } from "@elastic/elasticsearch/lib/errors";
-import { partition, merge, isEmpty } from "lodash";
+  InvalidSearchParameterError
+} from '@aws/fhir-works-on-aws-interface';
+import { Client, RequestParams } from '@elastic/elasticsearch';
+import { ResponseError } from '@elastic/elasticsearch/lib/errors';
+import { partition, merge, isEmpty } from 'lodash';
 import {
   DEFAULT_SEARCH_RESULTS_PER_PAGE,
   SEARCH_PAGINATION_PARAMS,
   ITERATIVE_INCLUSION_PARAMETERS,
   SORT_PARAMETER,
   MAX_ES_WINDOW_SIZE,
-  MAX_CHAINED_PARAMS_RESULT,
-} from "./constants";
-import { ElasticSearch } from "./elasticSearch";
-import {
-  parseQueryString,
-  parseQuery,
-  ParsedFhirQueryParams,
-} from "./FhirQueryParser";
-import { FHIRSearchParametersRegistry } from "./FHIRSearchParametersRegistry";
-import getComponentLogger from "./loggerBuilder";
-import {
-  buildQueryForAllSearchParameters,
-  buildSortClause,
-} from "./QueryBuilder";
-import parseChainedParameters, { ChainParameter } from "./QueryBuilder/chain";
+  MAX_CHAINED_PARAMS_RESULT
+} from './constants';
+import { ElasticSearch } from './elasticSearch';
+import { parseQueryString, parseQuery, ParsedFhirQueryParams } from './FhirQueryParser';
+import { FHIRSearchParametersRegistry } from './FHIRSearchParametersRegistry';
+import getComponentLogger from './loggerBuilder';
+import { buildQueryForAllSearchParameters, buildSortClause } from './QueryBuilder';
+import parseChainedParameters, { ChainParameter } from './QueryBuilder/chain';
 import {
   buildIncludeQueries,
   buildRevIncludeQueries,
   InclusionSearchParameter,
-  WildcardInclusionSearchParameter,
-} from "./searchInclusions";
+  WildcardInclusionSearchParameter
+} from './searchInclusions';
 
 export interface Query {
   resourceType: string;
@@ -96,17 +89,15 @@ export class ElasticSearchService implements Search {
    */
   constructor(
     searchFiltersForAllQueries: SearchFilter[] = [],
-    cleanUpFunction: (resource: any) => any = function passThrough(
-      resource: any
-    ) {
+    cleanUpFunction: (resource: any) => any = function passThrough(resource: any) {
       return resource;
     },
-    fhirVersion: FhirVersion = "4.0.1",
+    fhirVersion: FhirVersion = '4.0.1',
     compiledImplementationGuides?: any,
     esClient: Client = ElasticSearch,
     {
       enableMultiTenancy = false,
-      useKeywordSubFields = true,
+      useKeywordSubFields = true
     }: { enableMultiTenancy?: boolean; useKeywordSubFields?: boolean } = {}
   ) {
     this.searchFiltersForAllQueries = searchFiltersForAllQueries;
@@ -124,13 +115,11 @@ export class ElasticSearchService implements Search {
   private assertValidTenancyMode(tenantId?: string) {
     if (this.enableMultiTenancy && tenantId === undefined) {
       throw new Error(
-        "This instance has multi-tenancy enabled, but the incoming request is missing tenantId"
+        'This instance has multi-tenancy enabled, but the incoming request is missing tenantId'
       );
     }
     if (!this.enableMultiTenancy && tenantId !== undefined) {
-      throw new Error(
-        "This instance has multi-tenancy disabled, but the incoming request has a tenantId"
-      );
+      throw new Error('This instance has multi-tenancy disabled, but the incoming request has a tenantId');
     }
   }
 
@@ -142,14 +131,14 @@ export class ElasticSearchService implements Search {
     const { searchFilters, tenantId } = request;
     const filters: any[] = ElasticSearchService.buildElasticSearchFilter([
       ...this.searchFiltersForAllQueries,
-      ...(searchFilters ?? []),
+      ...(searchFilters ?? [])
     ]);
 
     if (this.enableMultiTenancy) {
       filters.push({
         match: {
-          _tenantId: tenantId,
-        },
+          _tenantId: tenantId
+        }
       });
     }
 
@@ -190,19 +179,15 @@ export class ElasticSearchService implements Search {
       );
       let chainedParameterQuery;
       if (parsedChainParameters.length > 0) {
-        chainedParameterQuery = await this.getChainedParametersQuery(
-          parsedChainParameters,
-          request,
-          filter
-        );
+        chainedParameterQuery = await this.getChainedParametersQuery(parsedChainParameters, request, filter);
         if (isEmpty(chainedParameterQuery)) {
           // chained parameter query did not return any results
           return {
             result: {
               numberOfResults: 0,
               entries: [],
-              message: "",
-            },
+              message: ''
+            }
           };
         }
       }
@@ -229,9 +214,9 @@ export class ElasticSearchService implements Search {
           size,
           track_total_hits: true,
           body: {
-            query,
-          },
-        },
+            query
+          }
+        }
       };
 
       if (request.queryParams[SORT_PARAMETER]) {
@@ -247,9 +232,9 @@ export class ElasticSearchService implements Search {
         entries: this.hitsToSearchEntries({
           hits,
           baseUrl: request.baseUrl,
-          mode: "match",
+          mode: 'match'
         }),
-        message: "",
+        message: ''
       };
 
       if (from !== 0) {
@@ -258,7 +243,7 @@ export class ElasticSearchService implements Search {
           {
             ...queryParams,
             [SEARCH_PAGINATION_PARAMS.PAGES_OFFSET]: from - size,
-            [SEARCH_PAGINATION_PARAMS.COUNT]: size,
+            [SEARCH_PAGINATION_PARAMS.COUNT]: size
           },
           resourceType
         );
@@ -269,7 +254,7 @@ export class ElasticSearchService implements Search {
           {
             ...queryParams,
             [SEARCH_PAGINATION_PARAMS.PAGES_OFFSET]: from + size,
-            [SEARCH_PAGINATION_PARAMS.COUNT]: size,
+            [SEARCH_PAGINATION_PARAMS.COUNT]: size
           },
           resourceType
         );
@@ -283,12 +268,11 @@ export class ElasticSearchService implements Search {
         );
         result.entries.push(...includedResources);
 
-        const iterativelyIncludedResources =
-          await this.processIterativeSearchInclusions(
-            result.entries,
-            request,
-            parsedFhirQueryParams.inclusionSearchParams
-          );
+        const iterativelyIncludedResources = await this.processIterativeSearchInclusions(
+          result.entries,
+          request,
+          parsedFhirQueryParams.inclusionSearchParams
+        );
         result.entries.push(...iterativelyIncludedResources);
       }
 
@@ -312,14 +296,13 @@ export class ElasticSearchService implements Search {
     for (const { chain, initialValue } of parsedChainParameters) {
       let stepValue = initialValue;
       let chainComplete = true;
-      const lastChain: { resourceType: string; searchParam: string } =
-        chain.pop()!;
+      const lastChain: { resourceType: string; searchParam: string } = chain.pop()!;
       // eslint-disable-next-line no-restricted-syntax
       for (const { resourceType, searchParam } of chain) {
         const stepRequest: TypeSearchRequest = {
           ...request,
           resourceType,
-          queryParams: { [searchParam]: stepValue },
+          queryParams: { [searchParam]: stepValue }
         };
         const parsedFhirQueryParams: ParsedFhirQueryParams = parseQuery(
           this.fhirSearchParametersRegistry,
@@ -340,10 +323,10 @@ export class ElasticSearchService implements Search {
             track_total_hits: true,
             body: {
               query: stepQuery,
-              fields: ["id"],
-              _source: false,
-            },
-          },
+              fields: ['id'],
+              _source: false
+            }
+          }
         };
         // eslint-disable-next-line no-await-in-loop
         const { total, hits } = await this.executeQuery(params, request);
@@ -360,7 +343,7 @@ export class ElasticSearchService implements Search {
       }
       if (chainComplete) {
         combinedChainedParameters = merge(combinedChainedParameters, {
-          [lastChain.searchParam]: stepValue,
+          [lastChain.searchParam]: stepValue
         });
       }
     }
@@ -376,28 +359,19 @@ export class ElasticSearchService implements Search {
       const searchQueryWithAlias = {
         ...searchQuery.queryRequest,
         index: getAliasName(searchQuery.resourceType, request.tenantId),
-        ...(request.sessionId && { preference: request.sessionId }),
+        ...(request.sessionId && { preference: request.sessionId })
       };
       if (logger.isDebugEnabled()) {
-        logger.debug(
-          `Elastic search query: ${JSON.stringify(
-            searchQueryWithAlias,
-            null,
-            2
-          )}`
-        );
+        logger.debug(`Elastic search query: ${JSON.stringify(searchQueryWithAlias, null, 2)}`);
       }
       const apiResponse = await this.esClient.search(searchQueryWithAlias);
       return {
         total: apiResponse.body.hits.total.value,
-        hits: apiResponse.body.hits.hits,
+        hits: apiResponse.body.hits.hits
       };
     } catch (error) {
       // Indexes are created the first time a resource of a given type is written to DDB.
-      if (
-        error instanceof ResponseError &&
-        error.meta.body.error.type === "index_not_found_exception"
-      ) {
+      if (error instanceof ResponseError && error.meta.body.error.type === 'index_not_found_exception') {
         logger.info(
           `Search index for ${getAliasName(
             searchQuery.resourceType,
@@ -406,7 +380,7 @@ export class ElasticSearchService implements Search {
         );
         return {
           total: 0,
-          hits: [],
+          hits: []
         };
       }
 
@@ -415,44 +389,35 @@ export class ElasticSearchService implements Search {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private async executeQueries(
-    searchQueries: Query[],
-    request: TypeSearchRequest
-  ): Promise<{ hits: any[] }> {
+  private async executeQueries(searchQueries: Query[], request: TypeSearchRequest): Promise<{ hits: any[] }> {
     if (searchQueries.length === 0) {
       return {
-        hits: [],
+        hits: []
       };
     }
 
     const searchQueriesWithAlias = searchQueries.map((searchQuery) => ({
       ...searchQuery.queryRequest,
-      index: getAliasName(searchQuery.resourceType, request.tenantId),
+      index: getAliasName(searchQuery.resourceType, request.tenantId)
     }));
 
     if (logger.isDebugEnabled()) {
-      logger.debug(
-        `Elastic msearch query: ${JSON.stringify(
-          searchQueriesWithAlias,
-          null,
-          2
-        )}`
-      );
+      logger.debug(`Elastic msearch query: ${JSON.stringify(searchQueriesWithAlias, null, 2)}`);
     }
     const apiResponse = await this.esClient.msearch({
       body: searchQueriesWithAlias.flatMap((query) => [
         {
           index: query.index,
-          ...(request.sessionId && { preference: request.sessionId }),
+          ...(request.sessionId && { preference: request.sessionId })
         },
-        { size: query.size, query: query.body!.query },
-      ]),
+        { size: query.size, query: query.body!.query }
+      ])
     });
 
     return (apiResponse.body.responses as any[])
       .filter((response) => {
         if (response.error) {
-          if (response.error.type === "index_not_found_exception") {
+          if (response.error.type === 'index_not_found_exception') {
             // Indexes are created the first time a resource of a given type is written to DDB.
             logger.info(
               `Search index for ${response.error.index} does not exist. Returning an empty search result`
@@ -469,7 +434,7 @@ export class ElasticSearchService implements Search {
           return acc;
         },
         {
-          hits: [],
+          hits: []
         }
       );
   }
@@ -477,24 +442,24 @@ export class ElasticSearchService implements Search {
   private hitsToSearchEntries({
     hits,
     baseUrl,
-    mode = "match",
+    mode = 'match'
   }: {
     hits: any[];
     baseUrl: string;
-    mode: "match" | "include";
+    mode: 'match' | 'include';
   }): SearchEntry[] {
     return hits.map((hit: any): SearchEntry => {
       // Modify to return resource with FHIR id not Dynamo ID
       const resource = this.cleanUpFunction(hit._source);
       return {
         search: {
-          mode,
+          mode
         },
         fullUrl: URL.format({
           host: baseUrl,
-          pathname: `/${resource.resourceType}/${resource.id}`,
+          pathname: `/${resource.resourceType}/${resource.id}`
         }),
-        resource,
+        resource
       };
     });
   }
@@ -502,10 +467,7 @@ export class ElasticSearchService implements Search {
   private async processSearchInclusions(
     searchEntries: SearchEntry[],
     request: TypeSearchRequest,
-    inclusionSearchParameters: (
-      | InclusionSearchParameter
-      | WildcardInclusionSearchParameter
-    )[],
+    inclusionSearchParameters: (InclusionSearchParameter | WildcardInclusionSearchParameter)[],
     iterative?: true
   ): Promise<SearchEntry[]> {
     const { allowedResourceTypes, baseUrl } = request;
@@ -528,36 +490,21 @@ export class ElasticSearchService implements Search {
       iterative
     );
 
-    const lowerCaseAllowedResourceTypes = new Set(
-      allowedResourceTypes.map((r: string) => r.toLowerCase())
-    );
-    const allowedInclusionQueries = [
-      ...includeSearchQueries,
-      ...revIncludeSearchQueries,
-    ].filter((query) =>
+    const lowerCaseAllowedResourceTypes = new Set(allowedResourceTypes.map((r: string) => r.toLowerCase()));
+    const allowedInclusionQueries = [...includeSearchQueries, ...revIncludeSearchQueries].filter((query) =>
       lowerCaseAllowedResourceTypes.has(query.resourceType.toLowerCase())
     );
 
-    const { hits } = await this.executeQueries(
-      allowedInclusionQueries,
-      request
-    );
-    return this.hitsToSearchEntries({ hits, baseUrl, mode: "include" });
+    const { hits } = await this.executeQueries(allowedInclusionQueries, request);
+    return this.hitsToSearchEntries({ hits, baseUrl, mode: 'include' });
   }
 
   private async processIterativeSearchInclusions(
     searchEntries: SearchEntry[],
     request: TypeSearchRequest,
-    inclusionSearchParams: (
-      | InclusionSearchParameter
-      | WildcardInclusionSearchParameter
-    )[]
+    inclusionSearchParams: (InclusionSearchParameter | WildcardInclusionSearchParameter)[]
   ): Promise<SearchEntry[]> {
-    if (
-      !ITERATIVE_INCLUSION_PARAMETERS.some(
-        (param) => request.queryParams[param]
-      )
-    ) {
+    if (!ITERATIVE_INCLUSION_PARAMETERS.some((param) => request.queryParams[param])) {
       return [];
     }
     const result: SearchEntry[] = [];
@@ -566,7 +513,7 @@ export class ElasticSearchService implements Search {
     );
     const resourceIdsWithInclusionsAlreadyResolved: Set<string> = new Set();
 
-    logger.info("Iterative inclusion search starts");
+    logger.info('Iterative inclusion search starts');
 
     let resourcesToIterate = searchEntries;
     for (let i = 0; i < MAX_INCLUDE_ITERATIVE_DEPTH; i += 1) {
@@ -595,7 +542,7 @@ export class ElasticSearchService implements Search {
       });
 
       if (i === MAX_INCLUDE_ITERATIVE_DEPTH - 1) {
-        logger.info("MAX_INCLUDE_ITERATIVE_DEPTH reached. Stopping");
+        logger.info('MAX_INCLUDE_ITERATIVE_DEPTH reached. Stopping');
         break;
       }
       resourcesToIterate = resourcesFound.filter(
@@ -611,7 +558,7 @@ export class ElasticSearchService implements Search {
     return URL.format({
       host,
       pathname: `/${resourceType}`,
-      query,
+      query
     });
   }
 
@@ -619,16 +566,18 @@ export class ElasticSearchService implements Search {
   async globalSearch(request: GlobalSearchRequest): Promise<SearchResponse> {
     logger.info(request);
     this.assertValidTenancyMode(request.tenantId);
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   validateSubscriptionSearchCriteria(searchCriteria: string): void {
-    const { inclusionSearchParams, chainedSearchParams, otherParams } =
-      parseQueryString(this.fhirSearchParametersRegistry, searchCriteria);
+    const { inclusionSearchParams, chainedSearchParams, otherParams } = parseQueryString(
+      this.fhirSearchParametersRegistry,
+      searchCriteria
+    );
     if (inclusionSearchParams || chainedSearchParams || otherParams) {
       throw new InvalidSearchParameterError(
-        "Search string used for field criteria contains unsupported parameter, please remove: " +
-          "_revinclude, _include, _sort, _count and chained parameters"
+        'Search string used for field criteria contains unsupported parameter, please remove: ' +
+          '_revinclude, _include, _sort, _count and chained parameters'
       );
     }
   }
@@ -636,67 +585,67 @@ export class ElasticSearchService implements Search {
   private static buildSingleElasticSearchFilterPart(
     key: string,
     value: string,
-    operator: "==" | "!=" | ">" | "<" | ">=" | "<="
+    operator: '==' | '!=' | '>' | '<' | '>=' | '<='
   ): any {
     switch (operator) {
-      case "==": {
+      case '==': {
         return {
           match: {
-            [key]: value,
-          },
+            [key]: value
+          }
         };
       }
-      case "!=": {
+      case '!=': {
         return {
           bool: {
             must_not: [
               {
                 term: {
-                  [key]: value,
-                },
-              },
-            ],
-          },
+                  [key]: value
+                }
+              }
+            ]
+          }
         };
       }
-      case ">": {
+      case '>': {
         return {
           range: {
             [key]: {
-              gt: value,
-            },
-          },
+              gt: value
+            }
+          }
         };
       }
-      case "<": {
+      case '<': {
         return {
           range: {
             [key]: {
-              lt: value,
-            },
-          },
+              lt: value
+            }
+          }
         };
       }
-      case ">=": {
+      case '>=': {
         return {
           range: {
             [key]: {
-              gte: value,
-            },
-          },
+              gte: value
+            }
+          }
         };
       }
-      case "<=": {
+      case '<=': {
         return {
           range: {
             [key]: {
-              lte: value,
-            },
-          },
+              lte: value
+            }
+          }
         };
       }
       default: {
-        throw new Error("Unknown comparison operator");
+        throw new Error('Unknown comparison operator');
       }
     }
   }
@@ -705,23 +654,17 @@ export class ElasticSearchService implements Search {
     const { key, value, comparisonOperator, logicalOperator } = searchFilter;
 
     if (value.length === 0) {
-      throw new Error(
-        "Malformed SearchFilter, at least 1 value is required for the comparison"
-      );
+      throw new Error('Malformed SearchFilter, at least 1 value is required for the comparison');
     }
     const parts: any[] = value.map((v: string) =>
-      ElasticSearchService.buildSingleElasticSearchFilterPart(
-        key,
-        v,
-        comparisonOperator
-      )
+      ElasticSearchService.buildSingleElasticSearchFilterPart(key, v, comparisonOperator)
     );
 
-    if (logicalOperator === "AND" && parts.length > 1) {
+    if (logicalOperator === 'AND' && parts.length > 1) {
       return {
         bool: {
-          should: parts,
-        },
+          should: parts
+        }
       };
     }
 
@@ -732,12 +675,10 @@ export class ElasticSearchService implements Search {
    * ES filter is created where all 'AND' filters are required and at least 1 'OR' condition is met
    * @returns the `filter` part of the ES query
    */
-  private static buildElasticSearchFilter(
-    searchFilters: SearchFilter[]
-  ): any[] {
+  private static buildElasticSearchFilter(searchFilters: SearchFilter[]): any[] {
     const partitions: SearchFilter[][] = partition(
       searchFilters,
-      (filter) => filter.logicalOperator === "OR"
+      (filter) => filter.logicalOperator === 'OR'
     );
     const orSearchFilterParts: any[] = partitions[0]
       .map(ElasticSearchService.buildElasticSearchFilterPart)
@@ -752,8 +693,8 @@ export class ElasticSearchService implements Search {
     if (orSearchFilterParts.length > 0) {
       filterQuery.push({
         bool: {
-          should: orSearchFilterParts,
-        },
+          should: orSearchFilterParts
+        }
       });
     }
 

@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 const SEARCH_PARAMETER_TO_DOCUMENT_FIELD = {
-  _id: "id",
-  id: "id",
+  _id: 'id',
+  id: 'id'
 };
 
 const hasMapping = (

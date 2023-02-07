@@ -4,23 +4,23 @@
  *
  */
 
-import { Client, errors } from "@elastic/elasticsearch";
-import SearchMock from "@elastic/elasticsearch-mock";
-import { SearchMappingsManager } from "./index";
+import { Client, errors } from '@elastic/elasticsearch';
+import SearchMock from '@elastic/elasticsearch-mock';
+import { SearchMappingsManager } from './index';
 
 const TEST_MAPPINGS = {
   Patient: {
     someField: {
-      type: "text",
-    },
+      type: 'text'
+    }
   },
   Practitioner: {
     someField: {
-      type: "keyword",
-    },
-  },
+      type: 'keyword'
+    }
+  }
 };
-describe("SearchMappingsManager", () => {
+describe('SearchMappingsManager', () => {
   let searchMock: SearchMock;
   beforeEach(() => {
     searchMock = new SearchMock();
@@ -29,32 +29,32 @@ describe("SearchMappingsManager", () => {
     searchMock.clearAll();
   });
 
-  test("should update all mappings", async () => {
+  test('should update all mappings', async () => {
     const searchMappingsManager = new SearchMappingsManager({
       numberOfShards: 3,
       searchMappings: TEST_MAPPINGS,
       searchClient: new Client({
-        node: "https://fake-es-endpoint.com",
-        Connection: searchMock.getConnection(),
-      }),
+        node: 'https://fake-es-endpoint.com',
+        Connection: searchMock.getConnection()
+      })
     });
 
     const putMappingsMock = jest.fn(() => {
-      return { statusCode: 200, body: "" };
+      return { statusCode: 200, body: '' };
     });
 
     searchMock.add(
       {
-        method: "HEAD",
-        path: "/:index",
+        method: 'HEAD',
+        path: '/:index'
       },
       () => ({ statusCode: 200, body: true })
     );
 
     searchMock.add(
       {
-        method: "PUT",
-        path: "/:index/_mapping",
+        method: 'PUT',
+        path: '/:index/_mapping'
       },
       putMappingsMock
     );
@@ -91,20 +91,20 @@ describe("SearchMappingsManager", () => {
         `);
   });
 
-  test("should create indices if they do not exist", async () => {
+  test('should create indices if they do not exist', async () => {
     const searchMappingsManager = new SearchMappingsManager({
       numberOfShards: 3,
       searchMappings: TEST_MAPPINGS,
       searchClient: new Client({
-        node: "https://fake-es-endpoint.com",
-        Connection: searchMock.getConnection(),
-      }),
+        node: 'https://fake-es-endpoint.com',
+        Connection: searchMock.getConnection()
+      })
     });
 
     searchMock.add(
       {
-        method: "HEAD",
-        path: "/patient",
+        method: 'HEAD',
+        path: '/patient'
       },
       () =>
         // @ts-ignore
@@ -114,27 +114,27 @@ describe("SearchMappingsManager", () => {
           warnings: null,
           body: {
             error: {
-              type: "index_not_found_exception",
-            },
-          },
+              type: 'index_not_found_exception'
+            }
+          }
         })
     );
 
     searchMock.add(
       {
-        method: "HEAD",
-        path: "/practitioner",
+        method: 'HEAD',
+        path: '/practitioner'
       },
       () => ({ statusCode: 200, body: true })
     );
 
     searchMock.add(
       {
-        method: "PUT",
-        path: "/practitioner/_mapping",
+        method: 'PUT',
+        path: '/practitioner/_mapping'
       },
       () => {
-        return { statusCode: 200, body: "" };
+        return { statusCode: 200, body: '' };
       }
     );
 
@@ -144,8 +144,8 @@ describe("SearchMappingsManager", () => {
 
     searchMock.add(
       {
-        method: "PUT",
-        path: "/patient",
+        method: 'PUT',
+        path: '/patient'
       },
       createIndexMock
     );

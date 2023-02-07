@@ -4,14 +4,14 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import each from "jest-each";
-import { parseDateSearchValue } from "./dateParser";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import each from 'jest-each';
+import { parseDateSearchValue } from './dateParser';
 
-describe("parseDateSearchValue", () => {
-  describe("valid inputs", () => {
-    test("YYYY", () => {
-      expect(parseDateSearchValue("2020")).toMatchInlineSnapshot(`
+describe('parseDateSearchValue', () => {
+  describe('valid inputs', () => {
+    test('YYYY', () => {
+      expect(parseDateSearchValue('2020')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -21,8 +21,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM", () => {
-      expect(parseDateSearchValue("2020-02")).toMatchInlineSnapshot(`
+    test('YYYY-MM', () => {
+      expect(parseDateSearchValue('2020-02')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -32,8 +32,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DD", () => {
-      expect(parseDateSearchValue("2020-02-02")).toMatchInlineSnapshot(`
+    test('YYYY-MM-DD', () => {
+      expect(parseDateSearchValue('2020-02-02')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -43,8 +43,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DDT:hh:mm", () => {
-      expect(parseDateSearchValue("2020-02-02T07:07")).toMatchInlineSnapshot(`
+    test('YYYY-MM-DDT:hh:mm', () => {
+      expect(parseDateSearchValue('2020-02-02T07:07')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -54,9 +54,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DDT:hh:mm:ss", () => {
-      expect(parseDateSearchValue("2020-02-02T07:07:07"))
-        .toMatchInlineSnapshot(`
+    test('YYYY-MM-DDT:hh:mm:ss', () => {
+      expect(parseDateSearchValue('2020-02-02T07:07:07')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -66,9 +65,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DDT:hh:mm:ss.sss", () => {
-      expect(parseDateSearchValue("2020-02-02T07:07:07.777"))
-        .toMatchInlineSnapshot(`
+    test('YYYY-MM-DDT:hh:mm:ss.sss', () => {
+      expect(parseDateSearchValue('2020-02-02T07:07:07.777')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -78,9 +76,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DDT:hh:mm:ssZ", () => {
-      expect(parseDateSearchValue("2020-02-02T07:07:07Z"))
-        .toMatchInlineSnapshot(`
+    test('YYYY-MM-DDT:hh:mm:ssZ', () => {
+      expect(parseDateSearchValue('2020-02-02T07:07:07Z')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -90,9 +87,8 @@ describe("parseDateSearchValue", () => {
                 }
             `);
     });
-    test("YYYY-MM-DDT:hh:mm:ss+hh:mm", () => {
-      expect(parseDateSearchValue("2020-02-02T07:07:07+07:00"))
-        .toMatchInlineSnapshot(`
+    test('YYYY-MM-DDT:hh:mm:ss+hh:mm', () => {
+      expect(parseDateSearchValue('2020-02-02T07:07:07+07:00')).toMatchInlineSnapshot(`
                 Object {
                   "prefix": "eq",
                   "range": Object {
@@ -104,20 +100,18 @@ describe("parseDateSearchValue", () => {
     });
   });
 
-  describe("invalid inputs", () => {
+  describe('invalid inputs', () => {
     each([
-      ["badpre2020-02-02"],
-      ["This is not a date at all"],
-      ["2020-99"],
-      ["2020-99-99"],
-      ["2020/02/02"],
-      ["2020-02-02T07"],
-      ["2020-02-02T07:07:07someSuffix"],
-      ["2020-02-02someSuffix"],
-    ]).test("%s", (param) => {
-      expect(() => parseDateSearchValue(param)).toThrow(
-        InvalidSearchParameterError
-      );
+      ['badpre2020-02-02'],
+      ['This is not a date at all'],
+      ['2020-99'],
+      ['2020-99-99'],
+      ['2020/02/02'],
+      ['2020-02-02T07'],
+      ['2020-02-02T07:07:07someSuffix'],
+      ['2020-02-02someSuffix']
+    ]).test('%s', (param) => {
+      expect(() => parseDateSearchValue(param)).toThrow(InvalidSearchParameterError);
     });
   });
 });

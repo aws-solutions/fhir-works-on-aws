@@ -4,16 +4,16 @@
  *
  */
 
-import { AsyncRefreshCache } from "./AsyncRefreshCache";
+import { AsyncRefreshCache } from './AsyncRefreshCache';
 
-describe("AsyncRefreshCache", () => {
-  test("should cache the result of loadFn", async () => {
+describe('AsyncRefreshCache', () => {
+  test('should cache the result of loadFn', async () => {
     jest.useFakeTimers();
     jest.clearAllTimers();
     const loadFn = jest
       .fn()
-      .mockReturnValueOnce(Promise.resolve("initial value"))
-      .mockReturnValueOnce(Promise.resolve("latest value"));
+      .mockReturnValueOnce(Promise.resolve('initial value'))
+      .mockReturnValueOnce(Promise.resolve('latest value'));
 
     const a = new AsyncRefreshCache<string>(loadFn, 1000);
 
@@ -30,10 +30,10 @@ describe("AsyncRefreshCache", () => {
     a.stop();
   });
 
-  test("should call loadFn periodically", async () => {
+  test('should call loadFn periodically', async () => {
     jest.useFakeTimers();
     jest.clearAllTimers();
-    const loadFn = jest.fn(async () => "hello");
+    const loadFn = jest.fn(async () => 'hello');
 
     const a = new AsyncRefreshCache<string>(loadFn, 1000);
 

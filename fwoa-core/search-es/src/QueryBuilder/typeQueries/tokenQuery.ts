@@ -3,12 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { TokenSearchValue } from "../../FhirQueryParser";
-import { CompiledSearchParam } from "../../FHIRSearchParametersRegistry";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { TokenSearchValue } from '../../FhirQueryParser';
+import { CompiledSearchParam } from '../../FHIRSearchParametersRegistry';
 
 // Fields that do not have `.keyword` suffix. This is only important if `useKeywordSubFields` is true
-const FIELDS_WITHOUT_KEYWORD = ["id"];
+const FIELDS_WITHOUT_KEYWORD = ['id'];
 const SUPPORTED_MODIFIERS: string[] = [];
 
 // eslint-disable-next-line import/prefer-default-export
@@ -19,15 +19,12 @@ export function tokenQuery(
   modifier?: string
 ): any {
   if (modifier && !SUPPORTED_MODIFIERS.includes(modifier)) {
-    throw new InvalidSearchParameterError(
-      `Unsupported token search modifier: ${modifier}`
-    );
+    throw new InvalidSearchParameterError(`Unsupported token search modifier: ${modifier}`);
   }
   const { system, code, explicitNoSystemProperty } = value;
   const queries = [];
-  const useKeywordSuffix =
-    useKeywordSubFields && !FIELDS_WITHOUT_KEYWORD.includes(compiled.path);
-  const keywordSuffix = useKeywordSuffix ? ".keyword" : "";
+  const useKeywordSuffix = useKeywordSubFields && !FIELDS_WITHOUT_KEYWORD.includes(compiled.path);
+  const keywordSuffix = useKeywordSuffix ? '.keyword' : '';
 
   // Token search params are used for many different field types. Search is not aware of the types of the fields in FHIR resources.
   // The field type is specified in StructureDefinition, but not in SearchParameter.
@@ -37,15 +34,15 @@ export function tokenQuery(
   if (system !== undefined) {
     const fields = [
       `${compiled.path}.system${keywordSuffix}`, // Coding, Identifier
-      `${compiled.path}.coding.system${keywordSuffix}`, // CodeableConcept
+      `${compiled.path}.coding.system${keywordSuffix}` // CodeableConcept
     ];
 
     queries.push({
       multi_match: {
         fields,
         query: system,
-        lenient: true,
-      },
+        lenient: true
+      }
     });
   }
 
@@ -56,7 +53,7 @@ export function tokenQuery(
       `${compiled.path}.code${keywordSuffix}`, // Coding
       `${compiled.path}.coding.code${keywordSuffix}`, // CodeableConcept
       `${compiled.path}.value${keywordSuffix}`, // Identifier, ContactPoint
-      `${compiled.path}${keywordSuffix}`, // code, uri, string, boolean
+      `${compiled.path}${keywordSuffix}` // code, uri, string, boolean
     ];
 
     // accommodate for boolean value when keywordSuffix is used, as .keyword field is not created for boolean value
@@ -68,8 +65,8 @@ export function tokenQuery(
       multi_match: {
         fields,
         query: code,
-        lenient: true,
-      },
+        lenient: true
+      }
     });
   }
 
@@ -78,10 +75,10 @@ export function tokenQuery(
       bool: {
         must_not: {
           exists: {
-            field: `${compiled.path}.system`,
-          },
-        },
-      },
+            field: `${compiled.path}.system`
+          }
+        }
+      }
     });
   }
 
@@ -91,7 +88,7 @@ export function tokenQuery(
 
   return {
     bool: {
-      must: queries,
-    },
+      must: queries
+    }
   };
 }

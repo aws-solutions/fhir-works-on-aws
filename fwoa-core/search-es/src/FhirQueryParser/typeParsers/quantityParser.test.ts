@@ -4,15 +4,14 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import each from "jest-each";
-import { parseQuantitySearchValue } from "./quantityParser";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import each from 'jest-each';
+import { parseQuantitySearchValue } from './quantityParser';
 
-describe("parseQuantitySearchValue", () => {
-  describe("valid inputs", () => {
-    test("5.4|http://unitsofmeasure.org|mg", () => {
-      expect(parseQuantitySearchValue("5.4|http://unitsofmeasure.org|mg"))
-        .toMatchInlineSnapshot(`
+describe('parseQuantitySearchValue', () => {
+  describe('valid inputs', () => {
+    test('5.4|http://unitsofmeasure.org|mg', () => {
+      expect(parseQuantitySearchValue('5.4|http://unitsofmeasure.org|mg')).toMatchInlineSnapshot(`
                 Object {
                   "code": "mg",
                   "implicitRange": Object {
@@ -25,9 +24,8 @@ describe("parseQuantitySearchValue", () => {
                 }
             `);
     });
-    test("5.40e-3|http://unitsofmeasure.org|g", () => {
-      expect(parseQuantitySearchValue("5.40e-3|http://unitsofmeasure.org|g"))
-        .toMatchInlineSnapshot(`
+    test('5.40e-3|http://unitsofmeasure.org|g', () => {
+      expect(parseQuantitySearchValue('5.40e-3|http://unitsofmeasure.org|g')).toMatchInlineSnapshot(`
                 Object {
                   "code": "g",
                   "implicitRange": Object {
@@ -40,8 +38,8 @@ describe("parseQuantitySearchValue", () => {
                 }
             `);
     });
-    test("5.4||mg", () => {
-      expect(parseQuantitySearchValue("5.4||mg")).toMatchInlineSnapshot(`
+    test('5.4||mg', () => {
+      expect(parseQuantitySearchValue('5.4||mg')).toMatchInlineSnapshot(`
                 Object {
                   "code": "mg",
                   "implicitRange": Object {
@@ -54,8 +52,8 @@ describe("parseQuantitySearchValue", () => {
                 }
             `);
     });
-    test("5.4", () => {
-      expect(parseQuantitySearchValue("5.4")).toMatchInlineSnapshot(`
+    test('5.4', () => {
+      expect(parseQuantitySearchValue('5.4')).toMatchInlineSnapshot(`
                 Object {
                   "code": "",
                   "implicitRange": Object {
@@ -68,9 +66,8 @@ describe("parseQuantitySearchValue", () => {
                 }
             `);
     });
-    test("le5.4|http://unitsofmeasure.org|mg", () => {
-      expect(parseQuantitySearchValue("le5.4|http://unitsofmeasure.org|mg"))
-        .toMatchInlineSnapshot(`
+    test('le5.4|http://unitsofmeasure.org|mg', () => {
+      expect(parseQuantitySearchValue('le5.4|http://unitsofmeasure.org|mg')).toMatchInlineSnapshot(`
                 Object {
                   "code": "mg",
                   "implicitRange": Object {
@@ -83,9 +80,8 @@ describe("parseQuantitySearchValue", () => {
                 }
             `);
     });
-    test("le5.4|http://unitsofmeasure.org|mg with no keyword", () => {
-      expect(parseQuantitySearchValue("le5.4|http://unitsofmeasure.org|mg"))
-        .toMatchInlineSnapshot(`
+    test('le5.4|http://unitsofmeasure.org|mg with no keyword', () => {
+      expect(parseQuantitySearchValue('le5.4|http://unitsofmeasure.org|mg')).toMatchInlineSnapshot(`
                 Object {
                   "code": "mg",
                   "implicitRange": Object {
@@ -100,18 +96,16 @@ describe("parseQuantitySearchValue", () => {
     });
   });
 
-  describe("invalid inputs", () => {
+  describe('invalid inputs', () => {
     each([
-      ["This is not a quantity at all"],
-      ["badPrefix100"],
-      ["100someSuffix"],
-      ["100|a|b|c"],
-      ["100xxx|system|code"],
-      ["100e-2x|system|code"],
-    ]).test("%s", (param) => {
-      expect(() => parseQuantitySearchValue(param)).toThrow(
-        InvalidSearchParameterError
-      );
+      ['This is not a quantity at all'],
+      ['badPrefix100'],
+      ['100someSuffix'],
+      ['100|a|b|c'],
+      ['100xxx|system|code'],
+      ['100e-2x|system|code']
+    ]).test('%s', (param) => {
+      expect(() => parseQuantitySearchValue(param)).toThrow(InvalidSearchParameterError);
     });
   });
 });

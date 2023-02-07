@@ -3,30 +3,25 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { parseReferenceSearchValue } from "../../FhirQueryParser/typeParsers/referenceParser";
-import { FHIRSearchParametersRegistry } from "../../FHIRSearchParametersRegistry";
-import { referenceQuery } from "./referenceQuery";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { parseReferenceSearchValue } from '../../FhirQueryParser/typeParsers/referenceParser';
+import { FHIRSearchParametersRegistry } from '../../FHIRSearchParametersRegistry';
+import { referenceQuery } from './referenceQuery';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
-const organizationParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "organization"
-)!.compiled[0];
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
+const organizationParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'organization')!
+  .compiled[0];
 
-describe("referenceQuery", () => {
-  describe("searching with {type}/{id}", () => {
-    test("keyword included", () => {
+describe('referenceQuery', () => {
+  describe('searching with {type}/{id}', () => {
+    test('keyword included', () => {
       expect(
         referenceQuery(
           organizationParam,
-          parseReferenceSearchValue(
-            { name: "organization", target: [] },
-            "Organization/111"
-          ),
+          parseReferenceSearchValue({ name: 'organization', target: [] }, 'Organization/111'),
           true,
-          "https://base-url.com",
-          "organization",
+          'https://base-url.com',
+          'organization',
           []
         )
       ).toMatchInlineSnapshot(`
@@ -40,17 +35,14 @@ describe("referenceQuery", () => {
                               }
                         `);
     });
-    test("keyword not included", () => {
+    test('keyword not included', () => {
       expect(
         referenceQuery(
           organizationParam,
-          parseReferenceSearchValue(
-            { name: "organization", target: [] },
-            "Organization/111"
-          ),
+          parseReferenceSearchValue({ name: 'organization', target: [] }, 'Organization/111'),
           false,
-          "https://base-url.com",
-          "organization"
+          'https://base-url.com',
+          'organization'
         )
       ).toMatchInlineSnapshot(`
                               Object {
@@ -64,18 +56,18 @@ describe("referenceQuery", () => {
                         `);
     });
   });
-  describe("searching with {fhirServiceBaseUrl}/{type}/{id}", () => {
-    test("fhirServiceBaseUrl matches baseUrl", () => {
+  describe('searching with {fhirServiceBaseUrl}/{type}/{id}', () => {
+    test('fhirServiceBaseUrl matches baseUrl', () => {
       expect(
         referenceQuery(
           organizationParam,
           parseReferenceSearchValue(
-            { name: "organization", target: [] },
-            "https://base-url.com/Organization/111"
+            { name: 'organization', target: [] },
+            'https://base-url.com/Organization/111'
           ),
           true,
-          "https://base-url.com",
-          "organization"
+          'https://base-url.com',
+          'organization'
         )
       ).toMatchInlineSnapshot(`
                 Object {
@@ -88,17 +80,17 @@ describe("referenceQuery", () => {
                 }
             `);
     });
-    test("fhirServiceBaseUrl does not match baseUrl", () => {
+    test('fhirServiceBaseUrl does not match baseUrl', () => {
       expect(
         referenceQuery(
           organizationParam,
           parseReferenceSearchValue(
-            { name: "organization", target: [] },
-            "http://notMatching.com/baseR4/Organization/111"
+            { name: 'organization', target: [] },
+            'http://notMatching.com/baseR4/Organization/111'
           ),
           true,
-          "https://base-url.com",
-          "organization"
+          'https://base-url.com',
+          'organization'
         )
       ).toMatchInlineSnapshot(`
                               Object {
@@ -111,19 +103,16 @@ describe("referenceQuery", () => {
                         `);
     });
   });
-  describe("searching with just {id}", () => {
-    test("one target type found", () => {
+  describe('searching with just {id}', () => {
+    test('one target type found', () => {
       expect(
         referenceQuery(
           organizationParam,
-          parseReferenceSearchValue(
-            { name: "organization", target: ["Organization"] },
-            "organizationId"
-          ),
+          parseReferenceSearchValue({ name: 'organization', target: ['Organization'] }, 'organizationId'),
           true,
-          "https://base-url.com",
-          "organization",
-          ["Organization"]
+          'https://base-url.com',
+          'organization',
+          ['Organization']
         )
       ).toMatchInlineSnapshot(`
                               Object {
@@ -136,18 +125,18 @@ describe("referenceQuery", () => {
                               }
                         `);
     });
-    test("many target types found", () => {
+    test('many target types found', () => {
       expect(
         referenceQuery(
           organizationParam,
           parseReferenceSearchValue(
-            { name: "organization", target: ["Organization", "Group"] },
-            "organizationId"
+            { name: 'organization', target: ['Organization', 'Group'] },
+            'organizationId'
           ),
           true,
-          "https://base-url.com",
-          "organization",
-          ["Organization", "Group"]
+          'https://base-url.com',
+          'organization',
+          ['Organization', 'Group']
         )
       ).toMatchInlineSnapshot(`
                               Object {
@@ -162,50 +151,41 @@ describe("referenceQuery", () => {
                               }
                         `);
     });
-    test("no target types found", () => {
+    test('no target types found', () => {
       expect(() =>
         referenceQuery(
           organizationParam,
-          parseReferenceSearchValue(
-            { name: "organization", target: [] },
-            "organizationId"
-          ),
+          parseReferenceSearchValue({ name: 'organization', target: [] }, 'organizationId'),
           false,
-          "https://base-url.com",
-          "organization"
+          'https://base-url.com',
+          'organization'
         )
       ).toThrow(InvalidSearchParameterError);
     });
   });
-  test("invalid modifier", () => {
+  test('invalid modifier', () => {
     expect(() =>
       referenceQuery(
         organizationParam,
-        parseReferenceSearchValue(
-          { name: "organization", target: ["Organization"] },
-          "organizationId"
-        ),
+        parseReferenceSearchValue({ name: 'organization', target: ['Organization'] }, 'organizationId'),
         false,
-        "https://base-url.com",
-        "organization",
-        ["Organization"],
-        "exact"
+        'https://base-url.com',
+        'organization',
+        ['Organization'],
+        'exact'
       )
     ).toThrow(InvalidSearchParameterError);
   });
 
-  test("search value is not an URL nor has the format <resourceType>/<id>", () => {
+  test('search value is not an URL nor has the format <resourceType>/<id>', () => {
     expect(
       referenceQuery(
         organizationParam,
-        parseReferenceSearchValue(
-          { name: "organization", target: [] },
-          "this:does# not match"
-        ),
+        parseReferenceSearchValue({ name: 'organization', target: [] }, 'this:does# not match'),
         true,
-        "https://base-url.com",
-        "organization",
-        ["Organization", "Group"]
+        'https://base-url.com',
+        'organization',
+        ['Organization', 'Group']
       )
     ).toMatchInlineSnapshot(`
           Object {

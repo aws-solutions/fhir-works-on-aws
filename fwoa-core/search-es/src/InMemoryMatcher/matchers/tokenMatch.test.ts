@@ -1,25 +1,25 @@
-import { TokenSearchValue } from "../../FhirQueryParser";
-import { tokenMatch } from "./tokenMatch";
+import { TokenSearchValue } from '../../FhirQueryParser';
+import { tokenMatch } from './tokenMatch';
 
-describe("tokenMatch", () => {
-  test("system and code", () => {
+describe('tokenMatch', () => {
+  test('system and code', () => {
     const tokenParam: TokenSearchValue = {
-      code: "code",
+      code: 'code',
       explicitNoSystemProperty: false,
-      system: "system",
+      system: 'system'
     };
 
     expect(
       tokenMatch(tokenParam, {
-        code: "code",
-        system: "system",
+        code: 'code',
+        system: 'system'
       })
     ).toBe(true);
 
     expect(
       tokenMatch(tokenParam, {
-        value: "code",
-        system: "system",
+        value: 'code',
+        system: 'system'
       })
     ).toBe(true);
 
@@ -27,91 +27,91 @@ describe("tokenMatch", () => {
       tokenMatch(tokenParam, {
         coding: [
           {
-            system: "xxxx",
-            code: "xxxx",
+            system: 'xxxx',
+            code: 'xxxx'
           },
           {
-            system: "system",
-            code: "code",
-          },
-        ],
+            system: 'system',
+            code: 'code'
+          }
+        ]
       })
     ).toBe(true);
 
     expect(
       tokenMatch(tokenParam, {
-        code: "code",
-        system: "xxxx",
+        code: 'code',
+        system: 'xxxx'
       })
     ).toBe(false);
 
     expect(
       tokenMatch(tokenParam, {
-        code: "xxxx",
-        system: "system",
+        code: 'xxxx',
+        system: 'system'
       })
     ).toBe(false);
   });
 
-  describe("only code", () => {
-    test("explicitNoSystemProperty is true", () => {
+  describe('only code', () => {
+    test('explicitNoSystemProperty is true', () => {
       const tokenParam = {
-        code: "code",
+        code: 'code',
         explicitNoSystemProperty: true,
-        system: undefined,
+        system: undefined
       };
 
       expect(
         tokenMatch(tokenParam, {
-          code: "code",
+          code: 'code'
         })
       ).toBe(true);
 
       expect(
         tokenMatch(tokenParam, {
-          code: "code",
-          system: "system",
+          code: 'code',
+          system: 'system'
         })
       ).toBe(false);
     });
 
-    describe("explicitNoSystemProperty is false", () => {
-      test("coding-like type", () => {
+    describe('explicitNoSystemProperty is false', () => {
+      test('coding-like type', () => {
         const tokenParam = {
-          code: "code",
+          code: 'code',
           explicitNoSystemProperty: false,
-          system: undefined,
+          system: undefined
         };
 
         expect(
           tokenMatch(tokenParam, {
-            code: "code",
-            system: "system",
+            code: 'code',
+            system: 'system'
           })
         ).toBe(true);
 
         expect(
           tokenMatch(tokenParam, {
-            code: "code",
+            code: 'code'
           })
         ).toBe(true);
 
-        expect(tokenMatch(tokenParam, "code")).toBe(true);
+        expect(tokenMatch(tokenParam, 'code')).toBe(true);
 
         expect(
           tokenMatch(tokenParam, {
-            code: "xxxx",
+            code: 'xxxx'
           })
         ).toBe(false);
       });
 
-      test("boolean type", () => {
+      test('boolean type', () => {
         expect(
           tokenMatch(
             {
-              code: "true",
+              code: 'true',
               explicitNoSystemProperty: false,
-              system: undefined,
+              system: undefined
             },
             true
           )
@@ -120,62 +120,62 @@ describe("tokenMatch", () => {
         expect(
           tokenMatch(
             {
-              code: "false",
+              code: 'false',
               explicitNoSystemProperty: false,
-              system: undefined,
+              system: undefined
             },
             false
           )
         ).toBe(true);
       });
 
-      test("code type", () => {
+      test('code type', () => {
         expect(
           tokenMatch(
             {
-              code: "female",
-              explicitNoSystemProperty: false,
+              code: 'female',
+              explicitNoSystemProperty: false
             },
-            "female"
+            'female'
           )
         ).toBe(true);
 
         expect(
           tokenMatch(
             {
-              code: "female",
-              explicitNoSystemProperty: false,
+              code: 'female',
+              explicitNoSystemProperty: false
             },
-            "male"
+            'male'
           )
         ).toBe(false);
       });
     });
   });
 
-  describe("only system", () => {
+  describe('only system', () => {
     const tokenParam = {
       code: undefined,
       explicitNoSystemProperty: false,
-      system: "system",
+      system: 'system'
     };
 
     expect(
       tokenMatch(tokenParam, {
-        code: "xxxx",
-        system: "system",
+        code: 'xxxx',
+        system: 'system'
       })
     ).toBe(true);
 
     expect(
       tokenMatch(tokenParam, {
-        system: "system",
+        system: 'system'
       })
     ).toBe(true);
 
     expect(
       tokenMatch(tokenParam, {
-        system: "xxxx",
+        system: 'xxxx'
       })
     ).toBe(false);
   });

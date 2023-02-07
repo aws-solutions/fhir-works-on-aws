@@ -3,11 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { isEmpty } from "lodash";
-import { QuantitySearchValue } from "../../FhirQueryParser";
-import { CompiledSearchParam } from "../../FHIRSearchParametersRegistry";
-import { prefixRangeNumber } from "./common/prefixRange";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { isEmpty } from 'lodash';
+import { QuantitySearchValue } from '../../FhirQueryParser';
+import { CompiledSearchParam } from '../../FHIRSearchParametersRegistry';
+import { prefixRangeNumber } from './common/prefixRange';
 
 const SUPPORTED_MODIFIERS: string[] = [];
 
@@ -19,36 +19,27 @@ export const quantityQuery = (
   modifier?: string
 ): any => {
   if (modifier && !SUPPORTED_MODIFIERS.includes(modifier)) {
-    throw new InvalidSearchParameterError(
-      `Unsupported quantity search modifier: ${modifier}`
-    );
+    throw new InvalidSearchParameterError(`Unsupported quantity search modifier: ${modifier}`);
   }
   const { prefix, implicitRange, number, system, code } = value;
-  const queries = [
-    prefixRangeNumber(
-      prefix,
-      number,
-      implicitRange,
-      `${compiledSearchParam.path}.value`
-    ),
-  ];
-  const keywordSuffix = useKeywordSubFields ? ".keyword" : "";
+  const queries = [prefixRangeNumber(prefix, number, implicitRange, `${compiledSearchParam.path}.value`)];
+  const keywordSuffix = useKeywordSubFields ? '.keyword' : '';
 
   if (!isEmpty(system) && !isEmpty(code)) {
     queries.push({
       multi_match: {
         fields: [`${compiledSearchParam.path}.code${keywordSuffix}`],
         query: code,
-        lenient: true,
-      },
+        lenient: true
+      }
     });
 
     queries.push({
       multi_match: {
         fields: [`${compiledSearchParam.path}.system${keywordSuffix}`],
         query: system,
-        lenient: true,
-      },
+        lenient: true
+      }
     });
   } else if (!isEmpty(code)) {
     // when there is no system, search either the code (code) or the stated human unit (unit)
@@ -57,11 +48,11 @@ export const quantityQuery = (
       multi_match: {
         fields: [
           `${compiledSearchParam.path}.code${keywordSuffix}`,
-          `${compiledSearchParam.path}.unit${keywordSuffix}`,
+          `${compiledSearchParam.path}.unit${keywordSuffix}`
         ],
         query: code,
-        lenient: true,
-      },
+        lenient: true
+      }
     });
   }
 
@@ -70,7 +61,7 @@ export const quantityQuery = (
   }
   return {
     bool: {
-      must: queries,
-    },
+      must: queries
+    }
   };
 };

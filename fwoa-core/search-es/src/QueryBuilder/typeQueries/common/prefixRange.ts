@@ -19,11 +19,7 @@ interface DateRange {
 }
 
 // See the interpretation of prefixes when applied to ranges: https://www.hl7.org/fhir/search.html#prefix. It can be counterintuitive at first
-const prefixRangePeriod = (
-  prefix: string,
-  range: Range,
-  periodTypeField: string
-): any => {
+const prefixRangePeriod = (prefix: string, range: Range, periodTypeField: string): any => {
   const { start, end } = range;
   const startField = `${periodTypeField}.start`;
   const endField = `${periodTypeField}.end`;
@@ -34,79 +30,79 @@ const prefixRangePeriod = (
         {
           range: {
             [startField]: {
-              gte: start,
-            },
-          },
+              gte: start
+            }
+          }
         },
         {
           range: {
             [endField]: {
-              lte: end,
-            },
-          },
-        },
-      ],
-    },
+              lte: end
+            }
+          }
+        }
+      ]
+    }
   };
 
   const saQuery = {
     range: {
       [startField]: {
-        gt: end,
-      },
-    },
+        gt: end
+      }
+    }
   };
   const ebQuery = {
     range: {
       [endField]: {
-        lt: start,
-      },
-    },
+        lt: start
+      }
+    }
   };
   let query;
 
   switch (prefix) {
-    case "eq":
+    case 'eq':
       query = eqQuery;
       break;
-    case "ne":
+    case 'ne':
       query = {
         bool: {
-          must_not: eqQuery,
-        },
+          must_not: eqQuery
+        }
       };
       break;
-    case "lt":
-    case "le":
+    case 'lt':
+    case 'le':
       query = {
         range: {
           [startField]: {
-            lte: end,
-          },
-        },
+            lte: end
+          }
+        }
       };
       break;
-    case "gt":
-    case "ge":
+    case 'gt':
+    case 'ge':
       query = {
         range: {
           [endField]: {
-            gte: start,
-          },
-        },
+            gte: start
+          }
+        }
       };
       break;
-    case "eb":
+    case 'eb':
       query = ebQuery;
       break;
-    case "sa":
+    case 'sa':
       query = saQuery;
       break;
-    case "ap":
+    case 'ap':
       query = {
         bool: {
-          must_not: [ebQuery, saQuery],
-        },
+          must_not: [ebQuery, saQuery]
+        }
       };
       break;
     default:
@@ -122,17 +118,17 @@ const prefixRangePeriod = (
         // especially when must_not clauses are involved
         {
           exists: {
-            field: startField,
-          },
+            field: startField
+          }
         },
         {
           exists: {
-            field: endField,
-          },
+            field: endField
+          }
         },
-        query,
-      ],
-    },
+        query
+      ]
+    }
   };
 };
 
@@ -140,73 +136,73 @@ const prefixRange = (prefix: string, range: Range, path: string): any => {
   const { start, end } = range;
 
   // not equal
-  if (prefix === "ne") {
+  if (prefix === 'ne') {
     return {
       bool: {
         should: [
           {
             range: {
               [path]: {
-                gt: end,
-              },
-            },
+                gt: end
+              }
+            }
           },
           {
             range: {
               [path]: {
-                lt: start,
-              },
-            },
-          },
-        ],
-      },
+                lt: start
+              }
+            }
+          }
+        ]
+      }
     };
   }
 
   // See https://www.hl7.org/fhir/search.html#prefix
   let elasticSearchRange;
   switch (prefix) {
-    case "eq": // equal
+    case 'eq': // equal
       elasticSearchRange = {
         gte: start,
-        lte: end,
+        lte: end
       };
       break;
-    case "lt": // less than
+    case 'lt': // less than
       elasticSearchRange = {
-        lt: end,
+        lt: end
       };
       break;
-    case "le": // less or equal
+    case 'le': // less or equal
       elasticSearchRange = {
-        lte: end,
+        lte: end
       };
       break;
-    case "gt": // greater than
+    case 'gt': // greater than
       elasticSearchRange = {
-        gt: start,
+        gt: start
       };
       break;
-    case "ge": // greater or equal
+    case 'ge': // greater or equal
       elasticSearchRange = {
-        gte: start,
+        gte: start
       };
       break;
-    case "sa": // starts after
+    case 'sa': // starts after
       elasticSearchRange = {
-        gt: end,
+        gt: end
       };
       break;
-    case "eb": // ends before
+    case 'eb': // ends before
       elasticSearchRange = {
-        lt: start,
+        lt: start
       };
       break;
-    case "ap": // approximately
+    case 'ap': // approximately
       elasticSearchRange = {
         // same as eq for now
         gte: start,
-        lte: end,
+        lte: end
       };
       break;
     default:
@@ -215,8 +211,8 @@ const prefixRange = (prefix: string, range: Range, path: string): any => {
   }
   return {
     range: {
-      [path]: elasticSearchRange,
-    },
+      [path]: elasticSearchRange
+    }
   };
 };
 export const prefixRangeNumber = (
@@ -225,7 +221,7 @@ export const prefixRangeNumber = (
   implicitRange: NumberRange,
   path: string
 ): any => {
-  if (prefix === "eq" || prefix === "ne") {
+  if (prefix === 'eq' || prefix === 'ne') {
     return prefixRange(prefix, implicitRange, path);
   }
   // When a comparison prefix in the set lgt, lt, ge, le, sa & eb is provided, the implicit precision of the number is ignored,
@@ -235,23 +231,19 @@ export const prefixRangeNumber = (
     prefix,
     {
       start: number,
-      end: number,
+      end: number
     },
     path
   );
 };
 
-export const prefixRangeDate = (
-  prefix: string,
-  range: DateRange,
-  path: string
-): any => {
+export const prefixRangeDate = (prefix: string, range: DateRange, path: string): any => {
   return {
     bool: {
       should: [
         prefixRange(prefix, range, path), // date, dateTime, instant
-        prefixRangePeriod(prefix, range, path), // Period
-      ],
-    },
+        prefixRangePeriod(prefix, range, path) // Period
+      ]
+    }
   };
 };

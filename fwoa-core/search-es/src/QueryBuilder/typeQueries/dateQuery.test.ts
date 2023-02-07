@@ -2,20 +2,16 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { parseDateSearchValue } from "../../FhirQueryParser/typeParsers/dateParser";
-import { FHIRSearchParametersRegistry } from "../../FHIRSearchParametersRegistry";
-import { dateQuery } from "./dateQuery";
+import { parseDateSearchValue } from '../../FhirQueryParser/typeParsers/dateParser';
+import { FHIRSearchParametersRegistry } from '../../FHIRSearchParametersRegistry';
+import { dateQuery } from './dateQuery';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
-const birthdateParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "birthdate"
-)!.compiled[0];
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
+const birthdateParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'birthdate')!.compiled[0];
 
-describe("dateQuery", () => {
-  test("no prefix", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("1999-09-09")))
-      .toMatchInlineSnapshot(`
+describe('dateQuery', () => {
+  test('no prefix', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -68,9 +64,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("eq", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("eq1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('eq', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('eq1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -123,9 +118,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("ne", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("ne1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('ne', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('ne1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -194,9 +188,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("lt", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("lt1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('lt', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('lt1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -235,9 +228,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("le", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("le1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('le', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('le1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -276,9 +268,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("gt", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("gt1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('gt', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('gt1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -317,9 +308,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("ge", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("ge1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('ge', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('ge1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -358,9 +348,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("sa", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("sa1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('sa', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('sa1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [
@@ -399,9 +388,8 @@ describe("dateQuery", () => {
             }
         `);
   });
-  test("eb", () => {
-    expect(dateQuery(birthdateParam, parseDateSearchValue("eb1999-09-09")))
-      .toMatchInlineSnapshot(`
+  test('eb', () => {
+    expect(dateQuery(birthdateParam, parseDateSearchValue('eb1999-09-09'))).toMatchInlineSnapshot(`
             Object {
               "bool": Object {
                 "should": Array [

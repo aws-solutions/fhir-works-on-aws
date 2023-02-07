@@ -3,21 +3,18 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FHIRSearchParametersRegistry } from "../../FHIRSearchParametersRegistry";
-import { uriQuery } from "./uriQuery";
+import { FHIRSearchParametersRegistry } from '../../FHIRSearchParametersRegistry';
+import { uriQuery } from './uriQuery';
 
-const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry("4.0.1");
-const profileParam = fhirSearchParametersRegistry.getSearchParameter(
-  "Patient",
-  "_profile"
-)!.compiled[0];
+const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
+const profileParam = fhirSearchParametersRegistry.getSearchParameter('Patient', '_profile')!.compiled[0];
 
-describe("uriQuery", () => {
-  test("simple value", () => {
+describe('uriQuery', () => {
+  test('simple value', () => {
     expect(
       uriQuery(
         profileParam,
-        "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy",
+        'http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy',
         true
       )
     ).toMatchInlineSnapshot(`
@@ -32,11 +29,11 @@ describe("uriQuery", () => {
             }
         `);
   });
-  test("simple value; without keyword", () => {
+  test('simple value; without keyword', () => {
     expect(
       uriQuery(
         profileParam,
-        "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy",
+        'http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy',
         false
       )
     ).toMatchInlineSnapshot(`

@@ -1,11 +1,8 @@
-import {
-  DynamoDBRecord,
-  DynamoDBStreamEvent,
-} from "aws-lambda/trigger/dynamodb-stream";
-import AWS from "aws-sdk";
-import { ParsedFhirQueryParams, parseQueryString } from "../FhirQueryParser";
-import { FHIRSearchParametersRegistry } from "../FHIRSearchParametersRegistry";
-import getComponentLogger from "../loggerBuilder";
+import { DynamoDBRecord, DynamoDBStreamEvent } from 'aws-lambda/trigger/dynamodb-stream';
+import AWS from 'aws-sdk';
+import { ParsedFhirQueryParams, parseQueryString } from '../FhirQueryParser';
+import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
+import getComponentLogger from '../loggerBuilder';
 
 const logger = getComponentLogger();
 
@@ -50,15 +47,12 @@ export const buildNotification = (
     id: resource._tenantId ? resource._id : resource.id,
     resourceType: resource.resourceType,
     lastUpdated: resource.meta?.lastUpdated,
-    versionId: resource.meta?.versionId,
-  },
+    versionId: resource.meta?.versionId
+  }
 });
 
 const isCreateOrUpdate = (dynamoDBRecord: DynamoDBRecord): boolean => {
-  return (
-    dynamoDBRecord.eventName === "INSERT" ||
-    dynamoDBRecord.eventName === "MODIFY"
-  );
+  return dynamoDBRecord.eventName === 'INSERT' || dynamoDBRecord.eventName === 'MODIFY';
 };
 
 export const filterOutIneligibleResources = (
@@ -71,15 +65,13 @@ export const filterOutIneligibleResources = (
     }
     if (dynamoDbRecord.dynamodb?.NewImage === undefined) {
       logger.error(
-        "dynamodb.NewImage is missing from event. The stream event will be dropped. Is your stream correctly configured?"
+        'dynamodb.NewImage is missing from event. The stream event will be dropped. Is your stream correctly configured?'
       );
       return [];
     }
-    const resource = AWS.DynamoDB.Converter.unmarshall(
-      dynamoDbRecord.dynamodb.NewImage
-    );
+    const resource = AWS.DynamoDB.Converter.unmarshall(dynamoDbRecord.dynamodb.NewImage);
 
-    if (resource.documentStatus !== "AVAILABLE") {
+    if (resource.documentStatus !== 'AVAILABLE') {
       return [];
     }
 
@@ -95,13 +87,10 @@ export const parseSubscription = (
     channelHeader: resource?.channel?.header || [],
     channelPayload: resource?.channel?.payload,
     endpoint: resource?.channel?.endpoint,
-    parsedCriteria: parseQueryString(
-      fhirSearchParametersRegistry,
-      resource?.criteria
-    ),
+    parsedCriteria: parseQueryString(fhirSearchParametersRegistry, resource?.criteria),
     // eslint-disable-next-line no-underscore-dangle
     subscriptionId: resource._tenantId ? resource._id : resource.id,
     // eslint-disable-next-line no-underscore-dangle
-    tenantId: resource?._tenantId,
+    tenantId: resource?._tenantId
   };
 };

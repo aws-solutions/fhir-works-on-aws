@@ -4,12 +4,12 @@
  *
  */
 
-import { unflatten } from "flat";
-import { mapValues } from "lodash";
-import searchMappingsBaseV3 from "../schema/searchMappingsBase.3.0.1.json";
-import searchMappingsBaseV4 from "../schema/searchMappingsBase.4.0.1.json";
-import { CUSTOM_MAPPINGS } from "./customMappings";
-import { fhirToESMapping } from "./fhirTypeToESMapping";
+import { unflatten } from 'flat';
+import { mapValues } from 'lodash';
+import searchMappingsBaseV3 from '../schema/searchMappingsBase.3.0.1.json';
+import searchMappingsBaseV4 from '../schema/searchMappingsBase.4.0.1.json';
+import { CUSTOM_MAPPINGS } from './customMappings';
+import { fhirToESMapping } from './fhirTypeToESMapping';
 
 interface SearchMappingsBase {
   [resourceType: string]: { field: string; type: string }[];
@@ -26,16 +26,14 @@ export const getSearchMappings = (
 } => {
   let searchMappings: SearchMappingsBase;
   switch (fhirVersion) {
-    case "3.0.1":
+    case '3.0.1':
       searchMappings = searchMappingsBaseV3;
       break;
-    case "4.0.1":
+    case '4.0.1':
       searchMappings = searchMappingsBaseV4;
       break;
     default:
-      throw new Error(
-        `search mappings are not available for FHIR version ${fhirVersion}`
-      );
+      throw new Error(`search mappings are not available for FHIR version ${fhirVersion}`);
   }
 
   const searchableFieldsMappings = mapValues(searchMappings, (fieldsArr) =>
@@ -44,9 +42,7 @@ export const getSearchMappings = (
 
   const flatMappings = mapValues(searchableFieldsMappings, (fieldsArr) =>
     fieldsArr.reduce((acc, field) => {
-      const fieldWithIntermediateProperties = field.field
-        .split(".")
-        .join(".properties.");
+      const fieldWithIntermediateProperties = field.field.split('.').join('.properties.');
       acc[fieldWithIntermediateProperties] = field.mapping;
       return acc;
     }, {} as any)
@@ -61,11 +57,11 @@ export const getSearchMappings = (
   const mergedMappings = mapValues(mappings, (x) => ({
     ...x,
     ...resourceMappings,
-    ...CUSTOM_MAPPINGS,
+    ...CUSTOM_MAPPINGS
   }));
 
   return mapValues(mergedMappings, (x) => ({
     dynamic: false,
-    properties: x,
+    properties: x
   }));
 };

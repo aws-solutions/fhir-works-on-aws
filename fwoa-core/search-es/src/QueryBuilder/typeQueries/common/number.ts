@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
 
 interface FhirNumber {
   number: number;
@@ -14,19 +14,16 @@ interface FhirNumber {
   };
 }
 
-const NUMBER_REGEX =
-  /^(?<sign>[+-])?(?<whole>\d+)(\.(?<decimals>\d+))?([eE](?<exp>[+-]?\d+))?$/;
+const NUMBER_REGEX = /^(?<sign>[+-])?(?<whole>\d+)(\.(?<decimals>\d+))?([eE](?<exp>[+-]?\d+))?$/;
 
 // eslint-disable-next-line import/prefer-default-export
 export const parseNumber = (numberString: string): FhirNumber => {
   const match = numberString.match(NUMBER_REGEX);
   if (match === null) {
-    throw new InvalidSearchParameterError(
-      `Invalid number in search parameter: ${numberString}`
-    );
+    throw new InvalidSearchParameterError(`Invalid number in search parameter: ${numberString}`);
   }
 
-  const { decimals = "", exp } = match.groups!;
+  const { decimals = '', exp } = match.groups!;
 
   let significantFiguresDeltaExp = 0;
   // FHIR considers ALL written digits to be significant figures
@@ -43,7 +40,7 @@ export const parseNumber = (numberString: string): FhirNumber => {
     number: numberValue,
     implicitRange: {
       start: numberValue - 5 * 10 ** significantFiguresDeltaExp,
-      end: numberValue + 5 * 10 ** significantFiguresDeltaExp,
-    },
+      end: numberValue + 5 * 10 ** significantFiguresDeltaExp
+    }
   };
 };

@@ -1,27 +1,17 @@
-import { isEmpty } from "lodash";
-import { QuantitySearchValue } from "../../FhirQueryParser";
-import {
-  applyPrefixRulesToRange,
-  compareNumberToRange,
-} from "./common/numericComparison";
+import { isEmpty } from 'lodash';
+import { QuantitySearchValue } from '../../FhirQueryParser';
+import { applyPrefixRulesToRange, compareNumberToRange } from './common/numericComparison';
 
 // eslint-disable-next-line import/prefer-default-export
-export const quantityMatch = (
-  value: QuantitySearchValue,
-  resourceValue: any
-): boolean => {
+export const quantityMatch = (value: QuantitySearchValue, resourceValue: any): boolean => {
   const { prefix, implicitRange, number, system, code } = value;
 
-  if (typeof resourceValue?.value !== "number") {
+  if (typeof resourceValue?.value !== 'number') {
     return false;
   }
 
   if (
-    !compareNumberToRange(
-      prefix,
-      applyPrefixRulesToRange(prefix, number, implicitRange),
-      resourceValue.value
-    )
+    !compareNumberToRange(prefix, applyPrefixRulesToRange(prefix, number, implicitRange), resourceValue.value)
   ) {
     return false;
   }

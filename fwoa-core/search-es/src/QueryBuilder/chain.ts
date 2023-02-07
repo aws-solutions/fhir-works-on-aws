@@ -1,27 +1,15 @@
 // eslint-disable-next-line import/prefer-default-export
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import {
-  COMPILED_CONDITION_OPERATOR_RESOLVE,
-  NON_SEARCHABLE_PARAMETERS,
-} from "../constants";
-import {
-  parseSearchModifiers,
-  normalizeQueryParams,
-  isChainedParameter,
-} from "../FhirQueryParser/util";
-import {
-  FHIRSearchParametersRegistry,
-  SearchParam,
-} from "../FHIRSearchParametersRegistry";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { COMPILED_CONDITION_OPERATOR_RESOLVE, NON_SEARCHABLE_PARAMETERS } from '../constants';
+import { parseSearchModifiers, normalizeQueryParams, isChainedParameter } from '../FhirQueryParser/util';
+import { FHIRSearchParametersRegistry, SearchParam } from '../FHIRSearchParametersRegistry';
 
 export interface ChainParameter {
   chain: { resourceType: string; searchParam: string }[];
   initialValue: string[];
 }
 
-export function getUniqueTarget(
-  fhirSearchParam: SearchParam
-): string | undefined {
+export function getUniqueTarget(fhirSearchParam: SearchParam): string | undefined {
   if (!fhirSearchParam.target) {
     return undefined;
   }
@@ -33,10 +21,7 @@ export function getUniqueTarget(
     // check compiled[].condition for resolution
     const compiled = fhirSearchParam.compiled[i]; // we can use ! since we checked length before
     // condition's format is defined in `../FHIRSearchParamtersRegistry/index.ts`
-    if (
-      compiled.condition &&
-      compiled.condition[1] === COMPILED_CONDITION_OPERATOR_RESOLVE
-    ) {
+    if (compiled.condition && compiled.condition[1] === COMPILED_CONDITION_OPERATOR_RESOLVE) {
       if (!target) {
         // eslint-disable-next-line prefer-destructuring
         target = compiled.condition[2];
@@ -61,21 +46,17 @@ const parseChainedParameters = (
   resourceType: string,
   queryParams: any
 ): ChainParameter[] => {
-  const parsedChainedParam: ChainParameter[] = Object.entries(
-    normalizeQueryParams(queryParams)
-  )
+  const parsedChainedParam: ChainParameter[] = Object.entries(normalizeQueryParams(queryParams))
     .filter(
       ([searchParameter]) =>
-        !NON_SEARCHABLE_PARAMETERS.includes(searchParameter) &&
-        isChainedParameter(searchParameter)
+        !NON_SEARCHABLE_PARAMETERS.includes(searchParameter) && isChainedParameter(searchParameter)
     )
     .flatMap(([searchParameter, searchValues]) => {
       // Validate chain and add resource type
-      const chain = searchParameter.split(".");
+      const chain = searchParameter.split('.');
       const lastChain: string = chain.pop() as string;
       let currentResourceType = resourceType;
-      const organizedChain: { resourceType: string; searchParam: string }[] =
-        [];
+      const organizedChain: { resourceType: string; searchParam: string }[] = [];
       chain.forEach((currentSearchParam) => {
         const searchModifier = parseSearchModifiers(currentSearchParam);
         const fhirSearchParam = fhirSearchParametersRegistry.getSearchParameter(
@@ -87,7 +68,7 @@ const parseChainedParameters = (
             `Invalid search parameter '${searchModifier.parameterName}' for resource type ${currentResourceType}`
           );
         }
-        if (fhirSearchParam.type !== "reference") {
+        if (fhirSearchParam.type !== 'reference') {
           throw new InvalidSearchParameterError(
             `Chained search parameter '${searchModifier.parameterName}' for resource type ${currentResourceType} is not a reference.`
           );
@@ -97,7 +78,7 @@ const parseChainedParameters = (
           if (fhirSearchParam.target?.includes(searchModifier.modifier)) {
             organizedChain.push({
               resourceType: currentResourceType,
-              searchParam: searchModifier.parameterName,
+              searchParam: searchModifier.parameterName
             });
             nextResourceType = searchModifier.modifier;
           } else {
@@ -114,7 +95,7 @@ const parseChainedParameters = (
           }
           organizedChain.push({
             resourceType: currentResourceType,
-            searchParam: searchModifier.parameterName,
+            searchParam: searchModifier.parameterName
           });
           nextResourceType = target;
         }
@@ -122,11 +103,11 @@ const parseChainedParameters = (
       });
       organizedChain.push({
         resourceType: currentResourceType,
-        searchParam: lastChain,
+        searchParam: lastChain
       });
       return {
         chain: organizedChain.reverse(),
-        initialValue: searchValues,
+        initialValue: searchValues
       };
     });
   return parsedChainedParam;

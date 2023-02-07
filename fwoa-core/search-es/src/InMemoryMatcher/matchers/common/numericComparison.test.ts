@@ -4,20 +4,20 @@
  *
  */
 
-import { compareNumberToRange, compareRanges } from "./numericComparison";
+import { compareNumberToRange, compareRanges } from './numericComparison';
 
-const prefixes = ["ne", "eq", "lt", "le", "gt", "ge", "sa", "eb", "ap"];
+const prefixes = ['ne', 'eq', 'lt', 'le', 'gt', 'ge', 'sa', 'eb', 'ap'];
 
-describe("compareNumberToRange", () => {
+describe('compareNumberToRange', () => {
   const resourceValue = 10;
   const ranges = [
     [8, 9],
     [9, 10],
     [9, 11],
     [10, 11],
-    [11, 12],
+    [11, 12]
   ];
-  test.each(prefixes)("%p", (prefix) => {
+  test.each(prefixes)('%p', (prefix) => {
     const results = ranges.map(
       ([start, end]) =>
         `(${resourceValue}) ${prefix} (${start}, ${end}) is ${compareNumberToRange(
@@ -31,10 +31,10 @@ describe("compareNumberToRange", () => {
   });
 });
 
-describe("compareRanges", () => {
+describe('compareRanges', () => {
   const resourceRange = {
     lowerBound: 10,
-    upperBound: 20,
+    upperBound: 20
   };
 
   const ranges = [
@@ -50,12 +50,12 @@ describe("compareRanges", () => {
     [15, 20],
     [15, 21],
     [20, 21],
-    [21, 22],
+    [21, 22]
   ];
 
   console.log(ranges);
 
-  test.each(prefixes)("%p", (prefix) => {
+  test.each(prefixes)('%p', (prefix) => {
     const results = ranges.map(
       ([start, end]) =>
         `(${resourceRange.lowerBound}, ${

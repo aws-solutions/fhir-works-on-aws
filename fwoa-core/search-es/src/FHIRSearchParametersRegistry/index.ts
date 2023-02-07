@@ -3,12 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  FhirVersion,
-  SearchCapabilityStatement,
-} from "@aws/fhir-works-on-aws-interface";
-import compiledSearchParamsV3 from "../schema/compiledSearchParameters.3.0.1.json";
-import compiledSearchParamsV4 from "../schema/compiledSearchParameters.4.0.1.json";
+import { FhirVersion, SearchCapabilityStatement } from '@aws/fhir-works-on-aws-interface';
+import compiledSearchParamsV3 from '../schema/compiledSearchParameters.3.0.1.json';
+import compiledSearchParamsV4 from '../schema/compiledSearchParameters.4.0.1.json';
 
 /**
  * name: SearchParameter name
@@ -64,16 +61,7 @@ export interface CompiledSearchParam {
 export interface SearchParam {
   name: string;
   url: string;
-  type:
-    | "composite"
-    | "date"
-    | "number"
-    | "quantity"
-    | "reference"
-    | "special"
-    | "string"
-    | "token"
-    | "uri";
+  type: 'composite' | 'date' | 'number' | 'quantity' | 'reference' | 'special' | 'string' | 'token' | 'uri';
   description: string;
   base: string;
   target?: string[];
@@ -84,7 +72,7 @@ const toCapabilityStatement = (searchParam: SearchParam) => ({
   name: searchParam.name,
   definition: searchParam.url,
   type: searchParam.type,
-  documentation: searchParam.description,
+  documentation: searchParam.description
 });
 
 /**
@@ -110,17 +98,14 @@ export class FHIRSearchParametersRegistry {
 
   constructor(fhirVersion: FhirVersion, compiledImplementationGuides?: any[]) {
     let compiledSearchParams: SearchParam[];
-    if (fhirVersion === "4.0.1") {
+    if (fhirVersion === '4.0.1') {
       compiledSearchParams = compiledSearchParamsV4 as SearchParam[];
     } else {
       compiledSearchParams = compiledSearchParamsV3 as SearchParam[];
     }
     if (compiledImplementationGuides !== undefined) {
       // order is important. params from IGs are added last so that they overwrite base FHIR params with the same name
-      compiledSearchParams = [
-        ...compiledSearchParams,
-        ...compiledImplementationGuides,
-      ];
+      compiledSearchParams = [...compiledSearchParams, ...compiledImplementationGuides];
     }
 
     this.includeMap = {};
@@ -129,13 +114,11 @@ export class FHIRSearchParametersRegistry {
     this.capabilityStatement = {};
 
     compiledSearchParams.forEach((searchParam) => {
-      this.typeNameMap[searchParam.base] =
-        this.typeNameMap[searchParam.base] ?? {};
+      this.typeNameMap[searchParam.base] = this.typeNameMap[searchParam.base] ?? {};
       this.typeNameMap[searchParam.base][searchParam.name] = searchParam;
 
-      if (searchParam.type === "reference") {
-        this.includeMap[searchParam.base] =
-          this.includeMap[searchParam.base] ?? [];
+      if (searchParam.type === 'reference') {
+        this.includeMap[searchParam.base] = this.includeMap[searchParam.base] ?? [];
         this.includeMap[searchParam.base].push(searchParam);
 
         // eslint-disable-next-line no-unused-expressions
@@ -147,48 +130,40 @@ export class FHIRSearchParametersRegistry {
     });
 
     Object.entries(this.typeNameMap).forEach(([resourceType, searchParams]) => {
-      if (resourceType === "Resource") {
+      if (resourceType === 'Resource') {
         // search params of type Resource are handled separately since they must appear on ALL resource types
         return;
       }
 
-      this.capabilityStatement[resourceType] =
-        this.capabilityStatement[resourceType] ?? {};
-      this.capabilityStatement[resourceType].searchParam = Object.values(
-        searchParams
-      ).map(toCapabilityStatement);
+      this.capabilityStatement[resourceType] = this.capabilityStatement[resourceType] ?? {};
+      this.capabilityStatement[resourceType].searchParam =
+        Object.values(searchParams).map(toCapabilityStatement);
 
       this.capabilityStatement[resourceType].searchInclude = [
-        "*",
-        ...(this.includeMap[resourceType]?.map(
-          (searchParam) => `${searchParam.base}:${searchParam.name}`
-        ) ?? []),
+        '*',
+        ...(this.includeMap[resourceType]?.map((searchParam) => `${searchParam.base}:${searchParam.name}`) ??
+          [])
       ];
 
       this.capabilityStatement[resourceType].searchRevInclude = [
-        "*",
+        '*',
         ...(this.revincludeMap[resourceType]?.map(
           (searchParam) => `${searchParam.base}:${searchParam.name}`
-        ) ?? []),
+        ) ?? [])
       ];
     });
 
-    const resourceSearchParams = Object.values(this.typeNameMap.Resource).map(
-      toCapabilityStatement
-    );
+    const resourceSearchParams = Object.values(this.typeNameMap.Resource).map(toCapabilityStatement);
 
     // For each resource type, add all search params that have "Resource" as base, except when there is already
     // a more specific search parameter with the same name.
-    Object.entries(this.capabilityStatement).forEach(
-      ([resourceType, searchCapabilities]) => {
-        searchCapabilities.searchParam.push(
-          ...resourceSearchParams.filter(
-            (resourceSearchParam) =>
-              !this.typeNameMap?.[resourceType]?.[resourceSearchParam.name]
-          )
-        );
-      }
-    );
+    Object.entries(this.capabilityStatement).forEach(([resourceType, searchCapabilities]) => {
+      searchCapabilities.searchParam.push(
+        ...resourceSearchParams.filter(
+          (resourceSearchParam) => !this.typeNameMap?.[resourceType]?.[resourceSearchParam.name]
+        )
+      );
+    });
   }
 
   /**
@@ -197,14 +172,8 @@ export class FHIRSearchParametersRegistry {
    * @param name search parameter name
    * @return the matching SearchParam or undefined if there's no match
    */
-  getSearchParameter(
-    resourceType: string,
-    name: string
-  ): SearchParam | undefined {
-    return (
-      this.typeNameMap?.[resourceType]?.[name] ||
-      this.typeNameMap?.Resource?.[name]
-    );
+  getSearchParameter(resourceType: string, name: string): SearchParam | undefined {
+    return this.typeNameMap?.[resourceType]?.[name] || this.typeNameMap?.Resource?.[name];
   }
 
   /**
@@ -223,22 +192,19 @@ export class FHIRSearchParametersRegistry {
 
     if (searchParam === undefined) {
       return {
-        error: `Search parameter ${name} does not exist in resource ${resourceType}`,
+        error: `Search parameter ${name} does not exist in resource ${resourceType}`
       };
     }
 
-    if (searchParam.type !== "reference") {
+    if (searchParam.type !== 'reference') {
       return {
-        error: `Search parameter ${name} is not of type reference in resource ${resourceType}`,
+        error: `Search parameter ${name} is not of type reference in resource ${resourceType}`
       };
     }
 
-    if (
-      targetResourceType !== undefined &&
-      !searchParam.target?.includes(targetResourceType)
-    ) {
+    if (targetResourceType !== undefined && !searchParam.target?.includes(targetResourceType)) {
       return {
-        error: `Search parameter ${name} in resource ${resourceType} does not point to target resource type ${targetResourceType}`,
+        error: `Search parameter ${name} in resource ${resourceType} does not point to target resource type ${targetResourceType}`
       };
     }
     return searchParam;

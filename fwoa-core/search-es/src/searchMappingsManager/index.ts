@@ -5,8 +5,8 @@
  *
  */
 
-import { Client } from "@elastic/elasticsearch";
-import { ElasticSearch } from "../elasticSearch";
+import { Client } from '@elastic/elasticsearch';
+import { ElasticSearch } from '../elasticSearch';
 
 const toIndexName = (resourceType: string) => resourceType.toLowerCase();
 
@@ -39,7 +39,7 @@ export class SearchMappingsManager {
     searchMappings,
     numberOfShards,
     searchClient = ElasticSearch,
-    ignoreMappingsErrorsForExistingIndices = false,
+    ignoreMappingsErrorsForExistingIndices = false
   }: {
     searchMappings: { [resourceType: string]: any };
     numberOfShards: number;
@@ -49,8 +49,7 @@ export class SearchMappingsManager {
     this.searchMappings = searchMappings;
     this.numberOfShards = numberOfShards;
     this.searchClient = searchClient;
-    this.ignoreMappingsErrorsForExistingIndices =
-      ignoreMappingsErrorsForExistingIndices;
+    this.ignoreMappingsErrorsForExistingIndices = ignoreMappingsErrorsForExistingIndices;
   }
 
   /**
@@ -58,14 +57,10 @@ export class SearchMappingsManager {
    */
   async createOrUpdateMappings() {
     const resourceTypesWithErrors = [];
-    for (const [resourceType, mappings] of Object.entries(
-      this.searchMappings
-    )) {
+    for (const [resourceType, mappings] of Object.entries(this.searchMappings)) {
       try {
         if (!(await this.indexExists(resourceType))) {
-          console.log(
-            `index for ${resourceType} was not found. It will be created`
-          );
+          console.log(`index for ${resourceType} was not found. It will be created`);
           await this.createIndexWithMapping(resourceType, mappings);
         } else {
           try {
@@ -83,25 +78,20 @@ export class SearchMappingsManager {
         }
       } catch (e) {
         console.log(e);
-        console.log(
-          `Failed to update mapping for ${resourceType}:`,
-          JSON.stringify(e, null, 2)
-        );
+        console.log(`Failed to update mapping for ${resourceType}:`, JSON.stringify(e, null, 2));
         resourceTypesWithErrors.push(resourceType);
       }
     }
 
     if (resourceTypesWithErrors.length > 0) {
-      throw new Error(
-        `Failed to update mappings for: ${resourceTypesWithErrors}`
-      );
+      throw new Error(`Failed to update mappings for: ${resourceTypesWithErrors}`);
     }
   }
 
   async indexExists(resourceType: string): Promise<boolean> {
     return (
       await this.searchClient.indices.exists({
-        index: toIndexName(resourceType),
+        index: toIndexName(resourceType)
       })
     ).body;
   }
@@ -110,7 +100,7 @@ export class SearchMappingsManager {
     console.log(`sending putMapping request for: ${resourceType}`);
     return this.searchClient.indices.put_mapping({
       index: toIndexName(resourceType),
-      body: mapping,
+      body: mapping
     });
   }
 
@@ -121,9 +111,9 @@ export class SearchMappingsManager {
       body: {
         mappings: mapping,
         settings: {
-          number_of_shards: this.numberOfShards,
-        },
-      },
+          number_of_shards: this.numberOfShards
+        }
+      }
     });
   }
 }

@@ -4,5 +4,5 @@
  *
  */
 
-export * from "./StreamSubscriptionMatcher";
-export * from "./subscriptions";
+export * from './StreamSubscriptionMatcher';
+export * from './subscriptions';

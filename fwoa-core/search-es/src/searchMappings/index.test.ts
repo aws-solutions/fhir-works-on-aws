@@ -4,10 +4,10 @@
  *
  */
 
-import { getSearchMappings } from "./index";
+import { getSearchMappings } from './index';
 
-describe("getSearchMappings", () => {
-  test("R4 snapshot", () => {
-    expect(getSearchMappings("4.0.1")).toMatchSnapshot();
+describe('getSearchMappings', () => {
+  test('R4 snapshot', () => {
+    expect(getSearchMappings('4.0.1')).toMatchSnapshot();
   });
 });

@@ -3,11 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { parseSearchModifiers } from "./util";
+import { parseSearchModifiers } from './util';
 
-describe("getSearchModifiers", () => {
-  test("name:exact", () => {
-    expect(parseSearchModifiers("name:exact")).toMatchInlineSnapshot(`
+describe('getSearchModifiers', () => {
+  test('name:exact', () => {
+    expect(parseSearchModifiers('name:exact')).toMatchInlineSnapshot(`
         Object {
           "modifier": "exact",
           "parameterName": "name",
@@ -15,8 +15,8 @@ describe("getSearchModifiers", () => {
         `);
   });
 
-  test("name", () => {
-    expect(parseSearchModifiers("name")).toMatchInlineSnapshot(`
+  test('name', () => {
+    expect(parseSearchModifiers('name')).toMatchInlineSnapshot(`
             Object {
               "modifier": undefined,
               "parameterName": "name",
@@ -24,8 +24,8 @@ describe("getSearchModifiers", () => {
         `);
   });
 
-  test("name:contains", () => {
-    expect(parseSearchModifiers("name:contains")).toMatchInlineSnapshot(`
+  test('name:contains', () => {
+    expect(parseSearchModifiers('name:contains')).toMatchInlineSnapshot(`
         Object {
           "modifier": "contains",
           "parameterName": "name",
@@ -33,8 +33,8 @@ describe("getSearchModifiers", () => {
         `);
   });
 
-  test("name:", () => {
-    expect(parseSearchModifiers("name:")).toMatchInlineSnapshot(`
+  test('name:', () => {
+    expect(parseSearchModifiers('name:')).toMatchInlineSnapshot(`
         Object {
           "modifier": "",
           "parameterName": "name",

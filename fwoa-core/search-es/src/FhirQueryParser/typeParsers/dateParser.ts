@@ -4,14 +4,8 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import {
-  lastDayOfMonth,
-  lastDayOfYear,
-  isValid,
-  parseISO,
-  set,
-} from "date-fns";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { lastDayOfMonth, lastDayOfYear, isValid, parseISO, set } from 'date-fns';
 
 export interface DateSearchValue {
   prefix: string;
@@ -28,16 +22,13 @@ const DATE_SEARCH_PARAM_REGEX =
 export const parseDateSearchValue = (param: string): DateSearchValue => {
   const match = param.match(DATE_SEARCH_PARAM_REGEX);
   if (match === null) {
-    throw new InvalidSearchParameterError(
-      `Invalid date search parameter: ${param}`
-    );
+    throw new InvalidSearchParameterError(`Invalid date search parameter: ${param}`);
   }
-  const { inputDate, month, day, minutes, seconds, milliseconds } =
-    match.groups!;
+  const { inputDate, month, day, minutes, seconds, milliseconds } = match.groups!;
 
   // If no prefix is present, the prefix eq is assumed.
   // https://www.hl7.org/fhir/search.html#prefix
-  const prefix = match.groups!.prefix ?? "eq";
+  const prefix = match.groups!.prefix ?? 'eq';
 
   const parsedDate = parseISO(inputDate);
   if (!isValid(parsedDate)) {
@@ -51,7 +42,7 @@ export const parseDateSearchValue = (param: string): DateSearchValue => {
     hours: 23,
     minutes: 59,
     seconds: 59,
-    milliseconds: 999,
+    milliseconds: 999
   };
   if (milliseconds !== undefined) {
     endDate = parsedDate; // date is fully specified
@@ -71,7 +62,7 @@ export const parseDateSearchValue = (param: string): DateSearchValue => {
     prefix,
     range: {
       start: parsedDate,
-      end: endDate,
-    },
+      end: endDate
+    }
   };
 };

@@ -4,13 +4,13 @@
  *
  */
 
-import { InvalidSearchParameterError } from "@aws/fhir-works-on-aws-interface";
-import { parseTokenSearchValue } from "./tokenParser";
+import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { parseTokenSearchValue } from './tokenParser';
 
-describe("parseTokenSearchValue", () => {
-  describe("valid inputs", () => {
-    test("code", () => {
-      expect(parseTokenSearchValue("code")).toMatchInlineSnapshot(`
+describe('parseTokenSearchValue', () => {
+  describe('valid inputs', () => {
+    test('code', () => {
+      expect(parseTokenSearchValue('code')).toMatchInlineSnapshot(`
                 Object {
                   "code": "code",
                   "explicitNoSystemProperty": false,
@@ -18,8 +18,8 @@ describe("parseTokenSearchValue", () => {
                 }
             `);
     });
-    test("system|code", () => {
-      expect(parseTokenSearchValue("system|code")).toMatchInlineSnapshot(`
+    test('system|code', () => {
+      expect(parseTokenSearchValue('system|code')).toMatchInlineSnapshot(`
                 Object {
                   "code": "code",
                   "explicitNoSystemProperty": false,
@@ -27,8 +27,8 @@ describe("parseTokenSearchValue", () => {
                 }
             `);
     });
-    test("|code", () => {
-      expect(parseTokenSearchValue("|code")).toMatchInlineSnapshot(`
+    test('|code', () => {
+      expect(parseTokenSearchValue('|code')).toMatchInlineSnapshot(`
                 Object {
                   "code": "code",
                   "explicitNoSystemProperty": true,
@@ -36,8 +36,8 @@ describe("parseTokenSearchValue", () => {
                 }
             `);
     });
-    test("system|", () => {
-      expect(parseTokenSearchValue("system|")).toMatchInlineSnapshot(`
+    test('system|', () => {
+      expect(parseTokenSearchValue('system|')).toMatchInlineSnapshot(`
                 Object {
                   "code": undefined,
                   "explicitNoSystemProperty": false,
@@ -45,9 +45,8 @@ describe("parseTokenSearchValue", () => {
                 }
             `);
     });
-    test("http://acme.org/patient|2345", () => {
-      expect(parseTokenSearchValue("http://acme.org/patient|2345"))
-        .toMatchInlineSnapshot(`
+    test('http://acme.org/patient|2345', () => {
+      expect(parseTokenSearchValue('http://acme.org/patient|2345')).toMatchInlineSnapshot(`
                 Object {
                   "code": "2345",
                   "explicitNoSystemProperty": false,
@@ -55,8 +54,8 @@ describe("parseTokenSearchValue", () => {
                 }
             `);
     });
-    test("empty string", () => {
-      expect(parseTokenSearchValue("")).toMatchInlineSnapshot(`
+    test('empty string', () => {
+      expect(parseTokenSearchValue('')).toMatchInlineSnapshot(`
                 Object {
                   "code": "",
                   "explicitNoSystemProperty": false,
@@ -66,17 +65,13 @@ describe("parseTokenSearchValue", () => {
     });
   });
 
-  describe("invalid inputs", () => {
+  describe('invalid inputs', () => {
     // there are actually very few invalid inputs since almost any string can potentially be a code
-    test("a|b|c", () => {
-      expect(() => parseTokenSearchValue("a|b|c")).toThrow(
-        InvalidSearchParameterError
-      );
+    test('a|b|c', () => {
+      expect(() => parseTokenSearchValue('a|b|c')).toThrow(InvalidSearchParameterError);
     });
-    test("|", () => {
-      expect(() => parseTokenSearchValue("|")).toThrow(
-        InvalidSearchParameterError
-      );
+    test('|', () => {
+      expect(() => parseTokenSearchValue('|')).toThrow(InvalidSearchParameterError);
     });
   });
 });
