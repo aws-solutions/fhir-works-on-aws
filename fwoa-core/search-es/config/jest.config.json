@@ -9,13 +9,6 @@
       "statements": 70
     }
   },
-  "coveragePathIgnorePatterns": [
-    "<rootDir>/src/errors",
-    "<rootDir>/src/index.ts",
-    "<rootDir>/src/constants.ts",
-    "<rootDir>/src/resourceMeta.ts",
-    "<rootDir>/src/stubs.ts",
-    "<rootDir>/src/loggerBuilder.ts"
-  ],
+  "coveragePathIgnorePatterns": [],
   "coverageReporters": ["json-summary", "json", "lcov", "text"]
 }

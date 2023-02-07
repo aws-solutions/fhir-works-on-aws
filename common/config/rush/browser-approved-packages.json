@@ -51,6 +51,14 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "ajv",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "ajv-errors",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "aws-elasticsearch-connector",
       "allowedCategories": ["production"]
     },
@@ -79,10 +87,6 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "date-fns",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "csv-load-sync",
       "allowedCategories": ["tools"]
     },
@@ -91,8 +95,16 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "date-fns",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "errorhandler",
+      "allowedCategories": ["production"]
     },
     {
       "name": "eslint",
@@ -163,16 +175,16 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "json-stringify-pretty-compact",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "jsonwebtoken",
       "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jwks-rsa",
       "allowedCategories": ["tools"]
-    },
-    {
-      "name": "json-stringify-pretty-compact",
-      "allowedCategories": ["production"]
     },
     {
       "name": "license-check-and-add",
@@ -188,6 +200,10 @@
     },
     {
       "name": "mime-types",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "mock-req-res",
       "allowedCategories": ["production"]
     },
     {
@@ -215,6 +231,14 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "sanitize-html",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "serverless-http",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
@@ -229,6 +253,10 @@
     {
       "name": "standard-version",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "supertest",
+      "allowedCategories": ["production"]
     },
     {
       "name": "ts-jest",
