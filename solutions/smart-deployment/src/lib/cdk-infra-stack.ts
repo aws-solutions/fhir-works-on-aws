@@ -1319,7 +1319,7 @@ export default class FhirWorksStack extends Stack {
         }
       }),
       handler: 'handler',
-      entry: path.join(__dirname, '../src/subscriptions/matcherLambda/index.ts'),
+      entry: path.join(__dirname, '../subscriptions/matcherLambda/index.ts'),
       bundling: {
         target: 'es2020'
       },
@@ -1376,7 +1376,7 @@ export default class FhirWorksStack extends Stack {
       description: 'Send rest-hook notification for subscription',
       role: subscriptionsResources.restHookLambdaRole,
       handler: 'handler',
-      entry: path.join(__dirname, '../src/subscriptions/restHookLambda/index.ts'),
+      entry: path.join(__dirname, '../subscriptions/restHookLambda/index.ts'),
       depsLockFilePath: this.lockFilePath,
       deadLetterQueue: subscriptionsRestHookDLQ,
       bundling: {
