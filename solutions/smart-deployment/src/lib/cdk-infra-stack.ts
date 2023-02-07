@@ -631,24 +631,6 @@ export default class FhirWorksStack extends Stack {
       })
     );
 
-    let lambdaBundlingOptions: any = {
-      commandHooks: {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        beforeBundling(inputDir: string, outputDir: string) {
-          return [];
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        beforeInstall(inputDir: string, outputDir: string) {
-          return [];
-        },
-        afterBundling(inputDir: string, outputDir: string) {
-          // Copy the source of sym-linked node modules to the Lambda package
-          // so all dependencies of 'fabric-network' is included
-          return [`cp -a -L ${outputDir}/node_modules/.pnpm/node_modules/. ${outputDir}/node_modules`];
-        }
-      }
-    };
-
     const updateSearchMappingsLambdaFunction = new NodejsFunction(
       this,
       'updateSearchMappingsLambdaFunction',
@@ -708,8 +690,7 @@ export default class FhirWorksStack extends Stack {
         handler: 'handler',
         entry: path.join(__dirname, '/../updateSearchMappings/index.ts'),
         bundling: {
-          externalModules: ['aws-sdk'],
-          ...lambdaBundlingOptions
+          externalModules: ['aws-sdk']
         },
         environment: {
           ...lambdaDefaultEnvVars,
