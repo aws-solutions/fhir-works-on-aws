@@ -73,6 +73,8 @@ export default class FhirWorksStack extends Stack {
   constructor(scope: Construct, id: string, props?: FhirWorksStackProps) {
     super(scope, id, props);
 
+    // Location of smart-deployment folder relative to pnpm-lock file, used for Lambda bundling
+    const projectRootRelativePath: string = '../../../solutions/smart-deployment';
     // Define parameters
     const exportGlueWorkerType = new CfnParameter(this, 'exportGlueWorkerType', {
       type: 'String',
@@ -580,10 +582,10 @@ export default class FhirWorksStack extends Stack {
             // copy all the necessary files for the lambda into the bundle
             // this allows the lambda functions for bulk export to have access to these files within the lambda instance
             return [
-              `node ../../../solutions/smart-deployment/scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/glueScripts/export-script.py`,
-              `node ../../../solutions/smart-deployment/scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/transitiveReferenceParams.json`,
-              `node ../../../solutions/smart-deployment/scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V3}`,
-              `node ../../../solutions/smart-deployment/scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V4}`
+              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/glueScripts/export-script.py`,
+              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/transitiveReferenceParams.json`,
+              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V3}`,
+              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V4}`
             ];
           }
         }
@@ -836,7 +838,7 @@ export default class FhirWorksStack extends Stack {
             // copy all the necessary files for the lambda into the bundle
             // this allows the validators to be constructed with the compiled implementation guides
             return [
-              `node ../../../solutions/smart-deployment/scripts/build_lambda.js ${inputDir}/compiledImplementationGuides ${outputDir}/compiledImplementationGuides none true`
+              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath}/compiledImplementationGuides ${outputDir}/compiledImplementationGuides none true`
             ];
           }
         }
