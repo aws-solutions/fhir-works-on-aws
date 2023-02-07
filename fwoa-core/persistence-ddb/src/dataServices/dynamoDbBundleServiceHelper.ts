@@ -11,7 +11,7 @@ import {
   isResourceNotFoundError
 } from '@aws/fhir-works-on-aws-interface';
 import { DynamoDB } from 'aws-sdk';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';
 import { DynamoDBConverter, RESOURCE_TABLE } from './dynamoDb';
@@ -45,7 +45,7 @@ export default class DynamoDbBundleServiceHelper {
       switch (request.operation) {
         case 'create': {
           // Add create request, put it in PENDING
-          let id = v4();
+          let id = uuidv4();
           if (request.id) {
             id = request.id;
           }
@@ -307,7 +307,7 @@ export default class DynamoDbBundleServiceHelper {
 
       if (operation === 'create') {
         vid = 1;
-        id = request.id ? request.id : v4();
+        id = request.id ? request.id : uuidv4();
       } else {
         try {
           // eslint-disable-next-line no-await-in-loop
@@ -317,7 +317,7 @@ export default class DynamoDbBundleServiceHelper {
           // if upsert supported and update operation
           if (updateCreateSupported && operation === 'update' && isResourceNotFoundError(e)) {
             vid = 1;
-            id = request.id ? request.id : v4();
+            id = request.id ? request.id : uuidv4();
             const createObject = {
               item,
               request,
