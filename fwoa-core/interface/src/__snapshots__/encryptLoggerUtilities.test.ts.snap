@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test logger utilities encryptSelectedField happy case" 1`] = `
+exports[`test logger utilities encryptSelectedField test happy case" 1`] = `
 Object {
   "how": Object {
     "apiGateway": Object {

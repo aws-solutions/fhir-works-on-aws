@@ -9,6 +9,7 @@ import inputLogger from './InputExampleEncryptLoggerUtilities.json';
 describe('test logger utilities', () => {
   afterEach(() => {
     jest.clearAllMocks();
+    AWSMock.restore('KMS');
   });
   describe('encryptSelectedField', () => {
     test('test happy case"', async () => {
@@ -24,7 +25,7 @@ describe('test logger utilities', () => {
         });
       });
       const info = {
-        meta: { metaData: ['logMetadata.EncryptedPayLoad'], componenet: 'routing' },
+        meta: { metaData: 'logMetadata.EncryptedPayLoad', component: 'routing' },
         message: exampleMessage
       };
 
@@ -34,40 +35,43 @@ describe('test logger utilities', () => {
       //CHECK
       expect(result).toMatchSnapshot();
     });
-    test('test error: Invalid data input to encrypt', async () => {
-      //BUILD
-      const exampleMessage = inputLogger;
-      const info = {
-        meta: { metaData: 'safasdfa', componenet: 'routing' },
-        message: exampleMessage
-      };
+    describe('invalid inputs', () => {
+      test('test error: empty field name to encrypt', async () => {
+        //BUILD
+        const exampleMessage = inputLogger;
+        const info = {
+          meta: { metaData: '', componenet: 'routing' },
+          message: exampleMessage
+        };
 
-      //CHECK
-      await expect(encryptSelectedField(info)).rejects.toThrow('Invalid data input to encrypt');
-    });
-    test('test error: Invalid data type for field input', async () => {
-      const exampleMessage = inputLogger;
-      const info = {
-        meta: { metaData: [2342], componenet: 'routing' },
-        message: exampleMessage
-      };
-      await expect(encryptSelectedField(info)).rejects.toThrow('Invalid data type for field input');
-    });
-    test('test error: Invalid field to encrypt', async () => {
-      //BUILD
-      const exampleMessage = inputLogger;
-      const info = {
-        meta: { metaData: ['asdas'], componenet: 'routing' },
-        message: exampleMessage
-      };
+        //CHECK
+        await expect(encryptSelectedField(info)).rejects.toThrow('Invalid field input to encrypt');
+      });
+      test('test error: Invalid data type for field input', async () => {
+        const exampleMessage = inputLogger;
+        const info = {
+          meta: { metaData: 2342, componenet: 'routing' },
+          message: exampleMessage
+        };
+        await expect(encryptSelectedField(info)).rejects.toThrow('Invalid field input to encrypt');
+      });
+      test('test error: Invalid field name to encrypt', async () => {
+        //BUILD
+        const exampleMessage = inputLogger;
+        const info = {
+          meta: { metaData: 'asdas', componenet: 'routing' },
+          message: exampleMessage
+        };
 
-      //CHECK
-      await expect(encryptSelectedField(info)).rejects.toThrow('Invalid field to encrypt');
+        //CHECK
+        await expect(encryptSelectedField(info)).rejects.toThrow(
+          'Input field does not exist in logger, cannot to encrypt'
+        );
+      });
     });
   });
-
   describe('encryptKMS', () => {
-    test('Success string encryption', async () => {
+    test('Successfully encrypt string', async () => {
       // BUILD
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
@@ -102,7 +106,7 @@ describe('test logger utilities', () => {
         callback(new Error('Invalid input'));
       });
 
-      // CHECK
+      // OPERATE & CHECK
       await expect(encryptKMS('', '123456789012')).rejects.toThrowError('Invalid input');
     });
   });

@@ -45,7 +45,7 @@ export interface whatAttribute {
       httpMethod: string;
       queryStringParameters: { [key: string]: string } | null;
       pathParameters: {
-        proxy: string;
+        proxy?: string;
       };
     };
   };
@@ -61,10 +61,12 @@ export interface whereAttribute {
       logStreamName: string;
     };
   };
-  domainName: string;
   'User-agent': string;
   requestContext: {
-    sourceIp: string;
+    domainName: string;
+    identity: {
+      sourceIp: string;
+    };
   };
 }
 
@@ -113,54 +115,67 @@ function preprocessFieldsToEncrypted(
   const stringToReplace = 'encrypted';
   const resourceIdRegx = /(\w{8}(-\w{4}){3}-\w{12})/;
   fieldsToEncrypt.forEach((selectedField) => {
-    let contentInField: string | { [key: string]: string };
-    let markedContent: string | undefined;
+    let contentInField: string | { [key: string]: string } | undefined | null;
+    let markedContent: string | undefined | null;
     // eslint-disable-next-line default-case
     switch (selectedField) {
       case 'who.userIdentity.sub': {
-        contentInField = _.get(logging, selectedField, '');
+        contentInField = _.get(logging, selectedField);
         markedContent = stringToReplace;
         break;
       }
       case 'who.userIdentity.fhirUser': {
-        contentInField = _.get(logging, selectedField, '');
-        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        contentInField = _.get(logging, selectedField);
+        if (contentInField) {
+          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
         break;
       }
       case 'what.apiGateway.event.queryStringParameters': {
-        contentInField = _.get(logging, selectedField, '');
-        markedContent = stringToReplace;
+        contentInField = _.get(logging, selectedField);
+        if (contentInField) {
+          markedContent = stringToReplace;
+        } else {
+          markedContent = contentInField;
+        }
         break;
       }
       case 'what.requestContext.path': {
-        contentInField = _.get(logging, selectedField, '');
-        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        contentInField = _.get(logging, selectedField);
+        markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
         break;
       }
       case 'what.apiGateway.event.pathParameters.proxy': {
-        contentInField = _.get(logging, selectedField, '');
-        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        contentInField = _.get(logging, selectedField);
+        if (contentInField) {
+          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
         break;
       }
-      case 'where.requestContext.sourceIp': {
-        contentInField = _.get(logging, selectedField, '');
+      case 'where.requestContext.identity.sourceIp': {
+        contentInField = _.get(logging, selectedField);
         markedContent = stringToReplace;
         break;
       }
       case 'responseOther.userIdentity.launch-response-patient': {
-        contentInField = _.get(logging, selectedField, '');
-        markedContent = contentInField.replace(resourceIdRegx, stringToReplace);
+        contentInField = _.get(logging, selectedField);
+        if (contentInField) {
+          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
+        } else {
+          markedContent = contentInField;
+        }
         break;
       }
       default:
         throw new Error('Field to encrypt must be the existing cases');
     }
-    if (contentInField) {
-      _.set(loggingPreprocessed, selectedField, markedContent);
-      _.set(fieldsToEncryptedObject, selectedField, contentInField);
-    } else {
-      throw new Error('case field is undefined in logger');
-    }
+    // keep selected fields inside encryptedPayLoad even the field does not have encrypted contents
+    _.set(fieldsToEncryptedObject, selectedField, contentInField);
+    _.set(loggingPreprocessed, selectedField, markedContent);
   });
   if (Object.keys(fieldsToEncryptedObject).length !== 0) {
     _.set(loggingPreprocessed, 'logMetadata.encryptedFields', fieldsToEncrypt);
@@ -175,8 +190,6 @@ export const setLoggerMiddleware = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const encryptedField = ['logMetadata.encryptedPayLoad'];
-  const logger = getEncryptLogger(encryptedField);
   try {
     const response = res as any;
     const request = req as any;
@@ -223,10 +236,13 @@ export const setLoggerMiddleware = async (
             request.apiGateway.context
           )
         },
-        domainName: request.requestContext.domainName,
         'User-agent': request.headers['user-agent'],
-        requestContext: (({ sourceIp }) => ({ sourceIp }))(request.requestContext.identity)
+        requestContext: {
+          domainName: request.requestContext.domainName,
+          identity: (({ sourceIp }) => ({ sourceIp }))(request.requestContext.identity)
+        }
       },
+
       how: {
         apiGateway: { context: (({ awsRequestId }) => ({ awsRequestId }))(request.apiGateway.context) },
         userIdentity: (({ jti }) => ({ jti }))(response.locals.userIdentity)
@@ -250,11 +266,9 @@ export const setLoggerMiddleware = async (
         }
       }
     };
-    let encryptedField: string[];
+    let encryptedField: string;
     let logger: any;
     if (process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION === 'true') {
-      // true or false means if a field is selected to replace the whole field with 'encrypted' or add 'encrypted' partially.
-      // Examples: https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"
       loggerDesign = preprocessFieldsToEncrypted(
         [
           'who.userIdentity.sub',
@@ -262,12 +276,12 @@ export const setLoggerMiddleware = async (
           'what.apiGateway.event.queryStringParameters',
           'what.requestContext.path',
           'what.apiGateway.event.pathParameters.proxy',
-          'where.requestContext.sourceIp',
+          'where.requestContext.identity.sourceIp',
           'responseOther.userIdentity.launch-response-patient'
         ],
         loggerDesign
       );
-      encryptedField = ['logMetadata.encryptedPayLoad'];
+      encryptedField = 'logMetadata.encryptedPayLoad';
       logger = getEncryptLogger(encryptedField);
       logger.error(loggerDesign);
     } else {
