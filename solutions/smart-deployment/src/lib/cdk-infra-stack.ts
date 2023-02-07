@@ -1191,7 +1191,7 @@ export default class FhirWorksStack extends Stack {
         }
       }),
       handler: 'handler',
-      entry: path.join(__dirname, '../src/subscriptions/reaperLambda/index.ts'),
+      entry: path.join(__dirname, '../subscriptions/reaperLambda/index.ts'),
       bundling: {
         target: 'es2020'
       },
