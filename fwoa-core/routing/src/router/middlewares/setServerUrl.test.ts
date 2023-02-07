@@ -5,8 +5,8 @@
  *
  */
 
+import { FhirConfig } from '@aws/fhir-works-on-aws-interface';
 import express from 'express';
-import { FhirConfig } from 'fhir-works-on-aws-interface';
 import { setServerUrlMiddleware } from './setServerUrl';
 
 async function sleep(milliseconds: number) {

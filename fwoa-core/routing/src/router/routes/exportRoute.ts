@@ -4,14 +4,14 @@
  */
 
 /* eslint-disable no-underscore-dangle */
-import express, { Router } from 'express';
 import {
   Authorization,
   BulkDataAccess,
   ExportType,
   FhirVersion,
   InitiateExportRequest
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import express, { Router } from 'express';
 import createHttpError from 'http-errors';
 import ExportHandler from '../handlers/exportHandler';
 import ExportRouteHelper from './exportRouteHelper';

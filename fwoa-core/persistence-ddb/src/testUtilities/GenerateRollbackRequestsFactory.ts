@@ -4,7 +4,7 @@
  */
 
 import { BatchReadWriteResponse, TypeOperation } from '@aws/fhir-works-on-aws-interface';
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 
 export default class GenerateRollbackRequestsFactory {
@@ -38,7 +38,7 @@ export default class GenerateRollbackRequestsFactory {
         gender: 'female'
       };
     }
-    const id = uuidv4();
+    const id = v4();
     const resourceType = 'Patient';
     const bundleEntryResponse: BatchReadWriteResponse = {
       id,

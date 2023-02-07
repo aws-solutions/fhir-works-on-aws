@@ -31,7 +31,7 @@ import {
 } from '@aws/fhir-works-on-aws-interface';
 import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
 import { difference } from 'lodash';
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 import { getBulkExportResults, startJobExecution } from '../bulkExport/bulkExport';
 import { BulkExportResultsUrlGenerator } from '../bulkExport/bulkExportResultsUrlGenerator';
 import { BulkExportS3PresignedUrlGenerator } from '../bulkExport/bulkExportS3PresignedUrlGenerator';
@@ -128,7 +128,7 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
   async createResource(request: CreateResourceRequest) {
     this.assertValidTenancyMode(request.tenantId);
     const { resourceType, resource, tenantId } = request;
-    return this.createResourceWithId(resourceType, resource, uuidv4(), tenantId);
+    return this.createResourceWithId(resourceType, resource, v4(), tenantId);
   }
 
   private async createResourceWithId(
@@ -360,7 +360,7 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
 
   buildExportJob(initiateExportRequest: InitiateExportRequest): BulkExportJob {
     const initialStatus: ExportJobStatus = 'in-progress';
-    const uuid = uuidv4();
+    const uuid = v4();
     // Combine allowedResourceTypes and user input parameter type before pass to Glue job
     let type = initiateExportRequest.allowedResourceTypes.join(',');
     if (initiateExportRequest.type) {

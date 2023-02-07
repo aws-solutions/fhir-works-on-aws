@@ -4,9 +4,9 @@
  */
 
 import URL from 'url';
-import { SearchResult, BatchReadWriteResponse } from 'fhir-works-on-aws-interface';
+import { SearchResult, BatchReadWriteResponse } from '@aws/fhir-works-on-aws-interface';
 import { isEmpty } from 'lodash';
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 
 type LinkType = 'self' | 'previous' | 'next' | 'first' | 'last';
 
@@ -24,7 +24,7 @@ export default class BundleGenerator {
 
     const bundle = {
       resourceType: 'Bundle',
-      id: uuidv4(),
+      id: v4(),
       meta: {
         lastUpdated: currentDateTime.toISOString()
       },
@@ -92,7 +92,7 @@ export default class BundleGenerator {
     bundleEntryResponses: BatchReadWriteResponse[],
     bundleType: string
   ) {
-    const id = uuidv4();
+    const id = v4();
     const response = {
       resourceType: 'Bundle',
       id,
