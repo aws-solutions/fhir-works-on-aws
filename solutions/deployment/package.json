@@ -30,7 +30,7 @@
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",
     "prepublish": "tsc",
-    "release": "yarn run build && yarn run lint && yarn run test",
+    "release": "rush build && rush lint-fix && rush test",
     "serverless-deploy": "serverless deploy",
     "serverless-info": "serverless info",
     "serverless-package": "serverless package",

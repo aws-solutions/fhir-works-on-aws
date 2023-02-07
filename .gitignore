@@ -51,6 +51,9 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
+# CDK output
+cdk.out
+
 # dotenv environment variables file
 .env
 

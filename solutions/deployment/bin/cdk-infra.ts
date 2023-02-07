@@ -5,6 +5,7 @@ import { Aspects } from 'aws-cdk-lib';
 import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../lib/cdk-infra-stack';
+import fs from 'fs';
 
 // initialize with defaults
 const app = new cdk.App();
@@ -22,6 +23,11 @@ const enableESHardDelete: boolean = app.node.tryGetContext('enableESHardDelete')
 const enableBackup: boolean = app.node.tryGetContext('enableBackup') || false;
 let logLevel: string = app.node.tryGetContext('logLevel') || 'error';
 const fhirVersion: string = app.node.tryGetContext('fhirVersion') || '4.0.1';
+
+// workaround for https://github.com/aws/aws-cdk/issues/15054
+// CDK won't allow having lock file with ".." relatively to project folder
+// https://github.com/aws/aws-cdk/blob/main/packages/%40aws-cdk/aws-lambda-nodejs/lib/bundling.ts#L110
+fs.copyFileSync('../../common/config/rush/pnpm-lock.yaml', './pnpm-lock.yaml');
 
 if (useHapiValidator) {
   if (!allowedFHIRVersions.includes(fhirVersion)) {
@@ -55,6 +61,9 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
 });
+
+fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
+
 // run cdk nag
 Aspects.of(app).add(new AwsSolutionsChecks());
 NagSuppressions.addStackSuppressions(stack, [
