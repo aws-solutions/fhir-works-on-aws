@@ -38,6 +38,12 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@aws/fhir-works-on-aws-deployment",
+      "projectFolder": "solutions/deployment",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
       "projectFolder": "fwoa-core/persistence-ddb",
       "reviewCategory": "production",
