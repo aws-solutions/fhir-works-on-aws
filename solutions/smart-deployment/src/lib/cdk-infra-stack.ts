@@ -68,13 +68,10 @@ export interface FhirWorksStackProps extends StackProps {
 
 export default class FhirWorksStack extends Stack {
   javaHapiValidator: JavaHapiValidator | undefined;
-  private lockFilePath: string = path.join(__dirname, '../../../../common/config/rush/pnpm-lock.yaml');
 
   constructor(scope: Construct, id: string, props?: FhirWorksStackProps) {
     super(scope, id, props);
 
-    // Location of smart-deployment folder relative to pnpm-lock file, used for Lambda bundling
-    const projectRootRelativePath: string = '../../../solutions/smart-deployment';
     // Define parameters
     const exportGlueWorkerType = new CfnParameter(this, 'exportGlueWorkerType', {
       type: 'String',
@@ -357,7 +354,6 @@ export default class FhirWorksStack extends Stack {
     };
 
     const defaultLambdaBundlingOptions = {
-      externalModules: ['aws-sdk'],
       target: 'es2020'
     };
     const defaultBulkExportLambdaProps = {
@@ -368,12 +364,10 @@ export default class FhirWorksStack extends Stack {
       role: bulkExportResources.glueJobRelatedLambdaRole,
       entry: path.join(__dirname, '../../bulkExport/index.ts'),
       bundling: defaultLambdaBundlingOptions,
-      awsSdkConnectionReuse: true,
       environment: {
         ...lambdaDefaultEnvVars,
         GLUE_JOB_NAME: bulkExportResources.exportGlueJob.ref
-      },
-      depsLockFilePath: this.lockFilePath
+      }
     };
 
     const startExportJobLambdaFunctionDLQ = new Queue(this, 'startExportJobLambdaFunctionDLQ', {
@@ -561,7 +555,6 @@ export default class FhirWorksStack extends Stack {
       memorySize: 192,
       reservedConcurrentExecutions: isDev ? 10 : 200,
       runtime: Runtime.NODEJS_16_X,
-      depsLockFilePath: this.lockFilePath,
       role: bulkExportResources.uploadGlueScriptsLambdaRole,
       description: 'Upload glue scripts to s3',
       handler: 'handler',
@@ -582,10 +575,10 @@ export default class FhirWorksStack extends Stack {
             // copy all the necessary files for the lambda into the bundle
             // this allows the lambda functions for bulk export to have access to these files within the lambda instance
             return [
-              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/glueScripts/export-script.py`,
-              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/transitiveReferenceParams.json`,
-              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V3}`,
-              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V4}`
+              `node scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/glueScripts/export-script.py`,
+              `node scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/transitiveReferenceParams.json`,
+              `node scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V3}`,
+              `node scripts/build_lambda.js ${inputDir} ${outputDir} bulkExport/schema/${PATIENT_COMPARTMENT_V4}`
             ];
           }
         }
@@ -630,7 +623,6 @@ export default class FhirWorksStack extends Stack {
         }
       })
     );
-
     const updateSearchMappingsLambdaFunction = new NodejsFunction(
       this,
       'updateSearchMappingsLambdaFunction',
@@ -641,7 +633,6 @@ export default class FhirWorksStack extends Stack {
         reservedConcurrentExecutions: isDev ? 10 : 200,
         description: 'Custom resource Lambda to update the search mappings',
         deadLetterQueue: updateSearchMappingsLambdaFunctionDLQ,
-        depsLockFilePath: this.lockFilePath,
         role: new Role(this, 'updateSearchMappingsLambdaRole', {
           assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
           inlinePolicies: {
@@ -688,9 +679,9 @@ export default class FhirWorksStack extends Stack {
           }
         }),
         handler: 'handler',
-        entry: path.join(__dirname, '/../updateSearchMappings/index.ts'),
+        entry: path.join(__dirname, '../updateSearchMappings/index.ts'),
         bundling: {
-          externalModules: ['aws-sdk']
+          target: 'es2020'
         },
         environment: {
           ...lambdaDefaultEnvVars,
@@ -798,7 +789,6 @@ export default class FhirWorksStack extends Stack {
       reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'FHIR API Server',
       entry: path.join(__dirname, '../index.ts'),
-      depsLockFilePath: this.lockFilePath,
       handler: 'handler',
       deadLetterQueue: fhirServerDLQ,
       currentVersionOptions: {
@@ -819,7 +809,7 @@ export default class FhirWorksStack extends Stack {
             // copy all the necessary files for the lambda into the bundle
             // this allows the validators to be constructed with the compiled implementation guides
             return [
-              `node ${projectRootRelativePath}/scripts/build_lambda.js ${inputDir}/${projectRootRelativePath}/compiledImplementationGuides ${outputDir}/compiledImplementationGuides none true`
+              `node scripts/build_lambda.js ${inputDir}/compiledImplementationGuides ${outputDir}/compiledImplementationGuides none true`
             ];
           }
         }
@@ -917,8 +907,8 @@ export default class FhirWorksStack extends Stack {
                   fhirBinaryBucket.arnForObjects('*'),
                   bulkExportResources.bulkExportResultsBucket.bucketArn,
                   `${bulkExportResources.bulkExportResultsBucket.bucketArn}/*`,
-                  bulkExportResources.exportResultsSignerRole.roleArn
-                  // bulkExportStateMachine.bulkExportStateMachine.stateMachineArn
+                  bulkExportResources.exportResultsSignerRole.roleArn,
+                  bulkExportStateMachine.bulkExportStateMachine.stateMachineArn
                 ]
               }),
               new PolicyStatement({
@@ -1036,7 +1026,6 @@ export default class FhirWorksStack extends Stack {
       description: 'Write DDB changes from `resource` table to ElasticSearch service',
       handler: 'handler',
       entry: path.join(__dirname, '../ddbToEsLambda/index.ts'),
-      depsLockFilePath: this.lockFilePath,
       bundling: {
         target: 'es2020'
       },
@@ -1152,7 +1141,6 @@ export default class FhirWorksStack extends Stack {
       reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'Scheduled Lambda to remove expired Subscriptions',
       deadLetterQueue: subscriptionReaperDLQ,
-      depsLockFilePath: this.lockFilePath,
       role: new Role(this, 'subscriptionReaperRole', {
         assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
         inlinePolicies: {
@@ -1235,7 +1223,6 @@ export default class FhirWorksStack extends Stack {
       runtime: Runtime.NODEJS_16_X,
       description: 'Match ddb events against active Subscriptions and emit notifications',
       deadLetterQueue: subscriptionsMatcherDLQ,
-      depsLockFilePath: this.lockFilePath,
       role: new Role(this, 'subscriptionsMatcherLambdaRole', {
         assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
         inlinePolicies: {
@@ -1377,7 +1364,6 @@ export default class FhirWorksStack extends Stack {
       role: subscriptionsResources.restHookLambdaRole,
       handler: 'handler',
       entry: path.join(__dirname, '../subscriptions/restHookLambda/index.ts'),
-      depsLockFilePath: this.lockFilePath,
       deadLetterQueue: subscriptionsRestHookDLQ,
       bundling: {
         target: 'es2020'
