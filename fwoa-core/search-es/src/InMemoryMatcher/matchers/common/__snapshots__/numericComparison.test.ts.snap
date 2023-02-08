@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compareNumberToRange "ap" 1`] = `
+Array [
+  "(10) ap (8, 9) is false",
+  "(10) ap (9, 10) is true",
+  "(10) ap (9, 11) is true",
+  "(10) ap (10, 11) is true",
+  "(10) ap (11, 12) is false",
+]
+`;
+
+exports[`compareNumberToRange "eb" 1`] = `
+Array [
+  "(10) eb (8, 9) is false",
+  "(10) eb (9, 10) is false",
+  "(10) eb (9, 11) is false",
+  "(10) eb (10, 11) is false",
+  "(10) eb (11, 12) is true",
+]
+`;
+
+exports[`compareNumberToRange "eq" 1`] = `
+Array [
+  "(10) eq (8, 9) is false",
+  "(10) eq (9, 10) is true",
+  "(10) eq (9, 11) is true",
+  "(10) eq (10, 11) is true",
+  "(10) eq (11, 12) is false",
+]
+`;
+
+exports[`compareNumberToRange "ge" 1`] = `
+Array [
+  "(10) ge (8, 9) is true",
+  "(10) ge (9, 10) is true",
+  "(10) ge (9, 11) is true",
+  "(10) ge (10, 11) is true",
+  "(10) ge (11, 12) is false",
+]
+`;
+
+exports[`compareNumberToRange "gt" 1`] = `
+Array [
+  "(10) gt (8, 9) is true",
+  "(10) gt (9, 10) is true",
+  "(10) gt (9, 11) is true",
+  "(10) gt (10, 11) is false",
+  "(10) gt (11, 12) is false",
+]
+`;
+
+exports[`compareNumberToRange "le" 1`] = `
+Array [
+  "(10) le (8, 9) is false",
+  "(10) le (9, 10) is true",
+  "(10) le (9, 11) is true",
+  "(10) le (10, 11) is true",
+  "(10) le (11, 12) is true",
+]
+`;
+
+exports[`compareNumberToRange "lt" 1`] = `
+Array [
+  "(10) lt (8, 9) is false",
+  "(10) lt (9, 10) is false",
+  "(10) lt (9, 11) is true",
+  "(10) lt (10, 11) is true",
+  "(10) lt (11, 12) is true",
+]
+`;
+
+exports[`compareNumberToRange "ne" 1`] = `
+Array [
+  "(10) ne (8, 9) is true",
+  "(10) ne (9, 10) is false",
+  "(10) ne (9, 11) is false",
+  "(10) ne (10, 11) is false",
+  "(10) ne (11, 12) is true",
+]
+`;
+
+exports[`compareNumberToRange "sa" 1`] = `
+Array [
+  "(10) sa (8, 9) is true",
+  "(10) sa (9, 10) is false",
+  "(10) sa (9, 11) is false",
+  "(10) sa (10, 11) is false",
+  "(10) sa (11, 12) is false",
+]
+`;
+
+exports[`compareRanges "ap" 1`] = `
+Array [
+  "(10, 20) ap (8, 9) is false",
+  "(10, 20) ap (9, 10) is true",
+  "(10, 20) ap (9, 15) is true",
+  "(10, 20) ap (9, 20) is true",
+  "(10, 20) ap (9, 21) is true",
+  "(10, 20) ap (10, 15) is true",
+  "(10, 20) ap (10, 20) is true",
+  "(10, 20) ap (10, 21) is true",
+  "(10, 20) ap (11, 19) is true",
+  "(10, 20) ap (15, 20) is true",
+  "(10, 20) ap (15, 21) is true",
+  "(10, 20) ap (20, 21) is true",
+  "(10, 20) ap (21, 22) is false",
+]
+`;
+
+exports[`compareRanges "eb" 1`] = `
+Array [
+  "(10, 20) eb (8, 9) is false",
+  "(10, 20) eb (9, 10) is false",
+  "(10, 20) eb (9, 15) is false",
+  "(10, 20) eb (9, 20) is false",
+  "(10, 20) eb (9, 21) is false",
+  "(10, 20) eb (10, 15) is false",
+  "(10, 20) eb (10, 20) is false",
+  "(10, 20) eb (10, 21) is false",
+  "(10, 20) eb (11, 19) is false",
+  "(10, 20) eb (15, 20) is false",
+  "(10, 20) eb (15, 21) is false",
+  "(10, 20) eb (20, 21) is false",
+  "(10, 20) eb (21, 22) is true",
+]
+`;
+
+exports[`compareRanges "eq" 1`] = `
+Array [
+  "(10, 20) eq (8, 9) is false",
+  "(10, 20) eq (9, 10) is false",
+  "(10, 20) eq (9, 15) is false",
+  "(10, 20) eq (9, 20) is true",
+  "(10, 20) eq (9, 21) is true",
+  "(10, 20) eq (10, 15) is false",
+  "(10, 20) eq (10, 20) is true",
+  "(10, 20) eq (10, 21) is true",
+  "(10, 20) eq (11, 19) is false",
+  "(10, 20) eq (15, 20) is false",
+  "(10, 20) eq (15, 21) is false",
+  "(10, 20) eq (20, 21) is false",
+  "(10, 20) eq (21, 22) is false",
+]
+`;
+
+exports[`compareRanges "ge" 1`] = `
+Array [
+  "(10, 20) ge (8, 9) is true",
+  "(10, 20) ge (9, 10) is true",
+  "(10, 20) ge (9, 15) is true",
+  "(10, 20) ge (9, 20) is true",
+  "(10, 20) ge (9, 21) is true",
+  "(10, 20) ge (10, 15) is true",
+  "(10, 20) ge (10, 20) is true",
+  "(10, 20) ge (10, 21) is true",
+  "(10, 20) ge (11, 19) is true",
+  "(10, 20) ge (15, 20) is true",
+  "(10, 20) ge (15, 21) is true",
+  "(10, 20) ge (20, 21) is true",
+  "(10, 20) ge (21, 22) is false",
+]
+`;
+
+exports[`compareRanges "gt" 1`] = `
+Array [
+  "(10, 20) gt (8, 9) is true",
+  "(10, 20) gt (9, 10) is true",
+  "(10, 20) gt (9, 15) is true",
+  "(10, 20) gt (9, 20) is true",
+  "(10, 20) gt (9, 21) is true",
+  "(10, 20) gt (10, 15) is true",
+  "(10, 20) gt (10, 20) is true",
+  "(10, 20) gt (10, 21) is true",
+  "(10, 20) gt (11, 19) is true",
+  "(10, 20) gt (15, 20) is true",
+  "(10, 20) gt (15, 21) is true",
+  "(10, 20) gt (20, 21) is true",
+  "(10, 20) gt (21, 22) is false",
+]
+`;
+
+exports[`compareRanges "le" 1`] = `
+Array [
+  "(10, 20) le (8, 9) is false",
+  "(10, 20) le (9, 10) is true",
+  "(10, 20) le (9, 15) is true",
+  "(10, 20) le (9, 20) is true",
+  "(10, 20) le (9, 21) is true",
+  "(10, 20) le (10, 15) is true",
+  "(10, 20) le (10, 20) is true",
+  "(10, 20) le (10, 21) is true",
+  "(10, 20) le (11, 19) is true",
+  "(10, 20) le (15, 20) is true",
+  "(10, 20) le (15, 21) is true",
+  "(10, 20) le (20, 21) is true",
+  "(10, 20) le (21, 22) is true",
+]
+`;
+
+exports[`compareRanges "lt" 1`] = `
+Array [
+  "(10, 20) lt (8, 9) is false",
+  "(10, 20) lt (9, 10) is true",
+  "(10, 20) lt (9, 15) is true",
+  "(10, 20) lt (9, 20) is true",
+  "(10, 20) lt (9, 21) is true",
+  "(10, 20) lt (10, 15) is true",
+  "(10, 20) lt (10, 20) is true",
+  "(10, 20) lt (10, 21) is true",
+  "(10, 20) lt (11, 19) is true",
+  "(10, 20) lt (15, 20) is true",
+  "(10, 20) lt (15, 21) is true",
+  "(10, 20) lt (20, 21) is true",
+  "(10, 20) lt (21, 22) is true",
+]
+`;
+
+exports[`compareRanges "ne" 1`] = `
+Array [
+  "(10, 20) ne (8, 9) is true",
+  "(10, 20) ne (9, 10) is true",
+  "(10, 20) ne (9, 15) is true",
+  "(10, 20) ne (9, 20) is false",
+  "(10, 20) ne (9, 21) is false",
+  "(10, 20) ne (10, 15) is true",
+  "(10, 20) ne (10, 20) is false",
+  "(10, 20) ne (10, 21) is false",
+  "(10, 20) ne (11, 19) is true",
+  "(10, 20) ne (15, 20) is true",
+  "(10, 20) ne (15, 21) is true",
+  "(10, 20) ne (20, 21) is true",
+  "(10, 20) ne (21, 22) is true",
+]
+`;
+
+exports[`compareRanges "sa" 1`] = `
+Array [
+  "(10, 20) sa (8, 9) is true",
+  "(10, 20) sa (9, 10) is false",
+  "(10, 20) sa (9, 15) is false",
+  "(10, 20) sa (9, 20) is false",
+  "(10, 20) sa (9, 21) is false",
+  "(10, 20) sa (10, 15) is false",
+  "(10, 20) sa (10, 20) is false",
+  "(10, 20) sa (10, 21) is false",
+  "(10, 20) sa (11, 19) is false",
+  "(10, 20) sa (15, 20) is false",
+  "(10, 20) sa (15, 21) is false",
+  "(10, 20) sa (20, 21) is false",
+  "(10, 20) sa (21, 22) is false",
+]
+`;

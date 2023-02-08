@@ -15,7 +15,7 @@ import {
 import flatten from 'flat';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import { MAX_BUNDLE_ENTRY_URL_LENGTH, MAX_REFERENCE_URL_LENGTH } from '../../constants';
 
@@ -412,7 +412,7 @@ export default class BundleParser {
   private static getResourceId(entry: any, operation: TypeOperation | SystemOperation) {
     let id = '';
     if (operation === 'create') {
-      id = v4();
+      id = uuidv4();
     } else if (operation === 'update' || operation === 'patch') {
       id = entry.resource.id;
     } else if (

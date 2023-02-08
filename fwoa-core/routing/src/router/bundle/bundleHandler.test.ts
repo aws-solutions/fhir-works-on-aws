@@ -16,7 +16,7 @@ import {
   RequestContext
 } from '@aws/fhir-works-on-aws-interface';
 import createError from 'http-errors';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import ConfigHandler from '../../configHandler';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';
 import { uuidRegExp, utcTimeRegExp } from '../../regExpressions';
@@ -531,7 +531,7 @@ describe('ERROR Cases: Validation of Bundle request', () => {
       const readRequest = {
         request: {
           method: 'GET',
-          url: `Patient/${v4()}`
+          url: `Patient/${uuidv4()}`
         }
       };
       bundleRequestJSON.entry.push(readRequest);

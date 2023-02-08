@@ -32,14 +32,20 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@aws/fhir-works-on-aws-routing",
-      "projectFolder": "fwoa-core/routing",
+      "packageName": "@aws/fhir-works-on-aws-search-es",
+      "projectFolder": "fwoa-core/search-es",
       "reviewCategory": "production",
       "shouldPublish": true
     },
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
       "projectFolder": "fwoa-core/persistence-ddb",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@aws/fhir-works-on-aws-routing",
+      "projectFolder": "fwoa-core/routing",
       "reviewCategory": "production",
       "shouldPublish": true
     },

@@ -25,7 +25,7 @@ import {
   GetExportStatusResponse,
   RequestContext
 } from '@aws/fhir-works-on-aws-interface';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validPatient from '../../sampleData/validV4Patient.json';
 
@@ -81,7 +81,7 @@ describe('SUCCESS CASES: Testing create, read, update, delete of resources', () 
 
   test('get: patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     const expectedValidPatient = { ...validPatient };
     expectedValidPatient.id = id;
 
@@ -98,7 +98,7 @@ describe('SUCCESS CASES: Testing create, read, update, delete of resources', () 
 
   test('vread: patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     const vid = '1';
     const expectedValidPatient = { ...validPatient };
     expectedValidPatient.id = id;
@@ -116,7 +116,7 @@ describe('SUCCESS CASES: Testing create, read, update, delete of resources', () 
 
   test('update: patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     const expectedValidPatient = { ...validPatient };
     expectedValidPatient.id = id;
 
@@ -135,7 +135,7 @@ describe('SUCCESS CASES: Testing create, read, update, delete of resources', () 
 
   test('patch: patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     const expectedValidPatient = { ...validPatient };
     expectedValidPatient.id = id;
 
@@ -154,7 +154,7 @@ describe('SUCCESS CASES: Testing create, read, update, delete of resources', () 
 
   test('delete: patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     // OPERATE
     const deleteResponse = await resourceHandler.delete('Patient', id);
     // CHECK
@@ -289,7 +289,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('update: invalid patient', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     try {
       // OPERATE
       await resourceHandler.update('Patient', id, invalidPatient);
@@ -305,7 +305,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('update: resource that does not exist', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     try {
       // OPERATE
       await resourceHandler.update('Patient', id, validPatient);
@@ -317,7 +317,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('patch: Data Service failure', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     try {
       // OPERATE
       await resourceHandler.patch('Patient', id, validPatient);
@@ -329,7 +329,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('get: resource that does not exist', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     try {
       // OPERATE
       await resourceHandler.read('Patient', id);
@@ -342,7 +342,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('history: resource that does not exist', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     const vid = '1';
     try {
       // OPERATE
@@ -355,7 +355,7 @@ describe('ERROR CASES: Testing create, read, update, delete of resources', () =>
 
   test('delete patient that does NOT exist', async () => {
     // BUILD
-    const id = v4();
+    const id = uuidv4();
     try {
       // OPERATE
       await resourceHandler.delete('Patient', id);
