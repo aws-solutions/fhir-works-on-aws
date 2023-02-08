@@ -17,7 +17,7 @@ THIRD-PARTY$
 .*/INSTALL.md
 
 # Line excludes
-# False positive / dummy emails
+# False positive
 fwoa-core/interface/src/fhirConfig.ts:49
 solutions/deployment/scripts/install.sh:332
 solutions/deployment/scripts/provision-user.py:26
@@ -48,7 +48,7 @@ fwoa-core/search-es/package.json:13
 solutions/deployment/package.json:13
 solutions/deployment/src/integration-tests/infrastructure/subscriptions-endpoint/src/package.json:12
 
-# Dummy Email
+# Dummy Email for tests
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
