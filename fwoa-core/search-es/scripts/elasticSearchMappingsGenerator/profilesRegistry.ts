@@ -5,11 +5,10 @@
  *
  */
 
-import fs from "fs";
-import { FhirProfiles } from "./types";
+import fs from 'fs';
+import { FhirProfiles } from './types';
 
-const buildFullUrl = (resourceType: string) =>
-  `http://hl7.org/fhir/StructureDefinition/${resourceType}`;
+const buildFullUrl = (resourceType: string) => `http://hl7.org/fhir/StructureDefinition/${resourceType}`;
 
 /**
  * Parses FHIR profiles json files
@@ -25,19 +24,16 @@ export class ProfilesRegistry {
   constructor(pathToFhirDefinitionsFolder: string) {
     const fileNames = [
       `${pathToFhirDefinitionsFolder}/profiles-resources.json`,
-      `${pathToFhirDefinitionsFolder}/profiles-types.json`,
+      `${pathToFhirDefinitionsFolder}/profiles-types.json`
     ];
 
     this.structureDefinitions = fileNames.flatMap(
-      (fileName: string) =>
-        JSON.parse(fs.readFileSync(fileName, { encoding: "utf8" })).entry
+      (fileName: string) => JSON.parse(fs.readFileSync(fileName, { encoding: 'utf8' })).entry
     );
   }
 
   getTypeForField(resourceType: string, field: string): string | undefined {
-    const resource = this.structureDefinitions.find(
-      (s) => s.fullUrl === buildFullUrl(resourceType)
-    );
+    const resource = this.structureDefinitions.find((s) => s.fullUrl === buildFullUrl(resourceType));
 
     if (resource === undefined) {
       return undefined;

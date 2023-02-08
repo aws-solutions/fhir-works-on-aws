@@ -20,28 +20,26 @@ Run the script:
 > ts-node run.ts <fhirVersion>
  */
 
-import * as fs from "fs";
-import { SearchImplementationGuides } from "../../src/implementationGuides";
-import getComponentLogger from "../../src/loggerBuilder";
+import * as fs from 'fs';
+import { SearchImplementationGuides } from '../../src/implementationGuides';
+import getComponentLogger from '../../src/loggerBuilder';
 
 const logger = getComponentLogger();
 
 const readSearchParamsFile = (path: string) => {
-  const data = JSON.parse(fs.readFileSync(path, { encoding: "utf8" }));
+  const data = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
   return data.entry.map((x: any) => x.resource);
 };
 
 const run = async () => {
   const args = process.argv.slice(2);
   if (!args[0]) {
-    logger.error("Error. Missing fhirVersion parameter");
-    logger.error("Usage: ts-node run.ts <fhirVersion>");
+    logger.error('Error. Missing fhirVersion parameter');
+    logger.error('Usage: ts-node run.ts <fhirVersion>');
   }
   const fhirVersion = args[0];
-  const searchParams = readSearchParamsFile("search-parameters.json");
-  const compiledSearchParams = await SearchImplementationGuides.compile(
-    searchParams
-  );
+  const searchParams = readSearchParamsFile('search-parameters.json');
+  const compiledSearchParams = await SearchImplementationGuides.compile(searchParams);
 
   fs.writeFileSync(
     `../../src/schema/compiledSearchParameters.${fhirVersion}.json`,

@@ -2,7 +2,7 @@ module.exports = {
   bracketSpacing: true,
   htmlWhitespaceSensitivity: 'css',
   insertPragma: false,
-  jsxSingleQuote: true,
+  jsxSingleQuote: false,
   printWidth: 110,
   proseWrap: 'preserve',
   quoteProps: 'as-needed',

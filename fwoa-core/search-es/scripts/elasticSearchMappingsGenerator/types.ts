@@ -16,13 +16,13 @@ export interface Compiled {
 }
 
 export enum SearchParamType {
-  Date = "date",
-  Number = "number",
-  Quantity = "quantity",
-  Reference = "reference",
-  String = "string",
-  Token = "token",
-  URI = "uri",
+  Date = 'date',
+  Number = 'number',
+  Quantity = 'quantity',
+  Reference = 'reference',
+  String = 'string',
+  Token = 'token',
+  URI = 'uri'
 }
 
 export interface CompiledSearchParameter {
@@ -85,12 +85,12 @@ export namespace FhirProfiles {
   }
 
   export enum System {
-    URL = "url",
+    URL = 'url'
   }
 
   export enum Derivation {
-    Constraint = "constraint",
-    Specialization = "specialization",
+    Constraint = 'constraint',
+    Specialization = 'specialization'
   }
 
   export interface Differential {
@@ -142,17 +142,17 @@ export namespace FhirProfiles {
   }
 
   export enum ValueCode {
-    Draft = "draft",
-    Normative = "normative",
-    The400 = "4.0.0",
-    TrialUse = "trial-use",
+    Draft = 'draft',
+    Normative = 'normative',
+    The400 = '4.0.0',
+    TrialUse = 'trial-use'
   }
 
   export enum Strength {
-    Example = "example",
-    Extensible = "extensible",
-    Preferred = "preferred",
-    Required = "required",
+    Example = 'example',
+    Extensible = 'extensible',
+    Preferred = 'preferred',
+    Required = 'required'
   }
 
   export interface Constraint {
@@ -165,8 +165,8 @@ export namespace FhirProfiles {
   }
 
   export enum Severity {
-    Error = "error",
-    Warning = "warning",
+    Error = 'error',
+    Warning = 'warning'
   }
 
   export interface Example {
@@ -179,7 +179,7 @@ export namespace FhirProfiles {
   }
 
   export enum Label {
-    General = "General",
+    General = 'General'
   }
 
   export interface ValuePeriod {
@@ -193,19 +193,19 @@ export namespace FhirProfiles {
   }
 
   export enum Identity {
-    Dex = "dex",
-    Iso11179 = "iso11179",
-    Loinc = "loinc",
-    Orim = "orim",
-    Rim = "rim",
-    Servd = "servd",
-    V2 = "v2",
-    Vcard = "vcard",
+    Dex = 'dex',
+    Iso11179 = 'iso11179',
+    Loinc = 'loinc',
+    Orim = 'orim',
+    Rim = 'rim',
+    Servd = 'servd',
+    V2 = 'v2',
+    Vcard = 'vcard'
   }
 
   export enum Representation {
-    XHTML = "xhtml",
-    XMLAttr = "xmlAttr",
+    XHTML = 'xhtml',
+    XMLAttr = 'xmlAttr'
   }
 
   export interface Slicing {
@@ -215,7 +215,7 @@ export namespace FhirProfiles {
   }
 
   export enum Description {
-    ExtensionsAreAlwaysSlicedByAtLeastURL = "Extensions are always sliced by (at least) url",
+    ExtensionsAreAlwaysSlicedByAtLeastURL = 'Extensions are always sliced by (at least) url'
   }
 
   export interface Discriminator {
@@ -224,11 +224,11 @@ export namespace FhirProfiles {
   }
 
   export enum TypeEnum {
-    Value = "value",
+    Value = 'value'
   }
 
   export enum Rules {
-    Open = "open",
+    Open = 'open'
   }
 
   export interface TypeElement {
@@ -250,12 +250,12 @@ export namespace FhirProfiles {
   }
 
   export enum Version {
-    The401 = "4.0.1",
+    The401 = '4.0.1'
   }
 
   export enum Kind {
-    ComplexType = "complex-type",
-    PrimitiveType = "primitive-type",
+    ComplexType = 'complex-type',
+    PrimitiveType = 'primitive-type'
   }
 
   export interface ResourceMapping {
@@ -265,14 +265,14 @@ export namespace FhirProfiles {
   }
 
   export enum Name {
-    HL7V2Mapping = "HL7 v2 Mapping",
-    IHEDataElementExchangeDEX = "IHE Data Element Exchange (DEX)",
-    ISO11179 = "ISO 11179",
-    LOINCCodeForTheElement = "LOINC code for the element",
-    OntologicalRIMMapping = "Ontological RIM Mapping",
-    RIMMapping = "RIM Mapping",
-    ServD = "ServD",
-    VCardMapping = "vCard Mapping",
+    HL7V2Mapping = 'HL7 v2 Mapping',
+    IHEDataElementExchangeDEX = 'IHE Data Element Exchange (DEX)',
+    ISO11179 = 'ISO 11179',
+    LOINCCodeForTheElement = 'LOINC code for the element',
+    OntologicalRIMMapping = 'Ontological RIM Mapping',
+    RIMMapping = 'RIM Mapping',
+    ServD = 'ServD',
+    VCardMapping = 'vCard Mapping'
   }
 
   export interface Meta {
@@ -280,11 +280,11 @@ export namespace FhirProfiles {
   }
 
   export enum Publisher {
-    HL7FHIRStandard = "HL7 FHIR Standard",
+    HL7FHIRStandard = 'HL7 FHIR Standard'
   }
 
   export enum ResourceType {
-    StructureDefinition = "StructureDefinition",
+    StructureDefinition = 'StructureDefinition'
   }
 
   export interface Snapshot {
@@ -328,8 +328,8 @@ export namespace FhirProfiles {
   }
 
   export enum ResourceStatus {
-    Active = "active",
-    Draft = "draft",
+    Active = 'active',
+    Draft = 'draft'
   }
 
   export interface Text {
@@ -338,6 +338,6 @@ export namespace FhirProfiles {
   }
 
   export enum TextStatus {
-    Generated = "generated",
+    Generated = 'generated'
   }
 }
