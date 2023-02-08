@@ -14,7 +14,6 @@ fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json
 fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json
 fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json
 fwoa-core/search-es/package.json
-fwoa-core/search-es/THIRD-PARTY
 
 #Third party file
 THIRD-PARTY$
