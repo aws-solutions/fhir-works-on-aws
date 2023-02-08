@@ -11,7 +11,7 @@ import {
   TypeOperation,
   SystemOperation,
   getRequestInformation
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import flatten from 'flat';
 import get from 'lodash/get';
 import set from 'lodash/set';

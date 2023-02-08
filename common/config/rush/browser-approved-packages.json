@@ -3,6 +3,14 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@aws-sdk/client-sns",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws-sdk/node-http-handler",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
       "allowedCategories": ["production", "tools"]
     },
@@ -11,16 +19,24 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-authz-smart",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "@aws/fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@aws/fhir-works-on-aws-persistence-ddb",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@aws/fhir-works-on-aws-routing",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-search-es",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "@elastic/elasticsearch",
@@ -64,11 +80,11 @@
     },
     {
       "name": "aws-cdk",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-cdk-lib",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-elasticsearch-connector",
@@ -76,11 +92,11 @@
     },
     {
       "name": "aws-embedded-metrics",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-sdk",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-sdk-mock",
@@ -100,15 +116,15 @@
     },
     {
       "name": "cdk-nag",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "chance",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "constructs",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "cors",
@@ -123,6 +139,10 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "date-fns",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
     },
@@ -132,7 +152,11 @@
     },
     {
       "name": "esbuild",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "escape-string-regexp",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "eslint",
@@ -196,7 +220,7 @@
     },
     {
       "name": "fs-extra",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "http-errors",
@@ -212,7 +236,7 @@
     },
     {
       "name": "jest-circus",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-each",
@@ -229,6 +253,10 @@
     {
       "name": "json-2-csv",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "json-stringify-pretty-compact",
+      "allowedCategories": ["production"]
     },
     {
       "name": "jsonwebtoken",
@@ -259,6 +287,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "nearley",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "npm-package-json-lint",
       "allowedCategories": ["production", "tools"]
     },
@@ -268,11 +300,11 @@
     },
     {
       "name": "p-settle",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "path",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "prettier",
@@ -284,7 +316,11 @@
     },
     {
       "name": "qs",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "query-string",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "react",
@@ -308,7 +344,7 @@
     },
     {
       "name": "serverless-http",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "serverless-offline",
@@ -324,7 +360,7 @@
     },
     {
       "name": "sinon",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "sort-package-json",
@@ -332,7 +368,7 @@
     },
     {
       "name": "source-map-support",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "standard-version",
@@ -344,7 +380,7 @@
     },
     {
       "name": "tmp-promise",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "ts-jest",
@@ -352,11 +388,11 @@
     },
     {
       "name": "ts-node",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "tslib",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "typescript",
@@ -364,11 +400,11 @@
     },
     {
       "name": "uuid",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "wait-for-expect",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "winston",
@@ -380,7 +416,7 @@
     },
     {
       "name": "yargs",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     }
   ]
 }

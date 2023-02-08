@@ -4,7 +4,7 @@
  */
 
 import URL from 'url';
-import { SearchResult, BatchReadWriteResponse } from 'fhir-works-on-aws-interface';
+import { SearchResult, BatchReadWriteResponse } from '@aws/fhir-works-on-aws-interface';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 

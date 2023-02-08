@@ -3,7 +3,13 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Search, History, KeyValueMap, Authorization, RequestContext } from 'fhir-works-on-aws-interface';
+import {
+  Search,
+  History,
+  KeyValueMap,
+  Authorization,
+  RequestContext
+} from '@aws/fhir-works-on-aws-interface';
 import BundleGenerator from '../bundle/bundleGenerator';
 import { hash } from './utils';
 

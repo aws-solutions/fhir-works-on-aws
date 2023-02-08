@@ -1,4 +1,3 @@
-import express from 'express';
 import {
   isInvalidResourceError,
   isResourceNotFoundError,
@@ -11,7 +10,8 @@ import {
   isResourceConflictError,
   isBadRequestError,
   isMethodNotAllowed
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import express from 'express';
 import createError from 'http-errors';
 import OperationsGenerator from '../operationsGenerator';
 

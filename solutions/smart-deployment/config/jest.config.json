@@ -1,0 +1,27 @@
+{
+  "extends": "@rushstack/heft-node-rig/profiles/default/config/jest.config.json",
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 55,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/src/integration-tests",
+    "<rootDir>/src/ddbToEsLambda/index.ts",
+    "<rootDir>/src/subscriptions/matcherLambda/index.ts",
+    "<rootDir>/src/subscriptions/reaperLambda/index.ts",
+    "<rootDir>/src/subscriptions/restHookLambda/index.ts",
+    "<rootDir>/src/index.ts",
+    "<rootDir>/src/updateSearchMappings/index.ts",
+    "<rootDir>/src/authZConfig.ts",
+    "<rootDir>/src/config.ts",
+    "<rootDir>/src/subscriptions/allowList.ts"
+  ],
+  "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/src/integration-tests"],
+  "coverageReporters": ["json-summary", "json", "lcov", "text"],
+  "testRunner": "jest-circus/runner"
+}

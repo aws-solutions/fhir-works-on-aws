@@ -4,8 +4,8 @@
  *
  */
 
+import { FhirConfig, UnauthorizedError } from '@aws/fhir-works-on-aws-interface';
 import express from 'express';
-import { FhirConfig, UnauthorizedError } from 'fhir-works-on-aws-interface';
 import { setTenantIdMiddleware } from './setTenantId';
 
 async function sleep(milliseconds: number) {

@@ -24,7 +24,7 @@ import {
   InitiateExportRequest,
   GetExportStatusResponse,
   RequestContext
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import { v4 as uuidv4 } from 'uuid';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validPatient from '../../sampleData/validV4Patient.json';
