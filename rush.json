@@ -41,7 +41,7 @@
       "packageName": "@aws/fhir-works-on-aws-deployment",
       "projectFolder": "solutions/deployment",
       "reviewCategory": "production",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
