@@ -24,7 +24,6 @@
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",
-    "prettier": "prettier --config '../../.prettierrc.js' 'src/**/*.ts' --write",
     "prepublish": "tsc",
     "release": "yarn run build && yarn run lint && yarn run test",
     "sort-package-json": "sort-package-json package.json",
