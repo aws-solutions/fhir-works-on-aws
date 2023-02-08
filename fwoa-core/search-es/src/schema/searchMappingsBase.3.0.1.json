@@ -1,0 +1,5526 @@
+{
+  "Resource": [
+    {
+      "field": "id",
+      "type": "id"
+    },
+    {
+      "field": "meta.lastUpdated",
+      "type": "instant"
+    },
+    {
+      "field": "meta.profile",
+      "type": "uri"
+    },
+    {
+      "field": "meta.security",
+      "type": "Coding"
+    },
+    {
+      "field": "meta.tag",
+      "type": "Coding"
+    },
+    {
+      "field": "extension.url",
+      "type": "uri"
+    },
+    {
+      "field": "extension.extension.valueCoding",
+      "type": "Coding"
+    },
+    {
+      "field": "extension.valueString",
+      "type": "string"
+    },
+    {
+      "field": "extension.valueDecimal",
+      "type": "decimal"
+    },
+    {
+      "field": "extension.valueBoolean",
+      "type": "boolean"
+    },
+    {
+      "field": "extension.valueDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "extension.valueDate",
+      "type": "date"
+    },
+    {
+      "field": "extension.valueCoding",
+      "type": "Coding"
+    },
+    {
+      "field": "extension.valueCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "extension.valueReference",
+      "type": "Reference"
+    },
+    {
+      "field": "extension.extension.valueString",
+      "type": "string"
+    },
+    {
+      "field": "extension.extension.valueDecimal",
+      "type": "decimal"
+    },
+    {
+      "field": "extension.extension.valueBoolean",
+      "type": "boolean"
+    },
+    {
+      "field": "extension.extension.valueDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "extension.extension.valueDate",
+      "type": "date"
+    },
+    {
+      "field": "extension.extension.valueCodeableConcept",
+      "type": "CodeableConcept"
+    }
+  ],
+  "Account": [
+    {
+      "field": "balance",
+      "type": "Money"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "owner",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "ActivityDefinition": [
+    {
+      "field": "relatedArtifact.resource",
+      "type": "Reference"
+    },
+    {
+      "field": "relatedArtifact.type",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "library",
+      "type": "Reference"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "topic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "AdverseEvent": [
+    {
+      "field": "category",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "reaction",
+      "type": "Reference"
+    },
+    {
+      "field": "recorder",
+      "type": "Reference"
+    },
+    {
+      "field": "seriousness",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "study",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "suspectEntity.instance",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "AllergyIntolerance": [
+    {
+      "field": "asserter",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "code"
+    },
+    {
+      "field": "clinicalStatus",
+      "type": "code"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "reaction.substance",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "criticality",
+      "type": "code"
+    },
+    {
+      "field": "assertedDate",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "lastOccurrence",
+      "type": "dateTime"
+    },
+    {
+      "field": "reaction.manifestation",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "reaction.onset",
+      "type": "dateTime"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "recorder",
+      "type": "Reference"
+    },
+    {
+      "field": "reaction.exposureRoute",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "reaction.severity",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    },
+    {
+      "field": "verificationStatus",
+      "type": "code"
+    }
+  ],
+  "FamilyMemberHistory": [
+    {
+      "field": "condition.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "gender",
+      "type": "code"
+    },
+    {
+      "field": "relationship",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "DeviceRequest": [
+    {
+      "field": "codeCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "codeReference",
+      "type": "Reference"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrencePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "groupIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "intent",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "performer",
+      "type": "Reference"
+    },
+    {
+      "field": "priorRequest",
+      "type": "Reference"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Procedure": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "performedDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "performedPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "performer.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "List": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "emptyReason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "entry.item",
+      "type": "Reference"
+    },
+    {
+      "field": "note.text",
+      "type": "string"
+    },
+    {
+      "field": "source",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    }
+  ],
+  "ProcedureRequest": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "bodySite",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrencePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "occurrenceTiming",
+      "type": "Timing"
+    },
+    {
+      "field": "performer",
+      "type": "Reference"
+    },
+    {
+      "field": "performerType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "replaces",
+      "type": "Reference"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "requisition",
+      "type": "Identifier"
+    },
+    {
+      "field": "specimen",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Observation": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "effectiveDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "component.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "dataAbsentReason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "component.dataAbsentReason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "valueCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "component.valueCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "valueQuantity",
+      "type": "Quantity"
+    },
+    {
+      "field": "component.valueQuantity",
+      "type": "Quantity"
+    },
+    {
+      "field": "device",
+      "type": "Reference"
+    },
+    {
+      "field": "method",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "performer",
+      "type": "Reference"
+    },
+    {
+      "field": "related.target",
+      "type": "Reference"
+    },
+    {
+      "field": "related.type",
+      "type": "code"
+    },
+    {
+      "field": "specimen",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "valueDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "valuePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "valueString",
+      "type": "string"
+    }
+  ],
+  "DiagnosticReport": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "effectiveDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "codedDiagnosis",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "image.link",
+      "type": "Reference"
+    },
+    {
+      "field": "issued",
+      "type": "instant"
+    },
+    {
+      "field": "performer.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "result",
+      "type": "Reference"
+    },
+    {
+      "field": "specimen",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Condition": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "abatementAge",
+      "type": "Age"
+    },
+    {
+      "field": "abatementRange",
+      "type": "Range"
+    },
+    {
+      "field": "abatementBoolean",
+      "type": "boolean"
+    },
+    {
+      "field": "abatementDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "abatementPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "abatementString",
+      "type": "string"
+    },
+    {
+      "field": "assertedDate",
+      "type": "dateTime"
+    },
+    {
+      "field": "asserter",
+      "type": "Reference"
+    },
+    {
+      "field": "bodySite",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "clinicalStatus",
+      "type": "code"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "evidence.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "evidence.detail",
+      "type": "Reference"
+    },
+    {
+      "field": "onsetAge",
+      "type": "Age"
+    },
+    {
+      "field": "onsetRange",
+      "type": "Range"
+    },
+    {
+      "field": "onsetDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "onsetPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "onsetString",
+      "type": "string"
+    },
+    {
+      "field": "severity",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "stage.summary",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "verificationStatus",
+      "type": "code"
+    }
+  ],
+  "Consent": [
+    {
+      "field": "dateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "action",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "except.action",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "actor.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "except.actor.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "consentingParty",
+      "type": "Reference"
+    },
+    {
+      "field": "data.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "except.data.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "purpose",
+      "type": "Coding"
+    },
+    {
+      "field": "except.purpose",
+      "type": "Coding"
+    },
+    {
+      "field": "securityLabel",
+      "type": "Coding"
+    },
+    {
+      "field": "except.securityLabel",
+      "type": "Coding"
+    },
+    {
+      "field": "sourceAttachment",
+      "type": "Attachment"
+    },
+    {
+      "field": "sourceIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "sourceReference",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "SupplyRequest": [
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "supplier",
+      "type": "Reference"
+    }
+  ],
+  "RiskAssessment": [
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "condition",
+      "type": "Reference"
+    },
+    {
+      "field": "method",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "performer",
+      "type": "Reference"
+    },
+    {
+      "field": "prediction.probabilityDecimal",
+      "type": "decimal"
+    },
+    {
+      "field": "prediction.probabilityRange",
+      "type": "Range"
+    },
+    {
+      "field": "prediction.qualitativeRisk",
+      "type": "CodeableConcept"
+    }
+  ],
+  "CareTeam": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "participant.member",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Encounter": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "appointment",
+      "type": "Reference"
+    },
+    {
+      "field": "class",
+      "type": "Coding"
+    },
+    {
+      "field": "diagnosis.condition",
+      "type": "Reference"
+    },
+    {
+      "field": "episodeOfCare",
+      "type": "Reference"
+    },
+    {
+      "field": "incomingReferral",
+      "type": "Reference"
+    },
+    {
+      "field": "length",
+      "type": "Duration"
+    },
+    {
+      "field": "location.location",
+      "type": "Reference"
+    },
+    {
+      "field": "location.period",
+      "type": "Period"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "participant.individual",
+      "type": "Reference"
+    },
+    {
+      "field": "participant.type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "reason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "serviceProvider",
+      "type": "Reference"
+    },
+    {
+      "field": "hospitalization.specialArrangement",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "CarePlan": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "activity.detail.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "activity.detail.scheduledTiming",
+      "type": "Timing"
+    },
+    {
+      "field": "activity.detail.scheduledPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "activity.detail.scheduledString",
+      "type": "string"
+    },
+    {
+      "field": "activity.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "careTeam",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "addresses",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "goal",
+      "type": "Reference"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "activity.detail.performer",
+      "type": "Reference"
+    },
+    {
+      "field": "replaces",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "EpisodeOfCare": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "careManager",
+      "type": "Reference"
+    },
+    {
+      "field": "diagnosis.condition",
+      "type": "Reference"
+    },
+    {
+      "field": "referralRequest",
+      "type": "Reference"
+    },
+    {
+      "field": "managingOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Immunization": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "vaccinationProtocol.doseSequence",
+      "type": "positiveInt"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "lotNumber",
+      "type": "string"
+    },
+    {
+      "field": "manufacturer",
+      "type": "Reference"
+    },
+    {
+      "field": "notGiven",
+      "type": "boolean"
+    },
+    {
+      "field": "practitioner.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "reaction.detail",
+      "type": "Reference"
+    },
+    {
+      "field": "reaction.date",
+      "type": "dateTime"
+    },
+    {
+      "field": "explanation.reason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "explanation.reasonNotGiven",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "vaccineCode",
+      "type": "CodeableConcept"
+    }
+  ],
+  "Flag": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    }
+  ],
+  "Composition": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "attester.party",
+      "type": "Reference"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "class",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "confidentiality",
+      "type": "code"
+    },
+    {
+      "field": "event.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "section.entry",
+      "type": "Reference"
+    },
+    {
+      "field": "event.period",
+      "type": "Period"
+    },
+    {
+      "field": "relatesTo.targetIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "relatesTo.targetReference",
+      "type": "Reference"
+    },
+    {
+      "field": "section.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    }
+  ],
+  "DetectedIssue": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "implicated",
+      "type": "Reference"
+    }
+  ],
+  "ClinicalImpression": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "action",
+      "type": "Reference"
+    },
+    {
+      "field": "assessor",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "finding.itemCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "finding.itemReference",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "investigation.item",
+      "type": "Reference"
+    },
+    {
+      "field": "previous",
+      "type": "Reference"
+    },
+    {
+      "field": "problem",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "DocumentManifest": [
+    {
+      "field": "masterIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "content.pReference",
+      "type": "Reference"
+    },
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "string"
+    },
+    {
+      "field": "recipient",
+      "type": "Reference"
+    },
+    {
+      "field": "related.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "related.ref",
+      "type": "Reference"
+    },
+    {
+      "field": "source",
+      "type": "uri"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Goal": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "startDate",
+      "type": "date"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "target.dueDate",
+      "type": "date"
+    }
+  ],
+  "DocumentReference": [
+    {
+      "field": "masterIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context.encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "authenticator",
+      "type": "Reference"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "class",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "custodian",
+      "type": "Reference"
+    },
+    {
+      "field": "description",
+      "type": "string"
+    },
+    {
+      "field": "context.event",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context.facilityType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "content.format",
+      "type": "Coding"
+    },
+    {
+      "field": "indexed",
+      "type": "instant"
+    },
+    {
+      "field": "content.attachment.language",
+      "type": "code"
+    },
+    {
+      "field": "content.attachment.url",
+      "type": "uri"
+    },
+    {
+      "field": "context.period",
+      "type": "Period"
+    },
+    {
+      "field": "context.related.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "context.related.ref",
+      "type": "Reference"
+    },
+    {
+      "field": "relatesTo.target",
+      "type": "Reference"
+    },
+    {
+      "field": "relatesTo.code",
+      "type": "code"
+    },
+    {
+      "field": "securityLabel",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context.practiceSetting",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "ImagingStudy": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "accession",
+      "type": "Identifier"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "series.bodySite",
+      "type": "Coding"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "series.instance.sopClass",
+      "type": "oid"
+    },
+    {
+      "field": "endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "series.endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "series.modality",
+      "type": "Coding"
+    },
+    {
+      "field": "series.performer",
+      "type": "Reference"
+    },
+    {
+      "field": "reason",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "series.uid",
+      "type": "oid"
+    },
+    {
+      "field": "started",
+      "type": "dateTime"
+    },
+    {
+      "field": "uid",
+      "type": "oid"
+    },
+    {
+      "field": "series.instance.uid",
+      "type": "oid"
+    }
+  ],
+  "VisionPrescription": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "dateWritten",
+      "type": "dateTime"
+    },
+    {
+      "field": "prescriber",
+      "type": "Reference"
+    }
+  ],
+  "NutritionOrder": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "enteralFormula.additiveType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "dateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "enteralFormula.baseFormulaType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "oralDiet.type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "orderer",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "supplement.type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "SupplyDelivery": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "receiver",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "supplier",
+      "type": "Reference"
+    }
+  ],
+  "ReferralRequest": [
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "groupIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrencePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "recipient",
+      "type": "Reference"
+    },
+    {
+      "field": "replaces",
+      "type": "Reference"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "serviceRequested",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "specialty",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "ImagingManifest": [
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "authoringTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "study.endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "study.series.endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "study.imagingStudy",
+      "type": "Reference"
+    },
+    {
+      "field": "study.uid",
+      "type": "oid"
+    }
+  ],
+  "DeviceUseStatement": [
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "device",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    }
+  ],
+  "Appointment": [
+    {
+      "field": "participant.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "appointmentType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "start",
+      "type": "instant"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "incomingReferral",
+      "type": "Reference"
+    },
+    {
+      "field": "participant.status",
+      "type": "code"
+    },
+    {
+      "field": "serviceType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "AppointmentResponse": [
+    {
+      "field": "actor",
+      "type": "Reference"
+    },
+    {
+      "field": "appointment",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "participantStatus",
+      "type": "code"
+    }
+  ],
+  "AuditEvent": [
+    {
+      "field": "action",
+      "type": "code"
+    },
+    {
+      "field": "agent.network.address",
+      "type": "string"
+    },
+    {
+      "field": "agent.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "agent.name",
+      "type": "string"
+    },
+    {
+      "field": "agent.role",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "agent.altId",
+      "type": "string"
+    },
+    {
+      "field": "recorded",
+      "type": "instant"
+    },
+    {
+      "field": "entity.reference",
+      "type": "Reference"
+    },
+    {
+      "field": "entity.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "entity.name",
+      "type": "string"
+    },
+    {
+      "field": "entity.role",
+      "type": "Coding"
+    },
+    {
+      "field": "entity.type",
+      "type": "Coding"
+    },
+    {
+      "field": "outcome",
+      "type": "code"
+    },
+    {
+      "field": "agent.policy",
+      "type": "uri"
+    },
+    {
+      "field": "source.site",
+      "type": "string"
+    },
+    {
+      "field": "source.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subtype",
+      "type": "Coding"
+    },
+    {
+      "field": "type",
+      "type": "Coding"
+    },
+    {
+      "field": "agent.userId",
+      "type": "Identifier"
+    }
+  ],
+  "Basic": [
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "created",
+      "type": "date"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    }
+  ],
+  "Binary": [
+    {
+      "field": "contentType",
+      "type": "code"
+    }
+  ],
+  "BodySite": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    }
+  ],
+  "Bundle": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    }
+  ],
+  "CapabilityStatement": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "messaging.event.code",
+      "type": "Coding"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    },
+    {
+      "field": "format",
+      "type": "code"
+    },
+    {
+      "field": "implementationGuide",
+      "type": "uri"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "rest.mode",
+      "type": "code"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "rest.resource.type",
+      "type": "code"
+    },
+    {
+      "field": "rest.resource.profile",
+      "type": "Reference"
+    },
+    {
+      "field": "rest.security.service",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "software.name",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "profile",
+      "type": "Reference"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    }
+  ],
+  "ChargeItem": [
+    {
+      "field": "account",
+      "type": "Reference"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "enteredDate",
+      "type": "dateTime"
+    },
+    {
+      "field": "enterer",
+      "type": "Reference"
+    },
+    {
+      "field": "factorOverride",
+      "type": "decimal"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrencePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "occurrenceTiming",
+      "type": "Timing"
+    },
+    {
+      "field": "participant.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "participant.role",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "performingOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "priceOverride",
+      "type": "Money"
+    },
+    {
+      "field": "quantity",
+      "type": "Quantity"
+    },
+    {
+      "field": "requestingOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "service",
+      "type": "Reference"
+    }
+  ],
+  "Claim": [
+    {
+      "field": "careTeam.provider",
+      "type": "Reference"
+    },
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "item.encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "enterer",
+      "type": "Reference"
+    },
+    {
+      "field": "facility",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "insurer",
+      "type": "Reference"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "payee.party",
+      "type": "Reference"
+    },
+    {
+      "field": "priority",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "provider",
+      "type": "Reference"
+    },
+    {
+      "field": "use",
+      "type": "code"
+    }
+  ],
+  "ClaimResponse": [
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "disposition",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "insurer",
+      "type": "Reference"
+    },
+    {
+      "field": "outcome",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "payment.date",
+      "type": "date"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    },
+    {
+      "field": "requestProvider",
+      "type": "Reference"
+    }
+  ],
+  "CodeSystem": [
+    {
+      "field": "concept.code",
+      "type": "code"
+    },
+    {
+      "field": "content",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "concept.designation.language",
+      "type": "code"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Communication": [
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medium",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "received",
+      "type": "dateTime"
+    },
+    {
+      "field": "recipient",
+      "type": "Reference"
+    },
+    {
+      "field": "sender",
+      "type": "Reference"
+    },
+    {
+      "field": "sent",
+      "type": "dateTime"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "CommunicationRequest": [
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "groupIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medium",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "recipient",
+      "type": "Reference"
+    },
+    {
+      "field": "replaces",
+      "type": "Reference"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "sender",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "CompartmentDefinition": [
+    {
+      "field": "code",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "resource.code",
+      "type": "code"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    }
+  ],
+  "ConceptMap": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "group.element.target.dependsOn.property",
+      "type": "uri"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "group.unmapped.url",
+      "type": "uri"
+    },
+    {
+      "field": "group.element.target.product.property",
+      "type": "uri"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "sourceReference",
+      "type": "Reference"
+    },
+    {
+      "field": "group.element.code",
+      "type": "code"
+    },
+    {
+      "field": "group.source",
+      "type": "uri"
+    },
+    {
+      "field": "sourceUri",
+      "type": "uri"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "targetReference",
+      "type": "Reference"
+    },
+    {
+      "field": "group.element.target.code",
+      "type": "code"
+    },
+    {
+      "field": "group.target",
+      "type": "uri"
+    },
+    {
+      "field": "targetUri",
+      "type": "uri"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Contract": [
+    {
+      "field": "agent.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "authority",
+      "type": "Reference"
+    },
+    {
+      "field": "domain",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "issued",
+      "type": "dateTime"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "signer.party",
+      "type": "Reference"
+    },
+    {
+      "field": "term.topic",
+      "type": "Reference"
+    }
+  ],
+  "Coverage": [
+    {
+      "field": "beneficiary",
+      "type": "Reference"
+    },
+    {
+      "field": "grouping.class",
+      "type": "string"
+    },
+    {
+      "field": "dependent",
+      "type": "string"
+    },
+    {
+      "field": "grouping.group",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "payor",
+      "type": "Reference"
+    },
+    {
+      "field": "grouping.plan",
+      "type": "string"
+    },
+    {
+      "field": "policyHolder",
+      "type": "Reference"
+    },
+    {
+      "field": "sequence",
+      "type": "string"
+    },
+    {
+      "field": "grouping.subClass",
+      "type": "string"
+    },
+    {
+      "field": "grouping.subGroup",
+      "type": "string"
+    },
+    {
+      "field": "grouping.subPlan",
+      "type": "string"
+    },
+    {
+      "field": "subscriber",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "DataElement": [
+    {
+      "field": "element.code",
+      "type": "Coding"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "element.definition",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "stringency",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Device": [
+    {
+      "field": "udi.name",
+      "type": "string"
+    },
+    {
+      "field": "type.text",
+      "type": "string"
+    },
+    {
+      "field": "type.coding.display",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "manufacturer",
+      "type": "string"
+    },
+    {
+      "field": "model",
+      "type": "string"
+    },
+    {
+      "field": "owner",
+      "type": "Reference"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "udi.carrierHRF",
+      "type": "string"
+    },
+    {
+      "field": "udi.carrierAIDC",
+      "type": "base64Binary"
+    },
+    {
+      "field": "udi.deviceIdentifier",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    }
+  ],
+  "DeviceComponent": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "parent",
+      "type": "Reference"
+    },
+    {
+      "field": "source",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "DeviceMetric": [
+    {
+      "field": "category",
+      "type": "code"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "parent",
+      "type": "Reference"
+    },
+    {
+      "field": "source",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "EligibilityRequest": [
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "enterer",
+      "type": "Reference"
+    },
+    {
+      "field": "facility",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "provider",
+      "type": "Reference"
+    }
+  ],
+  "EligibilityResponse": [
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "disposition",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "insurer",
+      "type": "Reference"
+    },
+    {
+      "field": "outcome",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    },
+    {
+      "field": "requestOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "requestProvider",
+      "type": "Reference"
+    }
+  ],
+  "Endpoint": [
+    {
+      "field": "connectionType",
+      "type": "Coding"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "managingOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "payloadType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "EnrollmentRequest": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    }
+  ],
+  "EnrollmentResponse": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    }
+  ],
+  "ExpansionProfile": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "ExplanationOfBenefit": [
+    {
+      "field": "careTeam.provider",
+      "type": "Reference"
+    },
+    {
+      "field": "claim",
+      "type": "Reference"
+    },
+    {
+      "field": "insurance.coverage",
+      "type": "Reference"
+    },
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "disposition",
+      "type": "string"
+    },
+    {
+      "field": "item.encounter",
+      "type": "Reference"
+    },
+    {
+      "field": "enterer",
+      "type": "Reference"
+    },
+    {
+      "field": "facility",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "payee.party",
+      "type": "Reference"
+    },
+    {
+      "field": "provider",
+      "type": "Reference"
+    }
+  ],
+  "GraphDefinition": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "start",
+      "type": "code"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Group": [
+    {
+      "field": "actual",
+      "type": "boolean"
+    },
+    {
+      "field": "characteristic.code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "characteristic.exclude",
+      "type": "boolean"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "member.entity",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    },
+    {
+      "field": "characteristic.valueCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "characteristic.valueBoolean",
+      "type": "boolean"
+    },
+    {
+      "field": "characteristic.valueQuantity",
+      "type": "Quantity"
+    },
+    {
+      "field": "characteristic.valueRange",
+      "type": "Range"
+    }
+  ],
+  "GuidanceResponse": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "requestId",
+      "type": "id"
+    }
+  ],
+  "HealthcareService": [
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "characteristic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "providedBy",
+      "type": "Reference"
+    },
+    {
+      "field": "programName",
+      "type": "string"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "ImmunizationRecommendation": [
+    {
+      "field": "recommendation.date",
+      "type": "dateTime"
+    },
+    {
+      "field": "recommendation.doseNumber",
+      "type": "positiveInt"
+    },
+    {
+      "field": "recommendation.protocol.doseSequence",
+      "type": "positiveInt"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "recommendation.supportingPatientInformation",
+      "type": "Reference"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "recommendation.forecastStatus",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "recommendation.supportingImmunization",
+      "type": "Reference"
+    },
+    {
+      "field": "recommendation.targetDisease",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "recommendation.vaccineCode",
+      "type": "CodeableConcept"
+    }
+  ],
+  "ImplementationGuide": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "dependency.uri",
+      "type": "uri"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "experimental",
+      "type": "boolean"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "package.resource.sourceUri",
+      "type": "uri"
+    },
+    {
+      "field": "package.resource.sourceReference",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Library": [
+    {
+      "field": "relatedArtifact.resource",
+      "type": "Reference"
+    },
+    {
+      "field": "relatedArtifact.type",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "topic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Linkage": [
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "item.resource",
+      "type": "Reference"
+    }
+  ],
+  "Location": [
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "alias",
+      "type": "string"
+    },
+    {
+      "field": "operationalStatus",
+      "type": "Coding"
+    },
+    {
+      "field": "managingOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "Measure": [
+    {
+      "field": "relatedArtifact.resource",
+      "type": "Reference"
+    },
+    {
+      "field": "relatedArtifact.type",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "library",
+      "type": "Reference"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "topic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "MeasureReport": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Media": [
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "content.creation",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrenceDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "occurrencePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "device",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "operator",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "bodySite",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "subtype",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    },
+    {
+      "field": "view",
+      "type": "CodeableConcept"
+    }
+  ],
+  "Medication": [
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "package.container",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "form",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "ingredient.itemReference",
+      "type": "Reference"
+    },
+    {
+      "field": "ingredient.itemCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "manufacturer",
+      "type": "Reference"
+    },
+    {
+      "field": "isOverTheCounter",
+      "type": "boolean"
+    },
+    {
+      "field": "package.content.itemReference",
+      "type": "Reference"
+    },
+    {
+      "field": "package.content.itemCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "MedicationRequest": [
+    {
+      "field": "medicationCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medicationReference",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "dosageInstruction.timing.event",
+      "type": "dateTime"
+    },
+    {
+      "field": "dispenseRequest.performer",
+      "type": "Reference"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    }
+  ],
+  "MedicationAdministration": [
+    {
+      "field": "medicationCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "device",
+      "type": "Reference"
+    },
+    {
+      "field": "effectiveDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medicationReference",
+      "type": "Reference"
+    },
+    {
+      "field": "notGiven",
+      "type": "boolean"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "performer.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "prescription",
+      "type": "Reference"
+    },
+    {
+      "field": "reasonCode",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "reasonNotGiven",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "MedicationStatement": [
+    {
+      "field": "medicationCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medicationReference",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "effectiveDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "informationSource",
+      "type": "Reference"
+    }
+  ],
+  "MedicationDispense": [
+    {
+      "field": "medicationCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "medicationReference",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "authorizingPrescription",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "destination",
+      "type": "Reference"
+    },
+    {
+      "field": "performer.actor",
+      "type": "Reference"
+    },
+    {
+      "field": "receiver",
+      "type": "Reference"
+    },
+    {
+      "field": "substitution.responsibleParty",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "whenHandedOver",
+      "type": "dateTime"
+    },
+    {
+      "field": "whenPrepared",
+      "type": "dateTime"
+    }
+  ],
+  "MessageDefinition": [
+    {
+      "field": "category",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "event",
+      "type": "Coding"
+    },
+    {
+      "field": "focus.code",
+      "type": "code"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "MessageHeader": [
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "response.code",
+      "type": "code"
+    },
+    {
+      "field": "destination.name",
+      "type": "string"
+    },
+    {
+      "field": "destination.endpoint",
+      "type": "uri"
+    },
+    {
+      "field": "enterer",
+      "type": "Reference"
+    },
+    {
+      "field": "event",
+      "type": "Coding"
+    },
+    {
+      "field": "focus",
+      "type": "Reference"
+    },
+    {
+      "field": "receiver",
+      "type": "Reference"
+    },
+    {
+      "field": "response.identifier",
+      "type": "id"
+    },
+    {
+      "field": "responsible",
+      "type": "Reference"
+    },
+    {
+      "field": "sender",
+      "type": "Reference"
+    },
+    {
+      "field": "source.name",
+      "type": "string"
+    },
+    {
+      "field": "source.endpoint",
+      "type": "uri"
+    },
+    {
+      "field": "destination.target",
+      "type": "Reference"
+    },
+    {
+      "field": "timestamp",
+      "type": "instant"
+    }
+  ],
+  "NamingSystem": [
+    {
+      "field": "contact.name",
+      "type": "string"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "uniqueId.type",
+      "type": "code"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "kind",
+      "type": "code"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "uniqueId.period",
+      "type": "Period"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "replacedBy",
+      "type": "Reference"
+    },
+    {
+      "field": "responsible",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "contact.telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "uniqueId.value",
+      "type": "string"
+    }
+  ],
+  "OperationDefinition": [
+    {
+      "field": "base",
+      "type": "Reference"
+    },
+    {
+      "field": "code",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "instance",
+      "type": "boolean"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "kind",
+      "type": "code"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "parameter.profile",
+      "type": "Reference"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "system",
+      "type": "boolean"
+    },
+    {
+      "field": "type",
+      "type": "boolean"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Organization": [
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "alias",
+      "type": "string"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "Patient": [
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "animal.breed",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "animal.species",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "birthDate",
+      "type": "date"
+    },
+    {
+      "field": "deceasedDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "telecom.system",
+      "type": "code"
+    },
+    {
+      "field": "name.family",
+      "type": "string"
+    },
+    {
+      "field": "gender",
+      "type": "code"
+    },
+    {
+      "field": "generalPractitioner",
+      "type": "Reference"
+    },
+    {
+      "field": "name.given",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "communication.language",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "link.other",
+      "type": "Reference"
+    },
+    {
+      "field": "name",
+      "type": "HumanName"
+    },
+    {
+      "field": "managingOrganization",
+      "type": "Reference"
+    }
+  ],
+  "RelatedPerson": [
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "birthDate",
+      "type": "date"
+    },
+    {
+      "field": "telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "telecom.system",
+      "type": "code"
+    },
+    {
+      "field": "gender",
+      "type": "code"
+    },
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "HumanName"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    }
+  ],
+  "Practitioner": [
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "telecom.system",
+      "type": "code"
+    },
+    {
+      "field": "name.family",
+      "type": "string"
+    },
+    {
+      "field": "gender",
+      "type": "code"
+    },
+    {
+      "field": "name.given",
+      "type": "string"
+    },
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "communication",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "name",
+      "type": "HumanName"
+    }
+  ],
+  "Person": [
+    {
+      "field": "address",
+      "type": "Address"
+    },
+    {
+      "field": "address.city",
+      "type": "string"
+    },
+    {
+      "field": "address.country",
+      "type": "string"
+    },
+    {
+      "field": "address.postalCode",
+      "type": "code"
+    },
+    {
+      "field": "address.state",
+      "type": "string"
+    },
+    {
+      "field": "address.use",
+      "type": "code"
+    },
+    {
+      "field": "birthDate",
+      "type": "date"
+    },
+    {
+      "field": "telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "telecom.system",
+      "type": "code"
+    },
+    {
+      "field": "gender",
+      "type": "code"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "link.target",
+      "type": "Reference"
+    },
+    {
+      "field": "name",
+      "type": "HumanName"
+    },
+    {
+      "field": "managingOrganization",
+      "type": "Reference"
+    }
+  ],
+  "PractitionerRole": [
+    {
+      "field": "telecom",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "telecom.system",
+      "type": "code"
+    },
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "endpoint",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "practitioner",
+      "type": "Reference"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "healthcareService",
+      "type": "Reference"
+    },
+    {
+      "field": "specialty",
+      "type": "CodeableConcept"
+    }
+  ],
+  "PaymentNotice": [
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "paymentStatus",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "provider",
+      "type": "Reference"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    },
+    {
+      "field": "response",
+      "type": "Reference"
+    },
+    {
+      "field": "statusDate",
+      "type": "date"
+    }
+  ],
+  "PaymentReconciliation": [
+    {
+      "field": "created",
+      "type": "dateTime"
+    },
+    {
+      "field": "disposition",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "outcome",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    },
+    {
+      "field": "requestOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "requestProvider",
+      "type": "Reference"
+    }
+  ],
+  "PlanDefinition": [
+    {
+      "field": "relatedArtifact.resource",
+      "type": "Reference"
+    },
+    {
+      "field": "relatedArtifact.type",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "library",
+      "type": "Reference"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "topic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "ProcessRequest": [
+    {
+      "field": "action",
+      "type": "code"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "provider",
+      "type": "Reference"
+    }
+  ],
+  "ProcessResponse": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "organization",
+      "type": "Reference"
+    },
+    {
+      "field": "request",
+      "type": "Reference"
+    },
+    {
+      "field": "requestOrganization",
+      "type": "Reference"
+    },
+    {
+      "field": "requestProvider",
+      "type": "Reference"
+    }
+  ],
+  "Provenance": [
+    {
+      "field": "agent.whoUri",
+      "type": "uri"
+    },
+    {
+      "field": "agent.whoReference",
+      "type": "Reference"
+    },
+    {
+      "field": "agent.role",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "period.end",
+      "type": "dateTime"
+    },
+    {
+      "field": "entity.whatIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "entity.whatReference",
+      "type": "Reference"
+    },
+    {
+      "field": "location",
+      "type": "Reference"
+    },
+    {
+      "field": "target",
+      "type": "Reference"
+    },
+    {
+      "field": "recorded",
+      "type": "instant"
+    },
+    {
+      "field": "signature.type",
+      "type": "Coding"
+    },
+    {
+      "field": "period.start",
+      "type": "dateTime"
+    }
+  ],
+  "Questionnaire": [
+    {
+      "field": "item.code",
+      "type": "Coding"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "QuestionnaireResponse": [
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "authored",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "parent",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "questionnaire",
+      "type": "Reference"
+    },
+    {
+      "field": "source",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "RequestGroup": [
+    {
+      "field": "author",
+      "type": "Reference"
+    },
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "definition",
+      "type": "Reference"
+    },
+    {
+      "field": "groupIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "action.participant",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "ResearchStudy": [
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "focus",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "keyword",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "principalInvestigator",
+      "type": "Reference"
+    },
+    {
+      "field": "protocol",
+      "type": "Reference"
+    },
+    {
+      "field": "site",
+      "type": "Reference"
+    },
+    {
+      "field": "sponsor",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    }
+  ],
+  "ResearchSubject": [
+    {
+      "field": "period",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "individual",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Schedule": [
+    {
+      "field": "active",
+      "type": "boolean"
+    },
+    {
+      "field": "actor",
+      "type": "Reference"
+    },
+    {
+      "field": "planningHorizon",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "serviceType",
+      "type": "CodeableConcept"
+    }
+  ],
+  "SearchParameter": [
+    {
+      "field": "base",
+      "type": "code"
+    },
+    {
+      "field": "code",
+      "type": "code"
+    },
+    {
+      "field": "component.definition",
+      "type": "Reference"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "derivedFrom",
+      "type": "uri"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "target",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Sequence": [
+    {
+      "field": "referenceSeq.chromosome",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "referenceSeq.windowEnd",
+      "type": "integer"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "patient",
+      "type": "Reference"
+    },
+    {
+      "field": "referenceSeq.windowStart",
+      "type": "integer"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    }
+  ],
+  "ServiceDefinition": [
+    {
+      "field": "relatedArtifact.resource",
+      "type": "Reference"
+    },
+    {
+      "field": "relatedArtifact.type",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "effectivePeriod",
+      "type": "Period"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "topic",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Slot": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "schedule",
+      "type": "Reference"
+    },
+    {
+      "field": "serviceType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "start",
+      "type": "instant"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "Specimen": [
+    {
+      "field": "accessionIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "collection.bodySite",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "collection.collectedDateTime",
+      "type": "dateTime"
+    },
+    {
+      "field": "collection.collectedPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "collection.collector",
+      "type": "Reference"
+    },
+    {
+      "field": "container.type",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "container.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "parent",
+      "type": "Reference"
+    },
+    {
+      "field": "subject",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "type",
+      "type": "CodeableConcept"
+    }
+  ],
+  "StructureDefinition": [
+    {
+      "field": "abstract",
+      "type": "boolean"
+    },
+    {
+      "field": "baseDefinition",
+      "type": "uri"
+    },
+    {
+      "field": "snapshot.element.base.path",
+      "type": "string"
+    },
+    {
+      "field": "differential.element.base.path",
+      "type": "string"
+    },
+    {
+      "field": "contextType",
+      "type": "code"
+    },
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "derivation",
+      "type": "code"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "experimental",
+      "type": "boolean"
+    },
+    {
+      "field": "context",
+      "type": "string"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "keyword",
+      "type": "Coding"
+    },
+    {
+      "field": "kind",
+      "type": "code"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "snapshot.element.path",
+      "type": "string"
+    },
+    {
+      "field": "differential.element.path",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "type",
+      "type": "code"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "snapshot.element.binding.valueSet",
+      "type": "canonical"
+    },
+    {
+      "field": "snapshot.element.binding.valueSetUri",
+      "type": "uri"
+    },
+    {
+      "field": "snapshot.element.binding.valueSetReference",
+      "type": "Reference"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "StructureMap": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "Subscription": [
+    {
+      "field": "tag",
+      "type": "Coding"
+    },
+    {
+      "field": "contact",
+      "type": "ContactPoint"
+    },
+    {
+      "field": "criteria",
+      "type": "string"
+    },
+    {
+      "field": "channel.payload",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "channel.type",
+      "type": "code"
+    },
+    {
+      "field": "channel.endpoint",
+      "type": "uri"
+    }
+  ],
+  "Substance": [
+    {
+      "field": "category",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "ingredient.substanceCodeableConcept",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "instance.identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "instance.expiry",
+      "type": "dateTime"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "instance.quantity",
+      "type": "Quantity"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "ingredient.substanceReference",
+      "type": "Reference"
+    }
+  ],
+  "Task": [
+    {
+      "field": "authoredOn",
+      "type": "dateTime"
+    },
+    {
+      "field": "basedOn",
+      "type": "Reference"
+    },
+    {
+      "field": "businessStatus",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "code",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "context",
+      "type": "Reference"
+    },
+    {
+      "field": "focus",
+      "type": "Reference"
+    },
+    {
+      "field": "groupIdentifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "intent",
+      "type": "code"
+    },
+    {
+      "field": "lastModified",
+      "type": "dateTime"
+    },
+    {
+      "field": "requester.onBehalfOf",
+      "type": "Reference"
+    },
+    {
+      "field": "owner",
+      "type": "Reference"
+    },
+    {
+      "field": "partOf",
+      "type": "Reference"
+    },
+    {
+      "field": "for",
+      "type": "Reference"
+    },
+    {
+      "field": "performerType",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "executionPeriod",
+      "type": "Period"
+    },
+    {
+      "field": "priority",
+      "type": "code"
+    },
+    {
+      "field": "requester.agent",
+      "type": "Reference"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    }
+  ],
+  "TestReport": [
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "issued",
+      "type": "dateTime"
+    },
+    {
+      "field": "participant.uri",
+      "type": "uri"
+    },
+    {
+      "field": "result",
+      "type": "code"
+    },
+    {
+      "field": "tester",
+      "type": "string"
+    },
+    {
+      "field": "testScript",
+      "type": "Reference"
+    }
+  ],
+  "TestScript": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "metadata.capability.description",
+      "type": "string"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ],
+  "ValueSet": [
+    {
+      "field": "date",
+      "type": "dateTime"
+    },
+    {
+      "field": "description",
+      "type": "markdown"
+    },
+    {
+      "field": "expansion.identifier",
+      "type": "uri"
+    },
+    {
+      "field": "identifier",
+      "type": "Identifier"
+    },
+    {
+      "field": "jurisdiction",
+      "type": "CodeableConcept"
+    },
+    {
+      "field": "name",
+      "type": "string"
+    },
+    {
+      "field": "publisher",
+      "type": "string"
+    },
+    {
+      "field": "compose.include.system",
+      "type": "uri"
+    },
+    {
+      "field": "status",
+      "type": "code"
+    },
+    {
+      "field": "title",
+      "type": "string"
+    },
+    {
+      "field": "url",
+      "type": "uri"
+    },
+    {
+      "field": "version",
+      "type": "string"
+    }
+  ]
+}

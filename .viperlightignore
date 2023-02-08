@@ -9,12 +9,8 @@ common
 build
 lib
 
-# Third Party files
-fwoa-core/interface/THIRD-PARTY
-fwoa-core/persistence-ddb/THIRD-PARTY 
-fwoa-core/routing/THIRD-PARTY
-fwoa-core/authz-smart/THIRD-PARTY
-fwoa-core/authz-rbac/THIRD-PARTY
+#Third party file
+THIRD-PARTY$
 
 # NOTICE files
 .*/NOTICE
@@ -22,6 +18,11 @@ fwoa-core/authz-rbac/THIRD-PARTY
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4333
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
+fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
+fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
 
 # Team Email
 .github/temp-workflows/release-pr.yml:28
@@ -29,11 +30,12 @@ fwoa-core/interface/package.json:13
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
-fwoa-core/persistence-ddb/package.json:13
 fwoa-core/authz-rbac/package.json:13
+fwoa-core/persistence-ddb/package.json:13
+fwoa-core/search-es/package.json:13
 
 # Dummy Email for Testing
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
-
+fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43

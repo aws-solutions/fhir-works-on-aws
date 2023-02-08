@@ -3,6 +3,14 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@aws-sdk/client-sns",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws-sdk/node-http-handler",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
       "allowedCategories": ["production", "tools"]
     },
@@ -87,6 +95,10 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "date-fns",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "depcheck",
       "allowedCategories": ["tools"]
     },
@@ -163,6 +175,10 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "json-stringify-pretty-compact",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "jsonwebtoken",
       "allowedCategories": ["production", "tools"]
     },
@@ -191,6 +207,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "nearley",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "npm-package-json-lint",
       "allowedCategories": ["production", "tools"]
     },
@@ -204,6 +224,10 @@
     },
     {
       "name": "promise.allsettled",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "qs",
       "allowedCategories": ["production"]
     },
     {
