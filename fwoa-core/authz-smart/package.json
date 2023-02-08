@@ -45,7 +45,7 @@
     "axios": "^0.21.4",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^1.12.1",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
@@ -55,8 +55,8 @@
     "@rushstack/heft-node-rig": "1.11.11",
     "@types/heft-jest": "^1.0.3",
     "@types/jest": "^26.0.19",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/lodash": "^4.14.161",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^14",
     "axios-mock-adapter": "^1.18.2",
     "csv-load-sync": "^2.3.1",

@@ -1,0 +1,30 @@
+{
+  "extends": "@rushstack/heft-node-rig/profiles/default/config/jest.config.json",
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/src/index.ts",
+    "<rootDir>/src/integration-tests/*",
+    "src/ddbToEsLambda/index.ts",
+    "src/updateSearchMappings/index.ts",
+    "src/subscriptions/reaperLambda/index.ts",
+    "src/subscriptions/matcherLambda/index.ts",
+    "src/subscriptions/restHookLambda/index.ts",
+
+    // TODO: these files were not tested previously, tests should be added for coverage
+    "src/RBACRules.ts",
+    "src/config.ts",
+    "src/subscriptions/allowList.ts",
+    "src/implementationGuides/loadCompiledIGs.ts",
+    "src/subscriptions/reaperLambda/subscriptionReaper.ts"
+  ],
+  "testPathIgnorePatterns": ["/node_modules/", "/integration-tests/"],
+  "coverageReporters": ["json-summary", "json", "lcov", "text"]
+}
