@@ -20,6 +20,9 @@ THIRD-PARTY$
 fwoa-core/interface/src/fhirConfig.ts:49
 solutions/smart-deployment/README.md:67
 solutions/smart-deployment/README.md:111
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4146
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4150
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4333
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338

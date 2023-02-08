@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as assertions from 'aws-cdk-lib/assertions';
 import * as cdknag from 'cdk-nag';
 import FhirWorksStack from './cdk-infra-stack';
+import fs from 'fs';
 
 describe('cdk-nag AwsSolutions Pack', () => {
   let stack: cdk.Stack;
@@ -24,6 +25,7 @@ describe('cdk-nag AwsSolutions Pack', () => {
   beforeAll(() => {
     // GIVEN
 
+    fs.copyFileSync('../../common/config/rush/pnpm-lock.yaml', './pnpm-lock.yaml');
     stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
       env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
@@ -48,6 +50,8 @@ describe('cdk-nag AwsSolutions Pack', () => {
       description:
         'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.'
     });
+
+    fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
 
     cdk.Aspects.of(stack).add(new cdknag.AwsSolutionsChecks({ verbose: true }));
 

@@ -88,7 +88,6 @@ coverage
 /solutions/smart-on-fhir/.webpack/
 
 # CDK
-**/.cdk.staging
 **/cdk.out
 **/build
 **/dist
