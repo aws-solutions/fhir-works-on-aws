@@ -8,12 +8,6 @@ common
 .next
 build
 lib
-fwoa-core/interface/THIRD-PARTY
-fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json
-fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json
-fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json
-fwoa-core/search-es/package.json
 
 #Third party file
 THIRD-PARTY$
