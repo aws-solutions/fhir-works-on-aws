@@ -66,6 +66,12 @@
       "projectFolder": "fwoa-core/authz-smart",
       "reviewCategory": "tools",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@aws/fhir-works-on-aws-smart-deployment",
+      "projectFolder": "solutions/smart-deployment",
+      "reviewCategory": "tools",
+      "shouldPublish": false
     }
   ]
 }

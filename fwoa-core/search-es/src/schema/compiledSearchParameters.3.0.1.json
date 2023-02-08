@@ -103,14 +103,7 @@
     "type": "reference",
     "description": "What is account tied to?",
     "base": "Account",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "HealthcareService",
-      "Location"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "HealthcareService", "Location"],
     "compiled": [{ "resourceType": "Account", "path": "subject" }]
   },
   {
@@ -532,9 +525,7 @@
     "type": "string",
     "description": "The description of the activity definition",
     "base": "ActivityDefinition",
-    "compiled": [
-      { "resourceType": "ActivityDefinition", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "ActivityDefinition", "path": "description" }]
   },
   {
     "name": "effective",
@@ -542,9 +533,7 @@
     "type": "date",
     "description": "The time during which the activity definition is intended to be in use",
     "base": "ActivityDefinition",
-    "compiled": [
-      { "resourceType": "ActivityDefinition", "path": "effectivePeriod" }
-    ]
+    "compiled": [{ "resourceType": "ActivityDefinition", "path": "effectivePeriod" }]
   },
   {
     "name": "identifier",
@@ -560,9 +549,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the activity definition",
     "base": "ActivityDefinition",
-    "compiled": [
-      { "resourceType": "ActivityDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "ActivityDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "name",
@@ -959,16 +946,8 @@
     "type": "reference",
     "description": "Refers to the specific entity that caused the adverse event",
     "base": "AdverseEvent",
-    "target": [
-      "Device",
-      "Medication",
-      "Substance",
-      "MedicationAdministration",
-      "MedicationStatement"
-    ],
-    "compiled": [
-      { "resourceType": "AdverseEvent", "path": "suspectEntity.instance" }
-    ]
+    "target": ["Device", "Medication", "Substance", "MedicationAdministration", "MedicationStatement"],
+    "compiled": [{ "resourceType": "AdverseEvent", "path": "suspectEntity.instance" }]
   },
   {
     "name": "type",
@@ -1001,9 +980,7 @@
     "type": "token",
     "description": "active | inactive | resolved",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "clinicalStatus" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "clinicalStatus" }]
   },
   {
     "name": "code",
@@ -1011,9 +988,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition code\r\n* [DeviceRequest](devicerequest.html): Code for what is being requested/ordered\r\n* [AllergyIntolerance](allergyintolerance.html): Code that identifies the allergy or intolerance\r\n* [Procedure](procedure.html): A code to identify a  procedure\r\n* [List](list.html): What the purpose of this list is\r\n* [ProcedureRequest](procedurerequest.html): What is being requested/ordered\r\n* [Observation](observation.html): The code of the observation type\r\n* [DiagnosticReport](diagnosticreport.html): The code for the report as a whole, as opposed to codes for the atomic results, which are the names on the observation resource referred to from the result\r\n* [Condition](condition.html): Code for the condition\r\n",
     "base": "FamilyMemberHistory",
-    "compiled": [
-      { "resourceType": "FamilyMemberHistory", "path": "condition.code" }
-    ]
+    "compiled": [{ "resourceType": "FamilyMemberHistory", "path": "condition.code" }]
   },
   {
     "name": "code",
@@ -1021,9 +996,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition code\r\n* [DeviceRequest](devicerequest.html): Code for what is being requested/ordered\r\n* [AllergyIntolerance](allergyintolerance.html): Code that identifies the allergy or intolerance\r\n* [Procedure](procedure.html): A code to identify a  procedure\r\n* [List](list.html): What the purpose of this list is\r\n* [ProcedureRequest](procedurerequest.html): What is being requested/ordered\r\n* [Observation](observation.html): The code of the observation type\r\n* [DiagnosticReport](diagnosticreport.html): The code for the report as a whole, as opposed to codes for the atomic results, which are the names on the observation resource referred to from the result\r\n* [Condition](condition.html): Code for the condition\r\n",
     "base": "DeviceRequest",
-    "compiled": [
-      { "resourceType": "DeviceRequest", "path": "codeCodeableConcept" }
-    ]
+    "compiled": [{ "resourceType": "DeviceRequest", "path": "codeCodeableConcept" }]
   },
   {
     "name": "code",
@@ -1090,9 +1063,7 @@
     "type": "token",
     "description": "low | high | unable-to-assess",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "criticality" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "criticality" }]
   },
   {
     "name": "date",
@@ -1116,9 +1087,7 @@
     "type": "date",
     "description": "Multiple Resources: \r\n\r\n* [Consent](consent.html): When this Consent was created or indexed\r\n* [SupplyRequest](supplyrequest.html): When the request was made\r\n* [RiskAssessment](riskassessment.html): When was assessment made?\r\n* [CareTeam](careteam.html): Time period team covers\r\n* [FamilyMemberHistory](familymemberhistory.html): When history was captured/updated\r\n* [Encounter](encounter.html): A date within the period the Encounter lasted\r\n* [AllergyIntolerance](allergyintolerance.html): Date record was believed accurate\r\n* [CarePlan](careplan.html): Time period plan covers\r\n* [EpisodeOfCare](episodeofcare.html): The provided date search value falls within the episode of care's period\r\n* [Procedure](procedure.html): Date/Period the procedure was performed\r\n* [List](list.html): When the list was prepared\r\n* [Immunization](immunization.html): Vaccination  (non)-Administration Date\r\n* [Flag](flag.html): Time period when flag is active\r\n* [Observation](observation.html): Obtained date/time. If the obtained element is a period, a date that falls in the period\r\n* [DiagnosticReport](diagnosticreport.html): The clinically relevant time of the report\r\n* [Composition](composition.html): Composition editing time\r\n* [DetectedIssue](detectedissue.html): When identified\r\n* [ClinicalImpression](clinicalimpression.html): When the assessment was documented\r\n",
     "base": "RiskAssessment",
-    "compiled": [
-      { "resourceType": "RiskAssessment", "path": "occurrenceDateTime" }
-    ]
+    "compiled": [{ "resourceType": "RiskAssessment", "path": "occurrenceDateTime" }]
   },
   {
     "name": "date",
@@ -1150,9 +1119,7 @@
     "type": "date",
     "description": "Multiple Resources: \r\n\r\n* [Consent](consent.html): When this Consent was created or indexed\r\n* [SupplyRequest](supplyrequest.html): When the request was made\r\n* [RiskAssessment](riskassessment.html): When was assessment made?\r\n* [CareTeam](careteam.html): Time period team covers\r\n* [FamilyMemberHistory](familymemberhistory.html): When history was captured/updated\r\n* [Encounter](encounter.html): A date within the period the Encounter lasted\r\n* [AllergyIntolerance](allergyintolerance.html): Date record was believed accurate\r\n* [CarePlan](careplan.html): Time period plan covers\r\n* [EpisodeOfCare](episodeofcare.html): The provided date search value falls within the episode of care's period\r\n* [Procedure](procedure.html): Date/Period the procedure was performed\r\n* [List](list.html): When the list was prepared\r\n* [Immunization](immunization.html): Vaccination  (non)-Administration Date\r\n* [Flag](flag.html): Time period when flag is active\r\n* [Observation](observation.html): Obtained date/time. If the obtained element is a period, a date that falls in the period\r\n* [DiagnosticReport](diagnosticreport.html): The clinically relevant time of the report\r\n* [Composition](composition.html): Composition editing time\r\n* [DetectedIssue](detectedissue.html): When identified\r\n* [ClinicalImpression](clinicalimpression.html): When the assessment was documented\r\n",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "assertedDate" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "assertedDate" }]
   },
   {
     "name": "date",
@@ -1330,9 +1297,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [DocumentManifest](documentmanifest.html): Unique Identifier for the set of documents\r\n* [Goal](goal.html): External Ids for this goal\r\n* [Consent](consent.html): Identifier for this record (external references)\r\n* [DocumentReference](documentreference.html): Master Version Specific Identifier\r\n* [SupplyRequest](supplyrequest.html): Unique identifier\r\n* [RiskAssessment](riskassessment.html): Unique identifier for the assessment\r\n* [CareTeam](careteam.html): External Ids for this team\r\n* [ImagingStudy](imagingstudy.html): Other identifiers for the Study\r\n* [FamilyMemberHistory](familymemberhistory.html): A search by a record identifier\r\n* [Encounter](encounter.html): Identifier(s) by which this encounter is known\r\n* [DeviceRequest](devicerequest.html): Business identifier for request/order\r\n* [AllergyIntolerance](allergyintolerance.html): External ids for this item\r\n* [CarePlan](careplan.html): External Ids for this plan\r\n* [EpisodeOfCare](episodeofcare.html): Business Identifier(s) relevant for this EpisodeOfCare\r\n* [Procedure](procedure.html): A unique identifier for a procedure\r\n* [List](list.html): Business identifier\r\n* [Immunization](immunization.html): Business identifier\r\n* [VisionPrescription](visionprescription.html): Return prescriptions with this external identifier\r\n* [ProcedureRequest](procedurerequest.html): Identifiers assigned to this order\r\n* [Observation](observation.html): The unique id for a particular observation\r\n* [DiagnosticReport](diagnosticreport.html): An identifier for the report\r\n* [NutritionOrder](nutritionorder.html): Return nutrition orders with this external identifier\r\n* [Condition](condition.html): A unique identifier of the condition record\r\n* [Composition](composition.html): Logical identifier of composition (version-independent)\r\n* [DetectedIssue](detectedissue.html): Unique id for the detected issue\r\n* [SupplyDelivery](supplydelivery.html): External identifier\r\n",
     "base": "FamilyMemberHistory",
-    "compiled": [
-      { "resourceType": "FamilyMemberHistory", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "FamilyMemberHistory", "path": "identifier" }]
   },
   {
     "name": "identifier",
@@ -1476,9 +1441,7 @@
     "type": "date",
     "description": "Date(/time) of last known occurrence of a reaction",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "lastOccurrence" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "lastOccurrence" }]
   },
   {
     "name": "manifestation",
@@ -1486,9 +1449,7 @@
     "type": "token",
     "description": "Clinical symptoms/signs associated with the Event",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "reaction.manifestation" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "reaction.manifestation" }]
   },
   {
     "name": "onset",
@@ -1496,9 +1457,7 @@
     "type": "date",
     "description": "Date(/time) when manifestations showed",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "reaction.onset" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "reaction.onset" }]
   },
   {
     "name": "patient",
@@ -1785,9 +1744,7 @@
     "type": "token",
     "description": "How the subject was exposed to the substance",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "reaction.exposureRoute" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "reaction.exposureRoute" }]
   },
   {
     "name": "severity",
@@ -1795,9 +1752,7 @@
     "type": "token",
     "description": "mild | moderate | severe (of event as a whole)",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "reaction.severity" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "reaction.severity" }]
   },
   {
     "name": "type",
@@ -1861,9 +1816,7 @@
     "type": "token",
     "description": "unconfirmed | confirmed | refuted | entered-in-error",
     "base": "AllergyIntolerance",
-    "compiled": [
-      { "resourceType": "AllergyIntolerance", "path": "verificationStatus" }
-    ]
+    "compiled": [{ "resourceType": "AllergyIntolerance", "path": "verificationStatus" }]
   },
   {
     "name": "actor",
@@ -1871,14 +1824,7 @@
     "type": "reference",
     "description": "Any one of the individuals participating in the appointment",
     "base": "Appointment",
-    "target": [
-      "Practitioner",
-      "Device",
-      "Patient",
-      "HealthcareService",
-      "RelatedPerson",
-      "Location"
-    ],
+    "target": ["Practitioner", "Device", "Patient", "HealthcareService", "RelatedPerson", "Location"],
     "compiled": [{ "resourceType": "Appointment", "path": "participant.actor" }]
   },
   {
@@ -1929,9 +1875,7 @@
     "type": "token",
     "description": "The Participation status of the subject, or other participant on the appointment. Can be used to locate participants that have not responded to meeting requests.",
     "base": "Appointment",
-    "compiled": [
-      { "resourceType": "Appointment", "path": "participant.status" }
-    ]
+    "compiled": [{ "resourceType": "Appointment", "path": "participant.status" }]
   },
   {
     "name": "patient",
@@ -1973,14 +1917,7 @@
     "type": "reference",
     "description": "The Person, Location/HealthcareService or Device that this appointment response replies for",
     "base": "AppointmentResponse",
-    "target": [
-      "Practitioner",
-      "Device",
-      "Patient",
-      "HealthcareService",
-      "RelatedPerson",
-      "Location"
-    ],
+    "target": ["Practitioner", "Device", "Patient", "HealthcareService", "RelatedPerson", "Location"],
     "compiled": [{ "resourceType": "AppointmentResponse", "path": "actor" }]
   },
   {
@@ -1990,9 +1927,7 @@
     "description": "The appointment that the response is attached to",
     "base": "AppointmentResponse",
     "target": ["Appointment"],
-    "compiled": [
-      { "resourceType": "AppointmentResponse", "path": "appointment" }
-    ]
+    "compiled": [{ "resourceType": "AppointmentResponse", "path": "appointment" }]
   },
   {
     "name": "identifier",
@@ -2000,9 +1935,7 @@
     "type": "token",
     "description": "An Identifier in this appointment response",
     "base": "AppointmentResponse",
-    "compiled": [
-      { "resourceType": "AppointmentResponse", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "AppointmentResponse", "path": "identifier" }]
   },
   {
     "name": "location",
@@ -2019,9 +1952,7 @@
     "type": "token",
     "description": "The participants acceptance status for this appointment",
     "base": "AppointmentResponse",
-    "compiled": [
-      { "resourceType": "AppointmentResponse", "path": "participantStatus" }
-    ]
+    "compiled": [{ "resourceType": "AppointmentResponse", "path": "participantStatus" }]
   },
   {
     "name": "patient",
@@ -2055,9 +1986,7 @@
     "type": "string",
     "description": "Identifier for the network access point of the user device",
     "base": "AuditEvent",
-    "compiled": [
-      { "resourceType": "AuditEvent", "path": "agent.network.address" }
-    ]
+    "compiled": [{ "resourceType": "AuditEvent", "path": "agent.network.address" }]
   },
   {
     "name": "agent",
@@ -2065,13 +1994,7 @@
     "type": "reference",
     "description": "Direct reference to resource",
     "base": "AuditEvent",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "AuditEvent", "path": "agent.reference" }]
   },
   {
@@ -2563,9 +2486,7 @@
     "type": "string",
     "description": "The description of the capability statement",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "description" }]
   },
   {
     "name": "event",
@@ -2573,9 +2494,7 @@
     "type": "token",
     "description": "Event code in a capability statement",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "messaging.event.code" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "messaging.event.code" }]
   },
   {
     "name": "fhirversion",
@@ -2599,9 +2518,7 @@
     "type": "uri",
     "description": "Implementation guides supported",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "implementationGuide" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "implementationGuide" }]
   },
   {
     "name": "jurisdiction",
@@ -2609,9 +2526,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the capability statement",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "jurisdiction" }]
   },
   {
     "name": "mode",
@@ -2643,9 +2558,7 @@
     "type": "token",
     "description": "Name of a resource mentioned in a capability statement",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "rest.resource.type" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "rest.resource.type" }]
   },
   {
     "name": "resource-profile",
@@ -2654,9 +2567,7 @@
     "description": "A profile id invoked in a capability statement",
     "base": "CapabilityStatement",
     "target": ["StructureDefinition"],
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "rest.resource.profile" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "rest.resource.profile" }]
   },
   {
     "name": "security-service",
@@ -2664,9 +2575,7 @@
     "type": "token",
     "description": "OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "rest.security.service" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "rest.security.service" }]
   },
   {
     "name": "software",
@@ -2674,9 +2583,7 @@
     "type": "string",
     "description": "Part of a the name of a software application",
     "base": "CapabilityStatement",
-    "compiled": [
-      { "resourceType": "CapabilityStatement", "path": "software.name" }
-    ]
+    "compiled": [{ "resourceType": "CapabilityStatement", "path": "software.name" }]
   },
   {
     "name": "status",
@@ -2854,16 +2761,8 @@
     "type": "reference",
     "description": "Matches if the practitioner is listed as a performer in any of the \"simple\" activities.  (For performers of the detailed activities, chain through the activitydetail search parameter.)",
     "base": "CarePlan",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "CareTeam",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "CarePlan", "path": "activity.detail.performer" }
-    ]
+    "target": ["Practitioner", "Organization", "CareTeam", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "CarePlan", "path": "activity.detail.performer" }]
   },
   {
     "name": "replaces",
@@ -2923,13 +2822,7 @@
     "type": "reference",
     "description": "Who is involved",
     "base": "CareTeam",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "CareTeam",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "CareTeam", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "CareTeam", "path": "participant.member" }]
   },
   {
@@ -2989,13 +2882,7 @@
     "type": "reference",
     "description": "Individual who was entering",
     "base": "ChargeItem",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "ChargeItem", "path": "enterer" }]
   },
   {
@@ -3033,13 +2920,7 @@
     "type": "reference",
     "description": "Individual who was performing",
     "base": "ChargeItem",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "ChargeItem", "path": "participant.actor" }]
   },
   {
@@ -3066,9 +2947,7 @@
     "description": "Organization providing the charged sevice",
     "base": "ChargeItem",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "ChargeItem", "path": "performingOrganization" }
-    ]
+    "compiled": [{ "resourceType": "ChargeItem", "path": "performingOrganization" }]
   },
   {
     "name": "price-override",
@@ -3093,9 +2972,7 @@
     "description": "Organization requesting the charged service",
     "base": "ChargeItem",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "ChargeItem", "path": "requestingOrganization" }
-    ]
+    "compiled": [{ "resourceType": "ChargeItem", "path": "requestingOrganization" }]
   },
   {
     "name": "service",
@@ -3319,13 +3196,7 @@
     "type": "reference",
     "description": "Action taken as part of assessment procedure",
     "base": "ClinicalImpression",
-    "target": [
-      "Appointment",
-      "ReferralRequest",
-      "MedicationRequest",
-      "ProcedureRequest",
-      "Procedure"
-    ],
+    "target": ["Appointment", "ReferralRequest", "MedicationRequest", "ProcedureRequest", "Procedure"],
     "compiled": [{ "resourceType": "ClinicalImpression", "path": "action" }]
   },
   {
@@ -3366,9 +3237,7 @@
     "description": "What was found",
     "base": "ClinicalImpression",
     "target": ["Condition", "Observation"],
-    "compiled": [
-      { "resourceType": "ClinicalImpression", "path": "finding.itemReference" }
-    ]
+    "compiled": [{ "resourceType": "ClinicalImpression", "path": "finding.itemReference" }]
   },
   {
     "name": "identifier",
@@ -3392,9 +3261,7 @@
       "ImagingStudy",
       "QuestionnaireResponse"
     ],
-    "compiled": [
-      { "resourceType": "ClinicalImpression", "path": "investigation.item" }
-    ]
+    "compiled": [{ "resourceType": "ClinicalImpression", "path": "investigation.item" }]
   },
   {
     "name": "previous",
@@ -3485,9 +3352,7 @@
     "type": "token",
     "description": "A language in which a designation is provided",
     "base": "CodeSystem",
-    "compiled": [
-      { "resourceType": "CodeSystem", "path": "concept.designation.language" }
-    ]
+    "compiled": [{ "resourceType": "CodeSystem", "path": "concept.designation.language" }]
   },
   {
     "name": "name",
@@ -3871,14 +3736,7 @@
     "type": "reference",
     "description": "Message recipient",
     "base": "Communication",
-    "target": [
-      "Practitioner",
-      "Group",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Group", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "Communication", "path": "recipient" }]
   },
   {
@@ -3887,13 +3745,7 @@
     "type": "reference",
     "description": "Message sender",
     "base": "Communication",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "Communication", "path": "sender" }]
   },
   {
@@ -3927,9 +3779,7 @@
     "type": "date",
     "description": "When request transitioned to being actionable",
     "base": "CommunicationRequest",
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "authoredOn" }
-    ]
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "authoredOn" }]
   },
   {
     "name": "based-on",
@@ -4089,9 +3939,7 @@
     "type": "token",
     "description": "Composite request this is part of",
     "base": "CommunicationRequest",
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "groupIdentifier" }
-    ]
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "groupIdentifier" }]
   },
   {
     "name": "identifier",
@@ -4099,9 +3947,7 @@
     "type": "token",
     "description": "Unique identifier",
     "base": "CommunicationRequest",
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "identifier" }]
   },
   {
     "name": "medium",
@@ -4117,9 +3963,7 @@
     "type": "date",
     "description": "When scheduled",
     "base": "CommunicationRequest",
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "occurrenceDateTime" }
-    ]
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "occurrenceDateTime" }]
   },
   {
     "name": "patient",
@@ -4144,18 +3988,8 @@
     "type": "reference",
     "description": "Message recipient",
     "base": "CommunicationRequest",
-    "target": [
-      "Practitioner",
-      "Group",
-      "Organization",
-      "CareTeam",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "recipient" }
-    ]
+    "target": ["Practitioner", "Group", "Organization", "CareTeam", "Device", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "recipient" }]
   },
   {
     "name": "replaces",
@@ -4172,16 +4006,8 @@
     "type": "reference",
     "description": "Individual making the request",
     "base": "CommunicationRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "CommunicationRequest", "path": "requester.agent" }
-    ]
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "CommunicationRequest", "path": "requester.agent" }]
   },
   {
     "name": "sender",
@@ -4189,13 +4015,7 @@
     "type": "reference",
     "description": "Message sender",
     "base": "CommunicationRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "CommunicationRequest", "path": "sender" }]
   },
   {
@@ -4237,9 +4057,7 @@
     "type": "string",
     "description": "The description of the compartment definition",
     "base": "CompartmentDefinition",
-    "compiled": [
-      { "resourceType": "CompartmentDefinition", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "CompartmentDefinition", "path": "description" }]
   },
   {
     "name": "jurisdiction",
@@ -4247,9 +4065,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the compartment definition",
     "base": "CompartmentDefinition",
-    "compiled": [
-      { "resourceType": "CompartmentDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "CompartmentDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "name",
@@ -4265,9 +4081,7 @@
     "type": "string",
     "description": "Name of the publisher of the compartment definition",
     "base": "CompartmentDefinition",
-    "compiled": [
-      { "resourceType": "CompartmentDefinition", "path": "publisher" }
-    ]
+    "compiled": [{ "resourceType": "CompartmentDefinition", "path": "publisher" }]
   },
   {
     "name": "resource",
@@ -4275,9 +4089,7 @@
     "type": "token",
     "description": "Name of resource type",
     "base": "CompartmentDefinition",
-    "compiled": [
-      { "resourceType": "CompartmentDefinition", "path": "resource.code" }
-    ]
+    "compiled": [{ "resourceType": "CompartmentDefinition", "path": "resource.code" }]
   },
   {
     "name": "status",
@@ -4352,9 +4164,7 @@
     "description": "Multiple Resources: \r\n\r\n* [DocumentReference](documentreference.html): Context of the document  content\r\n* [RiskAssessment](riskassessment.html): Where was assessment performed?\r\n* [DeviceRequest](devicerequest.html): Encounter or Episode during which request was created\r\n* [Procedure](procedure.html): Search by encounter\r\n* [List](list.html): Context in which list created\r\n* [VisionPrescription](visionprescription.html): Return prescriptions with this encounter identifier\r\n* [ProcedureRequest](procedurerequest.html): An encounter in which this request is made\r\n* [Flag](flag.html): Alert relevant during encounter\r\n* [Observation](observation.html): Encounter related to the observation\r\n* [DiagnosticReport](diagnosticreport.html): The Encounter when the order was made\r\n* [NutritionOrder](nutritionorder.html): Return nutrition orders with this encounter identifier\r\n* [Composition](composition.html): Context of the Composition\r\n",
     "base": "DocumentReference",
     "target": ["Encounter", "EpisodeOfCare"],
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.encounter" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.encounter" }]
   },
   {
     "name": "encounter",
@@ -4595,9 +4405,7 @@
     "type": "token",
     "description": "Target of the relationship",
     "base": "Composition",
-    "compiled": [
-      { "resourceType": "Composition", "path": "relatesTo.targetIdentifier" }
-    ]
+    "compiled": [{ "resourceType": "Composition", "path": "relatesTo.targetIdentifier" }]
   },
   {
     "name": "related-ref",
@@ -4606,9 +4414,7 @@
     "description": "Target of the relationship",
     "base": "Composition",
     "target": ["Composition"],
-    "compiled": [
-      { "resourceType": "Composition", "path": "relatesTo.targetReference" }
-    ]
+    "compiled": [{ "resourceType": "Composition", "path": "relatesTo.targetReference" }]
   },
   {
     "name": "section",
@@ -4899,9 +4705,7 @@
     "type": "token",
     "description": "Code that identifies the target element",
     "base": "ConceptMap",
-    "compiled": [
-      { "resourceType": "ConceptMap", "path": "group.element.target.code" }
-    ]
+    "compiled": [{ "resourceType": "ConceptMap", "path": "group.element.target.code" }]
   },
   {
     "name": "target-system",
@@ -5262,15 +5066,7 @@
     "type": "reference",
     "description": "Resource for the actor (or group, by role)",
     "base": "Consent",
-    "target": [
-      "Practitioner",
-      "Group",
-      "Organization",
-      "CareTeam",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Group", "Organization", "CareTeam", "Device", "Patient", "RelatedPerson"],
     "compiled": [
       { "resourceType": "Consent", "path": "actor.reference" },
       { "resourceType": "Consent", "path": "except.actor.reference" }
@@ -5467,12 +5263,7 @@
     "type": "reference",
     "description": "Source from which this consent is taken",
     "base": "Consent",
-    "target": [
-      "Consent",
-      "Contract",
-      "QuestionnaireResponse",
-      "DocumentReference"
-    ],
+    "target": ["Consent", "Contract", "QuestionnaireResponse", "DocumentReference"],
     "compiled": [
       { "resourceType": "Consent", "path": "source" },
       { "resourceType": "Consent", "path": "sourceAttachment" },
@@ -5949,9 +5740,7 @@
     "type": "string",
     "description": "Text search in the description of the data element.  This corresponds to the definition of the first DataElement.element.",
     "base": "DataElement",
-    "compiled": [
-      { "resourceType": "DataElement", "path": "element.definition" }
-    ]
+    "compiled": [{ "resourceType": "DataElement", "path": "element.definition" }]
   },
   {
     "name": "identifier",
@@ -6535,14 +6324,7 @@
     "type": "reference",
     "description": "Desired performer for service",
     "base": "DeviceRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "HealthcareService",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "HealthcareService", "RelatedPerson"],
     "compiled": [{ "resourceType": "DeviceRequest", "path": "performer" }]
   },
   {
@@ -6762,9 +6544,7 @@
     "type": "token",
     "description": "A coded diagnosis on the report",
     "base": "DiagnosticReport",
-    "compiled": [
-      { "resourceType": "DiagnosticReport", "path": "codedDiagnosis" }
-    ]
+    "compiled": [{ "resourceType": "DiagnosticReport", "path": "codedDiagnosis" }]
   },
   {
     "name": "image",
@@ -6790,9 +6570,7 @@
     "description": "Who was the source of the report (organization)",
     "base": "DiagnosticReport",
     "target": ["Practitioner", "Organization"],
-    "compiled": [
-      { "resourceType": "DiagnosticReport", "path": "performer.actor" }
-    ]
+    "compiled": [{ "resourceType": "DiagnosticReport", "path": "performer.actor" }]
   },
   {
     "name": "result",
@@ -6835,13 +6613,7 @@
     "type": "reference",
     "description": "Who and/or what authored the manifest",
     "base": "DocumentManifest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "DocumentManifest", "path": "author" }]
   },
   {
@@ -6968,9 +6740,7 @@
       "ValueSet",
       "VisionPrescription"
     ],
-    "compiled": [
-      { "resourceType": "DocumentManifest", "path": "content.pReference" }
-    ]
+    "compiled": [{ "resourceType": "DocumentManifest", "path": "content.pReference" }]
   },
   {
     "name": "created",
@@ -7003,9 +6773,7 @@
     "type": "token",
     "description": "Identifiers of things that are related",
     "base": "DocumentManifest",
-    "compiled": [
-      { "resourceType": "DocumentManifest", "path": "related.identifier" }
-    ]
+    "compiled": [{ "resourceType": "DocumentManifest", "path": "related.identifier" }]
   },
   {
     "name": "related-ref",
@@ -7165,9 +6933,7 @@
     "description": "Who/what authenticated the document",
     "base": "DocumentReference",
     "target": ["Practitioner", "Organization"],
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "authenticator" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "authenticator" }]
   },
   {
     "name": "author",
@@ -7175,13 +6941,7 @@
     "type": "reference",
     "description": "Who and/or what authored the document",
     "base": "DocumentReference",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "DocumentReference", "path": "author" }]
   },
   {
@@ -7223,9 +6983,7 @@
     "type": "token",
     "description": "Main clinical acts documented",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.event" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.event" }]
   },
   {
     "name": "facility",
@@ -7233,9 +6991,7 @@
     "type": "token",
     "description": "Kind of facility where patient was seen",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.facilityType" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.facilityType" }]
   },
   {
     "name": "format",
@@ -7243,9 +6999,7 @@
     "type": "token",
     "description": "Format/content rules for the document",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "content.format" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "content.format" }]
   },
   {
     "name": "indexed",
@@ -7274,9 +7028,7 @@
     "type": "uri",
     "description": "Uri where the data can be found",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "content.attachment.url" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "content.attachment.url" }]
   },
   {
     "name": "period",
@@ -7284,9 +7036,7 @@
     "type": "date",
     "description": "Time of service that is being documented",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.period" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.period" }]
   },
   {
     "name": "related-id",
@@ -7425,9 +7175,7 @@
       "ValueSet",
       "VisionPrescription"
     ],
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.related.ref" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.related.ref" }]
   },
   {
     "name": "relatesto",
@@ -7436,9 +7184,7 @@
     "description": "Target of the relationship",
     "base": "DocumentReference",
     "target": ["DocumentReference"],
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "relatesTo.target" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "relatesTo.target" }]
   },
   {
     "name": "relation",
@@ -7446,9 +7192,7 @@
     "type": "token",
     "description": "replaces | transforms | signs | appends",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "relatesTo.code" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "relatesTo.code" }]
   },
   {
     "name": "securitylabel",
@@ -7456,9 +7200,7 @@
     "type": "token",
     "description": "Document security-tags",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "securityLabel" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "securityLabel" }]
   },
   {
     "name": "setting",
@@ -7466,9 +7208,7 @@
     "type": "token",
     "description": "Additional details about where the content was created (e.g. clinical specialty)",
     "base": "DocumentReference",
-    "compiled": [
-      { "resourceType": "DocumentReference", "path": "context.practiceSetting" }
-    ]
+    "compiled": [{ "resourceType": "DocumentReference", "path": "context.practiceSetting" }]
   },
   {
     "name": "status",
@@ -7528,9 +7268,7 @@
     "description": "The reference to the providing organization",
     "base": "EligibilityRequest",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "EligibilityRequest", "path": "organization" }
-    ]
+    "compiled": [{ "resourceType": "EligibilityRequest", "path": "organization" }]
   },
   {
     "name": "patient",
@@ -7564,9 +7302,7 @@
     "type": "string",
     "description": "The contents of the disposition message",
     "base": "EligibilityResponse",
-    "compiled": [
-      { "resourceType": "EligibilityResponse", "path": "disposition" }
-    ]
+    "compiled": [{ "resourceType": "EligibilityResponse", "path": "disposition" }]
   },
   {
     "name": "identifier",
@@ -7574,9 +7310,7 @@
     "type": "token",
     "description": "The business identifier",
     "base": "EligibilityResponse",
-    "compiled": [
-      { "resourceType": "EligibilityResponse", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "EligibilityResponse", "path": "identifier" }]
   },
   {
     "name": "insurer",
@@ -7611,9 +7345,7 @@
     "description": "The EligibilityRequest organization",
     "base": "EligibilityResponse",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "EligibilityResponse", "path": "requestOrganization" }
-    ]
+    "compiled": [{ "resourceType": "EligibilityResponse", "path": "requestOrganization" }]
   },
   {
     "name": "request-provider",
@@ -7622,9 +7354,7 @@
     "description": "The EligibilityRequest provider",
     "base": "EligibilityResponse",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "EligibilityResponse", "path": "requestProvider" }
-    ]
+    "compiled": [{ "resourceType": "EligibilityResponse", "path": "requestProvider" }]
   },
   {
     "name": "appointment",
@@ -7711,9 +7441,7 @@
     "description": "Persons involved in the encounter other than the patient",
     "base": "Encounter",
     "target": ["Practitioner", "RelatedPerson"],
-    "compiled": [
-      { "resourceType": "Encounter", "path": "participant.individual" }
-    ]
+    "compiled": [{ "resourceType": "Encounter", "path": "participant.individual" }]
   },
   {
     "name": "participant-type",
@@ -7730,9 +7458,7 @@
     "description": "Persons involved in the encounter other than the patient",
     "base": "Encounter",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "Encounter", "path": "participant.individual" }
-    ]
+    "compiled": [{ "resourceType": "Encounter", "path": "participant.individual" }]
   },
   {
     "name": "reason",
@@ -7845,9 +7571,7 @@
     "description": "The organization who generated this resource",
     "base": "EnrollmentRequest",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "EnrollmentRequest", "path": "organization" }
-    ]
+    "compiled": [{ "resourceType": "EnrollmentRequest", "path": "organization" }]
   },
   {
     "name": "patient",
@@ -7882,9 +7606,7 @@
     "description": "The organization who generated this resource",
     "base": "EnrollmentResponse",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "EnrollmentResponse", "path": "organization" }
-    ]
+    "compiled": [{ "resourceType": "EnrollmentResponse", "path": "organization" }]
   },
   {
     "name": "request",
@@ -7911,9 +7633,7 @@
     "description": "Conditions/problems/diagnoses this episode of care is for",
     "base": "EpisodeOfCare",
     "target": ["Condition"],
-    "compiled": [
-      { "resourceType": "EpisodeOfCare", "path": "diagnosis.condition" }
-    ]
+    "compiled": [{ "resourceType": "EpisodeOfCare", "path": "diagnosis.condition" }]
   },
   {
     "name": "incomingreferral",
@@ -7931,9 +7651,7 @@
     "description": "The organization that has assumed the specific responsibilities of this EpisodeOfCare",
     "base": "EpisodeOfCare",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "EpisodeOfCare", "path": "managingOrganization" }
-    ]
+    "compiled": [{ "resourceType": "EpisodeOfCare", "path": "managingOrganization" }]
   },
   {
     "name": "status",
@@ -8022,9 +7740,7 @@
     "description": "Member of the CareTeam",
     "base": "ExplanationOfBenefit",
     "target": ["Practitioner", "Organization"],
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "careTeam.provider" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "careTeam.provider" }]
   },
   {
     "name": "claim",
@@ -8042,9 +7758,7 @@
     "description": "The plan under which the claim was adjudicated",
     "base": "ExplanationOfBenefit",
     "target": ["Coverage"],
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "insurance.coverage" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "insurance.coverage" }]
   },
   {
     "name": "created",
@@ -8060,9 +7774,7 @@
     "type": "string",
     "description": "The contents of the disposition message",
     "base": "ExplanationOfBenefit",
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "disposition" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "disposition" }]
   },
   {
     "name": "encounter",
@@ -8071,9 +7783,7 @@
     "description": "Encounters associated with a billed line item",
     "base": "ExplanationOfBenefit",
     "target": ["Encounter"],
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "item.encounter" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "item.encounter" }]
   },
   {
     "name": "enterer",
@@ -8099,9 +7809,7 @@
     "type": "token",
     "description": "The business identifier of the Explanation of Benefit",
     "base": "ExplanationOfBenefit",
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "identifier" }]
   },
   {
     "name": "organization",
@@ -8110,9 +7818,7 @@
     "description": "The reference to the providing organization",
     "base": "ExplanationOfBenefit",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "organization" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "organization" }]
   },
   {
     "name": "patient",
@@ -8130,9 +7836,7 @@
     "description": "The party receiving any payment for the Claim",
     "base": "ExplanationOfBenefit",
     "target": ["Practitioner", "Organization", "Patient", "RelatedPerson"],
-    "compiled": [
-      { "resourceType": "ExplanationOfBenefit", "path": "payee.party" }
-    ]
+    "compiled": [{ "resourceType": "ExplanationOfBenefit", "path": "payee.party" }]
   },
   {
     "name": "provider",
@@ -8150,9 +7854,7 @@
     "description": "Instantiates protocol or definition",
     "base": "FamilyMemberHistory",
     "target": ["Questionnaire", "PlanDefinition"],
-    "compiled": [
-      { "resourceType": "FamilyMemberHistory", "path": "definition" }
-    ]
+    "compiled": [{ "resourceType": "FamilyMemberHistory", "path": "definition" }]
   },
   {
     "name": "gender",
@@ -8168,9 +7870,7 @@
     "type": "token",
     "description": "A search by a relationship type",
     "base": "FamilyMemberHistory",
-    "compiled": [
-      { "resourceType": "FamilyMemberHistory", "path": "relationship" }
-    ]
+    "compiled": [{ "resourceType": "FamilyMemberHistory", "path": "relationship" }]
   },
   {
     "name": "status",
@@ -8458,9 +8158,7 @@
     "type": "token",
     "description": "One of the HealthcareService's characteristics",
     "base": "HealthcareService",
-    "compiled": [
-      { "resourceType": "HealthcareService", "path": "characteristic" }
-    ]
+    "compiled": [{ "resourceType": "HealthcareService", "path": "characteristic" }]
   },
   {
     "name": "endpoint",
@@ -8527,13 +8225,7 @@
     "type": "reference",
     "description": "Author of the ImagingManifest (or a DICOM Key Object Selection which it represents)",
     "base": "ImagingManifest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "ImagingManifest", "path": "author" }]
   },
   {
@@ -8571,9 +8263,7 @@
     "description": "ImagingStudy resource selected in the ImagingManifest (or a DICOM Key Object Selection which it represents)",
     "base": "ImagingManifest",
     "target": ["ImagingStudy"],
-    "compiled": [
-      { "resourceType": "ImagingManifest", "path": "study.imagingStudy" }
-    ]
+    "compiled": [{ "resourceType": "ImagingManifest", "path": "study.imagingStudy" }]
   },
   {
     "name": "selected-study",
@@ -8623,9 +8313,7 @@
     "type": "uri",
     "description": "The type of the instance",
     "base": "ImagingStudy",
-    "compiled": [
-      { "resourceType": "ImagingStudy", "path": "series.instance.sopClass" }
-    ]
+    "compiled": [{ "resourceType": "ImagingStudy", "path": "series.instance.sopClass" }]
   },
   {
     "name": "endpoint",
@@ -8694,9 +8382,7 @@
     "type": "uri",
     "description": "The instance unique identifier",
     "base": "ImagingStudy",
-    "compiled": [
-      { "resourceType": "ImagingStudy", "path": "series.instance.uid" }
-    ]
+    "compiled": [{ "resourceType": "ImagingStudy", "path": "series.instance.uid" }]
   },
   {
     "name": "dose-sequence",
@@ -8752,9 +8438,7 @@
     "description": "The practitioner who played a role in the vaccination",
     "base": "Immunization",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "Immunization", "path": "practitioner.actor" }
-    ]
+    "compiled": [{ "resourceType": "Immunization", "path": "practitioner.actor" }]
   },
   {
     "name": "reaction",
@@ -8779,9 +8463,7 @@
     "type": "token",
     "description": "Why immunization occurred",
     "base": "Immunization",
-    "compiled": [
-      { "resourceType": "Immunization", "path": "explanation.reason" }
-    ]
+    "compiled": [{ "resourceType": "Immunization", "path": "explanation.reason" }]
   },
   {
     "name": "reason-not-given",
@@ -8789,9 +8471,7 @@
     "type": "token",
     "description": "Explanation of reason vaccination was not administered",
     "base": "Immunization",
-    "compiled": [
-      { "resourceType": "Immunization", "path": "explanation.reasonNotGiven" }
-    ]
+    "compiled": [{ "resourceType": "Immunization", "path": "explanation.reasonNotGiven" }]
   },
   {
     "name": "status",
@@ -8854,9 +8534,7 @@
     "type": "token",
     "description": "Business identifier",
     "base": "ImmunizationRecommendation",
-    "compiled": [
-      { "resourceType": "ImmunizationRecommendation", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "ImmunizationRecommendation", "path": "identifier" }]
   },
   {
     "name": "information",
@@ -8879,9 +8557,7 @@
     "description": "Who this profile is for",
     "base": "ImmunizationRecommendation",
     "target": ["Patient"],
-    "compiled": [
-      { "resourceType": "ImmunizationRecommendation", "path": "patient" }
-    ]
+    "compiled": [{ "resourceType": "ImmunizationRecommendation", "path": "patient" }]
   },
   {
     "name": "status",
@@ -8950,9 +8626,7 @@
     "type": "uri",
     "description": "Where to find dependency",
     "base": "ImplementationGuide",
-    "compiled": [
-      { "resourceType": "ImplementationGuide", "path": "dependency.uri" }
-    ]
+    "compiled": [{ "resourceType": "ImplementationGuide", "path": "dependency.uri" }]
   },
   {
     "name": "description",
@@ -8960,9 +8634,7 @@
     "type": "string",
     "description": "The description of the implementation guide",
     "base": "ImplementationGuide",
-    "compiled": [
-      { "resourceType": "ImplementationGuide", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "ImplementationGuide", "path": "description" }]
   },
   {
     "name": "experimental",
@@ -8970,9 +8642,7 @@
     "type": "token",
     "description": "For testing purposes, not real usage",
     "base": "ImplementationGuide",
-    "compiled": [
-      { "resourceType": "ImplementationGuide", "path": "experimental" }
-    ]
+    "compiled": [{ "resourceType": "ImplementationGuide", "path": "experimental" }]
   },
   {
     "name": "jurisdiction",
@@ -8980,9 +8650,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the implementation guide",
     "base": "ImplementationGuide",
-    "compiled": [
-      { "resourceType": "ImplementationGuide", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "ImplementationGuide", "path": "jurisdiction" }]
   },
   {
     "name": "name",
@@ -11233,9 +10901,7 @@
     "description": "The product contained",
     "base": "Medication",
     "target": ["Medication", "Substance"],
-    "compiled": [
-      { "resourceType": "Medication", "path": "ingredient.itemReference" }
-    ]
+    "compiled": [{ "resourceType": "Medication", "path": "ingredient.itemReference" }]
   },
   {
     "name": "ingredient-code",
@@ -11243,9 +10909,7 @@
     "type": "token",
     "description": "The product contained",
     "base": "Medication",
-    "compiled": [
-      { "resourceType": "Medication", "path": "ingredient.itemCodeableConcept" }
-    ]
+    "compiled": [{ "resourceType": "Medication", "path": "ingredient.itemCodeableConcept" }]
   },
   {
     "name": "manufacturer",
@@ -11271,9 +10935,7 @@
     "description": "The item in the package",
     "base": "Medication",
     "target": ["Medication"],
-    "compiled": [
-      { "resourceType": "Medication", "path": "package.content.itemReference" }
-    ]
+    "compiled": [{ "resourceType": "Medication", "path": "package.content.itemReference" }]
   },
   {
     "name": "package-item-code",
@@ -11303,9 +10965,7 @@
     "description": "Return administrations that share this encounter or episode of care",
     "base": "MedicationAdministration",
     "target": ["EpisodeOfCare", "Encounter"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "context" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "context" }]
   },
   {
     "name": "device",
@@ -11314,9 +10974,7 @@
     "description": "Return administrations with this administration device identity",
     "base": "MedicationAdministration",
     "target": ["Device"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "device" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "device" }]
   },
   {
     "name": "effective-time",
@@ -11347,9 +11005,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Return prescriptions with this external identifier\r\n* [MedicationAdministration](medicationadministration.html): Return administrations with this external identifier\r\n* [MedicationStatement](medicationstatement.html): Return statements with this external identifier\r\n* [MedicationDispense](medicationdispense.html): Return dispenses with this external identifier\r\n",
     "base": "MedicationAdministration",
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "identifier" }]
   },
   {
     "name": "identifier",
@@ -11357,9 +11013,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Return prescriptions with this external identifier\r\n* [MedicationAdministration](medicationadministration.html): Return administrations with this external identifier\r\n* [MedicationStatement](medicationstatement.html): Return statements with this external identifier\r\n* [MedicationDispense](medicationdispense.html): Return dispenses with this external identifier\r\n",
     "base": "MedicationStatement",
-    "compiled": [
-      { "resourceType": "MedicationStatement", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "MedicationStatement", "path": "identifier" }]
   },
   {
     "name": "identifier",
@@ -11376,9 +11030,7 @@
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Return prescriptions of this medication reference\r\n* [MedicationAdministration](medicationadministration.html): Return administrations of this medication resource\r\n* [MedicationStatement](medicationstatement.html): Return statements of this medication reference\r\n* [MedicationDispense](medicationdispense.html): Return dispenses of this medicine resource\r\n",
     "base": "MedicationRequest",
     "target": ["Medication"],
-    "compiled": [
-      { "resourceType": "MedicationRequest", "path": "medicationReference" }
-    ]
+    "compiled": [{ "resourceType": "MedicationRequest", "path": "medicationReference" }]
   },
   {
     "name": "medication",
@@ -11401,9 +11053,7 @@
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Return prescriptions of this medication reference\r\n* [MedicationAdministration](medicationadministration.html): Return administrations of this medication resource\r\n* [MedicationStatement](medicationstatement.html): Return statements of this medication reference\r\n* [MedicationDispense](medicationdispense.html): Return dispenses of this medicine resource\r\n",
     "base": "MedicationStatement",
     "target": ["Medication"],
-    "compiled": [
-      { "resourceType": "MedicationStatement", "path": "medicationReference" }
-    ]
+    "compiled": [{ "resourceType": "MedicationStatement", "path": "medicationReference" }]
   },
   {
     "name": "medication",
@@ -11412,9 +11062,7 @@
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Return prescriptions of this medication reference\r\n* [MedicationAdministration](medicationadministration.html): Return administrations of this medication resource\r\n* [MedicationStatement](medicationstatement.html): Return statements of this medication reference\r\n* [MedicationDispense](medicationdispense.html): Return dispenses of this medicine resource\r\n",
     "base": "MedicationDispense",
     "target": ["Medication"],
-    "compiled": [
-      { "resourceType": "MedicationDispense", "path": "medicationReference" }
-    ]
+    "compiled": [{ "resourceType": "MedicationDispense", "path": "medicationReference" }]
   },
   {
     "name": "not-given",
@@ -11422,9 +11070,7 @@
     "type": "token",
     "description": "Administrations that were not made",
     "base": "MedicationAdministration",
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "notGiven" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "notGiven" }]
   },
   {
     "name": "patient",
@@ -11442,9 +11088,7 @@
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Returns prescriptions for a specific patient\r\n* [MedicationAdministration](medicationadministration.html): The identity of a patient to list administrations  for\r\n* [MedicationStatement](medicationstatement.html): Returns statements for a specific patient.\r\n* [MedicationDispense](medicationdispense.html): The identity of a patient to list dispenses  for\r\n",
     "base": "MedicationAdministration",
     "target": ["Patient"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "subject" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "subject" }]
   },
   {
     "name": "patient",
@@ -11471,9 +11115,7 @@
     "description": "The identify of the individual who administered the medication",
     "base": "MedicationAdministration",
     "target": ["Practitioner", "Device", "Patient", "RelatedPerson"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "performer.actor" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "performer.actor" }]
   },
   {
     "name": "prescription",
@@ -11482,9 +11124,7 @@
     "description": "Multiple Resources: \r\n\r\n* [MedicationAdministration](medicationadministration.html): The identity of a prescription to list administrations from\r\n* [MedicationDispense](medicationdispense.html): The identity of a prescription to list dispenses from\r\n",
     "base": "MedicationAdministration",
     "target": ["MedicationRequest"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "prescription" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "prescription" }]
   },
   {
     "name": "prescription",
@@ -11506,9 +11146,7 @@
     "type": "token",
     "description": "Reasons for administering the medication",
     "base": "MedicationAdministration",
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "reasonCode" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "reasonCode" }]
   },
   {
     "name": "reason-not-given",
@@ -11516,9 +11154,7 @@
     "type": "token",
     "description": "Reasons for not administering the medication",
     "base": "MedicationAdministration",
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "reasonNotGiven" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "reasonNotGiven" }]
   },
   {
     "name": "status",
@@ -11534,9 +11170,7 @@
     "type": "token",
     "description": "Multiple Resources: \r\n\r\n* [MedicationRequest](medicationrequest.html): Status of the prescription\r\n* [MedicationAdministration](medicationadministration.html): MedicationAdministration event status (for example one of active/paused/completed/nullified)\r\n* [MedicationStatement](medicationstatement.html): Return statements that match the given status\r\n* [MedicationDispense](medicationdispense.html): Return dispenses with a specified dispense status\r\n",
     "base": "MedicationAdministration",
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "status" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "status" }]
   },
   {
     "name": "status",
@@ -11561,9 +11195,7 @@
     "description": "The identify of the individual or group to list administrations for",
     "base": "MedicationAdministration",
     "target": ["Group", "Patient"],
-    "compiled": [
-      { "resourceType": "MedicationAdministration", "path": "subject" }
-    ]
+    "compiled": [{ "resourceType": "MedicationAdministration", "path": "subject" }]
   },
   {
     "name": "context",
@@ -11581,9 +11213,7 @@
     "description": "Return dispenses that should be sent to a specific destination",
     "base": "MedicationDispense",
     "target": ["Location"],
-    "compiled": [
-      { "resourceType": "MedicationDispense", "path": "destination" }
-    ]
+    "compiled": [{ "resourceType": "MedicationDispense", "path": "destination" }]
   },
   {
     "name": "performer",
@@ -11591,16 +11221,8 @@
     "type": "reference",
     "description": "Return dispenses performed by a specific individual",
     "base": "MedicationDispense",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "MedicationDispense", "path": "performer.actor" }
-    ]
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "MedicationDispense", "path": "performer.actor" }]
   },
   {
     "name": "receiver",
@@ -11648,9 +11270,7 @@
     "type": "date",
     "description": "Returns dispenses handed over on this date",
     "base": "MedicationDispense",
-    "compiled": [
-      { "resourceType": "MedicationDispense", "path": "whenHandedOver" }
-    ]
+    "compiled": [{ "resourceType": "MedicationDispense", "path": "whenHandedOver" }]
   },
   {
     "name": "whenprepared",
@@ -11658,9 +11278,7 @@
     "type": "date",
     "description": "Returns dispenses prepared on this date",
     "base": "MedicationDispense",
-    "compiled": [
-      { "resourceType": "MedicationDispense", "path": "whenPrepared" }
-    ]
+    "compiled": [{ "resourceType": "MedicationDispense", "path": "whenPrepared" }]
   },
   {
     "name": "authoredon",
@@ -11736,16 +11354,8 @@
     "type": "reference",
     "description": "Returns prescriptions prescribed by this prescriber",
     "base": "MedicationRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "MedicationRequest", "path": "requester.agent" }
-    ]
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "MedicationRequest", "path": "requester.agent" }]
   },
   {
     "name": "subject",
@@ -11807,9 +11417,7 @@
     "description": "Who or where the information in the statement came from",
     "base": "MedicationStatement",
     "target": ["Practitioner", "Organization", "Patient", "RelatedPerson"],
-    "compiled": [
-      { "resourceType": "MedicationStatement", "path": "informationSource" }
-    ]
+    "compiled": [{ "resourceType": "MedicationStatement", "path": "informationSource" }]
   },
   {
     "name": "subject",
@@ -11874,9 +11482,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the message definition",
     "base": "MessageDefinition",
-    "compiled": [
-      { "resourceType": "MessageDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "MessageDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "name",
@@ -11949,9 +11555,7 @@
     "type": "string",
     "description": "Name of system",
     "base": "MessageHeader",
-    "compiled": [
-      { "resourceType": "MessageHeader", "path": "destination.name" }
-    ]
+    "compiled": [{ "resourceType": "MessageHeader", "path": "destination.name" }]
   },
   {
     "name": "destination-uri",
@@ -11959,9 +11563,7 @@
     "type": "uri",
     "description": "Actual destination address or id",
     "base": "MessageHeader",
-    "compiled": [
-      { "resourceType": "MessageHeader", "path": "destination.endpoint" }
-    ]
+    "compiled": [{ "resourceType": "MessageHeader", "path": "destination.endpoint" }]
   },
   {
     "name": "enterer",
@@ -12121,9 +11723,7 @@
     "type": "token",
     "description": "Id of original message",
     "base": "MessageHeader",
-    "compiled": [
-      { "resourceType": "MessageHeader", "path": "response.identifier" }
-    ]
+    "compiled": [{ "resourceType": "MessageHeader", "path": "response.identifier" }]
   },
   {
     "name": "responsible",
@@ -12166,9 +11766,7 @@
     "description": "Particular delivery destination within the destination",
     "base": "MessageHeader",
     "target": ["Device"],
-    "compiled": [
-      { "resourceType": "MessageHeader", "path": "destination.target" }
-    ]
+    "compiled": [{ "resourceType": "MessageHeader", "path": "destination.target" }]
   },
   {
     "name": "timestamp",
@@ -12364,9 +11962,7 @@
     "type": "token",
     "description": "Type of supplement product requested",
     "base": "NutritionOrder",
-    "compiled": [
-      { "resourceType": "NutritionOrder", "path": "supplement.type" }
-    ]
+    "compiled": [{ "resourceType": "NutritionOrder", "path": "supplement.type" }]
   },
   {
     "name": "based-on",
@@ -12454,9 +12050,7 @@
     "type": "token",
     "description": "The reason why the expected value in the element Observation.component.value[x] is missing.",
     "base": "Observation",
-    "compiled": [
-      { "resourceType": "Observation", "path": "component.dataAbsentReason" }
-    ]
+    "compiled": [{ "resourceType": "Observation", "path": "component.dataAbsentReason" }]
   },
   {
     "name": "component-value-concept",
@@ -12477,9 +12071,7 @@
     "type": "quantity",
     "description": "The value of the component observation, if the value is a Quantity, or a SampledData (just search on the bounds of the values in sampled data)",
     "base": "Observation",
-    "compiled": [
-      { "resourceType": "Observation", "path": "component.valueQuantity" }
-    ]
+    "compiled": [{ "resourceType": "Observation", "path": "component.valueQuantity" }]
   },
   {
     "name": "context",
@@ -12573,9 +12165,7 @@
     "type": "token",
     "description": "The value of the observation, if the value is a CodeableConcept",
     "base": "Observation",
-    "compiled": [
-      { "resourceType": "Observation", "path": "valueCodeableConcept" }
-    ]
+    "compiled": [{ "resourceType": "Observation", "path": "valueCodeableConcept" }]
   },
   {
     "name": "value-date",
@@ -12635,9 +12225,7 @@
     "type": "string",
     "description": "The description of the operation definition",
     "base": "OperationDefinition",
-    "compiled": [
-      { "resourceType": "OperationDefinition", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "OperationDefinition", "path": "description" }]
   },
   {
     "name": "instance",
@@ -12653,9 +12241,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the operation definition",
     "base": "OperationDefinition",
-    "compiled": [
-      { "resourceType": "OperationDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "OperationDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "kind",
@@ -12680,9 +12266,7 @@
     "description": "Profile on the type",
     "base": "OperationDefinition",
     "target": ["StructureDefinition"],
-    "compiled": [
-      { "resourceType": "OperationDefinition", "path": "parameter.profile" }
-    ]
+    "compiled": [{ "resourceType": "OperationDefinition", "path": "parameter.profile" }]
   },
   {
     "name": "publisher",
@@ -12770,9 +12354,7 @@
     "type": "string",
     "description": "A postal code specified in an address",
     "base": "Organization",
-    "compiled": [
-      { "resourceType": "Organization", "path": "address.postalCode" }
-    ]
+    "compiled": [{ "resourceType": "Organization", "path": "address.postalCode" }]
   },
   {
     "name": "address-state",
@@ -12945,9 +12527,7 @@
     "type": "string",
     "description": "Multiple Resources: \r\n\r\n* [RelatedPerson](relatedperson.html): A postal code specified in an address\r\n* [Practitioner](practitioner.html): A postalCode specified in an address\r\n* [Person](person.html): A postal code specified in an address\r\n* [Patient](patient.html): A postalCode specified in an address\r\n",
     "base": "RelatedPerson",
-    "compiled": [
-      { "resourceType": "RelatedPerson", "path": "address.postalCode" }
-    ]
+    "compiled": [{ "resourceType": "RelatedPerson", "path": "address.postalCode" }]
   },
   {
     "name": "address-postalcode",
@@ -12955,9 +12535,7 @@
     "type": "string",
     "description": "Multiple Resources: \r\n\r\n* [RelatedPerson](relatedperson.html): A postal code specified in an address\r\n* [Practitioner](practitioner.html): A postalCode specified in an address\r\n* [Person](person.html): A postal code specified in an address\r\n* [Patient](patient.html): A postalCode specified in an address\r\n",
     "base": "Practitioner",
-    "compiled": [
-      { "resourceType": "Practitioner", "path": "address.postalCode" }
-    ]
+    "compiled": [{ "resourceType": "Practitioner", "path": "address.postalCode" }]
   },
   {
     "name": "address-postalcode",
@@ -13244,9 +12822,7 @@
     "type": "token",
     "description": "Language code (irrespective of use value)",
     "base": "Patient",
-    "compiled": [
-      { "resourceType": "Patient", "path": "communication.language" }
-    ]
+    "compiled": [{ "resourceType": "Patient", "path": "communication.language" }]
   },
   {
     "name": "link",
@@ -13700,9 +13276,7 @@
     "type": "string",
     "description": "The contents of the disposition message",
     "base": "PaymentReconciliation",
-    "compiled": [
-      { "resourceType": "PaymentReconciliation", "path": "disposition" }
-    ]
+    "compiled": [{ "resourceType": "PaymentReconciliation", "path": "disposition" }]
   },
   {
     "name": "identifier",
@@ -13710,9 +13284,7 @@
     "type": "token",
     "description": "The business identifier of the Explanation of Benefit",
     "base": "PaymentReconciliation",
-    "compiled": [
-      { "resourceType": "PaymentReconciliation", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "PaymentReconciliation", "path": "identifier" }]
   },
   {
     "name": "organization",
@@ -13721,9 +13293,7 @@
     "description": "The organization who generated this resource",
     "base": "PaymentReconciliation",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "PaymentReconciliation", "path": "organization" }
-    ]
+    "compiled": [{ "resourceType": "PaymentReconciliation", "path": "organization" }]
   },
   {
     "name": "outcome",
@@ -13749,9 +13319,7 @@
     "description": "The organization who generated this resource",
     "base": "PaymentReconciliation",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "PaymentReconciliation", "path": "requestOrganization" }
-    ]
+    "compiled": [{ "resourceType": "PaymentReconciliation", "path": "requestOrganization" }]
   },
   {
     "name": "request-provider",
@@ -13760,9 +13328,7 @@
     "description": "The reference to the provider who sumbitted the claim",
     "base": "PaymentReconciliation",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "PaymentReconciliation", "path": "requestProvider" }
-    ]
+    "compiled": [{ "resourceType": "PaymentReconciliation", "path": "requestProvider" }]
   },
   {
     "name": "identifier",
@@ -14244,9 +13810,7 @@
     "type": "date",
     "description": "The time during which the plan definition is intended to be in use",
     "base": "PlanDefinition",
-    "compiled": [
-      { "resourceType": "PlanDefinition", "path": "effectivePeriod" }
-    ]
+    "compiled": [{ "resourceType": "PlanDefinition", "path": "effectivePeriod" }]
   },
   {
     "name": "identifier",
@@ -14691,9 +14255,7 @@
     "description": "The list of healthcare services that this worker provides for this role's Organization/Location(s)",
     "base": "PractitionerRole",
     "target": ["HealthcareService"],
-    "compiled": [
-      { "resourceType": "PractitionerRole", "path": "healthcareService" }
-    ]
+    "compiled": [{ "resourceType": "PractitionerRole", "path": "healthcareService" }]
   },
   {
     "name": "specialty",
@@ -14762,13 +14324,7 @@
     "type": "reference",
     "description": "The reference to the practitioner",
     "base": "Procedure",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "Procedure", "path": "performer.actor" }]
   },
   {
@@ -14975,14 +14531,7 @@
     "type": "reference",
     "description": "Requested perfomer",
     "base": "ProcedureRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "HealthcareService",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "HealthcareService", "RelatedPerson"],
     "compiled": [{ "resourceType": "ProcedureRequest", "path": "performer" }]
   },
   {
@@ -14991,9 +14540,7 @@
     "type": "token",
     "description": "Performer role",
     "base": "ProcedureRequest",
-    "compiled": [
-      { "resourceType": "ProcedureRequest", "path": "performerType" }
-    ]
+    "compiled": [{ "resourceType": "ProcedureRequest", "path": "performerType" }]
   },
   {
     "name": "priority",
@@ -15136,9 +14683,7 @@
     "description": "Individual making the request",
     "base": "ProcedureRequest",
     "target": ["Practitioner", "Organization", "Device"],
-    "compiled": [
-      { "resourceType": "ProcedureRequest", "path": "requester.agent" }
-    ]
+    "compiled": [{ "resourceType": "ProcedureRequest", "path": "requester.agent" }]
   },
   {
     "name": "requisition",
@@ -15358,9 +14903,7 @@
     "description": "The Organization who is responsible the request transaction",
     "base": "ProcessResponse",
     "target": ["Organization"],
-    "compiled": [
-      { "resourceType": "ProcessResponse", "path": "requestOrganization" }
-    ]
+    "compiled": [{ "resourceType": "ProcessResponse", "path": "requestOrganization" }]
   },
   {
     "name": "request-provider",
@@ -15369,9 +14912,7 @@
     "description": "The Provider who is responsible the request transaction",
     "base": "ProcessResponse",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "ProcessResponse", "path": "requestProvider" }
-    ]
+    "compiled": [{ "resourceType": "ProcessResponse", "path": "requestProvider" }]
   },
   {
     "name": "agent",
@@ -15379,13 +14920,7 @@
     "type": "reference",
     "description": "Who participated",
     "base": "Provenance",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [
       { "resourceType": "Provenance", "path": "agent.who" },
       { "resourceType": "Provenance", "path": "agent.whoUri" },
@@ -15414,9 +14949,7 @@
     "type": "token",
     "description": "Identity of entity",
     "base": "Provenance",
-    "compiled": [
-      { "resourceType": "Provenance", "path": "entity.whatIdentifier" }
-    ]
+    "compiled": [{ "resourceType": "Provenance", "path": "entity.whatIdentifier" }]
   },
   {
     "name": "entity-ref",
@@ -15542,9 +15075,7 @@
       "ValueSet",
       "VisionPrescription"
     ],
-    "compiled": [
-      { "resourceType": "Provenance", "path": "entity.whatReference" }
-    ]
+    "compiled": [{ "resourceType": "Provenance", "path": "entity.whatReference" }]
   },
   {
     "name": "location",
@@ -15825,9 +15356,7 @@
     "type": "date",
     "description": "When the questionnaire response was last changed",
     "base": "QuestionnaireResponse",
-    "compiled": [
-      { "resourceType": "QuestionnaireResponse", "path": "authored" }
-    ]
+    "compiled": [{ "resourceType": "QuestionnaireResponse", "path": "authored" }]
   },
   {
     "name": "based-on",
@@ -15853,9 +15382,7 @@
     "type": "token",
     "description": "The unique identifier for the questionnaire response",
     "base": "QuestionnaireResponse",
-    "compiled": [
-      { "resourceType": "QuestionnaireResponse", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "QuestionnaireResponse", "path": "identifier" }]
   },
   {
     "name": "parent",
@@ -15882,9 +15409,7 @@
     "description": "The questionnaire the answers are provided for",
     "base": "QuestionnaireResponse",
     "target": ["Questionnaire"],
-    "compiled": [
-      { "resourceType": "QuestionnaireResponse", "path": "questionnaire" }
-    ]
+    "compiled": [{ "resourceType": "QuestionnaireResponse", "path": "questionnaire" }]
   },
   {
     "name": "source",
@@ -16079,9 +15604,7 @@
     "type": "token",
     "description": "Part of common request",
     "base": "ReferralRequest",
-    "compiled": [
-      { "resourceType": "ReferralRequest", "path": "groupIdentifier" }
-    ]
+    "compiled": [{ "resourceType": "ReferralRequest", "path": "groupIdentifier" }]
   },
   {
     "name": "identifier",
@@ -16143,16 +15666,8 @@
     "type": "reference",
     "description": "Individual making the request",
     "base": "ReferralRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
-    "compiled": [
-      { "resourceType": "ReferralRequest", "path": "requester.agent" }
-    ]
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
+    "compiled": [{ "resourceType": "ReferralRequest", "path": "requester.agent" }]
   },
   {
     "name": "service",
@@ -16160,9 +15675,7 @@
     "type": "token",
     "description": "Actions requested as part of the referral",
     "base": "ReferralRequest",
-    "compiled": [
-      { "resourceType": "ReferralRequest", "path": "serviceRequested" }
-    ]
+    "compiled": [{ "resourceType": "ReferralRequest", "path": "serviceRequested" }]
   },
   {
     "name": "specialty",
@@ -16414,9 +15927,7 @@
     "description": "The participant in the requests in the group",
     "base": "RequestGroup",
     "target": ["Practitioner", "Patient", "Person", "RelatedPerson"],
-    "compiled": [
-      { "resourceType": "RequestGroup", "path": "action.participant" }
-    ]
+    "compiled": [{ "resourceType": "RequestGroup", "path": "action.participant" }]
   },
   {
     "name": "patient",
@@ -16516,9 +16027,7 @@
     "description": "The individual responsible for the study",
     "base": "ResearchStudy",
     "target": ["Practitioner"],
-    "compiled": [
-      { "resourceType": "ResearchStudy", "path": "principalInvestigator" }
-    ]
+    "compiled": [{ "resourceType": "ResearchStudy", "path": "principalInvestigator" }]
   },
   {
     "name": "protocol",
@@ -16655,9 +16164,7 @@
     "type": "token",
     "description": "Likelihood of specified outcome as a qualitative value",
     "base": "RiskAssessment",
-    "compiled": [
-      { "resourceType": "RiskAssessment", "path": "prediction.qualitativeRisk" }
-    ]
+    "compiled": [{ "resourceType": "RiskAssessment", "path": "prediction.qualitativeRisk" }]
   },
   {
     "name": "subject",
@@ -16740,9 +16247,7 @@
     "description": "Defines how the part works",
     "base": "SearchParameter",
     "target": ["SearchParameter"],
-    "compiled": [
-      { "resourceType": "SearchParameter", "path": "component.definition" }
-    ]
+    "compiled": [{ "resourceType": "SearchParameter", "path": "component.definition" }]
   },
   {
     "name": "date",
@@ -16838,9 +16343,7 @@
     "type": "token",
     "description": "Chromosome number of the reference sequence",
     "base": "Sequence",
-    "compiled": [
-      { "resourceType": "Sequence", "path": "referenceSeq.chromosome" }
-    ]
+    "compiled": [{ "resourceType": "Sequence", "path": "referenceSeq.chromosome" }]
   },
   {
     "name": "end",
@@ -16848,9 +16351,7 @@
     "type": "number",
     "description": "End position (0-based exclusive, which menas the acid at this position will not be included, 1-based inclusive, which means the acid at this position will be included) of the reference sequence.",
     "base": "Sequence",
-    "compiled": [
-      { "resourceType": "Sequence", "path": "referenceSeq.windowEnd" }
-    ]
+    "compiled": [{ "resourceType": "Sequence", "path": "referenceSeq.windowEnd" }]
   },
   {
     "name": "identifier",
@@ -16875,9 +16376,7 @@
     "type": "number",
     "description": "Start position (0-based inclusive, 1-based inclusive, that means the nucleic acid or amino acid at this position will be included) of the reference sequence.",
     "base": "Sequence",
-    "compiled": [
-      { "resourceType": "Sequence", "path": "referenceSeq.windowStart" }
-    ]
+    "compiled": [{ "resourceType": "Sequence", "path": "referenceSeq.windowStart" }]
   },
   {
     "name": "type",
@@ -17305,9 +16804,7 @@
     "type": "date",
     "description": "The time during which the service definition is intended to be in use",
     "base": "ServiceDefinition",
-    "compiled": [
-      { "resourceType": "ServiceDefinition", "path": "effectivePeriod" }
-    ]
+    "compiled": [{ "resourceType": "ServiceDefinition", "path": "effectivePeriod" }]
   },
   {
     "name": "identifier",
@@ -17323,9 +16820,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the service definition",
     "base": "ServiceDefinition",
-    "compiled": [
-      { "resourceType": "ServiceDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "ServiceDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "name",
@@ -17806,9 +17301,7 @@
     "type": "uri",
     "description": "Definition that this type is constrained/specialized from",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "baseDefinition" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "baseDefinition" }]
   },
   {
     "name": "base-path",
@@ -17833,9 +17326,7 @@
     "type": "token",
     "description": "resource | datatype | extension",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "contextType" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "contextType" }]
   },
   {
     "name": "date",
@@ -17851,9 +17342,7 @@
     "type": "token",
     "description": "specialization | constraint - How relates to base definition",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "derivation" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "derivation" }]
   },
   {
     "name": "description",
@@ -17861,9 +17350,7 @@
     "type": "string",
     "description": "The description of the structure definition",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "description" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "description" }]
   },
   {
     "name": "experimental",
@@ -17871,9 +17358,7 @@
     "type": "token",
     "description": "For testing purposes, not real usage",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "experimental" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "experimental" }]
   },
   {
     "name": "ext-context",
@@ -17889,9 +17374,7 @@
     "type": "token",
     "description": "External identifier for the structure definition",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "identifier" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "identifier" }]
   },
   {
     "name": "jurisdiction",
@@ -17899,9 +17382,7 @@
     "type": "token",
     "description": "Intended jurisdiction for the structure definition",
     "base": "StructureDefinition",
-    "compiled": [
-      { "resourceType": "StructureDefinition", "path": "jurisdiction" }
-    ]
+    "compiled": [{ "resourceType": "StructureDefinition", "path": "jurisdiction" }]
   },
   {
     "name": "keyword",
@@ -18219,9 +17700,7 @@
     "description": "A component of the substance",
     "base": "Substance",
     "target": ["Substance"],
-    "compiled": [
-      { "resourceType": "Substance", "path": "ingredient.substanceReference" }
-    ]
+    "compiled": [{ "resourceType": "Substance", "path": "ingredient.substanceReference" }]
   },
   {
     "name": "receiver",
@@ -18263,13 +17742,7 @@
     "type": "reference",
     "description": "Individual making the request",
     "base": "SupplyRequest",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "SupplyRequest", "path": "requester.agent" }]
   },
   {
@@ -18621,13 +18094,7 @@
     "type": "reference",
     "description": "Search by task owner",
     "base": "Task",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "Task", "path": "owner" }]
   },
   {
@@ -18678,13 +18145,7 @@
     "type": "reference",
     "description": "Search by task requester",
     "base": "Task",
-    "target": [
-      "Practitioner",
-      "Organization",
-      "Device",
-      "Patient",
-      "RelatedPerson"
-    ],
+    "target": ["Practitioner", "Organization", "Device", "Patient", "RelatedPerson"],
     "compiled": [{ "resourceType": "Task", "path": "requester.agent" }]
   },
   {
@@ -19025,9 +18486,7 @@
     "type": "uri",
     "description": "A code system included or excluded in the value set or an imported value set",
     "base": "ValueSet",
-    "compiled": [
-      { "resourceType": "ValueSet", "path": "compose.include.system" }
-    ]
+    "compiled": [{ "resourceType": "ValueSet", "path": "compose.include.system" }]
   },
   {
     "name": "status",
@@ -19067,9 +18526,7 @@
     "type": "date",
     "description": "Return prescriptions written on this date",
     "base": "VisionPrescription",
-    "compiled": [
-      { "resourceType": "VisionPrescription", "path": "dateWritten" }
-    ]
+    "compiled": [{ "resourceType": "VisionPrescription", "path": "dateWritten" }]
   },
   {
     "name": "prescriber",
