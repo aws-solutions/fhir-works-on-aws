@@ -8,12 +8,6 @@ common
 .next
 build
 lib
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4333
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
-fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
-fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
-
 
 #Third party file
 THIRD-PARTY$
