@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { generateServerlessRouter } from 'fhir-works-on-aws-routing';
+import { generateServerlessRouter } from '@aws/fhir-works-on-aws-routing';
 import serverless from 'serverless-http';
 import { getFhirConfig, genericResources } from './config';
 

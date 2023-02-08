@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { DynamoDbDataService, DynamoDb } from 'fhir-works-on-aws-persistence-ddb';
+import { DynamoDbDataService, DynamoDb } from '@aws/fhir-works-on-aws-persistence-ddb';
 import reaperHandler from './subscriptionReaper';
 
 const dbServiceWithTenancy = new DynamoDbDataService(DynamoDb, false, {

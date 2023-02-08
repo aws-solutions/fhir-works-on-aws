@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *
  */
-import { DynamoDbDataService } from 'fhir-works-on-aws-persistence-ddb';
+import { DynamoDbDataService } from '@aws/fhir-works-on-aws-persistence-ddb';
 
 const reaperHandler = async (
   dbService: DynamoDbDataService,

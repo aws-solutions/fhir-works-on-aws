@@ -15,8 +15,24 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-authz-smart",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "@aws/fhir-works-on-aws-interface",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-persistence-ddb",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-routing",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-search-es",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "@elastic/elasticsearch",

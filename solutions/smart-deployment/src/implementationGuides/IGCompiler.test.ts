@@ -4,7 +4,7 @@
 
 import { existsSync, mkdirSync, PathLike } from 'fs';
 import { join } from 'path';
-import { ImplementationGuides } from 'fhir-works-on-aws-interface';
+import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
 import { dir, DirectoryResult } from 'tmp-promise';
 import { IGCompiler, IGCompilerOptions, loadJson, storeJson } from './IGCompiler';
 

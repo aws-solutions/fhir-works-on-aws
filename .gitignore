@@ -89,8 +89,6 @@ coverage
 
 # CDK
 **/cdk.out
-**/build
-**/dist
 **/Info_Output.log
 
 ##############################

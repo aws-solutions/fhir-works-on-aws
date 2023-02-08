@@ -498,6 +498,11 @@ importers:
   ../../solutions/smart-deployment:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
+      '@aws/fhir-works-on-aws-authz-smart': workspace:*
+      '@aws/fhir-works-on-aws-interface': workspace:*
+      '@aws/fhir-works-on-aws-persistence-ddb': workspace:*
+      '@aws/fhir-works-on-aws-routing': workspace:*
+      '@aws/fhir-works-on-aws-search-es': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -526,11 +531,6 @@ importers:
       esbuild: ^0.14.39
       escape-string-regexp: ^4.0.0
       eslint: ^8.7.0
-      fhir-works-on-aws-authz-smart: 3.1.4
-      fhir-works-on-aws-interface: 12.1.1
-      fhir-works-on-aws-persistence-ddb: 3.12.0
-      fhir-works-on-aws-routing: 6.6.2
-      fhir-works-on-aws-search-es: 3.12.0
       fs-extra: ^10.1.0
       jest: ^26.6.3
       jest-circus: ^26.6.3
@@ -557,6 +557,11 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
+      '@aws/fhir-works-on-aws-authz-smart': link:../../fwoa-core/authz-smart
+      '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
+      '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
+      '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
+      '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
       '@types/aws-lambda': 8.10.110
       aws-cdk-lib: 2.45.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
@@ -565,11 +570,6 @@ importers:
       cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
       constructs: 10.1.244
       escape-string-regexp: 4.0.0
-      fhir-works-on-aws-authz-smart: 3.1.4
-      fhir-works-on-aws-interface: 12.1.1
-      fhir-works-on-aws-persistence-ddb: 3.12.0
-      fhir-works-on-aws-routing: 6.6.2
-      fhir-works-on-aws-search-es: 3.12.0
       fs-extra: 10.1.0
       lodash: 4.17.21
       p-settle: 4.1.1
@@ -1963,6 +1963,13 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
+
+  /@balena/dockerignore/1.0.2:
+    resolution:
+      {
+        integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==
+      }
+    dev: false
 
   /@bcoe/v8-coverage/0.2.3:
     resolution:
@@ -4536,6 +4543,14 @@ packages:
       }
     dev: true
 
+  /at-least-node/1.0.0:
+    resolution:
+      {
+        integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
+      }
+    engines: { node: '>= 4.0.0' }
+    dev: false
+
   /atob/2.1.2:
     resolution:
       {
@@ -4568,7 +4583,16 @@ packages:
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@balena/dockerignore': 1.0.2
+      case: 1.6.3
       constructs: 10.1.244
+      fs-extra: 9.1.0
+      ignore: 5.2.4
+      jsonschema: 1.4.1
+      minimatch: 3.1.2
+      punycode: 2.3.0
+      semver: 7.3.8
+      yaml: 1.10.2
     dev: false
     bundledDependencies:
       - '@balena/dockerignore'
@@ -5150,6 +5174,14 @@ packages:
     dependencies:
       rsvp: 4.8.5
     dev: true
+
+  /case/1.6.3:
+    resolution:
+      {
+        integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
+      }
+    engines: { node: '>= 0.8.0' }
+    dev: false
 
   /cdk-nag/2.21.86_3kftpotut6azu3igewqexonpnu:
     resolution:
@@ -7491,119 +7523,6 @@ packages:
       }
     dev: false
 
-  /fhir-works-on-aws-authz-smart/3.1.4:
-    resolution:
-      {
-        integrity: sha512-4ZzSNQSm+NOfo8opkCfQVlrHTLQQZNLuiYpT68HlTwsShiZwc+5ihxmnfzezd3dFUR1Dny3hnPrsonx3NnTZ8w==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      axios: 0.21.4
-      fhir-works-on-aws-interface: 11.3.0
-      jsonwebtoken: 9.0.0
-      jwks-rsa: 1.12.3
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-      - supports-color
-    dev: false
-
-  /fhir-works-on-aws-interface/11.3.0:
-    resolution:
-      {
-        integrity: sha512-d3QtB0HsjRsDbFZm6IxH0s9nZpndWej01rnJKpXg7RFjepPDRztu+bNo/Me3hwxVexiCgOIVLxXs4DqAPRHEKA==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      winston: 3.8.2
-      winston-transport: 4.5.0
-    dev: false
-
-  /fhir-works-on-aws-interface/12.1.1:
-    resolution:
-      {
-        integrity: sha512-v0HS4D6tCSj4ZDRS9oLv+S+Em0eTnmNb1sklRO91eaBFRDsyniiAxH6Klj/qfkMVfu6WC1khPJV/Z33zE2GouQ==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      winston: 3.8.2
-      winston-transport: 4.5.0
-    dev: false
-
-  /fhir-works-on-aws-persistence-ddb/3.12.0:
-    resolution:
-      {
-        integrity: sha512-58WR2t2s+Vdksrq9zYCmmTBfY6RK9xwH9G6Rzo1XFUtiif46U64zq2O1H+ANR0vJ5ofehzLarNlU1TK0epw3Rg==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      '@elastic/elasticsearch': 7.13.0
-      '@types/aws-lambda': 8.10.110
-      aws-elasticsearch-connector: 8.3.0_kqorqixvveqfccvnfmm5hbzazm
-      aws-sdk: 2.1310.0
-      aws-xray-sdk: 3.4.1
-      fhir-works-on-aws-interface: 12.1.1
-      flat: 5.0.2
-      lodash: 4.17.21
-      mime-types: 2.1.35
-      promise.allsettled: 1.0.6
-      uuid: 3.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /fhir-works-on-aws-routing/6.6.2:
-    resolution:
-      {
-        integrity: sha512-EfPROIursZkZIvQ8gqFeiZFzZ95gUo5W2mm8QdYAHdZgyE8UwfEbx10tM4glUawHRLOz2Uh6H0qJ552c7m/gJw==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      '@types/cors': 2.8.13
-      '@types/express-serve-static-core': 4.17.33
-      ajv: 6.12.6
-      ajv-errors: 1.0.1_ajv@6.12.6
-      aws-sdk: 2.1310.0
-      aws-xray-sdk: 3.4.1
-      cors: 2.8.5
-      errorhandler: 1.5.1
-      express: 4.18.2
-      fhir-works-on-aws-interface: 12.1.1
-      flat: 5.0.2
-      http-errors: 1.8.1
-      lodash: 4.17.21
-      mime-types: 2.1.35
-      sanitize-html: 2.9.0
-      serverless-http: 2.7.0
-      uuid: 3.4.0
-    dev: false
-
-  /fhir-works-on-aws-search-es/3.12.0:
-    resolution:
-      {
-        integrity: sha512-XqeKXNfFrh+ZoAApy6Uk4y83Kf/xigAqbYvo01NLeUZx8a7JWTumt61l2IZAm9mu0LJIWOuv78XATagAuMDXJQ==
-      }
-    engines: { node: '>=12.0.0' }
-    dependencies:
-      '@aws-sdk/client-sns': 3.266.1
-      '@aws-sdk/node-http-handler': 3.266.1
-      '@elastic/elasticsearch': 7.13.0
-      '@types/aws-lambda': 8.10.110
-      aws-elasticsearch-connector: 8.3.0_kqorqixvveqfccvnfmm5hbzazm
-      aws-sdk: 2.1310.0
-      aws-xray-sdk: 3.4.1
-      date-fns: 2.29.3
-      fhir-works-on-aws-interface: 12.1.1
-      flat: 5.0.2
-      lodash: 4.17.21
-      nearley: 2.20.1
-      qs: 6.11.0
-      uuid: 8.3.2
-    transitivePeerDependencies:
-      - aws-crt
-      - supports-color
-    dev: false
-
   /figures/3.2.0:
     resolution:
       {
@@ -7904,6 +7823,19 @@ packages:
       jsonfile: 4.0.0
       universalify: 0.1.2
     dev: true
+
+  /fs-extra/9.1.0:
+    resolution:
+      {
+        integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      at-least-node: 1.0.0
+      graceful-fs: 4.2.10
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: false
 
   /fs.realpath/1.0.0:
     resolution:
@@ -10930,6 +10862,13 @@ packages:
       }
     engines: { node: '>=10.0' }
     dev: true
+
+  /jsonschema/1.4.1:
+    resolution:
+      {
+        integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
+      }
+    dev: false
 
   /jsonwebtoken/8.5.1:
     resolution:
@@ -14894,15 +14833,6 @@ packages:
     engines: { node: '>= 0.4.0' }
     dev: false
 
-  /uuid/3.4.0:
-    resolution:
-      {
-        integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
-      }
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-    dev: false
-
   /uuid/8.0.0:
     resolution:
       {
@@ -15316,7 +15246,6 @@ packages:
         integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
       }
     engines: { node: '>= 6' }
-    dev: true
 
   /yargs-parser/13.1.2:
     resolution:

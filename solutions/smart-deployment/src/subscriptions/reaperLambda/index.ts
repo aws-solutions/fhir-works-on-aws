@@ -1,4 +1,4 @@
-import { DynamoDbDataService, DynamoDb } from 'fhir-works-on-aws-persistence-ddb';
+import { DynamoDbDataService, DynamoDb } from '@aws/fhir-works-on-aws-persistence-ddb';
 import reaperHandler from './subscriptionReaper';
 
 const enableMultitenancy = process.env.ENABLE_MULTI_TENANCY === 'true';

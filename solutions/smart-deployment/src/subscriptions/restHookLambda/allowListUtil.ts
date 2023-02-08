@@ -1,4 +1,4 @@
-import { SubscriptionEndpoint } from 'fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
+import { SubscriptionEndpoint } from '@aws/fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
 import { groupBy } from 'lodash';
 import getAllowListedSubscriptionEndpoints from '../allowList';
 

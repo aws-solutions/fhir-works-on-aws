@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { SMARTConfig, ScopeRule } from 'fhir-works-on-aws-authz-smart';
+import { SMARTConfig, ScopeRule } from '@aws/fhir-works-on-aws-authz-smart';
 
 // if they have a system level operation then you need * as resourceType
 
