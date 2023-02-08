@@ -24,7 +24,7 @@
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",
     "prepublish": "tsc",
-    "release": "yarn run build && yarn run lint && yarn run test",
+    "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",
     "test": "heft test --clean --no-build && rushx pkg-json-lint",
@@ -75,6 +75,6 @@
     "typescript": "^4.9.4"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.0.0"
   }
 }
