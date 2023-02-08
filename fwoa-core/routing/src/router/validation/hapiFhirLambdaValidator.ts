@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { InvalidResourceError, TypeOperation, Validator } from '@aws/fhir-works-on-aws-interface';
 import { Lambda } from 'aws-sdk';
-import { InvalidResourceError, TypeOperation, Validator } from 'fhir-works-on-aws-interface';
 import AWS from '../../AWS';
 import getComponentLogger from '../../loggerBuilder';
 

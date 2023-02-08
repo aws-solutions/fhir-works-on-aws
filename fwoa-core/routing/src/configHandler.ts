@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FhirConfig, FhirVersion, TypeOperation } from 'fhir-works-on-aws-interface';
+import { FhirConfig, FhirVersion, TypeOperation } from '@aws/fhir-works-on-aws-interface';
 import ResourceHandler from './router/handlers/resourceHandler';
 
 export default class ConfigHandler {

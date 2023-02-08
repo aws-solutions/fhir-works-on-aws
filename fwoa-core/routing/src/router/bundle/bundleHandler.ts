@@ -15,7 +15,7 @@ import {
   isUnauthorizedError,
   Validator,
   RequestContext
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import createError from 'http-errors';
 import isEmpty from 'lodash/isEmpty';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';

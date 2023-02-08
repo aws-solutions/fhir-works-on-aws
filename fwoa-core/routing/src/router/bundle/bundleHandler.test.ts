@@ -14,9 +14,9 @@ import {
   UnauthorizedError,
   AccessBulkDataJobRequest,
   RequestContext
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import createError from 'http-errors';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import ConfigHandler from '../../configHandler';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';
 import { uuidRegExp, utcTimeRegExp } from '../../regExpressions';

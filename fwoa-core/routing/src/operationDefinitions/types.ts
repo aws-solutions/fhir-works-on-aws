@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { SystemOperation, TypeOperation } from '@aws/fhir-works-on-aws-interface';
 import { Router } from 'express';
-import { SystemOperation, TypeOperation } from 'fhir-works-on-aws-interface';
 import ResourceHandler from '../router/handlers/resourceHandler';
 
 export interface OperationDefinitionImplementation {
