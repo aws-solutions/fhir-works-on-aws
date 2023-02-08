@@ -11,11 +11,11 @@ import {
   TypeOperation,
   SystemOperation,
   getRequestInformation
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import flatten from 'flat';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 import { MAX_BUNDLE_ENTRY_URL_LENGTH, MAX_REFERENCE_URL_LENGTH } from '../../constants';
 

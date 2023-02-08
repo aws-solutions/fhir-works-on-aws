@@ -9,7 +9,7 @@ import {
   SearchCapabilityStatement,
   SearchCapabilities,
   Resource
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import {
   OperationCapability,
   OperationCapabilityStatement

@@ -3,7 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Capabilities, CapabilitiesRequest, FhirVersion, GenericResponse } from 'fhir-works-on-aws-interface';
+import {
+  Capabilities,
+  CapabilitiesRequest,
+  FhirVersion,
+  GenericResponse
+} from '@aws/fhir-works-on-aws-interface';
 import createError from 'http-errors';
 import ConfigHandler from '../../configHandler';
 import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
