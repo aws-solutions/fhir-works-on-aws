@@ -27,7 +27,7 @@
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json ./package.json",
-    "release": "yarn run build && yarn run lint && yarn run test",
+    "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
     "test": "heft test --clean --no-build 2>&1 && rushx pkg-json-lint",
     "test-coverage": "jest --coverage --testPathPattern=src/*",
@@ -121,7 +121,7 @@
     "wait-for-expect": "^3.0.2"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "stackname": "fhir-works-on-aws-deployment"
 }
