@@ -35,7 +35,7 @@ one single source of truth.
 To generate the csv file for review, create an output folder under the comboTest folder, then run
 
 ```shell
-GENERATE_CSV_FOR_REVIEW=true yarn test
+GENERATE_CSV_FOR_REVIEW=true rush test
 ```
 
 Tip: In the generated csv file, it could be hard to review the scope column with all the scopes clustered together, try using

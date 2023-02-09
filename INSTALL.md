@@ -22,15 +22,19 @@ The FHIR Server is designed to use AWS services for data storage and API access.
 
 ### Node.JS
 
-Node is used as the Lambda runtime. To install node, we recommend the use of [nvm (the Node Version Manager)](https://github.com/nvm-sh/nvm).
+Node is used as the Lambda runtime. To install node, we recommend the use of nvm (the Node Version Manager):
 
-If you'd rather install Node 12.x by itself, see [Nodejs.org](https://nodejs.org/en/download/).
+> https://github.com/nvm-sh/nvm
 
-### Python
+If you'd rather just install Node 18.x by itself:
+
+> https://nodejs.org/en/download/
+
+### Python (deployment only)
 
 Python is used for a few scripts to instantiate a Cognito user and could be regarded as optional. To install Python, see [python.org](https://www.python.org/downloads/).
 
-### boto3 AWS Python SDK
+### boto3 AWS Python SDK (deployment only)
 
 Boto3 is the AWS Python SDK running as a Python import. The installation is platform-agnostic but requires Python and Pip to function:
 
@@ -38,13 +42,13 @@ Boto3 is the AWS Python SDK running as a Python import. The installation is plat
 pip install boto3
 ```
 
-### yarn
+### pnpm
 
-Yarn is a node package management tool similar to npm. Instructions for installing Yarn are provided for different platforms [here](https://classic.yarnpkg.com/en/docs/install).
+pnpm is a fast, disk space efficient package manager similar to npm. Instructions for installing pnpm are provided for different platforms [here](https://pnpm.io/installation).
 
-```sh
-brew install yarn
-```
+### rush
+
+Rush is a scalable monorepo manager for the web. Installation process is described [here](https://rushjs.io/pages/developer/new_developer/#prerequisites).
 
 ### CDK CLI
 
@@ -88,14 +92,15 @@ In a Terminal application or command shell, navigate to the directory containing
 
 ### Package dependencies (required)
 
-Use Yarn to install all package dependencies and compile & test the code:
+Use Rush to install all package dependencies and compile & test the code:
 
 ```sh
-yarn install
-yarn run release
+rush update && rush build && rush test
 ```
 
 ### IAM User ARN (LEGACY)
+
+Note: this customization is only needed if deploying with serverless; it is not needed with CDK.
 
 Create a new file in the package's root folder named
 
@@ -113,38 +118,82 @@ In the _serverless_config.json_ file, add the following, using the previously no
 
 Using the previously noted AWS Profile, deploy the required AWS services to your AWS account. By default, the region and stage of the deployment are set to us-west-2, and dev, respectively. These can be configured by adjusting the default context values in the [cdk.json](./cdk.json) file.
 
+Deployment:
+
 ```sh
-yarn deploy --profile <AWS PROFILE>
+cd ./solutions/deployment
+rushx deploy --profile <AWS PROFILE>
+```
+
+Smart deployment:
+
+```sh
+cd ./solutions/smart-deployment
+rushx deploy --profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT -c oAuth2ApiEndpoint=YOUR_OAUTH2_API_ENDPOINT -c patientPickerEndpoint=YOUR_PATIENT_PICKER_ENDPOINT
 ```
 
 Or you can deploy with a custom stage (default: dev) and/or region (default: us-west-2)
 
+Deployment:
+
 ```sh
-yarn deploy --profile <AWS PROFILE> -c stage=<STAGE> -c region=<AWS_REGION>
+cd ./solutions/deployment
+rushx deploy --profile <AWS PROFILE> -c stage=<STAGE> -c region=<AWS_REGION>
+```
+
+Smart deployment:
+
+```sh
+cd ./solutions/smart-deployment
+rushx deploy --profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT -c oAuth2ApiEndpoint=YOUR_OAUTH2_API_ENDPOINT -c patientPickerEndpoint=YOUR_PATIENT_PICKER_ENDPOINT -c stage=YOUR_STAGE -c region=YOUR_REGION
 ```
 
 Retrieve auto-generated IDs or instance names by checking in the [Info Output](./INFO_OUTPUT.log) file.
 
 All of the stack's outputs will be located in this file, for future reference.
 
-### AWS service deployment (LEGACY)
+### AWS service deployment with Serverless (LEGACY)
 
 Using the previously noted AWS Profile, deploy the required AWS services to your AWS account using the default setting of stage: dev and region: us-west-2. To change the default stage/region look for the stage/region variable in the [serverless.yaml](./serverless.yaml) file under the provider: object.
+
+Deployment:
 
 ```sh
 serverless deploy --aws-profile <AWS PROFILE>
 ```
 
+Smart deployment:
+
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint>
+```
+
 Or you can deploy with a custom stage (default: dev) and/or region (default: us-west-2)
+
+Deployment:
 
 ```sh
 serverless deploy --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
 ```
 
+Smart deployment:
+
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint>
+```
+
 Retrieve auto-generated IDs or instance names using: (If you have provided non-default values for --stage and --region during `serverless deploy`, you will need to provide the same here as well)
+
+Deployment:
 
 ```sh
 serverless info --verbose --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
+```
+
+Smart deployment:
+
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint> --region <REGION> --stage <STAGE>
 ```
 
 From the command’s output note down the following data
@@ -155,9 +204,9 @@ From the command’s output note down the following data
   - from Service Information: api keys: developer-key
 - API_URL
   - from Service Information:endpoints: ANY
-- USER_POOL_ID
+- USER_POOL_ID (deployment only)
   - from Stack Outputs: UserPoolId
-- USER_POOL_APP_CLIENT_ID
+- USER_POOL_APP_CLIENT_ID (deployment only)
   - from Stack Outputs: UserPoolAppClientId
 - FHIR_SERVER_BINARY_BUCKET
   - from Stack Outputs: FHIRBinaryBucket
@@ -172,7 +221,7 @@ From the command’s output note down the following data
 - CLOUDWATCH_EXECUTION_LOG_GROUP
   - from Stack Outputs: CloudwatchExecutionLogGroup:
 
-### Initialize Cognito
+### Initialize Cognito (deployment only)
 
 Initially, AWS Cognito is set up supporting OAuth2 requests in order to support authentication and authorization. When first created there will be no users. This step creates a `workshopuser` and assigns the user to the `practitioner` User Group.
 
@@ -277,7 +326,7 @@ aws cognito-idp admin-confirm-sign-up \
 
 ###### Get Kibana url
 
-After the Cognito user is created and confirmed you can now log in with the username and password, at the ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command). **Note** Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
+After the Cognito user is created and confirmed you can now log in with the username and password, at the ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command (LEGACY)). **Note** Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
 
 #### DynamoDB table backups
 
@@ -306,7 +355,6 @@ From the root directory
 
 ```sh
 cd auditLogMover
-yarn install
 serverless deploy --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
 ```
 

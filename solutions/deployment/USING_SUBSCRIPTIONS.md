@@ -16,7 +16,7 @@ FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/s
 2. Use the `enableSubscriptions` option when deploying the stack:
 
    ```bash
-   yarn deploy -c enableSubscriptions=true
+   rushx deploy -c enableSubscriptions=true
    ```
 
 **Note**  

@@ -29,7 +29,7 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
 1. Compile the IGs using the `compile-igs` command:
    ```bash
    #fhir-works-on-aws-deployment
-   yarn run compile-igs
+   rushx run compile-igs
    ```
    **Note:** This command needs to be invoked in the top level directory of the cloned `fhir-works-on-aws-deployment` repository
 1. Deploy the Hapi Validator using the following commands:
@@ -37,7 +37,7 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
 When deploying, simply append the useHapiValidator flag (and the optional fhirVersion flag, which defaults to 4.0.1):
 
 ```sh
-yarn deploy -c useHapiValidator=true -c fhirVersion=4.0.1
+rushx deploy -c useHapiValidator=true -c fhirVersion=4.0.1
 ```
 
 Or, with Serverless, continue with these steps: (LEGACY)

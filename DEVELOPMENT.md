@@ -1,12 +1,14 @@
-# Development Instructions
+# FHIR Works on AWS Development Instructions
+
+- **Initial Install:** Please complete this [installation guide](./INSTALL.md) and get the initial `fhir-works-on-aws` code deployed to your AWS account.
 
 ## Prerequisites for development
 
-Code for [fhir-works-on-aws](https://github.com/awslabs/fhir-works-on-aws) is written in TypeScript. It is highly recommended you configure your IDE to render TypeScript errors and warnings. To make sure your IDE displays TS properly, see this [guide to help](https://medium.com/@netczuk/even-faster-code-formatting-using-eslint-22b80d061461)
+Code for [fhir-works-on-aws](https://github.com/aws-solutions/fhir-works-on-aws) is written in TypeScript. It is highly recommended you configure your IDE to render TypeScript errors and warnings. To make sure your IDE displays TS properly, see this [guide to help](https://medium.com/@netczuk/even-faster-code-formatting-using-eslint-22b80d061461)
 
-This repository uses [Rush](https://rushjs.io/pages/intro/welcome/) as the monorepo manager and [pnpm](https://rushjs.io/pages/maintainer/package_managers/) as it's package manager. Please go through the [Developer tutorial](https://rushjs.io/pages/developer/new_developer/) for Rush usage details
+This repository uses [Rush](https://rushjs.io/pages/intro/welcome/) as the monorepo manager and [pnpm](https://rushjs.io/pages/maintainer/package_managers/) as its package manager. Please go through the [Developer tutorial](https://rushjs.io/pages/developer/new_developer/) for Rush usage details
 
-1. Clone the repo: `git clone https://github.com/awslabs/solution-spark-on-aws.git`
+1. Clone the repo: `git clone https://github.com/aws-solutions/fhir-works-on-aws`
 2. Move to the correct directory: `cd fhir-works-on-aws`
 3. Install rush: `npm install -g @microsoft/rush`
 4. Run [`rush update`](https://rushjs.io/pages/commands/rush_update/) - This ensures rush is set-up and ready to go, which includes installing NPM packages as defined in package.json files
@@ -15,22 +17,22 @@ This repository uses [Rush](https://rushjs.io/pages/intro/welcome/) as the monor
 
 1. Set up your repo ([Follow Prerequisites for development](#prerequisites-for-development)) on your local machine
 2. Create a feature branch from `develop`: `git pull; git checkout develop; git checkout -b feature/<feature>`
-3. Run: [`rush check`](https://rushjs.io/pages/commands/rush_check/) - Checks each project's package.json files and ensures that all dependencies are of the same version throughout the repository.
-4. Run either of the two:
+3. Run either of the two:
    - [`rush build`](https://rushjs.io/pages/commands/rush_build/) - performs incremental build. See `rush build -h` for more options
    - [`rush rebuild`](https://rushjs.io/pages/commands/rush_rebuild/) - performs a full clean build. See `rush rebuild -h` for more options
-5. `rush test` - runs test and updates code coverage summary in README file for each package. See `rush test -h` for more options
-6. Alternatively you can use:
+4. `rush test` - runs test and updates code coverage summary in README file for each package. See `rush test -h` for more options
+5. Alternatively you can use:
    - `rush build-test` - single command to perform `rush build && rush test` for each package. See `rush build-test -h` for more options
-
-[//]: # '7. `rush common-coverage-report` - updates root README file with code coverage summary'
-
-8. `rush lint-fix` - automatically fixes eslint problems
+6. `rush lint-fix` - automatically fixes eslint problems
 
 NOTE: to install new packages or dependencies: **DO NOT USE** `npm install`. Refer to the [documentation](https://rushjs.io/pages/developer/modifying_package_json/) for more details. Packages can be added/updated in 2 ways:
 
 - `rush add -p <PACKAGE_NAME> --caret`. Always use the `--caret` or version with caret sign(example-lib@^1.2.3), not doing so by default installs tilde versions(e.g. ~1.2.3). See `rush add -h` for more options.
 - Update the package.json in your package and run `rush update`.
+
+### Local Development with Implementation Guides
+
+If you're using [Implementation Guides](./solutions/deployment/USING_IMPLEMENTATION_GUIDES.md) or ([Implementation Guides](./solutions/smart-deployment/USING_IMPLEMENTATION_GUIDES.md)), then follow these steps to run FHIR Works with IG locally.
 
 ## Staging a Pull Request
 
@@ -57,13 +59,18 @@ Please refer to [Contributing via Pull Requests](./CONTRIBUTING.md#contributing-
 1. [`rush update`](https://rushjs.io/pages/commands/rush_update/) - This ensures rush is set-up and ready to go, which includes installing NPM packages as defined in package.json files
    - `rush update --purge` - The `--purge` option is used to delete temporary files created by Rush. This is useful if you are having problems and suspect that cache files may be corrupt.
 2. [`rush install`](https://rushjs.io/pages/commands/rush_install/) - The `rush install` command installs package dependencies for all your projects, based on the pnpm-lock.yaml file that is created/updated using `rush update`
-3. [`rush add`](https://rushjs.io/pages/commands/rush_add/) - Adds a specified package as a dependency of the current project (as determined by the current working directory) and then runs `rush update`. Always use the `--caret` or version with caret sign(example-lib@^1.2.3), not doing so by default installs tilde versions(e.g. ~1.2.3)
+3. Run either of the two:
+   - [`rush build`](https://rushjs.io/pages/commands/rush_build/) - performs incremental build. See `rush build -h` for more options
+   - [`rush rebuild`](https://rushjs.io/pages/commands/rush_rebuild/) - performs a full clean build. See `rush rebuild -h` for more options
+4. `rush test` - runs test and updates code coverage summary in README file for each package. See `rush test -h` for more options
+5. [`rush add`](https://rushjs.io/pages/commands/rush_add/) - Adds a specified package as a dependency of the current project (as determined by the current working directory) and then runs `rush update`. Always use the `--caret` or version with caret sign(example-lib@^1.2.3), not doing so by default installs tilde versions(e.g. ~1.2.3)
+
    - `rush add -p example-lib --dev --caret` - Adds package to the devDependencies only for the current project (cd /path-to-your-project first)
    - `rush add -p example-lib --all --dev --caret` or `rush add -p example-lib@^1.2.3 --all --dev` - Caret specifier for SemVer dependencies
    - `rush add -p example-lib --all --dev --caret --make-consistent` - Make all devDependency for a package consistent across all projects
    - `rush add -p example-lib@1.2.3 --all --dev` or `rush add -p example-lib --exact --all --dev` - Adds package to all the projects as devDependencies (installs the exact version, use this if there is a need for exact version or else always install dependencies and devDependencies with `--caret` option)
-4. [`rush check`](https://rushjs.io/pages/commands/rush_check/) - Checks each project's package.json files and ensures that all dependencies are of the same version throughout the repository.
-5. Triggering commands using `rush` as mentioned above triggers them for all the projects in the monorepo, but if you want to trigger a command just for a specific package then (for example trigger commands just for [fwoa-core/interface](./fwoa-core/interface/) package):
+
+6. Triggering commands using `rush` as mentioned above triggers them for all the projects in the monorepo, but if you want to trigger a command just for a specific package then (for example trigger commands just for [fwoa-core/interface](./fwoa-core/interface/) package):
    - Go to projects root folder - `cd ./fwoa-core/interface`
    - Instead of running commands using `rush` use `rushx`, example:
      - run build - `rushx build`
@@ -82,3 +89,25 @@ Please refer to [Contributing via Pull Requests](./CONTRIBUTING.md#contributing-
 ## Getting support for rush
 
 [Getting Support](https://rushjs.io/pages/help/support/)
+
+## Troubleshooting
+
+### Accessing Logs and Debugging on FWoA
+
+FWoA logs and debugging are handled by Amazon CloudWatch, and you can utilize FWoA CloudWatch logs alongside identity provider (IdP) logs to identify past API search requests. (Detailed instructions on using CloudWatch can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html).
+
+Identifying past API searches requires cross analyzing timestamps between the two log sources to correlate the issuance of a credential to past FWoA API requests. _Note:_ CloudWatch retains search query content for GET requests, but not POST requests.
+
+To obtain and analyze FWoA logs:
+
+1. Log on to the AWS Console and navigate to _CloudWatch →_ _Log Groups_.
+2. From the list of log groups, select the Lambda function or API Gateway service that you would like to debug:
+
+- `/aws/lambda/smart-fhir-service-{STAGE}-fhirServer` - contains all logs from the FWoA API server, including transactions and requests. In most cases, this will be the primary log group to check when receiving errors from the FWoA server.
+- `/aws/api-gateway/fhir-service-{STAGE}` - contains all logs related to the API Gateway setup for FWoA.
+- `/aws/lambda/smart-fhir-service-{STAGE}-ddbtoES` - contains all logs from the process of writing DynamoDB resources to ElasticSearch.
+
+3. Select a stream to view the output for the function. If applicable, the Lambda function version will be prefixed in square brackets (`[]`) to help identify which stream corresponds to which version (example: `YYYY/MM/DD/[{VERSION}]`).
+
+4. Optional: To further refine the output of the function, filter the events in a stream using the options at the top of the list. Additionally, you can perform broader searches through _Logs Insights_ located on the left panel.
+5. To compare FWoA logs with your third-party IdP’s logs, match the FWoA Cloudwatch _log stream log events_ with timestamps from the IdP logs.
