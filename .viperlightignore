@@ -14,7 +14,7 @@ THIRD-PARTY$
 
 # NOTICE files
 .*/NOTICE
-.*/INSTALL.md
+INSTALL.md
 
 # Line excludes
 # False positive
@@ -41,7 +41,6 @@ fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
 fwoa-core/authz-smart/package.json:13
 fwoa-core/authz-rbac/package.json:13
-solutions/smart-deployment/INSTALL.md
 solutions/smart-deployment/package.json:13
 fwoa-core/persistence-ddb/package.json:13
 fwoa-core/search-es/package.json:13
