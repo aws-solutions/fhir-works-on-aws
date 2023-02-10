@@ -7,10 +7,6 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "@aws/fhir-works-on-aws-interface",
-      "allowedCategories": ["production"]
-    },
-    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": ["production", "tools"]
     },
