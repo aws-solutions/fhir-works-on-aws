@@ -20,7 +20,7 @@ class SimpleEncryptConsole extends Transport {
         callback();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
