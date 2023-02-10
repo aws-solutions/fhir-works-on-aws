@@ -58,7 +58,7 @@
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "flat": "^5.0.0",
+    "flat": "^5.0.2",
     "http-errors": "^1.8.0",
     "lodash": "^4.17.15",
     "mime-types": "^2.1.26",
