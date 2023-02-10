@@ -11,7 +11,7 @@ import {
   KeyValueMap,
   Validator,
   RequestContext
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
 import BundleGenerator from '../bundle/bundleGenerator';
 import OperationsGenerator from '../operationsGenerator';
 import { validateResource } from '../validation/validationUtilities';

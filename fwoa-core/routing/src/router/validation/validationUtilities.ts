@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError, TypeOperation, Validator } from 'fhir-works-on-aws-interface';
+import { InvalidResourceError, TypeOperation, Validator } from '@aws/fhir-works-on-aws-interface';
 import { validateXHTMLResource } from '../handlers/utils';
 
 export async function validateResource(

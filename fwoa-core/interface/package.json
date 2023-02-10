@@ -22,6 +22,7 @@
     "lint-fix": "eslint . --fix",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",
+    "prettier": "prettier --config '../../.prettierrc.js' 'src/**/*.ts' --write",
     "prepublish": "tsc",
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",
@@ -29,19 +30,19 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
     "@rushstack/eslint-config": "^3.0.0",
-    "@rushstack/heft": "^0.49.0",
-    "@rushstack/heft-jest-plugin": "^0.4.2",
-    "@rushstack/heft-node-rig": "^1.11.11",
+    "@rushstack/heft": "0.49.0",
+    "@rushstack/heft-jest-plugin": "0.4.2",
+    "@rushstack/heft-node-rig": "1.11.11",
     "@types/heft-jest": "^1.0.3",
     "@types/jest": "^26.0.19",
-    "@types/lodash": "^4.14.157",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^14",
     "aws-sdk": "^2.1000.0",
     "aws-sdk-mock": "^5.1.0",
@@ -58,6 +59,6 @@
     "typescript": "^4.9.4"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.0.0"
   }
 }

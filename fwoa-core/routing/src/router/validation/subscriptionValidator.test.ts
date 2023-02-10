@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError, Search, Persistence } from 'fhir-works-on-aws-interface';
+import { InvalidResourceError, Search, Persistence } from '@aws/fhir-works-on-aws-interface';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validPatient from '../../sampleData/validV4Patient.json';
 import DynamoDbDataService from '../__mocks_/dynamoDbDataService';

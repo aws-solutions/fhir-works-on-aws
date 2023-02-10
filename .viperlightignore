@@ -14,11 +14,50 @@ THIRD-PARTY$
 
 # NOTICE files
 .*/NOTICE
+.*/INSTALL.md
 
 # Line excludes
-solutions-pipelines-integration:49
+# False positive
+fwoa-core/interface/src/fhirConfig.ts:49
+solutions/deployment/scripts/install.sh:332
+solutions/deployment/scripts/provision-user.py:26
+solutions/deployment/scripts/provision-user.py:41
+solutions/deployment/scripts/win_install.ps1:325
+solutions/smart-deployment/README.md:67
+solutions/smart-deployment/README.md:111
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4146
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4150
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4333
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
+fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
+fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
+fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
+
+# Team Email
 .github/temp-workflows/release-pr.yml:28
 fwoa-core/interface/package.json:13
-fwoa-core/interface/src/fhirConfig.ts:49
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13
+fwoa-core/authz-smart/package.json:13
+fwoa-core/authz-rbac/package.json:13
+solutions/smart-deployment/INSTALL.md
+solutions/smart-deployment/package.json:13
+fwoa-core/persistence-ddb/package.json:13
+fwoa-core/search-es/package.json:13
+solutions/deployment/package.json:13
+solutions/deployment/src/integration-tests/infrastructure/subscriptions-endpoint/src/package.json:12
+
+# Dummy Email for tests
+fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
+fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
+fwoa-core/authz-smart/src/smartHandler.test.ts:90
+solutions/deployment/src/integration-tests/search.test.ts:382
+solutions/deployment/src/integration-tests/search.test.ts:412
+solutions/deployment/src/integration-tests/search.test.ts:428
+solutions/smart-deployment/scripts/install.sh:338
+solutions/smart-deployment/scripts/win_install.ps1:318
+solutions/smart-deployment/src/integration-tests/search.test.ts:378
+solutions/smart-deployment/src/integration-tests/search.test.ts:408
+solutions/smart-deployment/src/integration-tests/search.test.ts:424
+fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43

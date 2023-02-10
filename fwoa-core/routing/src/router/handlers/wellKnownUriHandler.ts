@@ -1,4 +1,4 @@
-import { SmartStrategy } from 'fhir-works-on-aws-interface';
+import { SmartStrategy } from '@aws/fhir-works-on-aws-interface';
 import { mapKeys } from 'lodash';
 
 export function camelToSnakeCase(str: string) {

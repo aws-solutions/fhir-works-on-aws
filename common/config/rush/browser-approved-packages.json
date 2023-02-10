@@ -3,7 +3,47 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@aws-sdk/client-sns",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws-sdk/node-http-handler",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "@aws/eslint-config-fwoa-eslint-custom",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-authz-rbac",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-authz-smart",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-interface",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-persistence-ddb",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-routing",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-search-es",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "@elastic/elasticsearch",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "@elastic/elasticsearch-mock",
       "allowedCategories": ["production"]
     },
     {
@@ -39,8 +79,24 @@
       "allowedCategories": ["production"]
     },
     {
-      "name": "aws-sdk",
+      "name": "aws-cdk",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "aws-cdk-lib",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "aws-elasticsearch-connector",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "aws-embedded-metrics",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "aws-sdk",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-sdk-mock",
@@ -51,7 +107,39 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "axios",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "axios-mock-adapter",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "cdk-nag",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "chance",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "constructs",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "cors",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "csv-load-sync",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "csv-writer",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "date-fns",
       "allowedCategories": ["production"]
     },
     {
@@ -61,6 +149,14 @@
     {
       "name": "errorhandler",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "esbuild",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "escape-string-regexp",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "eslint",
@@ -95,7 +191,23 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "fhir-works-on-aws-authz-rbac",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "fhir-works-on-aws-interface",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "fhir-works-on-aws-persistence-ddb",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "fhir-works-on-aws-routing",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "fhir-works-on-aws-search-es",
       "allowedCategories": ["production"]
     },
     {
@@ -103,12 +215,28 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "fs",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "fs-extra",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "http-errors",
       "allowedCategories": ["production"]
     },
     {
-      "name": "jest",
+      "name": "inquirer",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "jest",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jest-circus",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-each",
@@ -116,7 +244,27 @@
     },
     {
       "name": "jest-mock-extended",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jose",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "json-2-csv",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "json-stringify-pretty-compact",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "jsonwebtoken",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "jwks-rsa",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "license-check-and-add",
@@ -128,7 +276,7 @@
     },
     {
       "name": "lodash",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "mime-types",
@@ -136,6 +284,10 @@
     },
     {
       "name": "mock-req-res",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "nearley",
       "allowedCategories": ["production"]
     },
     {
@@ -147,7 +299,35 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "p-settle",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "path",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "prettier",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "promise.allsettled",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "qs",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "query-string",
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "react",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "react-dom",
       "allowedCategories": ["production"]
     },
     {
@@ -155,28 +335,64 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "serverless",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "serverless-bundle",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "serverless-http",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "serverless-offline",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "serverless-step-functions",
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "shuffle-array",
       "allowedCategories": ["production"]
     },
     {
       "name": "sinon",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "sort-package-json",
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "source-map-support",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "standard-version",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "supertest",
       "allowedCategories": ["production"]
     },
     {
+      "name": "tmp-promise",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "ts-jest",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "ts-node",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "tslib",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "typescript",
@@ -184,7 +400,11 @@
     },
     {
       "name": "uuid",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "wait-for-expect",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "winston",
@@ -193,6 +413,10 @@
     {
       "name": "winston-transport",
       "allowedCategories": ["production"]
+    },
+    {
+      "name": "yargs",
+      "allowedCategories": ["production", "tools"]
     }
   ]
 }

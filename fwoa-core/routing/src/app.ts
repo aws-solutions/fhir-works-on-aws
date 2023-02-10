@@ -3,8 +3,6 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import cors, { CorsOptions } from 'cors';
-import express, { Express } from 'express';
 import {
   cleanAuthHeader,
   getRequestInformation,
@@ -14,7 +12,9 @@ import {
   SmartStrategy,
   RequestContext,
   VerbType
-} from 'fhir-works-on-aws-interface';
+} from '@aws/fhir-works-on-aws-interface';
+import cors, { CorsOptions } from 'cors';
+import express, { Express } from 'express';
 import ConfigHandler from './configHandler';
 import { initializeOperationRegistry } from './operationDefinitions';
 import { FHIRStructureDefinitionRegistry } from './registry';

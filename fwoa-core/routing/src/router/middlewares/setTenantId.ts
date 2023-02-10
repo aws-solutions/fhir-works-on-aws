@@ -4,8 +4,8 @@
  *
  */
 
+import { FhirConfig, UnauthorizedError } from '@aws/fhir-works-on-aws-interface';
 import express from 'express';
-import { FhirConfig, UnauthorizedError } from 'fhir-works-on-aws-interface';
 import { get, uniq } from 'lodash';
 import RouteHelper from '../routes/routeHelper';
 
