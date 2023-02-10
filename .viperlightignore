@@ -60,4 +60,9 @@ solutions/smart-deployment/scripts/win_install.ps1:318
 solutions/smart-deployment/src/integration-tests/search.test.ts:378
 solutions/smart-deployment/src/integration-tests/search.test.ts:408
 solutions/smart-deployment/src/integration-tests/search.test.ts:424
-fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43
+fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43 
+fwoa-core/interface/src/InputExampleEncryptLoggerUtilities.json:18 
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:63
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:124  
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:182  
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:243  
