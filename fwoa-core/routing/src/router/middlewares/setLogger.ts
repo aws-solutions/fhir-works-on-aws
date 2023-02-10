@@ -15,12 +15,14 @@ import getComponentLogger, { getEncryptLogger } from '../../loggerBuilder';
  */
 
 // define metadata,who,what,when,where,how,requestOther,responseOther 5 categoires in logger
+
 export interface metaDataAttribute {
   uid: string;
   timestamp: string;
   category: string;
-  encryptedFields?: { [key: string]: boolean };
-  encryptedPayLoad?: { [key: string]: string } | string;
+  encryptedFields?: string[];
+  payLoadToEncrypt?: { [key: string]: string };
+  encryptedPayLoad?: string;
 }
 
 export interface whoAttribute {
@@ -43,9 +45,9 @@ export interface whatAttribute {
   apiGateway: {
     event: {
       httpMethod: string;
-      queryStringParameters: { [key: string]: string } | null;
-      pathParameters: {
-        proxy?: string;
+      queryStringParameters?: { [key: string]: string };
+      pathParameters?: {
+        proxy: string;
       };
     };
   };
@@ -85,12 +87,12 @@ export interface requestOtherAttribute {
 export interface responseOtherAttribute {
   userIdentity: {
     'launch-response-patient'?: string;
-    iss: string;
-    aud: string;
-    scp?: string[];
-    iat: string;
-    exp: string;
-    'auth-time': string;
+    iss: string; // issuer: identify who created and signed the access token
+    aud: string; // The dev URL of the fhir works that you're trying to access using the JWT to authenticate
+    scp?: string[]; // The scopes from the original request
+    iat: string; // When the token was issued
+    exp: string; // The token expiration time
+    'auth-time': string; // when the authentication occurs
   };
 }
 
@@ -105,81 +107,101 @@ export interface setEntireLogger {
   responseOther: responseOtherAttribute;
 }
 
-function preprocessFieldsToEncrypted(
-  fieldsToEncrypt: string[], // { [key: string]: boolean },
-  logging: setEntireLogger
-): setEntireLogger {
+function preprocessFieldsToEncrypted(fieldsToEncrypt: string[], logging: setEntireLogger): setEntireLogger {
   // add encrypted for selected elements
   const fieldsToEncryptedObject: { [key: string]: string } = {};
   const loggingPreprocessed = { ...logging };
+  const validFieldsToEncrypt: string[] = [];
   const stringToReplace = 'encrypted';
-  const resourceIdRegx = /(\w{8}(-\w{4}){3}-\w{12})/;
+  const captureFullUrlParts =
+    /((?:http|https):\/\/[(A-Za-z0-9_\-\\.:%$)*/]+[Patient|Practitioner]\/)([A-Za-z0-9\-.]{1,100}(\/_history\/[A-Za-z0-9\-.]{1,64})?)+/;
+  const capturePathParts = /^(\/\w{1,30}\/\w{1,30}\/)([-\w+]{1,100})$/; // ["/dev/Patient/00000000-0000-0000-0000-000000000000", "/dev/Patient/", "00000000-0000-0000-0000-000000000000"]
+  const capturePathProxyParts = /^(\w{1,30}\/)([-\w+]{1,100})$/; // ["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
   fieldsToEncrypt.forEach((selectedField) => {
-    let contentInField: string | { [key: string]: string } | undefined | null;
     let markedContent: string | undefined | null;
     // eslint-disable-next-line default-case
-    switch (selectedField) {
-      case 'who.userIdentity.sub': {
-        contentInField = _.get(logging, selectedField);
-        markedContent = stringToReplace;
-        break;
-      }
-      case 'who.userIdentity.fhirUser': {
-        contentInField = _.get(logging, selectedField);
-        if (contentInField) {
-          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
-        }
-        break;
-      }
-      case 'what.apiGateway.event.queryStringParameters': {
-        contentInField = _.get(logging, selectedField);
-        if (contentInField) {
+    const contentInField = _.get(logging, selectedField);
+    if (contentInField) {
+      switch (selectedField) {
+        case 'who.userIdentity.sub': {
           markedContent = stringToReplace;
-        } else {
-          markedContent = contentInField;
+          break;
         }
-        break;
-      }
-      case 'what.requestContext.path': {
-        contentInField = _.get(logging, selectedField);
-        markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
-        break;
-      }
-      case 'what.apiGateway.event.pathParameters.proxy': {
-        contentInField = _.get(logging, selectedField);
-        if (contentInField) {
-          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
+        // {fhirUser:https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000}
+        // {fhirUser:https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/00000000-0000-0000-0000-000000000000}
+        // match groups = ["https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/00000000-0000-0000-0000-000000000000", "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/", "00000000-0000-0000-0000-000000000000", undefined]
+        case 'who.userIdentity.fhirUser': {
+          const actualMatch = contentInField.match(captureFullUrlParts);
+          if (actualMatch && actualMatch[2]) {
+            markedContent = actualMatch[1] + stringToReplace;
+          } else {
+            markedContent = contentInField;
+          }
+          break;
         }
-        break;
-      }
-      case 'where.requestContext.identity.sourceIp': {
-        contentInField = _.get(logging, selectedField);
-        markedContent = stringToReplace;
-        break;
-      }
-      case 'responseOther.userIdentity.launch-response-patient': {
-        contentInField = _.get(logging, selectedField);
-        if (contentInField) {
-          markedContent = (contentInField as string).replace(resourceIdRegx, stringToReplace);
-        } else {
-          markedContent = contentInField;
+        // queryStringParameters: {name: 'FakeName'}
+        // queryStringParameters: null
+        case 'what.apiGateway.event.queryStringParameters': {
+          markedContent = stringToReplace;
+          break;
         }
-        break;
+        // {path: '/dev/Patient/00000000-0000-0000-0000-000000000000'}
+        // {path: '/dev/Practitioner'}
+        // match groups = ["/dev/Patient/00000000-0000-0000-0000-000000000000", "/dev/Patient/", "00000000-0000-0000-0000-000000000000"]
+        case 'what.requestContext.path': {
+          const actualMatch = contentInField.match(capturePathParts);
+          if (actualMatch && actualMatch[2]) {
+            markedContent = actualMatch[1] + stringToReplace;
+          } else {
+            markedContent = contentInField;
+          }
+          break;
+        }
+        // {pathParameters:{ proxy: 'patient/00000000-0000-0000-0000-000000000000' }}
+        // {pathParameters:{}}
+        // match groups =["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
+        case 'what.apiGateway.event.pathParameters.proxy': {
+          const actualMatch = contentInField.match(capturePathProxyParts);
+          if (actualMatch && actualMatch[2]) {
+            markedContent = actualMatch[1] + stringToReplace;
+          } else {
+            markedContent = contentInField;
+          }
+          break;
+        }
+        // {sourceIp: '0.0.0.0'}
+        case 'where.requestContext.identity.sourceIp': {
+          markedContent = stringToReplace;
+          break;
+        }
+        // {launch-response-patient:'https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/22222222-2222-2222-2222-222222222222'}
+        // {launch-response-patient:'Patient/22222222-2222-2222-2222-222222222222'}
+        // {launch-response-patient:''}
+        case 'responseOther.userIdentity.launch-response-patient': {
+          const actualMatchCase1 = contentInField.match(captureFullUrlParts);
+          const actualMatchCase2 = contentInField.match(capturePathProxyParts);
+          if (actualMatchCase1 && actualMatchCase1[2]) {
+            markedContent = actualMatchCase1[1] + stringToReplace;
+          } else if (actualMatchCase2 && actualMatchCase2[2]) {
+            markedContent = actualMatchCase2[1] + stringToReplace;
+          } else {
+            markedContent = contentInField;
+          }
+          break;
+        }
+        default:
+          throw new Error('Field to encrypt must be the existing cases');
       }
-      default:
-        throw new Error('Field to encrypt must be the existing cases');
+      if (markedContent !== contentInField) {
+        _.set(fieldsToEncryptedObject, selectedField, contentInField);
+        _.set(loggingPreprocessed, selectedField, markedContent);
+        validFieldsToEncrypt.push(selectedField);
+      }
     }
-    // keep selected fields inside encryptedPayLoad even the field does not have encrypted contents
-    _.set(fieldsToEncryptedObject, selectedField, contentInField);
-    _.set(loggingPreprocessed, selectedField, markedContent);
   });
   if (Object.keys(fieldsToEncryptedObject).length !== 0) {
-    _.set(loggingPreprocessed, 'logMetadata.encryptedFields', fieldsToEncrypt);
-    _.set(loggingPreprocessed, 'logMetadata.encryptedPayLoad', fieldsToEncryptedObject);
+    _.set(loggingPreprocessed, 'logMetadata.encryptedFields', validFieldsToEncrypt);
+    _.set(loggingPreprocessed, 'logMetadata.payLoadToEncrypt', fieldsToEncryptedObject);
   }
   return loggingPreprocessed;
 }
@@ -281,9 +303,9 @@ export const setLoggerMiddleware = async (
         ],
         loggerDesign
       );
-      encryptedField = 'logMetadata.encryptedPayLoad';
-      logger = getEncryptLogger(encryptedField);
-      logger.error(loggerDesign);
+      encryptedField = 'logMetadata.payLoadToEncrypt';
+      logger = getEncryptLogger({ encryptedField });
+      await logger.error(loggerDesign);
     } else {
       logger = getComponentLogger();
       logger.error(JSON.stringify(loggerDesign, null, ' '));

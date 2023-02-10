@@ -54,6 +54,7 @@ importers:
       '@rushstack/heft-node-rig': ^1.11.11
       '@types/heft-jest': ^1.0.3
       '@types/jest': ^26.0.19
+      '@types/lodash': ^4.14.157
       '@types/node': ^14
       aws-sdk: ^2.1000.0
       aws-sdk-mock: ^5.1.0
@@ -61,6 +62,7 @@ importers:
       jest: ^26.6.3
       jest-each: ^26.6.2
       jest-mock-extended: ^1.0.8
+      lodash: ^4.17.15
       npm-package-json-lint: ^6.3.0
       npm-package-json-lint-config-default: ^5.0.0
       prettier: ^2.4.1
@@ -71,6 +73,7 @@ importers:
       winston: ^3.3.3
       winston-transport: ^4.4.0
     dependencies:
+      lodash: 4.17.21
       winston: 3.8.2
       winston-transport: 4.5.0
     devDependencies:
@@ -81,6 +84,7 @@ importers:
       '@rushstack/heft-node-rig': 1.11.11_@rushstack+heft@0.49.0
       '@types/heft-jest': 1.0.3
       '@types/jest': 26.0.24
+      '@types/lodash': 4.14.191
       '@types/node': 14.18.36
       aws-sdk: 2.1306.0
       aws-sdk-mock: 5.8.0
@@ -99,6 +103,7 @@ importers:
   ../../fwoa-core/routing:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
+      '@aws/fhir-works-on-aws-interface': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': ^0.49.0
       '@rushstack/heft-jest-plugin': ^0.4.2
@@ -126,7 +131,6 @@ importers:
       errorhandler: ^1.5.1
       eslint: ^8.7.0
       express: ^4.17.1
-      fhir-works-on-aws-interface: workspace:*
       flat: ^5.0.0
       http-errors: ^1.8.0
       jest: ^26.6.3
@@ -148,6 +152,7 @@ importers:
       typescript: ^4.9.4
       uuid: ^3.4.0
     dependencies:
+      '@aws/fhir-works-on-aws-interface': link:../interface
       '@types/cors': 2.8.13
       '@types/express-serve-static-core': 4.17.33
       ajv: 6.12.6
@@ -157,7 +162,6 @@ importers:
       cors: 2.8.5
       errorhandler: 1.5.1
       express: 4.18.2
-      fhir-works-on-aws-interface: link:../interface
       flat: 5.0.2
       http-errors: 1.8.1
       lodash: 4.17.21

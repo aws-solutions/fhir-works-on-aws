@@ -8,7 +8,7 @@ export default function getComponentLogger(): any {
   return componentLogger;
 }
 export function getEncryptLogger(metaData?: any): any {
-  const metaDataTotal = metaData ? { metaData, component: 'routing' } : { component: 'routing' };
+  const metaDataTotal = metaData ? { component: 'routing', ...metaData } : { component: 'routing' };
   const encryptedComponentLogger = makeEncryptLogger(metaDataTotal);
   return encryptedComponentLogger;
 }

@@ -1,11 +1,11 @@
 // import _ from 'lodash';
 import { createLogger, Logger } from 'winston';
 import Transport from 'winston-transport';
-import { encryptSelectedField } from './encryptLoggerUtilities';
+import { encryptSelectedField, runLoggerLevel } from './loggerUtilities';
 
 class SimpleEncryptConsole extends Transport {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
-  async log(info: any, callback: () => void) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async log(info: any, callback: () => void): Promise<void> {
     try {
       setImmediate(() => this.emit('logged', info));
       // encrypt
@@ -18,23 +18,7 @@ class SimpleEncryptConsole extends Transport {
 
       // Use console here so request ID and log level can be automatically attached in CloudWatch log
       /* eslint-disable no-console */
-      switch (info[Symbol.for('level')]) {
-        case 'debug':
-          console.debug(...msg);
-          break;
-        case 'info':
-          console.info(...msg);
-          break;
-        case 'warn':
-          console.warn(...msg);
-          break;
-        case 'error':
-          console.error(...msg);
-          break;
-        default:
-          console.log(...msg);
-          break;
-      }
+      runLoggerLevel(info, msg);
       /* eslint-enable no-console */
 
       if (callback) {

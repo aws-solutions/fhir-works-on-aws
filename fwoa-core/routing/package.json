@@ -48,6 +48,7 @@
     "set-value": "^4.0.1"
   },
   "dependencies": {
+    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@types/cors": "^2.8.7",
     "@types/express-serve-static-core": "^4.17.2",
     "ajv": "^6.11.0",
@@ -57,7 +58,6 @@
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "fhir-works-on-aws-interface": "workspace:*",
     "flat": "^5.0.0",
     "http-errors": "^1.8.0",
     "lodash": "^4.17.15",

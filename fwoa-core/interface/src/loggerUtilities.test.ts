@@ -3,8 +3,8 @@
 
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
-import { encryptKMS, encryptSelectedField } from './encryptLoggerUtilities';
 import inputLogger from './InputExampleEncryptLoggerUtilities.json';
+import { encryptKMS, encryptSelectedField } from './loggerUtilities';
 
 describe('test logger utilities', () => {
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('test logger utilities', () => {
         });
       });
       const info = {
-        meta: { metaData: 'logMetadata.EncryptedPayLoad', component: 'routing' },
+        meta: { encryptedField: 'logMetadata.payLoadToEncrypt', component: 'routing' },
         message: exampleMessage
       };
 
@@ -40,7 +40,7 @@ describe('test logger utilities', () => {
         //BUILD
         const exampleMessage = inputLogger;
         const info = {
-          meta: { metaData: '', componenet: 'routing' },
+          meta: { encryptedField: '', componenet: 'routing' },
           message: exampleMessage
         };
 
@@ -50,7 +50,7 @@ describe('test logger utilities', () => {
       test('test error: Invalid data type for field input', async () => {
         const exampleMessage = inputLogger;
         const info = {
-          meta: { metaData: 2342, componenet: 'routing' },
+          meta: { encryptedField: 2342, componenet: 'routing' },
           message: exampleMessage
         };
         await expect(encryptSelectedField(info)).rejects.toThrow('Invalid field input to encrypt');
@@ -59,7 +59,7 @@ describe('test logger utilities', () => {
         //BUILD
         const exampleMessage = inputLogger;
         const info = {
-          meta: { metaData: 'asdas', componenet: 'routing' },
+          meta: { encryptedField: 'asdas', componenet: 'routing' },
           message: exampleMessage
         };
 

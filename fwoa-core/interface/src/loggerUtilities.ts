@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import AWS from 'aws-sdk';
+import _ from 'lodash';
 
 export async function encryptKMS(plaintext: string, keyId: string): Promise<string> {
   if (!plaintext) throw Error('Invalid input');
@@ -14,9 +16,8 @@ export async function encryptKMS(plaintext: string, keyId: string): Promise<stri
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function encryptSelectedField(info: any): Promise<string> {
-  const loggingMessage = { ...info.message };
-  const field = info.meta.metaData;
-  const _ = require('lodash');
+  let loggingMessage = { ...info.message };
+  const field = info.meta.encryptedField;
   if (typeof field !== 'string' || !field.length) {
     throw new Error('Invalid field input to encrypt');
   }
@@ -26,8 +27,30 @@ export async function encryptSelectedField(info: any): Promise<string> {
       fieldsContentsStringToEncrypt,
       `${process.env.LOGGING_MIDDLEWARE_KMS_KEY}`
     );
-    _.set(loggingMessage, field, encryptedFieldsContentsString);
+    loggingMessage = _.omit(loggingMessage, field);
+    _.set(loggingMessage, 'logMetadata.encryptedPayLoad', encryptedFieldsContentsString);
     return loggingMessage;
   }
   throw new Error('Input field does not exist in logger, cannot to encrypt');
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function runLoggerLevel(info: any, msg: Array<{}>): void {
+  switch (info[Symbol.for('level')]) {
+    case 'debug':
+      console.debug(...msg);
+      break;
+    case 'info':
+      console.info(...msg);
+      break;
+    case 'warn':
+      console.warn(...msg);
+      break;
+    case 'error':
+      console.error(...msg);
+      break;
+    default:
+      console.log(...msg);
+      break;
+  }
 }

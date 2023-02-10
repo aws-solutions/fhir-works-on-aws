@@ -21,15 +21,14 @@ exports[`createLoggerMiddleware test encryption case 1`] = `
             "who.userIdentity.sub",
             "who.userIdentity.fhirUser",
             "what.apiGateway.event.queryStringParameters",
-            "what.requestContext.path",
             "what.apiGateway.event.pathParameters.proxy",
             "where.requestContext.identity.sourceIp",
             "responseOther.userIdentity.launch-response-patient",
           ],
-          "encryptedPayLoad": Object {
+          "payLoadToEncrypt": Object {
             "responseOther": Object {
               "userIdentity": Object {
-                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
+                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/22222222-2222-2222-2222-222222222222",
               },
             },
             "what": Object {
@@ -42,9 +41,6 @@ exports[`createLoggerMiddleware test encryption case 1`] = `
                     "name": "FakeName",
                   },
                 },
-              },
-              "requestContext": Object {
-                "path": "/dev/Patient",
               },
             },
             "where": Object {
@@ -61,8 +57,8 @@ exports[`createLoggerMiddleware test encryption case 1`] = `
               },
             },
           },
-          "timestamp": "2023-02-07T22:51:27.465Z",
-          "uid": "8840d6d3-a0f7-4847-8518-7cfbae8feb27",
+          "timestamp": "2023-02-10T14:18:10.576Z",
+          "uid": "d2eac003-ce51-41f3-953e-e8dd6b0ab6d3",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -76,7 +72,7 @@ exports[`createLoggerMiddleware test encryption case 1`] = `
             "exp": "1975-04-21T19:04:04.000Z",
             "iat": "1975-04-21T18:47:24.000Z",
             "iss": "FakeIssuer",
-            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
+            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted",
             "scp": Array [
               "FakeScope1",
               "FakeScope2",
@@ -158,8 +154,8 @@ exports[`createLoggerMiddleware test no encrypt case 1`] = `
     Array [
       "{
  \\"logMetadata\\": {
-  \\"uid\\": \\"9710e5c5-53b2-4f7a-aaf4-23dc7980dc04\\",
-  \\"timestamp\\": \\"2023-02-07T22:51:27.469Z\\",
+  \\"uid\\": \\"32cc1fc3-0cb1-4fec-83b1-a5fee58657db\\",
+  \\"timestamp\\": \\"2023-02-10T14:18:10.587Z\\",
   \\"category\\": \\"Audit Event\\"
  },
  \\"who\\": {
@@ -279,29 +275,17 @@ exports[`createLoggerMiddleware test null value in a field to encrypt case 1`] =
           "encryptedFields": Array [
             "who.userIdentity.sub",
             "who.userIdentity.fhirUser",
-            "what.apiGateway.event.queryStringParameters",
-            "what.requestContext.path",
             "what.apiGateway.event.pathParameters.proxy",
             "where.requestContext.identity.sourceIp",
-            "responseOther.userIdentity.launch-response-patient",
           ],
-          "encryptedPayLoad": Object {
-            "responseOther": Object {
-              "userIdentity": Object {
-                "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
-              },
-            },
+          "payLoadToEncrypt": Object {
             "what": Object {
               "apiGateway": Object {
                 "event": Object {
                   "pathParameters": Object {
                     "proxy": "patient/00000000-0000-0000-0000-000000000000",
                   },
-                  "queryStringParameters": null,
                 },
-              },
-              "requestContext": Object {
-                "path": "/dev/Patient",
               },
             },
             "where": Object {
@@ -318,8 +302,8 @@ exports[`createLoggerMiddleware test null value in a field to encrypt case 1`] =
               },
             },
           },
-          "timestamp": "2023-02-07T22:51:27.469Z",
-          "uid": "b71b3858-b464-4be8-a84e-b0eacfa94f98",
+          "timestamp": "2023-02-10T14:18:10.585Z",
+          "uid": "a4e0bc3f-bd5e-4cd2-aade-1808ab8526de",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -333,7 +317,151 @@ exports[`createLoggerMiddleware test null value in a field to encrypt case 1`] =
             "exp": "1975-04-21T19:04:04.000Z",
             "iat": "1975-04-21T18:47:24.000Z",
             "iss": "FakeIssuer",
-            "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
+            "launch-response-patient": "",
+            "scp": Array [
+              "FakeScope1",
+              "FakeScope2",
+              "FakeScope3",
+            ],
+          },
+        },
+        "what": Object {
+          "apiGateway": Object {
+            "event": Object {
+              "httpMethod": "GET",
+              "pathParameters": Object {
+                "proxy": "patient/encrypted",
+              },
+              "queryStringParameters": null,
+            },
+          },
+          "requestContext": Object {
+            "httpMethod": "GET",
+            "path": "/dev/Patient",
+          },
+          "userIdentity": Object {
+            "scopes": Array [
+              "FakeScope1",
+              "FakeScope2",
+              "FakeScope3",
+            ],
+            "usableScopes": Array [
+              "FakeScope2",
+              "FakeScope3",
+            ],
+          },
+        },
+        "when": Object {
+          "requestContext": Object {
+            "requestTimeEpoch": "1970-01-02T22:28:57.044Z",
+          },
+        },
+        "where": Object {
+          "User-agent": "FakeUserAgent",
+          "apiGateway": Object {
+            "Context": Object {
+              "logGroupName": "FakeLogGroupName",
+              "logStreamName": "FakeLogStreamName",
+            },
+          },
+          "requestContext": Object {
+            "domainName": "FakeDomainName",
+            "identity": Object {
+              "sourceIp": "encrypted",
+            },
+          },
+        },
+        "who": Object {
+          "apiKeyId": "FakeApiKeyId",
+          "userIdentity": Object {
+            "cognito:groups": undefined,
+            "cognito:username": undefined,
+            "custom:tenantId": undefined,
+            "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
+            "sub": "encrypted",
+          },
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`createLoggerMiddleware test reference launch context value for encryption case 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "how": Object {
+          "apiGateway": Object {
+            "context": Object {
+              "awsRequestId": "11111111-1111-1111-1111-111111111111",
+            },
+          },
+          "userIdentity": Object {
+            "jti": "AT.FakeJTIValue",
+          },
+        },
+        "logMetadata": Object {
+          "category": "Audit Event",
+          "encryptedFields": Array [
+            "who.userIdentity.sub",
+            "who.userIdentity.fhirUser",
+            "what.apiGateway.event.pathParameters.proxy",
+            "where.requestContext.identity.sourceIp",
+            "responseOther.userIdentity.launch-response-patient",
+          ],
+          "payLoadToEncrypt": Object {
+            "responseOther": Object {
+              "userIdentity": Object {
+                "launch-response-patient": "Patient/22222222-2222-2222-2222-222222222222",
+              },
+            },
+            "what": Object {
+              "apiGateway": Object {
+                "event": Object {
+                  "pathParameters": Object {
+                    "proxy": "patient/00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              },
+            },
+            "where": Object {
+              "requestContext": Object {
+                "identity": Object {
+                  "sourceIp": "0.0.0.0",
+                },
+              },
+            },
+            "who": Object {
+              "userIdentity": Object {
+                "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
+                "sub": "example@amazon.com",
+              },
+            },
+          },
+          "timestamp": "2023-02-10T14:18:10.586Z",
+          "uid": "0e9e9891-974b-4443-8880-9831325bbaf9",
+        },
+        "requestOther": Object {
+          "requestContext": Object {
+            "stage": "dev",
+          },
+        },
+        "responseOther": Object {
+          "userIdentity": Object {
+            "aud": "FakeAudience",
+            "auth-time": "2023-01-10T21:40:22.000Z",
+            "exp": "1975-04-21T19:04:04.000Z",
+            "iat": "1975-04-21T18:47:24.000Z",
+            "iss": "FakeIssuer",
+            "launch-response-patient": "Patient/encrypted",
             "scp": Array [
               "FakeScope1",
               "FakeScope2",
