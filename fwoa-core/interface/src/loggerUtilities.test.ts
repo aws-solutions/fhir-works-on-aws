@@ -62,7 +62,7 @@ describe('test logger utilities', () => {
 
         //CHECK
         await expect(encryptSelectedField(info)).rejects.toThrow(
-          'Input field does not exist in logger, cannot to encrypt'
+          'field does not exist in loggingMessage, cannot encrypt'
         );
       });
     });

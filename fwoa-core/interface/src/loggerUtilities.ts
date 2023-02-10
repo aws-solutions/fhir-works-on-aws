@@ -21,7 +21,7 @@ export async function encryptSelectedField(info: any): Promise<string> {
     throw new Error('Invalid field input to encrypt');
   }
   if (!_.has(loggingMessage, field)) {
-    throw new Error('Input field does not exist in logger, cannot to encrypt');
+    throw new Error('field does not exist in loggingMessage, cannot encrypt');
   }
   const fieldsContentsStringToEncrypt = JSON.stringify(_.get(loggingMessage, field), null, ' ');
   const encryptedFieldsContentsString = await encryptKMS(
