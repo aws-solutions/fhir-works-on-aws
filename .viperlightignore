@@ -63,10 +63,11 @@ solutions/smart-deployment/src/integration-tests/search.test.ts:424
 fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43 
 fwoa-core/interface/src/InputExampleEncryptLoggerUtilities.json:18 
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:63
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:124  
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:182  
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:243  
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:67
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:75
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:128
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:186
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:124  
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:182 
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:186 
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:243  
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:247
