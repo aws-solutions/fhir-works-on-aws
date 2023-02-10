@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
-import inputLogger from './InputExampleEncryptLoggerUtilities.json';
+import inputLogger from './inputExampleEncryptSelectedField.json';
 import { encryptKMS, encryptSelectedField } from './loggerUtilities';
 
 describe('test logger utilities', () => {
