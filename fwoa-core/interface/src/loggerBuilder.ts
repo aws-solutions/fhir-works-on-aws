@@ -1,5 +1,6 @@
 import { createLogger, Logger } from 'winston';
 import Transport from 'winston-transport';
+import { runLoggerLevel } from './loggerUtilities';
 
 class SimpleConsole extends Transport {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -9,28 +10,7 @@ class SimpleConsole extends Transport {
     if (info[Symbol.for('splat')]) {
       msg.push(...info[Symbol.for('splat')]);
     }
-
-    // Use console here so request ID and log level can be automatically attached in CloudWatch log
-    /* eslint-disable no-console */
-    switch (info[Symbol.for('level')]) {
-      case 'debug':
-        console.debug(...msg);
-        break;
-      case 'info':
-        console.info(...msg);
-        break;
-      case 'warn':
-        console.warn(...msg);
-        break;
-      case 'error':
-        console.error(...msg);
-        break;
-      default:
-        console.log(...msg);
-        break;
-    }
-    /* eslint-enable no-console */
-
+    runLoggerLevel(info, msg);
     if (callback) {
       callback();
     }
@@ -39,9 +19,9 @@ class SimpleConsole extends Transport {
 
 // eslint-disable-next-line import/prefer-default-export
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function makeLogger(metadata?: any, logLevel: string | undefined = process.env.LOG_LEVEL): Logger {
+export function makeLogger(metadata?: any, logLevel?: string): Logger {
   return createLogger({
-    level: logLevel,
+    level: logLevel ?? process.env.LOG_LEVEL,
     transports: [new SimpleConsole()],
     defaultMeta: { meta: metadata }
   });

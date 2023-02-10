@@ -20,6 +20,7 @@ import { initializeOperationRegistry } from './operationDefinitions';
 import { FHIRStructureDefinitionRegistry } from './registry';
 import ResourceHandler from './router/handlers/resourceHandler';
 import { setContentTypeMiddleware } from './router/middlewares/setContentType';
+import { setLoggerMiddleware } from './router/middlewares/setLogger';
 import { setServerUrlMiddleware } from './router/middlewares/setServerUrl';
 import { setTenantIdMiddleware } from './router/middlewares/setTenantId';
 import { applicationErrorMapper, httpErrorHandler, unknownErrorHandler } from './router/routes/errorHandling';
@@ -125,6 +126,10 @@ export function generateServerlessRouter(
       next(e);
     }
   });
+
+  if (process.env.ENABLE_LOGGING_MIDDLEWARE === 'true') {
+    mainRouter.use(setLoggerMiddleware);
+  }
 
   if (fhirConfig.multiTenancyConfig?.enableMultiTenancy) {
     mainRouter.use(setTenantIdMiddleware(fhirConfig));

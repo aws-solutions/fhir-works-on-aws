@@ -174,6 +174,7 @@ importers:
       '@rushstack/heft-node-rig': 1.11.11
       '@types/heft-jest': ^1.0.3
       '@types/jest': ^26.0.19
+      '@types/lodash': ^4.14.182
       '@types/node': ^14
       aws-sdk: ^2.1000.0
       aws-sdk-mock: ^5.1.0
@@ -181,6 +182,7 @@ importers:
       jest: ^26.6.3
       jest-each: ^26.6.2
       jest-mock-extended: ^1.0.8
+      lodash: ^4.17.21
       npm-package-json-lint: ^6.3.0
       npm-package-json-lint-config-default: ^5.0.0
       prettier: ^2.4.1
@@ -191,20 +193,22 @@ importers:
       winston: ^3.3.3
       winston-transport: ^4.4.0
     dependencies:
+      lodash: 4.17.21
       winston: 3.8.2
       winston-transport: 4.5.0
     devDependencies:
       '@aws/eslint-config-fwoa-eslint-custom': link:../../core/eslint-custom
-      '@rushstack/eslint-config': 3.1.1_4vsywjlpuriuw3tl5oq6zy5a64
+      '@rushstack/eslint-config': 3.1.1_opj64b5mh2lpwi5gzwfy6wkcdm
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2_@rushstack+heft@0.49.0
       '@rushstack/heft-node-rig': 1.11.11_@rushstack+heft@0.49.0
       '@types/heft-jest': 1.0.3
       '@types/jest': 26.0.24
+      '@types/lodash': 4.14.191
       '@types/node': 14.18.36
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       aws-sdk-mock: 5.8.0
-      eslint: 8.33.0
+      eslint: 8.7.0
       jest: 26.6.3
       jest-each: 26.6.2
       jest-mock-extended: 1.0.18_xuote2qreek47x2di7kesslrai
@@ -262,8 +266,8 @@ importers:
     dependencies:
       '@aws/fhir-works-on-aws-interface': link:../interface
       '@elastic/elasticsearch': 7.13.0
-      aws-elasticsearch-connector: 8.3.0_rkoimxyn2sw5hoqfs6r53g2dfq
-      aws-sdk: 2.1311.0
+      aws-elasticsearch-connector: 8.3.0_ipruhuyphb5vvpdzrh4nzndwjq
+      aws-sdk: 2.1303.0
       aws-xray-sdk: 3.4.1
       flat: 5.0.2
       lodash: 4.17.21
@@ -277,7 +281,7 @@ importers:
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2_@rushstack+heft@0.49.0
       '@rushstack/heft-node-rig': 1.11.11_@rushstack+heft@0.49.0
-      '@types/aws-lambda': 8.10.110
+      '@types/aws-lambda': 8.10.109
       '@types/flat': 5.0.2
       '@types/heft-jest': 1.0.3
       '@types/jest': 26.0.24
@@ -360,7 +364,7 @@ importers:
       '@types/express-serve-static-core': 4.17.33
       ajv: 6.12.6
       ajv-errors: 1.0.1_ajv@6.12.6
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       aws-xray-sdk: 3.4.1
       cors: 2.8.5
       errorhandler: 1.5.1
@@ -455,9 +459,9 @@ importers:
       '@aws-sdk/node-http-handler': 3.267.0
       '@aws/fhir-works-on-aws-interface': link:../interface
       '@elastic/elasticsearch': 7.13.0
-      '@types/aws-lambda': 8.10.110
-      aws-elasticsearch-connector: 8.3.0_rkoimxyn2sw5hoqfs6r53g2dfq
-      aws-sdk: 2.1311.0
+      '@types/aws-lambda': 8.10.109
+      aws-elasticsearch-connector: 8.3.0_ipruhuyphb5vvpdzrh4nzndwjq
+      aws-sdk: 2.1303.0
       aws-xray-sdk: 3.4.1
       date-fns: 2.29.3
       flat: 5.0.2
@@ -567,10 +571,10 @@ importers:
       '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
-      '@types/aws-lambda': 8.10.110
+      '@types/aws-lambda': 8.10.109
       aws-cdk-lib: 2.45.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       axios: 0.21.4
       cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
       constructs: 10.1.244
@@ -697,10 +701,10 @@ importers:
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
-      '@types/aws-lambda': 8.10.110
+      '@types/aws-lambda': 8.10.109
       aws-cdk-lib: 2.45.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       axios: 0.21.4
       cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
       constructs: 10.1.244
@@ -3203,6 +3207,13 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
+  /@balena/dockerignore/1.0.2:
+    resolution:
+      {
+        integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==
+      }
+    dev: false
+
   /@bcoe/v8-coverage/0.2.3:
     resolution:
       {
@@ -4673,6 +4684,32 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@rushstack/eslint-config/3.1.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-hlpXiEPQDHXWtI+iGm9sJjnfm5qOEJsQN7pN004b1ZYq+g3MsE+QvTamalMAcdvXrsnH5Lo0XPfHuEJCa7nwPA==
+      }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '>=4.7.0'
+    dependencies:
+      '@rushstack/eslint-patch': 1.2.0
+      '@rushstack/eslint-plugin': 0.11.0_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@rushstack/eslint-plugin-packlets': 0.6.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@rushstack/eslint-plugin-security': 0.5.0_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@typescript-eslint/eslint-plugin': 5.38.1_6mmkuwwab25vvxuslg4mp5lch4
+      '@typescript-eslint/experimental-utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@typescript-eslint/parser': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@typescript-eslint/typescript-estree': 5.38.1_typescript@4.9.5
+      eslint: 8.7.0
+      eslint-plugin-promise: 6.0.1_eslint@8.7.0
+      eslint-plugin-react: 7.27.1_eslint@8.7.0
+      eslint-plugin-tsdoc: 0.2.17
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@rushstack/eslint-patch/1.2.0:
     resolution:
       {
@@ -4694,6 +4731,22 @@ packages:
       - supports-color
       - typescript
 
+  /@rushstack/eslint-plugin-packlets/0.6.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-N0GqjUbpQ4X348BTLr+gUGVojFVrXwbT3YQv/5sP5adYzq8bOKarmSHKXpvl4rC4CKPDfdSKxTMPfu3P3CJVSA==
+      }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@rushstack/tree-pattern': 0.2.4
+      '@typescript-eslint/experimental-utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      eslint: 8.7.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@rushstack/eslint-plugin-security/0.5.0_4vsywjlpuriuw3tl5oq6zy5a64:
     resolution:
       {
@@ -4709,6 +4762,22 @@ packages:
       - supports-color
       - typescript
 
+  /@rushstack/eslint-plugin-security/0.5.0_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-qDtij3D2DY8VDHKeUdf+M2SpoctrY+eIA+fJFkpuHP7CTJZLBv5186+oCsJ59lZmKoBFREdgpaV3coXamoT8RQ==
+      }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@rushstack/tree-pattern': 0.2.4
+      '@typescript-eslint/experimental-utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      eslint: 8.7.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@rushstack/eslint-plugin/0.11.0_4vsywjlpuriuw3tl5oq6zy5a64:
     resolution:
       {
@@ -4723,6 +4792,22 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  /@rushstack/eslint-plugin/0.11.0_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-e8eVBOgb/xkpkgFmPP+oifrqCLh8I5BFI/emB/nf5+WnuS4hsTHkgprCEiJuvkhJRypsWrbchkIda9/1YFadxg==
+      }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@rushstack/tree-pattern': 0.2.4
+      '@typescript-eslint/experimental-utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      eslint: 8.7.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
 
   /@rushstack/heft-config-file/0.11.4:
     resolution:
@@ -5450,10 +5535,10 @@ packages:
       }
     dev: true
 
-  /@types/aws-lambda/8.10.110:
+  /@types/aws-lambda/8.10.109:
     resolution:
       {
-        integrity: sha512-r6egf2Cwv/JaFTTrF9OXFVUB3j/SXTgM9BwrlbBRjWAa2Tu6GWoDoLflppAZ8uSfbUJdXvC7Br3DjuN9pQ2NUQ==
+        integrity: sha512-/ME92FneNyXQzrAfcnQQlW1XkCZGPDlpi2ao1MJwecN+6SbeonKeggU8eybv1DfKli90FAVT1MlIZVXfwVuCyg==
       }
 
   /@types/babel__core/7.20.0:
@@ -5832,7 +5917,7 @@ packages:
       }
     dependencies:
       '@types/node': 14.18.36
-      pg-protocol: 1.6.0
+      pg-protocol: 1.5.0
       pg-types: 2.2.0
     dev: false
 
@@ -6014,6 +6099,35 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/eslint-plugin/5.38.1_6mmkuwwab25vvxuslg4mp5lch4:
+    resolution:
+      {
+        integrity: sha512-ky7EFzPhqz3XlhS7vPOoMDaQnQMn+9o5ICR9CPr/6bw8HrFkzhMSxuA3gRfiJVvs7geYrSeawGJjZoZQKCOglQ==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      '@typescript-eslint/parser': ^5.0.0
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/parser': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@typescript-eslint/scope-manager': 5.38.1
+      '@typescript-eslint/type-utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      '@typescript-eslint/utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      debug: 4.3.4
+      eslint: 8.7.0
+      ignore: 5.2.4
+      regexpp: 3.2.0
+      semver: 7.3.8
+      tsutils: 3.21.0_typescript@4.9.5
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@typescript-eslint/eslint-plugin/5.38.1_jttimxj6fpqwf6lsabejxgrdua:
     resolution:
       {
@@ -6109,6 +6223,22 @@ packages:
       - supports-color
       - typescript
 
+  /@typescript-eslint/experimental-utils/5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-Zv0EcU0iu64DiVG3pRZU0QYCgANO//U1fS3oEs3eqHD1eIVVcQsFd/T01ckaNbL2H2aCqRojY2xZuMAPcOArEA==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@typescript-eslint/utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      eslint: 8.7.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@typescript-eslint/parser/4.33.0_jofidmxrjzhj7l6vknpw5ecvfe:
     resolution:
       {
@@ -6153,6 +6283,29 @@ packages:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
+
+  /@typescript-eslint/parser/5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-LDqxZBVFFQnQRz9rUZJhLmox+Ep5kdUmLatLQnCRR6523YV+XhRjfYzStQ4MheFA8kMAfUlclHSbu+RKdRwQKw==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': 5.38.1
+      '@typescript-eslint/types': 5.38.1
+      '@typescript-eslint/typescript-estree': 5.38.1_typescript@4.9.5
+      debug: 4.3.4
+      eslint: 8.7.0
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@typescript-eslint/parser/5.51.0_4vsywjlpuriuw3tl5oq6zy5a64:
     resolution:
@@ -6228,6 +6381,29 @@ packages:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
+
+  /@typescript-eslint/type-utils/5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-UU3j43TM66gYtzo15ivK2ZFoDFKKP0k03MItzLdq0zV92CeGCXRfXlfQX5ILdd4/DSpHkSjIgLLLh1NtkOJOAw==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      eslint: '*'
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/typescript-estree': 5.38.1_typescript@4.9.5
+      '@typescript-eslint/utils': 5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm
+      debug: 4.3.4
+      eslint: 8.7.0
+      tsutils: 3.21.0_typescript@4.9.5
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@typescript-eslint/type-utils/5.51.0_4vsywjlpuriuw3tl5oq6zy5a64:
     resolution:
@@ -6363,6 +6539,27 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  /@typescript-eslint/utils/5.38.1_opj64b5mh2lpwi5gzwfy6wkcdm:
+    resolution:
+      {
+        integrity: sha512-oIuUiVxPBsndrN81oP8tXnFa/+EcZ03qLqPDfSZ5xIJVm7A9V0rlkQwwBOAGtrdN70ZKDlKv+l1BeT4eSFxwXA==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@types/json-schema': 7.0.11
+      '@typescript-eslint/scope-manager': 5.38.1
+      '@typescript-eslint/types': 5.38.1
+      '@typescript-eslint/typescript-estree': 5.38.1_typescript@4.9.5
+      eslint: 8.7.0
+      eslint-scope: 5.1.1
+      eslint-utils: 3.0.0_eslint@8.7.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
 
   /@typescript-eslint/utils/5.51.0_4vsywjlpuriuw3tl5oq6zy5a64:
     resolution:
@@ -7334,7 +7531,6 @@ packages:
         integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
       }
     engines: { node: '>= 4.0.0' }
-    dev: true
 
   /atob/2.1.2:
     resolution:
@@ -7368,7 +7564,16 @@ packages:
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@balena/dockerignore': 1.0.2
+      case: 1.6.3
       constructs: 10.1.244
+      fs-extra: 9.1.0
+      ignore: 5.2.4
+      jsonschema: 1.4.1
+      minimatch: 3.1.2
+      punycode: 2.3.0
+      semver: 7.3.8
+      yaml: 1.10.2
     dev: false
     bundledDependencies:
       - '@balena/dockerignore'
@@ -7392,7 +7597,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /aws-elasticsearch-connector/8.3.0_rkoimxyn2sw5hoqfs6r53g2dfq:
+  /aws-elasticsearch-connector/8.3.0_ipruhuyphb5vvpdzrh4nzndwjq:
     resolution:
       {
         integrity: sha512-OPd1iNhebBBpGIvvjL79J5FcfdokD7LXbSeo6mENdWNqiIykYHnD5jT2wRFA4CSDpZBgEq9cUgc0D60GOxQp3A==
@@ -7403,7 +7608,7 @@ packages:
       aws-sdk: ^2.709.0
     dependencies:
       '@elastic/elasticsearch': 7.13.0
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       aws4: 1.12.0
       lodash.get: 4.4.2
     dev: false
@@ -7424,15 +7629,15 @@ packages:
         integrity: sha512-s0Vy4DObFmVJ6h1uTw1LGInOop77oF0JXH2N39Lv+1Wss274EowVk9odhM4Sji4mynXcM5oSu68uYqkJRviDRA==
       }
     dependencies:
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       sinon: 14.0.2
       traverse: 0.6.7
     dev: true
 
-  /aws-sdk/2.1311.0:
+  /aws-sdk/2.1303.0:
     resolution:
       {
-        integrity: sha512-X3cFNsfs3HUfz6LKiLqvDTO4EsqO5DnNssh9SOoxhwmoMyJ2et3dEmigO6TaA44BjVNdLW98+sXJVPTGvINY1Q==
+        integrity: sha512-KTzMliy60ParQgmnHB3jcAZVQmyLV1ZlNK4jUDP6Hzb0SPZFkGHzzjfSb224o8pB/HfR5n4fT3hOUVWMjISwdA==
       }
     engines: { node: '>= 10.0.0' }
     dependencies:
@@ -7939,7 +8144,7 @@ packages:
     engines: { node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16 }
     dependencies:
       bytes: 3.1.2
-      content-type: 1.0.5
+      content-type: 1.0.4
       debug: 2.6.9
       depd: 2.0.0
       destroy: 1.2.0
@@ -8437,6 +8642,14 @@ packages:
     dependencies:
       rsvp: 4.8.5
     dev: true
+
+  /case/1.6.3:
+    resolution:
+      {
+        integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
+      }
+    engines: { node: '>= 0.8.0' }
+    dev: false
 
   /cdk-nag/2.21.86_3kftpotut6azu3igewqexonpnu:
     resolution:
@@ -9133,10 +9346,10 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /content-type/1.0.5:
+  /content-type/1.0.4:
     resolution:
       {
-        integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==
+        integrity: sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
       }
     engines: { node: '>= 0.6' }
     dev: false
@@ -11283,6 +11496,18 @@ packages:
     dependencies:
       eslint: 8.33.0
 
+  /eslint-plugin-promise/6.0.1_eslint@8.7.0:
+    resolution:
+      {
+        integrity: sha512-uM4Tgo5u3UWQiroOyDEsYcVMOo7re3zmno0IZmB5auxoaQNIceAbXEkSt8RNrKtaYehARHG06pYK6K1JhtP0Zw==
+      }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+    dependencies:
+      eslint: 8.7.0
+    dev: true
+
   /eslint-plugin-react/7.27.1_eslint@8.33.0:
     resolution:
       {
@@ -11307,6 +11532,32 @@ packages:
       resolve: 2.0.0-next.4
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
+
+  /eslint-plugin-react/7.27.1_eslint@8.7.0:
+    resolution:
+      {
+        integrity: sha512-meyunDjMMYeWr/4EBLTV1op3iSG3mjT/pz5gti38UzfM4OPpNc2m0t2xvKCOMU5D6FSdd34BIMFOvQbW+i8GAA==
+      }
+    engines: { node: '>=4' }
+    peerDependencies:
+      eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
+    dependencies:
+      array-includes: 3.1.6
+      array.prototype.flatmap: 1.3.1
+      doctrine: 2.1.0
+      eslint: 8.7.0
+      estraverse: 5.3.0
+      jsx-ast-utils: 3.3.3
+      minimatch: 3.1.2
+      object.entries: 1.1.6
+      object.fromentries: 2.0.6
+      object.hasown: 1.1.2
+      object.values: 1.1.6
+      prop-types: 15.8.1
+      resolve: 2.0.0-next.4
+      semver: 6.3.0
+      string.prototype.matchall: 4.0.8
+    dev: true
 
   /eslint-plugin-security/1.7.1:
     resolution:
@@ -11861,7 +12112,7 @@ packages:
       array-flatten: 1.1.1
       body-parser: 1.20.1
       content-disposition: 0.5.4
-      content-type: 1.0.5
+      content-type: 1.0.4
       cookie: 0.5.0
       cookie-signature: 1.0.6
       debug: 2.6.9
@@ -12104,9 +12355,9 @@ packages:
       '@aws-sdk/client-sns': 3.267.0
       '@aws-sdk/node-http-handler': 3.267.0
       '@elastic/elasticsearch': 7.13.0
-      '@types/aws-lambda': 8.10.110
-      aws-elasticsearch-connector: 8.3.0_rkoimxyn2sw5hoqfs6r53g2dfq
-      aws-sdk: 2.1311.0
+      '@types/aws-lambda': 8.10.109
+      aws-elasticsearch-connector: 8.3.0_ipruhuyphb5vvpdzrh4nzndwjq
+      aws-sdk: 2.1303.0
       aws-xray-sdk: 3.4.1
       date-fns: 2.29.3
       fhir-works-on-aws-interface: 12.1.1
@@ -12659,7 +12910,6 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs-minipass/2.1.0:
     resolution:
@@ -16379,7 +16629,6 @@ packages:
       {
         integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
       }
-    dev: true
 
   /jsonwebtoken/8.5.1:
     resolution:
@@ -18889,10 +19138,10 @@ packages:
     engines: { node: '>=4.0.0' }
     dev: false
 
-  /pg-protocol/1.6.0:
+  /pg-protocol/1.5.0:
     resolution:
       {
-        integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==
+        integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==
       }
     dev: false
 
@@ -20768,7 +21017,7 @@ packages:
       }
     engines: { node: '>=8.0' }
     optionalDependencies:
-      '@types/aws-lambda': 8.10.110
+      '@types/aws-lambda': 8.10.109
     dev: false
 
   /serverless-offline/8.8.1_serverless@2.71.0:
@@ -20783,7 +21032,7 @@ packages:
       '@hapi/boom': 9.1.4
       '@hapi/h2o2': 9.1.0
       '@hapi/hapi': 20.2.2
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       boxen: 5.1.2
       chalk: 4.1.2
       cuid: 2.1.8
@@ -20884,7 +21133,7 @@ packages:
       ajv: 6.12.6
       ajv-keywords: 3.5.2_ajv@6.12.6
       archiver: 5.3.1
-      aws-sdk: 2.1311.0
+      aws-sdk: 2.1303.0
       bluebird: 3.7.2
       boxen: 5.1.2
       cachedir: 2.3.0
@@ -23867,7 +24116,6 @@ packages:
         integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
       }
     engines: { node: '>= 6' }
-    dev: true
 
   /yamljs/0.3.0:
     resolution:
