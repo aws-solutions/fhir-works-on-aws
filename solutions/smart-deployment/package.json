@@ -29,7 +29,7 @@
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json ./package.json",
     "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
-    "test": "heft test --clean --no-build && rushx pkg-json-lint",
+    "test": "heft test --clean --no-build 2>&1 && rushx pkg-json-lint",
     "test-coverage": "jest --coverage --testPathPattern=src/*",
     "watch": "tsc -w"
   },
