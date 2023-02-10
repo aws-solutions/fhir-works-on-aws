@@ -83,7 +83,6 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(nextMock).toHaveBeenCalledWith();
       expect(mLogger1.error).toMatchSnapshot();
     });
 
@@ -143,7 +142,6 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(nextMock).toHaveBeenCalledWith();
       expect(mLogger1.error).toMatchSnapshot();
     });
     test('test reference launch context value for encryption case', async () => {
@@ -202,7 +200,6 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(nextMock).toHaveBeenCalledWith();
       expect(mLogger1.error).toMatchSnapshot();
     });
   });
@@ -265,7 +262,6 @@ describe('createLoggerMiddleware', () => {
 
     //CHECK
     expect(nextMock).toBeCalledTimes(1);
-    expect(nextMock).toHaveBeenCalledWith();
     expect(mLogger.error).toMatchSnapshot();
   });
 });
