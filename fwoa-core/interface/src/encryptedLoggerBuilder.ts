@@ -15,12 +15,7 @@ class SimpleEncryptConsole extends Transport {
       if (info[Symbol.for('splat')]) {
         msg.push(...info[Symbol.for('splat')]);
       }
-
-      // Use console here so request ID and log level can be automatically attached in CloudWatch log
-      /* eslint-disable no-console */
       runLoggerLevel(info, msg);
-      /* eslint-enable no-console */
-
       if (callback) {
         callback();
       }
@@ -33,10 +28,10 @@ class SimpleEncryptConsole extends Transport {
 export function makeEncryptLogger(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   metadata?: any,
-  logLevel: string | undefined = process.env.LOG_LEVEL
+  logLevel?: string
 ): Logger {
   return createLogger({
-    level: logLevel,
+    level: logLevel ?? process.env.LOG_LEVEL,
     transports: [new SimpleEncryptConsole()],
     defaultMeta: { meta: metadata }
   });

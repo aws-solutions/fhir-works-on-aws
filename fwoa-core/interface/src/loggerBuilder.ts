@@ -41,9 +41,9 @@ class SimpleConsole extends Transport {
 
 // eslint-disable-next-line import/prefer-default-export
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function makeLogger(metadata?: any, logLevel: string | undefined = process.env.LOG_LEVEL): Logger {
+export function makeLogger(metadata?: any, logLevel?: string): Logger {
   return createLogger({
-    level: logLevel,
+    level: logLevel ?? process.env.LOG_LEVEL,
     transports: [new SimpleConsole()],
     defaultMeta: { meta: metadata }
   });

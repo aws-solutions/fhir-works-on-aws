@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import AWS from 'aws-sdk';
 import _ from 'lodash';
 
@@ -21,21 +20,23 @@ export async function encryptSelectedField(info: any): Promise<string> {
   if (typeof field !== 'string' || !field.length) {
     throw new Error('Invalid field input to encrypt');
   }
-  if (_.has(loggingMessage, field)) {
-    const fieldsContentsStringToEncrypt = JSON.stringify(_.get(loggingMessage, field), null, ' ');
-    const encryptedFieldsContentsString = await encryptKMS(
-      fieldsContentsStringToEncrypt,
-      `${process.env.LOGGING_MIDDLEWARE_KMS_KEY}`
-    );
-    loggingMessage = _.omit(loggingMessage, field);
-    _.set(loggingMessage, 'logMetadata.encryptedPayLoad', encryptedFieldsContentsString);
-    return loggingMessage;
+  if (!_.has(loggingMessage, field)) {
+    throw new Error('Input field does not exist in logger, cannot to encrypt');
   }
-  throw new Error('Input field does not exist in logger, cannot to encrypt');
+  const fieldsContentsStringToEncrypt = JSON.stringify(_.get(loggingMessage, field), null, ' ');
+  const encryptedFieldsContentsString = await encryptKMS(
+    fieldsContentsStringToEncrypt,
+    `${process.env.LOGGING_MIDDLEWARE_KMS_KEY}`
+  );
+  loggingMessage = _.omit(loggingMessage, field);
+  _.set(loggingMessage, 'logMetadata.encryptedPayLoad', encryptedFieldsContentsString);
+  return loggingMessage;
 }
 
+// Use console here so request ID and log level can be automatically attached in CloudWatch log
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function runLoggerLevel(info: any, msg: Array<{}>): void {
+  /* eslint-disable no-console */
   switch (info[Symbol.for('level')]) {
     case 'debug':
       console.debug(...msg);
@@ -53,4 +54,5 @@ export function runLoggerLevel(info: any, msg: Array<{}>): void {
       console.log(...msg);
       break;
   }
+  /* eslint-enable no-console */
 }

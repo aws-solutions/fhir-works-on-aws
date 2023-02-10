@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
-
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
 import inputLogger from './InputExampleEncryptLoggerUtilities.json';
@@ -19,7 +16,7 @@ describe('test logger utilities', () => {
       AWSMock.setSDKInstance(AWS);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      AWSMock.mock('KMS', 'encrypt', (params: any, callback: Function) => {
+      AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
           CiphertextBlob: Buffer.from(encryptRes)
         });
@@ -76,7 +73,7 @@ describe('test logger utilities', () => {
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
       //eslint-disable-next-line @typescript-eslint/ban-types
-      AWSMock.mock('KMS', 'encrypt', (params: any, callback: Function) => {
+      AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
           CiphertextBlob: Buffer.from(encryptRes),
           KeyId: '1233424123312',
@@ -95,7 +92,7 @@ describe('test logger utilities', () => {
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
       //eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
-      AWSMock.mock('KMS', 'encrypt', (params, callback: Function) => {
+      AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         if (params.Plaintext) {
           callback(null, {
             CiphertextBlob: encryptRes,
