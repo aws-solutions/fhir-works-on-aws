@@ -15,7 +15,7 @@ describe('test logger utilities', () => {
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
           CiphertextBlob: Buffer.from(encryptRes)
@@ -72,7 +72,7 @@ describe('test logger utilities', () => {
       // BUILD
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
-      //eslint-disable-next-line @typescript-eslint/ban-types
+      //eslint-disable-next-line @typescript-eslint/ban-types,@typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
           CiphertextBlob: Buffer.from(encryptRes),
