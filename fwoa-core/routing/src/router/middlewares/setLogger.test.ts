@@ -4,6 +4,7 @@ const mLogger = {
 const mLogger1 = {
   error: jest.fn()
 };
+
 // // eslint-disable-next-line @rushstack/hoist-jest-mock
 jest.mock('../../loggerBuilder', () => {
   const originalModule = jest.requireActual('../../loggerBuilder');
@@ -15,6 +16,9 @@ jest.mock('../../loggerBuilder', () => {
   };
 });
 
+jest.mock('uuid', () => ({ v4: () => '123456789' }));
+
+jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 import express from 'express';
 import { setLoggerMiddleware } from './setLogger';
 

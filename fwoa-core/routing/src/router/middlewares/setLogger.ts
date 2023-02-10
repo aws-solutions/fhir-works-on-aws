@@ -7,7 +7,7 @@
 
 import express, { json } from 'express';
 import _ from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 import getComponentLogger, { getEncryptLogger } from '../../loggerBuilder';
 
 /**
@@ -222,7 +222,7 @@ export const setLoggerMiddleware = async (
     const timestampDate = new Date();
     let loggerDesign: setEntireLogger = {
       logMetadata: {
-        uid: uuidv4(),
+        uid: v4(),
         timestamp: timestampDate.toISOString(),
         category: 'Audit Event'
       },

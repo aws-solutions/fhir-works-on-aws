@@ -57,8 +57,8 @@ exports[`createLoggerMiddleware test encryption happy case 1`] = `
               },
             },
           },
-          "timestamp": "2023-02-10T14:34:14.366Z",
-          "uid": "f6381ca0-ba9c-4ccd-9e83-0e462b2345d0",
+          "timestamp": "2020-01-01T00:00:00.000Z",
+          "uid": "123456789",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -195,8 +195,8 @@ exports[`createLoggerMiddleware test encryption test null value in a field for e
               },
             },
           },
-          "timestamp": "2023-02-10T14:34:14.387Z",
-          "uid": "c1d4f642-264d-44f0-8104-b9ebafc70011",
+          "timestamp": "2020-01-01T00:00:00.000Z",
+          "uid": "123456789",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -339,8 +339,8 @@ exports[`createLoggerMiddleware test encryption test reference launch context va
               },
             },
           },
-          "timestamp": "2023-02-10T14:34:14.389Z",
-          "uid": "ff081aea-3984-49a8-83e9-01988f449d78",
+          "timestamp": "2020-01-01T00:00:00.000Z",
+          "uid": "123456789",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -436,8 +436,8 @@ exports[`createLoggerMiddleware test no encrypt case 1`] = `
     Array [
       "{
  \\"logMetadata\\": {
-  \\"uid\\": \\"9058e647-7145-4940-a5f9-d1b0ae9afb23\\",
-  \\"timestamp\\": \\"2023-02-10T14:34:14.390Z\\",
+  \\"uid\\": \\"123456789\\",
+  \\"timestamp\\": \\"2020-01-01T00:00:00.000Z\\",
   \\"category\\": \\"Audit Event\\"
  },
  \\"who\\": {
