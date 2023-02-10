@@ -58,7 +58,7 @@ exports[`createLoggerMiddleware test encryption happy case 1`] = `
             },
           },
           "timestamp": "2020-01-01T00:00:00.000Z",
-          "uid": "123456789",
+          "uid": "00000000-0000-0000-0000-000000000000",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -196,7 +196,7 @@ exports[`createLoggerMiddleware test encryption test null value in a field for e
             },
           },
           "timestamp": "2020-01-01T00:00:00.000Z",
-          "uid": "123456789",
+          "uid": "00000000-0000-0000-0000-000000000000",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -340,7 +340,7 @@ exports[`createLoggerMiddleware test encryption test reference launch context va
             },
           },
           "timestamp": "2020-01-01T00:00:00.000Z",
-          "uid": "123456789",
+          "uid": "00000000-0000-0000-0000-000000000000",
         },
         "requestOther": Object {
           "requestContext": Object {
@@ -436,7 +436,7 @@ exports[`createLoggerMiddleware test no encrypt case 1`] = `
     Array [
       "{
  \\"logMetadata\\": {
-  \\"uid\\": \\"123456789\\",
+  \\"uid\\": \\"00000000-0000-0000-0000-000000000000\\",
   \\"timestamp\\": \\"2020-01-01T00:00:00.000Z\\",
   \\"category\\": \\"Audit Event\\"
  },

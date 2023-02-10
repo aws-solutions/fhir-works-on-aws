@@ -9,10 +9,11 @@ import express, { json } from 'express';
 import _ from 'lodash';
 import { v4 } from 'uuid';
 import getComponentLogger, { getEncryptLogger } from '../../loggerBuilder';
-
-/**
- * Set Logger'
- */
+import {
+  captureFhirUserParts,
+  capturePathParts,
+  capturePathParametersProxyParts
+} from '../../regExpressions';
 
 // define metadata,who,what,when,where,how,requestOther,responseOther 5 categoires in logger
 
@@ -108,15 +109,11 @@ export interface setEntireLogger {
 }
 
 function preprocessFieldsToEncrypted(fieldsToEncrypt: string[], logging: setEntireLogger): setEntireLogger {
-  // add encrypted for selected elements
+  // mark encrypted string for selected elements
   const fieldsToEncryptedObject: { [key: string]: string } = {};
   const loggingPreprocessed = { ...logging };
   const validFieldsToEncrypt: string[] = [];
   const stringToReplace = 'encrypted';
-  const captureFullUrlParts =
-    /((?:http|https):\/\/[(A-Za-z0-9_\-\\.:%$)*/]+[Patient|Practitioner]\/)([A-Za-z0-9\-.]{1,100}(\/_history\/[A-Za-z0-9\-.]{1,64})?)+/;
-  const capturePathParts = /^(\/\w{1,30}\/\w{1,30}\/)([-\w+]{1,100})$/; // ["/dev/Patient/00000000-0000-0000-0000-000000000000", "/dev/Patient/", "00000000-0000-0000-0000-000000000000"]
-  const capturePathProxyParts = /^(\w{1,30}\/)([-\w+]{1,100})$/; // ["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
   fieldsToEncrypt.forEach((selectedField) => {
     let markedContent: string | undefined | null;
     // eslint-disable-next-line default-case
@@ -131,7 +128,7 @@ function preprocessFieldsToEncrypted(fieldsToEncrypt: string[], logging: setEnti
         // {fhirUser:https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/00000000-0000-0000-0000-000000000000}
         // match groups = ["https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/00000000-0000-0000-0000-000000000000", "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/", "00000000-0000-0000-0000-000000000000", undefined]
         case 'who.userIdentity.fhirUser': {
-          const actualMatch = contentInField.match(captureFullUrlParts);
+          const actualMatch = contentInField.match(captureFhirUserParts);
           if (actualMatch && actualMatch[2]) {
             markedContent = actualMatch[1] + stringToReplace;
           } else {
@@ -161,7 +158,7 @@ function preprocessFieldsToEncrypted(fieldsToEncrypt: string[], logging: setEnti
         // {pathParameters:{}}
         // match groups =["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
         case 'what.apiGateway.event.pathParameters.proxy': {
-          const actualMatch = contentInField.match(capturePathProxyParts);
+          const actualMatch = contentInField.match(capturePathParametersProxyParts);
           if (actualMatch && actualMatch[2]) {
             markedContent = actualMatch[1] + stringToReplace;
           } else {
@@ -178,8 +175,8 @@ function preprocessFieldsToEncrypted(fieldsToEncrypt: string[], logging: setEnti
         // {launch-response-patient:'Patient/22222222-2222-2222-2222-222222222222'}
         // {launch-response-patient:''}
         case 'responseOther.userIdentity.launch-response-patient': {
-          const actualMatchCase1 = contentInField.match(captureFullUrlParts);
-          const actualMatchCase2 = contentInField.match(capturePathProxyParts);
+          const actualMatchCase1 = contentInField.match(captureFhirUserParts);
+          const actualMatchCase2 = contentInField.match(capturePathParametersProxyParts);
           if (actualMatchCase1 && actualMatchCase1[2]) {
             markedContent = actualMatchCase1[1] + stringToReplace;
           } else if (actualMatchCase2 && actualMatchCase2[2]) {

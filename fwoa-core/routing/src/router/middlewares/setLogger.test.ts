@@ -1,22 +1,21 @@
-const mLogger = {
+const Logger = {
   error: jest.fn()
 };
-const mLogger1 = {
+const encryptLogger = {
   error: jest.fn()
 };
 
-// // eslint-disable-next-line @rushstack/hoist-jest-mock
 jest.mock('../../loggerBuilder', () => {
   const originalModule = jest.requireActual('../../loggerBuilder');
   return {
     __esModule: true,
     ...originalModule,
-    default: jest.fn(() => mLogger),
-    getEncryptLogger: jest.fn(() => mLogger1)
+    default: jest.fn(() => Logger),
+    getEncryptLogger: jest.fn(() => encryptLogger)
   };
 });
 
-jest.mock('uuid', () => ({ v4: () => '123456789' }));
+jest.mock('uuid', () => ({ v4: () => '00000000-0000-0000-0000-000000000000' }));
 
 jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 import express from 'express';
@@ -87,7 +86,7 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(mLogger1.error).toMatchSnapshot();
+      expect(encryptLogger.error).toMatchSnapshot();
     });
 
     test('test null value in a field for encryption case', async () => {
@@ -146,7 +145,7 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(mLogger1.error).toMatchSnapshot();
+      expect(encryptLogger.error).toMatchSnapshot();
     });
     test('test reference launch context value for encryption case', async () => {
       //BUILD
@@ -204,7 +203,7 @@ describe('createLoggerMiddleware', () => {
 
       //CHECK
       expect(nextMock).toBeCalledTimes(1);
-      expect(mLogger1.error).toMatchSnapshot();
+      expect(encryptLogger.error).toMatchSnapshot();
     });
   });
   test('test no encrypt case', async () => {
@@ -266,6 +265,6 @@ describe('createLoggerMiddleware', () => {
 
     //CHECK
     expect(nextMock).toBeCalledTimes(1);
-    expect(mLogger.error).toMatchSnapshot();
+    expect(Logger.error).toMatchSnapshot();
   });
 });

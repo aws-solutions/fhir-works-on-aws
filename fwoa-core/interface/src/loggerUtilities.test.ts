@@ -3,6 +3,8 @@ import * as AWSMock from 'aws-sdk-mock';
 import inputLogger from './inputExampleEncryptSelectedField.json';
 import { encryptKMS, encryptSelectedField } from './loggerUtilities';
 
+process.env.LOGGING_MIDDLEWARE_KMS_KEY = 'fake-key-id';
+
 describe('test logger utilities', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -15,10 +17,12 @@ describe('test logger utilities', () => {
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
+      // eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
-          CiphertextBlob: Buffer.from(encryptRes)
+          CiphertextBlob: Buffer.from(encryptRes),
+          KeyId: '1233424123312',
+          EncryptionAlgorithm: 'SYMMETRIC_DEFAULT'
         });
       });
       const info = {
@@ -72,7 +76,7 @@ describe('test logger utilities', () => {
       // BUILD
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
-      //eslint-disable-next-line @typescript-eslint/ban-types,@typescript-eslint/ban-types
+      //eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         callback(null, {
           CiphertextBlob: Buffer.from(encryptRes),
@@ -91,7 +95,7 @@ describe('test logger utilities', () => {
       // BUILD
       const encryptRes: string = 'FakeEncryptedString';
       AWSMock.setSDKInstance(AWS);
-      //eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types
+      //eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock('KMS', 'encrypt', (params: { KeyId: string; Plaintext: string }, callback: Function) => {
         if (params.Plaintext) {
           callback(null, {

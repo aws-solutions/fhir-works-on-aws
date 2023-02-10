@@ -26,7 +26,7 @@ export async function encryptSelectedField(info: any): Promise<string> {
   const fieldsContentsStringToEncrypt = JSON.stringify(_.get(loggingMessage, field), null, ' ');
   const encryptedFieldsContentsString = await encryptKMS(
     fieldsContentsStringToEncrypt,
-    `${process.env.LOGGING_MIDDLEWARE_KMS_KEY}`
+    process.env.LOGGING_MIDDLEWARE_KMS_KEY as string
   );
   loggingMessage = _.omit(loggingMessage, field);
   _.set(loggingMessage, 'logMetadata.encryptedPayLoad', encryptedFieldsContentsString);
