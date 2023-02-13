@@ -10,7 +10,7 @@
 - **ARM64 not supported**: If this is a blocker for you please let us know [fhir-works-on-aws-dev](mailto:fhir-works-on-aws-dev@amazon.com).
 
 You'll need an IAM User with sufficient permissions to deploy this solution.
-You can use an existing User with AdministratorAccess or you can [create an IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following policy [scripts/iam_policy.json](./scripts/iam_policy.json)
+You can use an existing User with AdministratorAccess or you can [create an IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following policy [scripts/iam_policy.json](./scripts/iam_policy.json).
 
 ## Manual installation prerequisites
 
@@ -22,17 +22,13 @@ The FHIR Server is designed to use AWS services for data storage and API access.
 
 ### Node.JS
 
-Node is used as the Lambda runtime. To install node, we recommend the use of nvm (the Node Version Manager):
+Node is used as the Lambda runtime. To install node, we recommend the use of [nvm (Node Version Manager)](https://github.com/nvm-sh/nvm).
 
-> https://github.com/nvm-sh/nvm
-
-If you'd rather just install Node 18.x by itself:
-
-> https://nodejs.org/en/download/
+If you would rather directly install Node 18.x, download it [here](https://nodejs.org/en/download/).
 
 ### Python (deployment only)
 
-Python is used for a few scripts to instantiate a Cognito user and could be regarded as optional. To install Python, see [python.org](https://www.python.org/downloads/).
+Some scripts use Python to create a Cognito user and could be regarded as optional. To install Python, see [python.org](https://www.python.org/downloads/).
 
 ### boto3 AWS Python SDK (deployment only)
 
@@ -68,23 +64,21 @@ curl -o- -L https://slss.io/install | bash
 
 ### AWS credentials
 
-Log into your AWS account, navigate to the IAM service, and create a new User. This will be required for deployment to the Dev environment. Add the IAM policy located at [scripts/iam_policy.json](./scripts/iam_policy.json) to the IAM user that you create.
+Sign in to your AWS account, navigate to the IAM service, and create a new **User**. This will be required for deployment to the Dev environment. Add the IAM policy located at [`scripts/iam_policy.json`](./scripts/iam_policy.json) to the IAM user that you create.
 
-Note down the below IAM user’s properties for further use later in the process.
+Note the following IAM user properties for use later in the process:
 
-- ACCESS_KEY
-- SECRET_KEY
-- IAM_USER_ARN
+- `ACCESS_KEY`
+- `SECRET_KEY`
+- `IAM_USER_ARN`
 
-Use these credentials to create a new profile in the AWS credentials file based on these instructions:
-
-> https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+Use these credentials to create a new profile in the AWS credentials file. For more information on creating a new profile, see [Named profiles for the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html).
 
 ```sh
 vi ~/.aws/credentials
 ```
 
-You can use any available name for your AWS Profile (section name in []). Note down the name of the AWS profile for further use later in the process.
+You can use any available name for your AWS Profile (section name in []). Note the name of the AWS profile for use later in the process.
 
 ### Working directory selection
 
@@ -100,13 +94,12 @@ rush update && rush build && rush test
 
 ### IAM User ARN (LEGACY)
 
-Note: this customization is only needed if deploying with serverless; it is not needed with CDK.
+> **Note**  
+> This customization is only needed if deploying with serverless. It is not needed with CDK.
 
-Create a new file in the package's root folder named
+Create a new file in the package's root folder named `serverless_config.json`.
 
-> serverless_config.json
-
-In the _serverless_config.json_ file, add the following, using the previously noted IAM_USER_ARN.
+In the `serverless_config.json` file, add the following, using the previously noted IAM_USER_ARN.
 
 ```json
 {
@@ -116,7 +109,7 @@ In the _serverless_config.json_ file, add the following, using the previously no
 
 ### AWS service deployment with CDK
 
-Using the previously noted AWS Profile, deploy the required AWS services to your AWS account. By default, the region and stage of the deployment are set to us-west-2, and dev, respectively. These can be configured by adjusting the default context values in the [cdk.json](./cdk.json) file.
+Using the previously noted AWS Profile, deploy the required AWS services to your AWS account. By default, the region and stage of the deployment are set to us-west-2, and dev, respectively. These can be configured by adjusting the default context values in the [`cdk.json`](./cdk.json) file.
 
 Deployment:
 
@@ -196,30 +189,30 @@ Smart deployment:
 serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint> --region <REGION> --stage <STAGE>
 ```
 
-From the command’s output note down the following data
+From the command’s output note the following information:
 
-- REGION
-  - from Service Information: region
-- API_KEY
-  - from Service Information: api keys: developer-key
-- API_URL
-  - from Service Information:endpoints: ANY
-- USER_POOL_ID (deployment only)
-  - from Stack Outputs: UserPoolId
-- USER_POOL_APP_CLIENT_ID (deployment only)
-  - from Stack Outputs: UserPoolAppClientId
-- FHIR_SERVER_BINARY_BUCKET
-  - from Stack Outputs: FHIRBinaryBucket
-- ELASTIC_SEARCH_DOMAIN_ENDPOINT (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchDomainEndpoint
-- ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchDomainKibanaEndpoint
-- ELASTIC_SEARCH_KIBANA_USER_POOL_ID (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchKibanaUserPoolId
-- ELASTIC_SEARCH_KIBANA_USER_POOL_APP_CLIENT_ID (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchKibanaUserPoolAppClientId
-- CLOUDWATCH_EXECUTION_LOG_GROUP
-  - from Stack Outputs: CloudwatchExecutionLogGroup:
+- REGION  
+  From Service Information: region
+- API_KEY  
+  From Service Information: api keys: developer-key
+- API_URL  
+  From Service Information:endpoints: ANY
+- USER_POOL_ID (deployment only)  
+  From Stack Outputs: UserPoolId
+- USER_POOL_APP_CLIENT_ID (deployment only)  
+  From Stack Outputs: UserPoolAppClientId
+- FHIR_SERVER_BINARY_BUCKET  
+  From Stack Outputs: FHIRBinaryBucket
+- ELASTIC_SEARCH_DOMAIN_ENDPOINT (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchDomainEndpoint
+- ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchDomainKibanaEndpoint
+- ELASTIC_SEARCH_KIBANA_USER_POOL_ID (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchKibanaUserPoolId
+- ELASTIC_SEARCH_KIBANA_USER_POOL_APP_CLIENT_ID (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchKibanaUserPoolAppClientId
+- CLOUDWATCH_EXECUTION_LOG_GROUP  
+  From Stack Outputs: CloudwatchExecutionLogGroup:
 
 ### Initialize Cognito (deployment only)
 
@@ -280,7 +273,7 @@ If you lose this URL, it can be found in the `Info_Output.log` file under the "E
 ##### Accessing Elasticsearch Kibana server
 
 > **Note**  
-> Kibana is only deployed in the default 'dev' stage; if you want Kibana set up in other stages, like 'production', please remove `Condition: isDev` from [elasticsearch.yaml](./cloudformation/elasticsearch.yaml) if using serverless, or in the [elasticsearch.ts](./lib/elasticsearch.ts) file if using CDK.
+> Kibana is only deployed in the default `dev` stage. If you want Kibana set up in other stages, like `production`, please remove `Condition: isDev` from [`elasticsearch.yaml`](./cloudformation/elasticsearch.yaml) for serverless, or in the [`elasticsearch.ts`](./lib/elasticsearch.ts) for CDK.
 
 The Kibana server allows you to explore data inside your Elasticsearch instance through a web UI.
 
@@ -326,7 +319,10 @@ aws cognito-idp admin-confirm-sign-up \
 
 ###### Get Kibana url
 
-After the Cognito user is created and confirmed you can now log in with the username and password, at the ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command (LEGACY)). **Note** Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
+After the Cognito user is created and confirmed you can now log in with the username and password, at the `ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT` (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command (LEGACY)). 
+
+> **Note**  
+> Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
 
 #### DynamoDB table backups
 

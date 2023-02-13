@@ -87,7 +87,7 @@ Run either:
    Performs a full clean build. See `rush rebuild -h` for more options.
 
 `rush test`  
-runs test and updates code coverage summary in README file for each package. See `rush test -h` for more options
+Runs test and updates code coverage summary in README file for each package. See `rush test -h` for more options
 
 [`rush add`](https://rushjs.io/pages/commands/rush_add/)  
 Adds a specified package as a dependency of the current project (as determined by the current working directory), and then runs `rush update`. Always use the `--caret` or version with caret symbol(example-lib@^1.2.3). Not including the caret installs tilde versions(e.g. ~1.2.3) by default.
