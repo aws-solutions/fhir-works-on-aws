@@ -7,7 +7,7 @@ phases:
       - echo "nothing to do in install"
   pre_build:
     commands:
-      - echo "Setting node version to 14"
+      - echo "Setting node version to 18"
       - n 18
       - echo "Installing dependencies and executing unit tests - `pwd`"
       - echo Update npm to latest
