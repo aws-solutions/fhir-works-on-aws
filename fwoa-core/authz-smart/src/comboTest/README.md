@@ -38,5 +38,6 @@ To generate the csv file for review, create an output folder under the comboTest
 GENERATE_CSV_FOR_REVIEW=true rush test
 ```
 
-Tip: In the generated csv file, it could be hard to review the scope column with all the scopes clustered together, try using
-the method suggested in [this post](https://stackoverflow.com/questions/14856501/substitute-a-comma-with-a-line-break-in-a-cell) to reformat each scope on different row within the cell.
+> **Tip**  
+> In the generated csv file, it could be hard to review the scope column with all the scopes clustered together. Try using
+the method suggested in [this post](https://stackoverflow.com/questions/14856501/substitute-a-comma-with-a-line-break-in-a-cell) to reformat each scope on a different row within the cell.
