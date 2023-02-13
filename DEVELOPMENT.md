@@ -125,20 +125,25 @@ By defualt, using `rush` commands triggers them for all of the projects in the m
 
 ### Accessing Logs and Debugging on FWoA
 
-FWoA logs and debugging are handled by Amazon CloudWatch, and you can utilize FWoA CloudWatch logs alongside identity provider (IdP) logs to identify past API search requests. (Detailed instructions on using CloudWatch can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html).
+FWoA logs and debugging are handled by Amazon CloudWatch, and you can utilize FWoA CloudWatch logs alongside identity provider (IdP) logs to identify past API search requests. For more information, see [What is CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html).
 
-Identifying past API searches requires cross analyzing timestamps between the two log sources to correlate the issuance of a credential to past FWoA API requests. _Note:_ CloudWatch retains search query content for GET requests, but not POST requests.
+Identifying past API searches requires cross analyzing timestamps between the two log sources to correlate the issuance of a credential to past FWoA API requests. 
+
+> **Note**  
+> Amazon CloudWatch retains search query content for GET requests, but not POST requests.
 
 To obtain and analyze FWoA logs:
 
-1. Log on to the AWS Console and navigate to _CloudWatch →_ _Log Groups_.
-2. From the list of log groups, select the Lambda function or API Gateway service that you would like to debug:
-
-- `/aws/lambda/smart-fhir-service-{STAGE}-fhirServer` - contains all logs from the FWoA API server, including transactions and requests. In most cases, this will be the primary log group to check when receiving errors from the FWoA server.
-- `/aws/api-gateway/fhir-service-{STAGE}` - contains all logs related to the API Gateway setup for FWoA.
-- `/aws/lambda/smart-fhir-service-{STAGE}-ddbtoES` - contains all logs from the process of writing DynamoDB resources to ElasticSearch.
+1. Sign in to the [AWS Console](https://console.aws.amazon.com/) and navigate to **CloudWatch** → **Log Groups**.
+2. From the list of log groups, select the Lambda function or API Gateway service that you would like to debug:  
+   - `/aws/lambda/smart-fhir-service-{STAGE}-fhirServer`  
+   Contains all logs from the FWoA API server, including transactions and requests. In most cases, this will be the primary log group to check when receiving errors from the FWoA server.
+   - `/aws/api-gateway/fhir-service-{STAGE}`  
+   Contains all logs related to the API Gateway setup for FWoA.
+   - `/aws/lambda/smart-fhir-service-{STAGE}-ddbtoES`  
+   Contains all logs from the process of writing DynamoDB resources to ElasticSearch.
 
 3. Select a stream to view the output for the function. If applicable, the Lambda function version will be prefixed in square brackets (`[]`) to help identify which stream corresponds to which version (example: `YYYY/MM/DD/[{VERSION}]`).
 
-4. Optional: To further refine the output of the function, filter the events in a stream using the options at the top of the list. Additionally, you can perform broader searches through _Logs Insights_ located on the left panel.
-5. To compare FWoA logs with your third-party IdP’s logs, match the FWoA Cloudwatch _log stream log events_ with timestamps from the IdP logs.
+4. *(Optional)* To further refine the output of the function, filter the events in a stream using the options at the top of the list. Additionally, you can perform broader searches through **Logs Insights** located on the left panel.
+5. To compare FWoA logs with your third-party IdP’s logs, match the FWoA Cloudwatch **log stream log events** with timestamps from the IdP logs.
