@@ -25,8 +25,8 @@ Or with Serverless (LEGACY),
 serverless deploy --enableSubscriptions true
 ```
 
-**Note**  
-Enabling subscriptions incurs a cost even if there are no active subscriptions. It is recommended to only enable it if you intend to use it.
+> **Note**  
+> Enabling subscriptions incurs a cost even if there are no active subscriptions. It is recommended to only enable it if you intend to use it.
 
 ## Creating Subscriptions
 
@@ -110,7 +110,7 @@ FWoA supports 2 types of notifications
   PUT https://my-endpoint.com/on-result/Observation/<matching ObservationId>
   ```
 
-  **Note**  
-   The Id-only notifications differ slightly from the FHIR spec.
+  > **Note**  
+  > The Id-only notifications differ slightly from the FHIR spec.
   The spec indicates that the entire matching FHIR resource is sent in JSON format, but we chose to only send the Id since
   sending the entire resource poses a security risk.
