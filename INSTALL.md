@@ -322,16 +322,16 @@ aws cognito-idp admin-confirm-sign-up \
 After the Cognito user is created and confirmed you can now log in with the username and password, at the `ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT` (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command (LEGACY)). 
 
 > **Note**  
-> Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
+> Kibana will be empty at first and have no indices. They will be created once the FHIR server writes resources to DynamoDB.
 
 #### DynamoDB table backups
 
-Daily DynamoDB Table back-ups can be optionally deployed via an additional 'fhir-server-backups' stack. The installation script will deploy this stack automatically if indicated during installation.
+Daily DynamoDB Table back-ups can be optionally deployed via an additional `fhir-server-backups` stack. The installation script will deploy this stack automatically if indicated during installation.
 You can enable this by passing in the context parameter during the deployment process (`-c enableBackup=true`).
 
 The reason behind multiple stacks is that backup vaults can be deleted only if they are empty, and you can't delete a stack that includes backup vaults if they contain any recovery points. With separate stacks it is easier for you to operate.
 
-These back-ups work by using tags. In the [serverless.yaml](./serverless.yaml) you can see ResourceDynamoDBTableV2 has a `backup - daily` & `service - fhir` tag. Anything with these tags will be backed-up daily at 5:00 UTC.
+These back-ups work by using tags. In [`serverless.yaml`](./serverless.yaml), you can see `ResourceDynamoDBTableV2` has a `backup - daily` & `service - fhir` tag. Anything with these tags will be backed-up daily at 5:00 UTC.
 
 To deploy the stack and start daily backups (outside of the install script) (LEGACY):
 
