@@ -11,7 +11,7 @@ is logically partitioned to ensure that tenants are prevented from accessing ano
 Use the `enableMultiTenancy` option when deploying the stack:
 
 ```sh
-yarn deploy -c enableMultiTenancy=true
+rushx deploy -c enableMultiTenancy=true
 ```
 
 or with Serverless, (LEGACY)
@@ -20,7 +20,8 @@ or with Serverless, (LEGACY)
 serverless deploy --enableMultiTenancy true
 ```
 
-**Note:** Updating an existing (single-tenant) stack to enable multi-tenancy is a breaking change. Multi-tenant
+> **Note**  
+> Updating an existing (single-tenant) stack to enable multi-tenancy is a breaking change. Multi-tenant
 deployments use a different data partitioning strategy that renders the old, single-tenant, data inaccessible.
 If you wish to switch from single-tenant to a multi-tenant model, it is recommended to create a new multi-tenant stack
 and then migrate the data from the old stack. Switching from multi-tenant to a single-tenant model is also a breaking change.
