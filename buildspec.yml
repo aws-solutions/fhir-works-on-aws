@@ -7,8 +7,8 @@ phases:
       - echo "nothing to do in install"
   pre_build:
     commands:
-      - echo "Setting node version to 14"
-      - n 14
+      - echo "Setting node version to 18"
+      - n 18
       - echo "Installing dependencies and executing unit tests - `pwd`"
       - echo Update npm to latest
       - npm install -g npm@latest
@@ -16,16 +16,14 @@ phases:
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-      - echo "Skip build step as no CDK construct has been added yet"
 #      - cd ./../fwoa-core/interface
 #      - node ./../../common/scripts/install-run-rushx.js compile
-#      - echo "Starting build `date` `pwd`"
-#      - cd ../../deployment
-#      - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
-#      - echo "Build completed `date`"
-#      - echo "Starting open-source-dist `date` `pwd`"
-#      - chmod +x ./build-open-source-dist.sh && ./build-open-source-dist.sh $SOLUTION_NAME
-#      - echo "Open Source Dist completed `date`"
+      - echo "Starting build `date` `pwd`"
+      - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
+      - echo "Build completed `date`"
+      - echo "Starting open-source-dist `date` `pwd`"
+      - chmod +x ./build-open-source-dist.sh && ./build-open-source-dist.sh $SOLUTION_NAME
+      - echo "Open Source Dist completed `date`"
   post_build:
     commands:
       - echo "Retrieving next stage buildspec `date` `pwd`"
@@ -36,12 +34,12 @@ phases:
 artifacts:
   files:
     - common/**/*
-#    - solutions/**/*
+    - solutions/**/*
     - fwoa-core/**/*
     - core/**/*
     - deployment/**/*
     - .gitignore
     - sonar-project.properties
     - buildspec.yml
-#    - CHANGELOG.md
-#    - .cfnnag_*
+    - CHANGELOG.md
+    - .cfnnag_*

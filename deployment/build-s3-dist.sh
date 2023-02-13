@@ -287,27 +287,7 @@ echo "--------------------------------------------------------------------------
 echo "${bold}[Create] Templates${normal}"
 echo "------------------------------------------------------------------------------"
 
-do_cmd cd $source_dir/swb-reference
-
-if fn_exists create_template_${template_format}; then
-    create_template_${template_format}
-else
-    echo "Invalid setting for \$template_format: $template_format"
-    exit 255
-fi
-
-# <STAGE>.json must exist in the deployment folder (same folder as this file). 
-# This is a dummy file that we copy over to the solutions/swb-reference/src/config folder
-# to unblock SWBUIStack synth
-echo "cp $template_dir/$STAGE.json $source_dir/swb-reference/src/config"
-if [[ -e "$template_dir/$STAGE.json" ]]; then
-    cp $template_dir/$STAGE.json $source_dir/swb-reference/src/config
-else
-    echo "$STAGE.json is missing from the solution root."
-    exit 1
-fi
-
-do_cmd cd $source_dir/swb-ui/infrastructure
+do_cmd cd $source_dir/deployment
 
 if fn_exists create_template_${template_format}; then
     create_template_${template_format}

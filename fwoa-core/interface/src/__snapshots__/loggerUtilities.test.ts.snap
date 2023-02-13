@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test logger utilities encryptSelectedField test happy case" 1`] = `
+Object {
+  "how": Object {
+    "apiGateway": Object {
+      "context": Object {
+        "awsRequestId": "11111111-1111-1111-1111-111111111111",
+      },
+    },
+    "userIdentity": Object {
+      "jti": "AT.FakeJtiValue",
+    },
+  },
+  "logMetadata": Object {
+    "category": "Audit Event",
+    "encryptedFields": Array [
+      "who.userIdentity.sub",
+      "who.userIdentity.fhirUser",
+      "what.apiGateway.event.queryStringParameters",
+      "what.requestContext.path",
+      "what.apiGateway.event.pathParameters.proxy",
+      "where.requestContext.sourceIp",
+      "responseOther.userIdentity.launch-response-patient",
+    ],
+    "encryptedPayLoad": "RmFrZUVuY3J5cHRlZFN0cmluZw==",
+    "timestamp": "2023-02-01T17:23:54.905Z",
+    "uid": "11111111-1111-1111-1111-111111111111",
+  },
+  "requestOther": Object {
+    "requestContext": Object {
+      "stage": "dev",
+    },
+  },
+  "responseOther": Object {
+    "userIdentity": Object {
+      "aud": "https://example.execute-api.us-east-1.amazonaws.com/dev",
+      "auth-time": "2023-02-01T17:14:05.000Z",
+      "exp": "2023-02-01T18:14:28.000Z",
+      "iat": "2023-02-01T17:14:28.000Z",
+      "iss": "https://dev-00000000.okta.com/oauth2/FakeIssuer",
+      "launch-response-patient": "https://example.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted",
+      "scp": Array [
+        "FakeScope1",
+        "FakeScope2",
+        "FakeScope3",
+      ],
+    },
+  },
+  "what": Object {
+    "apiGateway": Object {
+      "event": Object {
+        "httpMethod": "GET",
+        "pathParameters": Object {
+          "proxy": "Patient",
+        },
+        "queryStringParameters": "encrypted",
+      },
+    },
+    "requestContext": Object {
+      "httpMethod": "GET",
+      "path": "/dev/Patient",
+    },
+    "userIdentity": Object {
+      "scopes": Array [
+        "FakeScope1",
+        "FakeScope2",
+        "FakeScope3",
+      ],
+      "usableScopes": Array [
+        "FakeScope2",
+        "FakeScope3",
+      ],
+    },
+  },
+  "when": Object {
+    "requestContext": Object {
+      "requestTimeEpoch": "2023-02-01T17:23:50.610Z",
+    },
+  },
+  "where": Object {
+    "User-agent": "FakeUserAgent",
+    "apiGateway": Object {
+      "Context": Object {
+        "logGroupName": "/aws/lambda/smart-fhir-service-dev-fhirServer00000000-AAAAAAAAAAAA",
+        "logStreamName": "2023/02/01/[$LATEST]FakeLogStreamId",
+      },
+    },
+    "domainName": "example.execute-api.us-east-1.amazonaws.com",
+    "requestContext": Object {
+      "sourceIp": "encrypted",
+    },
+  },
+  "who": Object {
+    "apiKeyId": "x1siojg81g",
+    "userIdentity": Object {
+      "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted",
+      "sub": "encrypted",
+    },
+  },
+}
+`;
