@@ -15,7 +15,7 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
 
 1. Download the IG packages. IG packages can be downloaded from different sources. The most common sources are the corresponding official IG website (for example, [download](https://www.hl7.org/fhir/us/core/package.tgz) from the [US Core website](https://www.hl7.org/fhir/us/core/downloads.html) or the [FHIR Package Registry](https://registry.fhir.org/).
 
-1. Copy the unzipped IG deployment packages to the `implementationGuides` directory
+1. Copy the unzipped IG deployment packages to the `implementationGuides` directory.
 
    Example:
 
@@ -29,29 +29,32 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
 1. Compile the IGs using the `compile-igs` command:
    ```bash
    #fhir-works-on-aws-deployment
-   yarn run compile-igs
+   rushx compile-igs
    ```
-   **Note:** This command needs to be invoked in the top level directory of the cloned `fhir-works-on-aws-deployment` repository
+   > **Note**  
+   > This command needs to be invoked in the top level directory of the cloned `fhir-works-on-aws-deployment` repository.
 1. Deploy the Hapi Validator using the following commands:
    ```bash
    #fhir-works-on-aws-deployment/javaHapiValidatorLambda
    cd javaHapiValidatorLambda
    mvn clean install
    ```
-   **Note:** By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-   comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+   > **Note**  
+   > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
+   > comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
    ```bash
    #fhir-works-on-aws-deployment/javaHapiValidatorLambda
-   yarn deploy -c fhirVersion="3.0.1"
+   rushx deploy -c fhirVersion="3.0.1"
    ```
 1. Deploy the FHIR Works on AWS server using the `deploy` command (after navigating back to the top level directory of the cloned repository):
    ```bash
    #fhir-works-on-aws-deployment
    cd ..
-   yarn deploy -c useHapiValidator=true --all
+   rushx deploy -c useHapiValidator=true --all
    ```
 
-Note: For more information on how to set up AWS credentials or how to deploy to a specific stage or region, refer to the [installation documentation](INSTALL.md#manual-installation)
+> **Note**  
+> For more information on how to set up AWS credentials or how to deploy to a specific stage or region, refer to the [installation documentation](INSTALL.md#manual-installation).
 
 ## Supported IG features in FHIR Works on AWS
 

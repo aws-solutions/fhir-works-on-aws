@@ -10,7 +10,7 @@
 - **ARM64 not supported**: If this is a blocker for you please let us know [fhir-works-on-aws-dev](mailto:fhir-works-on-aws-dev@amazon.com).
 
 You'll need an IAM User with sufficient permissions to deploy this solution.
-You can use an existing User with AdministratorAccess or you can [create an IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following policy [scripts/iam_policy.json](./scripts/iam_policy.json)
+You can use an existing User with AdministratorAccess or you can [create an IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following policy [scripts/iam_policy.json](./scripts/iam_policy.json).
 
 ## Manual installation prerequisites
 
@@ -22,15 +22,15 @@ The FHIR Server is designed to use AWS services for data storage and API access.
 
 ### Node.JS
 
-Node is used as the Lambda runtime. To install node, we recommend the use of [nvm (the Node Version Manager)](https://github.com/nvm-sh/nvm).
+Node is used as the Lambda runtime. To install node, we recommend the use of [nvm (Node Version Manager)](https://github.com/nvm-sh/nvm).
 
-If you'd rather install Node 12.x by itself, see [Nodejs.org](https://nodejs.org/en/download/).
+If you would rather directly install Node 18.x, download it [here](https://nodejs.org/en/download/).
 
-### Python
+### Python (deployment only)
 
-Python is used for a few scripts to instantiate a Cognito user and could be regarded as optional. To install Python, see [python.org](https://www.python.org/downloads/).
+Some scripts use Python to create a Cognito user and could be regarded as optional. To install Python, see [python.org](https://www.python.org/downloads/).
 
-### boto3 AWS Python SDK
+### boto3 AWS Python SDK (deployment only)
 
 Boto3 is the AWS Python SDK running as a Python import. The installation is platform-agnostic but requires Python and Pip to function:
 
@@ -38,13 +38,13 @@ Boto3 is the AWS Python SDK running as a Python import. The installation is plat
 pip install boto3
 ```
 
-### yarn
+### pnpm
 
-Yarn is a node package management tool similar to npm. Instructions for installing Yarn are provided for different platforms [here](https://classic.yarnpkg.com/en/docs/install).
+pnpm is a fast, disk space efficient package manager similar to npm. Instructions for installing pnpm are provided for different platforms [here](https://pnpm.io/installation).
 
-```sh
-brew install yarn
-```
+### rush
+
+Rush is a scalable monorepo manager for the web. Installation process is described [here](https://rushjs.io/pages/developer/new_developer/#prerequisites).
 
 ### CDK CLI
 
@@ -64,23 +64,21 @@ curl -o- -L https://slss.io/install | bash
 
 ### AWS credentials
 
-Log into your AWS account, navigate to the IAM service, and create a new User. This will be required for deployment to the Dev environment. Add the IAM policy located at [scripts/iam_policy.json](./scripts/iam_policy.json) to the IAM user that you create.
+Sign in to your AWS account, navigate to the IAM service, and create a new **User**. This will be required for deployment to the Dev environment. Add the IAM policy located at [`scripts/iam_policy.json`](./scripts/iam_policy.json) to the IAM user that you create.
 
-Note down the below IAM user’s properties for further use later in the process.
+Note the following IAM user properties for use later in the process:
 
-- ACCESS_KEY
-- SECRET_KEY
-- IAM_USER_ARN
+- `ACCESS_KEY`
+- `SECRET_KEY`
+- `IAM_USER_ARN`
 
-Use these credentials to create a new profile in the AWS credentials file based on these instructions:
-
-> https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+Use these credentials to create a new profile in the AWS credentials file. For more information on creating a new profile, see [Named profiles for the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html).
 
 ```sh
 vi ~/.aws/credentials
 ```
 
-You can use any available name for your AWS Profile (section name in []). Note down the name of the AWS profile for further use later in the process.
+You can use any available name for your AWS Profile (section name in []). Note the name of the AWS profile for use later in the process.
 
 ### Working directory selection
 
@@ -88,20 +86,20 @@ In a Terminal application or command shell, navigate to the directory containing
 
 ### Package dependencies (required)
 
-Use Yarn to install all package dependencies and compile & test the code:
+Use Rush to install all package dependencies and compile & test the code:
 
 ```sh
-yarn install
-yarn run release
+rush update && rush build && rush test
 ```
 
 ### IAM User ARN (LEGACY)
 
-Create a new file in the package's root folder named
+> **Note**  
+> This customization is only needed if deploying with serverless. It is not needed with CDK.
 
-> serverless_config.json
+Create a new file in the package's root folder named `serverless_config.json`.
 
-In the _serverless_config.json_ file, add the following, using the previously noted IAM_USER_ARN.
+In the `serverless_config.json` file, add the following, using the previously noted IAM_USER_ARN.
 
 ```json
 {
@@ -111,68 +109,112 @@ In the _serverless_config.json_ file, add the following, using the previously no
 
 ### AWS service deployment with CDK
 
-Using the previously noted AWS Profile, deploy the required AWS services to your AWS account. By default, the region and stage of the deployment are set to us-west-2, and dev, respectively. These can be configured by adjusting the default context values in the [cdk.json](./cdk.json) file.
+Using the previously noted AWS Profile, deploy the required AWS services to your AWS account. By default, the region and stage of the deployment are set to us-west-2, and dev, respectively. These can be configured by adjusting the default context values in the [`cdk.json`](./cdk.json) file.
+
+Deployment:
 
 ```sh
-yarn deploy --profile <AWS PROFILE>
+cd ./solutions/deployment
+rushx deploy --profile <AWS PROFILE>
+```
+
+Smart deployment:
+
+```sh
+cd ./solutions/smart-deployment
+rushx deploy --profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT -c oAuth2ApiEndpoint=YOUR_OAUTH2_API_ENDPOINT -c patientPickerEndpoint=YOUR_PATIENT_PICKER_ENDPOINT
 ```
 
 Or you can deploy with a custom stage (default: dev) and/or region (default: us-west-2)
 
+Deployment:
+
 ```sh
-yarn deploy --profile <AWS PROFILE> -c stage=<STAGE> -c region=<AWS_REGION>
+cd ./solutions/deployment
+rushx deploy --profile <AWS PROFILE> -c stage=<STAGE> -c region=<AWS_REGION>
+```
+
+Smart deployment:
+
+```sh
+cd ./solutions/smart-deployment
+rushx deploy --profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT -c oAuth2ApiEndpoint=YOUR_OAUTH2_API_ENDPOINT -c patientPickerEndpoint=YOUR_PATIENT_PICKER_ENDPOINT -c stage=YOUR_STAGE -c region=YOUR_REGION
 ```
 
 Retrieve auto-generated IDs or instance names by checking in the [Info Output](./INFO_OUTPUT.log) file.
 
 All of the stack's outputs will be located in this file, for future reference.
 
-### AWS service deployment (LEGACY)
+### AWS service deployment with Serverless (LEGACY)
 
 Using the previously noted AWS Profile, deploy the required AWS services to your AWS account using the default setting of stage: dev and region: us-west-2. To change the default stage/region look for the stage/region variable in the [serverless.yaml](./serverless.yaml) file under the provider: object.
+
+Deployment:
 
 ```sh
 serverless deploy --aws-profile <AWS PROFILE>
 ```
 
+Smart deployment:
+
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint>
+```
+
 Or you can deploy with a custom stage (default: dev) and/or region (default: us-west-2)
+
+Deployment:
 
 ```sh
 serverless deploy --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
 ```
 
+Smart deployment:
+
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint>
+```
+
 Retrieve auto-generated IDs or instance names using: (If you have provided non-default values for --stage and --region during `serverless deploy`, you will need to provide the same here as well)
+
+Deployment:
 
 ```sh
 serverless info --verbose --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
 ```
 
-From the command’s output note down the following data
+Smart deployment:
 
-- REGION
-  - from Service Information: region
-- API_KEY
-  - from Service Information: api keys: developer-key
-- API_URL
-  - from Service Information:endpoints: ANY
-- USER_POOL_ID
-  - from Stack Outputs: UserPoolId
-- USER_POOL_APP_CLIENT_ID
-  - from Stack Outputs: UserPoolAppClientId
-- FHIR_SERVER_BINARY_BUCKET
-  - from Stack Outputs: FHIRBinaryBucket
-- ELASTIC_SEARCH_DOMAIN_ENDPOINT (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchDomainEndpoint
-- ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchDomainKibanaEndpoint
-- ELASTIC_SEARCH_KIBANA_USER_POOL_ID (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchKibanaUserPoolId
-- ELASTIC_SEARCH_KIBANA_USER_POOL_APP_CLIENT_ID (dev stage ONLY)
-  - from Stack Outputs: ElasticsearchKibanaUserPoolAppClientId
-- CLOUDWATCH_EXECUTION_LOG_GROUP
-  - from Stack Outputs: CloudwatchExecutionLogGroup:
+```sh
+serverless deploy --aws-profile <AWS PROFILE> --issuerEndpoint <issuerEndpoint> --oAuth2ApiEndpoint <oAuth2ApiEndpoint> --patientPickerEndpoint <patientPickerEndpoint> --region <REGION> --stage <STAGE>
+```
 
-### Initialize Cognito
+From the command’s output note the following information:
+
+- REGION  
+  From Service Information: region
+- API_KEY  
+  From Service Information: api keys: developer-key
+- API_URL  
+  From Service Information:endpoints: ANY
+- USER_POOL_ID (deployment only)  
+  From Stack Outputs: UserPoolId
+- USER_POOL_APP_CLIENT_ID (deployment only)  
+  From Stack Outputs: UserPoolAppClientId
+- FHIR_SERVER_BINARY_BUCKET  
+  From Stack Outputs: FHIRBinaryBucket
+- ELASTIC_SEARCH_DOMAIN_ENDPOINT (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchDomainEndpoint
+- ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchDomainKibanaEndpoint
+- ELASTIC_SEARCH_KIBANA_USER_POOL_ID (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchKibanaUserPoolId
+- ELASTIC_SEARCH_KIBANA_USER_POOL_APP_CLIENT_ID (dev stage ONLY)  
+  From Stack Outputs: ElasticsearchKibanaUserPoolAppClientId
+- CLOUDWATCH_EXECUTION_LOG_GROUP  
+  From Stack Outputs: CloudwatchExecutionLogGroup:
+
+### Initialize Cognito (deployment only)
 
 Initially, AWS Cognito is set up supporting OAuth2 requests in order to support authentication and authorization. When first created there will be no users. This step creates a `workshopuser` and assigns the user to the `practitioner` User Group.
 
@@ -231,7 +273,7 @@ If you lose this URL, it can be found in the `Info_Output.log` file under the "E
 ##### Accessing Elasticsearch Kibana server
 
 > **Note**  
-> Kibana is only deployed in the default 'dev' stage; if you want Kibana set up in other stages, like 'production', please remove `Condition: isDev` from [elasticsearch.yaml](./cloudformation/elasticsearch.yaml) if using serverless, or in the [elasticsearch.ts](./lib/elasticsearch.ts) file if using CDK.
+> Kibana is only deployed in the default `dev` stage. If you want Kibana set up in other stages, like `production`, please remove `Condition: isDev` from [`elasticsearch.yaml`](./cloudformation/elasticsearch.yaml) for serverless, or in the [`elasticsearch.ts`](./lib/elasticsearch.ts) for CDK.
 
 The Kibana server allows you to explore data inside your Elasticsearch instance through a web UI.
 
@@ -277,16 +319,19 @@ aws cognito-idp admin-confirm-sign-up \
 
 ###### Get Kibana url
 
-After the Cognito user is created and confirmed you can now log in with the username and password, at the ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command). **Note** Kibana will be empty at first and have no indices, they will be created once the FHIR server writes resources to the DynamoDB
+After the Cognito user is created and confirmed you can now log in with the username and password, at the `ELASTIC_SEARCH_DOMAIN_KIBANA_ENDPOINT` (found within the [Info Output](./INFO_OUTPUT.log) or with the `serverless info --verbose` command (LEGACY)).
+
+> **Note**  
+> Kibana will be empty at first and have no indices. They will be created once the FHIR server writes resources to DynamoDB.
 
 #### DynamoDB table backups
 
-Daily DynamoDB Table back-ups can be optionally deployed via an additional 'fhir-server-backups' stack. The installation script will deploy this stack automatically if indicated during installation.
+Daily DynamoDB Table back-ups can be optionally deployed via an additional `fhir-server-backups` stack. The installation script will deploy this stack automatically if indicated during installation.
 You can enable this by passing in the context parameter during the deployment process (`-c enableBackup=true`).
 
 The reason behind multiple stacks is that backup vaults can be deleted only if they are empty, and you can't delete a stack that includes backup vaults if they contain any recovery points. With separate stacks it is easier for you to operate.
 
-These back-ups work by using tags. In the [serverless.yaml](./serverless.yaml) you can see ResourceDynamoDBTableV2 has a `backup - daily` & `service - fhir` tag. Anything with these tags will be backed-up daily at 5:00 UTC.
+These back-ups work by using tags. In [`serverless.yaml`](./serverless.yaml), you can see `ResourceDynamoDBTableV2` has a `backup - daily` & `service - fhir` tag. Anything with these tags will be backed-up daily at 5:00 UTC.
 
 To deploy the stack and start daily backups (outside of the install script) (LEGACY):
 
@@ -306,7 +351,6 @@ From the root directory
 
 ```sh
 cd auditLogMover
-yarn install
 serverless deploy --aws-profile <AWS PROFILE> --stage <STAGE> --region <AWS_REGION>
 ```
 
