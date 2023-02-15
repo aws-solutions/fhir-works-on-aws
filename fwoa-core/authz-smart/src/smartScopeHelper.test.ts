@@ -11,7 +11,7 @@ import {
   getScopes,
   getValidOperationsForScopeTypeAndAccessType,
   rejectInvalidScopeCombination,
-  rejectNonsensibleToken
+  rejectNonsensicalToken
 } from './smartScopeHelper';
 
 const emptyScopeRule = (): ScopeRule => ({
@@ -620,22 +620,21 @@ describe('rejectInvalidScopeCombination', () => {
   });
 });
 
-describe('rejectNonsensibleToken', () => {
+describe('rejectNonsensicalToken', () => {
   test('happe cases', () => {
     const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
-    // expect(rejectNonsensibleScopes(scopes, 'launchPatient', 'fhirUser')).toEqual(true);
-    expect(rejectNonsensibleToken(scopes, 'launchPatient', 'fhirUser')).toBeUndefined();
+    expect(rejectNonsensicalToken(scopes, 'launchPatient', 'fhirUser')).toBeUndefined();
   });
-  test('nonsensible token with user/ scopes without a FHIR user', () => {
+  test('nonsensical token with user/ scopes without a FHIR user', () => {
     const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
     expect(() => {
-      rejectNonsensibleToken(scopes, 'launchPatient', undefined);
+      rejectNonsensicalToken(scopes, 'launchPatient', undefined);
     }).toThrow('Invalid user scopes in token.');
   });
-  test('nonsensible token with patient/ scopes without a patient in context', () => {
+  test('nonsensical token with patient/ scopes without a patient in context', () => {
     const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
     expect(() => {
-      rejectNonsensibleToken(scopes, undefined, 'fhirUser');
+      rejectNonsensicalToken(scopes, undefined, 'fhirUser');
     }).toThrow('Invalid patient scopes in token.');
   });
 });
