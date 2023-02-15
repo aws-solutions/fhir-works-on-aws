@@ -38,7 +38,7 @@ export async function encryptSelectedField(info: any): Promise<string> {
   return loggingMessage;
 }
 
-// Use console here so request ID and log level can be automatically attached in CloudWatch log
+// Use console here so request id and log level can be automatically attached in CloudWatch log
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function runLoggerLevel(info: any, msg: Array<{}>): void {
   /* eslint-disable no-console */
