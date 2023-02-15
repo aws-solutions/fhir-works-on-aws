@@ -6,14 +6,14 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions-cool/check-user-permission@v2
-          id: check_admin
-          with:
-            require: 'admin'
-            username: ${{ github.triggering_actor }}
+        id: check_admin
+        with:
+          require: 'admin'
+          username: ${{ github.triggering_actor }}
       - name: Use Node.js 18.x
-          uses: actions/setup-node@v3
-          with:
-            node-version: '18.x'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
