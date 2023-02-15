@@ -30,9 +30,6 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.64.0-alpha.0",
-    "aws-cdk-lib": "^2.64.0",
-    "constructs": "^10.0.0",
     "lodash": "^4.17.21",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
