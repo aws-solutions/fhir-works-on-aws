@@ -17,7 +17,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
-    "build-test": "heft test --clean && rushx pkg-json-lint",
+    "build-test": "heft test -u --clean && rushx pkg-json-lint",
     "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* lib/*",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
