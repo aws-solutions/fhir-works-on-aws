@@ -58,13 +58,14 @@
     "xmlhttprequest-ssl": "^1.6.2"
   },
   "dependencies": {
+    "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.64.0-alpha.0",
     "@aws/fhir-works-on-aws-authz-smart": "workspace:*",
     "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@aws/fhir-works-on-aws-persistence-ddb": "workspace:*",
     "@aws/fhir-works-on-aws-routing": "workspace:*",
     "@aws/fhir-works-on-aws-search-es": "workspace:*",
     "@types/aws-lambda": "^8.10.92",
-    "aws-cdk-lib": "2.45.0",
+    "aws-cdk-lib": "^2.64.0",
     "aws-embedded-metrics": "^2.0.4",
     "aws-sdk": "^2.1000.0",
     "axios": "^0.21.4",

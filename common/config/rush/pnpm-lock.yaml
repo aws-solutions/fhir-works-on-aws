@@ -501,6 +501,7 @@ importers:
 
   ../../solutions/deployment:
     specifiers:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.64.0-alpha.0
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-rbac': workspace:*
       '@aws/fhir-works-on-aws-interface': workspace:*
@@ -525,7 +526,7 @@ importers:
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
       aws-cdk: 2.45.0
-      aws-cdk-lib: 2.45.0
+      aws-cdk-lib: ^2.64.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -567,16 +568,17 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
       '@aws/fhir-works-on-aws-authz-rbac': link:../../fwoa-core/authz-rbac
       '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.21.4
-      cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
+      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
       constructs: 10.1.244
       fhir-works-on-aws-search-es: 3.12.0
       fs-extra: 10.1.0
@@ -636,6 +638,7 @@ importers:
 
   ../../solutions/smart-deployment:
     specifiers:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.64.0-alpha.0
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-smart': workspace:*
       '@aws/fhir-works-on-aws-interface': workspace:*
@@ -660,7 +663,7 @@ importers:
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
       aws-cdk: 2.45.0
-      aws-cdk-lib: 2.45.0
+      aws-cdk-lib: ^2.64.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -696,17 +699,18 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
       '@aws/fhir-works-on-aws-authz-smart': link:../../fwoa-core/authz-smart
       '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.21.4
-      cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
+      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
       constructs: 10.1.244
       escape-string-regexp: 4.0.0
       fs-extra: 10.1.0
@@ -778,6 +782,41 @@ packages:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
+
+  /@aws-cdk/asset-awscli-v1/2.2.68:
+    resolution:
+      {
+        integrity: sha512-/rx5dTFSSyKtYa1VOFuqt+hjQv5AnEc3x0OAmaHRhHWIepgUQ3aPHCyln/izgnwR4Y4albsptxoerM4lGEoaUg==
+      }
+    dev: false
+
+  /@aws-cdk/asset-kubectl-v20/2.1.1:
+    resolution:
+      {
+        integrity: sha512-U1ntiX8XiMRRRH5J1IdC+1t5CE89015cwyt5U63Cpk0GnMlN5+h9WsWMlKlPXZR4rdq/m806JRlBMRpBUB2Dhw==
+      }
+    dev: false
+
+  /@aws-cdk/asset-node-proxy-agent-v5/2.0.57:
+    resolution:
+      {
+        integrity: sha512-oLxJ9VQdSP2L8EALzChmWdzgq5wc4UidJfWYTCfuiZox6r0vW5ftYIffVgE/+iA0WxRstJUQz/nmpOeGfNbQDQ==
+      }
+    dev: false
+
+  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m:
+    resolution:
+      {
+        integrity: sha512-WrSbHiv6Npi6SWwZl+WbarMY/nkUE7WVoKrXrV8AS6Vqrdfl+4HsrWbx2oyC8FjfZW2Ts+V4QPXQv8tjlYDprQ==
+      }
+    engines: { node: '>= 14.15.0' }
+    peerDependencies:
+      aws-cdk-lib: ^2.64.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      constructs: 10.1.244
+    dev: false
 
   /@aws-crypto/ie11-detection/3.0.0:
     resolution:
@@ -7555,15 +7594,18 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
-  /aws-cdk-lib/2.45.0_constructs@10.1.244:
+  /aws-cdk-lib/2.64.0_constructs@10.1.244:
     resolution:
       {
-        integrity: sha512-oEeZZF8xjub9KYAB7n01A60wwQXSzNapmiih3t5uf9aEvlvqT+0as8/WrPdNIeAaf9Lhb0WQXdZ2o2DlsFHbAg==
+        integrity: sha512-IrgL7thb6TeOyHgyR/qKWTdA9FBb9lv7Z9QPDzCNJlkKI+0ANjYHy3RYV8Gd+1+kc6l8DG9Z1elij40YCr/Ptg==
       }
     engines: { node: '>= 14.15.0' }
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@aws-cdk/asset-awscli-v1': 2.2.68
+      '@aws-cdk/asset-kubectl-v20': 2.1.1
+      '@aws-cdk/asset-node-proxy-agent-v5': 2.0.57
       '@balena/dockerignore': 1.0.2
       case: 1.6.3
       constructs: 10.1.244
@@ -8651,7 +8693,7 @@ packages:
     engines: { node: '>= 0.8.0' }
     dev: false
 
-  /cdk-nag/2.21.86_3kftpotut6azu3igewqexonpnu:
+  /cdk-nag/2.21.86_nfqzj33ydgldzoghshyt46jh2m:
     resolution:
       {
         integrity: sha512-FX1PZBtWYDn8VbrnVVyiOvJSmbr5It4CS2Xr0yNi9ReE9qcJFTe3gzJn4CH0Kx2pm9DOrIDXjX1rrz5JZ2oKyw==
@@ -8660,7 +8702,7 @@ packages:
       aws-cdk-lib: ^2.45.0
       constructs: ^10.0.5
     dependencies:
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       constructs: 10.1.244
     dev: false
 

@@ -6,6 +6,7 @@ import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { HIPAASecurityChecks, NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../src/lib/cdk-infra-stack';
 import * as fs from 'fs';
+import { FhirWorksAppRegistry } from '../src/lib/fhirWorksAppRegistry';
 
 // initialize with defaults
 const app = new cdk.App();
@@ -76,6 +77,14 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
   validateXHTML,
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
+});
+new FhirWorksAppRegistry(stack, stack.stackId, {
+  solutionId: 'SO0128',
+  solutionName: 'FHIR Works',
+  solutionVersion: '6.0.0',
+  attributeGroupName: 'fhir-works-AttributeGroup',
+  applicationType: 'AWS-Solutions',
+  appRegistryApplicationName: 'FHIR Works'
 });
 
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
