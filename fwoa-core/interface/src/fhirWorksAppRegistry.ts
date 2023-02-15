@@ -3,11 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Construct, IConstruct } from 'constructs';
 import * as appreg from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import { SharePermission } from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import { Aws, CfnMapping, Fn, RemovalPolicy, Stack, Tags } from 'aws-cdk-lib';
 import { CfnApplication } from 'aws-cdk-lib/aws-applicationinsights';
+import { Construct, IConstruct } from 'constructs';
 
 /**
  * @param resource - Construct
