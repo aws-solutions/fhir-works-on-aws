@@ -109,29 +109,6 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
     ).toEqual(false);
   });
 
-  test('scope is sufficient for group export with "system" scopeType, not "user" of "patient" scopeType', () => {
-    const clonedScopeRule = emptyScopeRule();
-    clonedScopeRule[scopeType].read = ['read'];
-    const bulkDataAuth: BulkDataAuth = { operation: 'initiate-export', exportType: 'group' };
-
-    // Only scopeType of system has bulkDataAccess
-    expect(
-      isScopeSufficient(`${scopeType}/*.read`, clonedScopeRule, 'read', false, undefined, bulkDataAuth)
-    ).toEqual(scopeType === 'system');
-
-    // Group export result is filtered on allowed resourceType, scope not having resourceType "*" should be passed
-    expect(
-      isScopeSufficient(
-        `${scopeType}/Observation.read`,
-        clonedScopeRule,
-        'read',
-        false,
-        undefined,
-        bulkDataAuth
-      )
-    ).toEqual(scopeType === 'system');
-  });
-
   test('scope is sufficient to do a search-system', () => {
     const clonedScopeRule = emptyScopeRule();
     clonedScopeRule[scopeType].read = ['search-system'];
@@ -209,7 +186,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
       ).toEqual(false);
     });
 
-    test('scope is sufficient for `group` initiate-export with "system" scopeType, not "user" of "patient" scopeType', () => {
+    test('scope is sufficient for `group` initiate-export with "system" scopeType, not "user" or "patient" scopeType', () => {
       const clonedScopeRule = emptyScopeRule();
       clonedScopeRule[scopeType].read = ['read'];
       const bulkDataAuth: BulkDataAuth = { operation: 'initiate-export', exportType: 'group' };
@@ -219,7 +196,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
         isScopeSufficient(`${scopeType}/*.read`, clonedScopeRule, 'read', false, undefined, bulkDataAuth)
       ).toEqual(scopeType === 'system');
 
-      // Group export result is filtered on allowed resourceType, scope not having resourceType "*" should be passed
+      // Group export should fail when resourceType is not "*"
       expect(
         isScopeSufficient(
           `${scopeType}/Observation.read`,
@@ -229,7 +206,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
           undefined,
           bulkDataAuth
         )
-      ).toEqual(scopeType === 'system');
+      ).toEqual(false);
     });
     describe.each(exportTypes)('export type: %s', (exportType: ExportType) => {
       describe.each(exportOperations)(
