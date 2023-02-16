@@ -63,6 +63,9 @@ export interface FhirWorksStackProps extends StackProps {
     logLevel: string;
     oauthRedirect: string;
     fhirVersion: string;
+    igMemoryLimit: number;
+    igMemorySize: number;
+    igStorageSize: number;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -141,6 +144,11 @@ export default class FhirWorksStack extends Stack {
                 region: props!.region,
                 fhirVersion: props!.fhirVersion,
                 stage: props!.stage,
+                fhirLogsBucket,
+                s3KMSKey: kmsResources.s3KMSKey,
+                igMemoryLimit: props!.igMemoryLimit,
+                igMemorySize: props!.igMemorySize,
+                igStorageSize: props!.igStorageSize,
             });
         }
 

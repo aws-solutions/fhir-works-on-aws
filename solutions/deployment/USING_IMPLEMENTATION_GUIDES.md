@@ -36,12 +36,13 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
 1. Deploy the Hapi Validator using the following commands:
    ```bash
    #fhir-works-on-aws-deployment/javaHapiValidatorLambda
-   cd javaHapiValidatorLambda
+   cd ../../fwoa-core/javaHapiValidatorLambda
    mvn clean install
+   cd ../../solutions/deployment
    ```
    > **Note**  
    > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-   comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+   comments on [pom.xml](../../fwoa-core/javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
    ```bash
    #fhir-works-on-aws-deployment/javaHapiValidatorLambda
    rushx deploy -c fhirVersion="3.0.1"
@@ -52,6 +53,8 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
    cd ..
    rushx deploy -c useHapiValidator=true --all
    ```
+> **Note**
+>  If you are deploying with implementation guides that are large in file size such as [us.nlm.vsac](https://registry.fhir.org/package/us.nlm.vsac|0.3.0), you can specify the additional context parameters `igMemoryLimit`, `igMemorySize`, and `igStorageSize`. These values are reflected in the `memoryLimit` of the BucketDeployment, and the `memorySize` and `ephemeralStorageSize` values for the Validator Lambda Function in [this file](./lib/javaHapiValidator.ts).
 
 > **Note**  
 > For more information on how to set up AWS credentials or how to deploy to a specific stage or region, refer to the [installation documentation](INSTALL.md#manual-installation).
