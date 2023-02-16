@@ -57,7 +57,7 @@ export default class JavaHapiValidator extends Stack {
             },
             logRetention: RetentionDays.TEN_YEARS,
             code: Code.fromAsset(
-                path.resolve(__dirname, `../javaHapiValidatorLambda/target/fwoa-hapi-validator-dev.jar`),
+                path.resolve(__dirname, `../../../fwoa-core/javaHapiValidatorLambda/target/fwoa-hapi-validator-dev.jar`),
                 {},
             ),
             runtime: Runtime.JAVA_11,
