@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-authz-smart",
-      "comment": "rename function name and reorganize unit test code",
-      "type": "patch"
+      "comment": "Reject token with scopes that can not be used",
+      "type": "major"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-authz-smart"

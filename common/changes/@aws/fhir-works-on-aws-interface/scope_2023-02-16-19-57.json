@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-interface",
-      "comment": "update comments",
+      "comment": "update License header",
       "type": "patch"
     }
   ],
