@@ -632,6 +632,33 @@ describe('initiateExport', () => {
     );
   });
 
+  test('Export request goes through if user request specific resource type', async () => {
+    // BUILD
+    // Return an export request that is in-progress
+    AWSMock.mock('DynamoDB', 'query', (params: QueryInput, callback: Function) => {
+      if (isEqual(params, DynamoDbParamBuilder.buildQueryExportRequestJobStatus('in-progress'))) {
+        callback(null, {
+          Items: [DynamoDBConverter.marshall({ jobOwnerId: 'userId-2', jobStatus: 'in-progress' })]
+        });
+      }
+      callback(null, {});
+    });
+
+    const ddbPutSpy = jest.fn();
+    AWSMock.mock('DynamoDB', 'putItem', (params: QueryInput, callback: Function) => {
+      ddbPutSpy(params);
+      // Successfully update export-request table with request
+      callback(null, {});
+    });
+
+    const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
+    // OPERATE
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+    await expect(
+      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Group' })
+    ).resolves.toMatch(uuidRegex);
+  });
+
   each(['in-progress', 'canceling']).test(
     'throttle limit exceeds MAXIMUM_CONCURRENT_REQUEST_PER_USER because user already has an %s request',
     async (jobStatus: ExportJobStatus) => {
