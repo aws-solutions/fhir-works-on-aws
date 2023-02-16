@@ -1,0 +1,17 @@
+{
+  "name": "@aws/fhir-works-on-aws-search-es",
+  "entries": [
+    {
+      "version": "3.12.2",
+      "tag": "@aws/fhir-works-on-aws-search-es_v3.12.2",
+      "date": "Thu, 16 Feb 2023 21:03:17 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "test changes"
+          }
+        ]
+      }
+    }
+  ]
+}
