@@ -369,11 +369,13 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
       serverUrl: initiateExportRequest.serverUrl ?? '',
       outputFormat: initiateExportRequest.outputFormat ?? 'ndjson',
       since: initiateExportRequest.since ?? '1800-01-01T00:00:00.000Z', // Default to a long time ago in the past
-      type: initiateExportRequest.type,
       transactionTime: initiateExportRequest.transactionTime,
       jobStatus: initialStatus,
       jobFailedMessage: ''
     };
+    if (initiateExportRequest.type) {
+      exportJob.type = initiateExportRequest.type;
+    }
     if (this.enableMultiTenancy) {
       exportJob.tenantId = initiateExportRequest.tenantId;
     }
