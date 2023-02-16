@@ -723,7 +723,6 @@ Object {
   "sub": "test@test.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
-    "system/Patient.read",
     "system/*.read",
   ],
   "ver": 1,

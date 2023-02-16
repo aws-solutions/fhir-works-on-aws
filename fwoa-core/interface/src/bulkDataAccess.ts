@@ -13,7 +13,6 @@ export type ExportType = 'system' | 'group' | 'patient';
 export interface InitiateExportRequest {
   requesterUserId: string;
   exportType: ExportType;
-  allowedResourceTypes: string[];
   transactionTime: string;
   outputFormat?: string;
   since?: string;

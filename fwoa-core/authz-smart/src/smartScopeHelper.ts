@@ -117,7 +117,8 @@ function isSmartScopeSufficientForBulkDataAccess(
     if (bulkDataAuth.exportType === 'system') {
       bulkDataRequestHasCorrectScope = hasSufficientScopeType && resourceType === '*' && hasReadPermissions;
     } else if (bulkDataAuth.exportType === 'group') {
-      bulkDataRequestHasCorrectScope = ['system'].includes(scopeType) && hasReadPermissions;
+      bulkDataRequestHasCorrectScope =
+        ['system'].includes(scopeType) && hasReadPermissions && resourceType === '*';
     }
     return bulkDataRequestHasCorrectScope;
   }
