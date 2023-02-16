@@ -8,6 +8,7 @@ common
 .next
 build
 lib
+fwoa-core/javaHapiValidatorLambda/src/test/
 
 #Third party file
 THIRD-PARTY$
@@ -33,7 +34,6 @@ fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
 fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
 fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
-fwoa-core/javaHapiValidatorLambda/test/*
 
 # Team Email
 .github/temp-workflows/release-pr.yml:28
