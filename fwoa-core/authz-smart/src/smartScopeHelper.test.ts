@@ -621,34 +621,35 @@ describe('rejectInvalidScopeCombination', () => {
 });
 
 describe('validateTokenScopes', () => {
-  const arrayScopesCases: (string | boolean | any)[][] = [
-    ['happy cases', ['user/*.read', 'user/Patient.read', 'patient/*.*'], 'launchPatient', 'fhirUser'],
-    [
-      'nonsensical token with user/ scopes without a FHIR user',
-      ['user/*.read', 'user/Patient.read', 'patient/*.*'],
-      'launchPatient',
-      undefined
-    ],
-    [
-      'nonsensical token with patient/ scopes without a patient in context',
-      ['user/*.read', 'user/Patient.read', 'patient/*.*'],
-      undefined,
-      'fhirUser'
-    ]
-  ];
-  test.each(arrayScopesCases)('CASE: %p', (_firstArg, scopes, patientContextClaim, fhirUserClaim) => {
-    if (patientContextClaim && fhirUserClaim) {
-      expect(validateTokenScopes(scopes, patientContextClaim, fhirUserClaim)).toBeUndefined();
-    }
-    if (patientContextClaim && !fhirUserClaim) {
-      expect(() => {
-        validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
-      }).toThrow('Invalid user scopes in token.');
-    }
-    if (!patientContextClaim && fhirUserClaim) {
-      expect(() => {
-        validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
-      }).toThrow('Invalid patient scopes in token.');
-    }
+  test('happy case', () => {
+    //BUILD
+    const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
+    //OPERATE & CHECK
+    expect(validateTokenScopes(scopes, 'launchPatient', 'fhirUser')).toBeUndefined();
+  });
+  describe('invaild cases', () => {
+    //BUILD
+    const arrayScopesCases: [string[], string | undefined, string | undefined, string][] = [
+      [
+        ['user/*.read', 'user/Patient.read', 'patient/*.*'],
+        'launchPatient',
+        undefined,
+        'Invalid user scopes in token.'
+      ],
+      [
+        ['user/*.read', 'user/Patient.read', 'patient/*.*'],
+        undefined,
+        'fhirUser',
+        'Invalid patient scopes in token.'
+      ]
+    ];
+    test.each(arrayScopesCases)(
+      'given scopes: %p, patient context: %p, and fhir context: %p error should be: %p',
+      (scopes, patientContextClaim, fhirUserClaim, errorMessage) => {
+        expect(() => {
+          validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
+        }).toThrow(errorMessage);
+      }
+    );
   });
 });
