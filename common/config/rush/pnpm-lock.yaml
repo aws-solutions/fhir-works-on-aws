@@ -501,7 +501,7 @@ importers:
 
   ../../solutions/deployment:
     specifiers:
-      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.64.0-alpha.0
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.61.0-alpha.0
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-rbac': workspace:*
       '@aws/fhir-works-on-aws-interface': workspace:*
@@ -525,8 +525,8 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
-      aws-cdk: 2.45.0
-      aws-cdk-lib: ^2.64.0
+      aws-cdk: 2.61.0
+      aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -568,7 +568,7 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
-      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
       '@aws/fhir-works-on-aws-authz-rbac': link:../../fwoa-core/authz-rbac
       '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
@@ -611,7 +611,7 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
-      aws-cdk: 2.45.0
+      aws-cdk: 2.61.0
       chance: 1.1.9
       esbuild: 0.14.54
       eslint: 8.33.0
@@ -638,7 +638,7 @@ importers:
 
   ../../solutions/smart-deployment:
     specifiers:
-      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.64.0-alpha.0
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.61.0-alpha.0
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-smart': workspace:*
       '@aws/fhir-works-on-aws-interface': workspace:*
@@ -662,8 +662,8 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
-      aws-cdk: 2.45.0
-      aws-cdk-lib: ^2.64.0
+      aws-cdk: 2.61.0
+      aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -699,7 +699,7 @@ importers:
       wait-for-expect: ^3.0.2
       yargs: ^16.2.0
     dependencies:
-      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
       '@aws/fhir-works-on-aws-authz-smart': link:../../fwoa-core/authz-smart
       '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
@@ -739,7 +739,7 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
-      aws-cdk: 2.45.0
+      aws-cdk: 2.61.0
       chance: 1.1.9
       esbuild: 0.14.54
       eslint: 8.33.0
@@ -804,14 +804,14 @@ packages:
       }
     dev: false
 
-  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.64.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m:
+  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m:
     resolution:
       {
-        integrity: sha512-WrSbHiv6Npi6SWwZl+WbarMY/nkUE7WVoKrXrV8AS6Vqrdfl+4HsrWbx2oyC8FjfZW2Ts+V4QPXQv8tjlYDprQ==
+        integrity: sha512-hbigorGAW0jUc5KhwebD5/gmBztWPuSzV84qsrambSC1RAlDDUFQ9N+jEgyqV6U6D/OsDp/XnbGKjtTh6OIZ1Q==
       }
     engines: { node: '>= 14.15.0' }
     peerDependencies:
-      aws-cdk-lib: ^2.64.0
+      aws-cdk-lib: ^2.61.0
       constructs: ^10.0.0
     dependencies:
       aws-cdk-lib: 2.64.0_constructs@10.1.244
@@ -7628,10 +7628,10 @@ packages:
       - semver
       - yaml
 
-  /aws-cdk/2.45.0:
+  /aws-cdk/2.61.0:
     resolution:
       {
-        integrity: sha512-AIug6Ugvtd3I0+U3gTNZtJVDhOgpGpxwWMoOQUlX6xKGwDgQxWrWdq2QWe7ZyKgCRnY9SM90fa+Yxbx+VYk9Bw==
+        integrity: sha512-5vcDdVR9HG3Kq1LAoRoxb8vmF5eqoT9hCFx85olMXqALx/DQ5/ooCCDKbQrp+zNhYXcALiIo+1W+jJpfRnhA+g==
       }
     engines: { node: '>= 14.15.0' }
     hasBin: true

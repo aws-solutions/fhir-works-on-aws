@@ -47,10 +47,11 @@ export class FhirWorksAppRegistry extends Construct {
   private _attributeGroupName: string;
   private _accountIds: string[];
   private _destroy: boolean;
+  private _appInsights: boolean;
   private readonly _registryApplication: appreg.Application;
   private readonly _appRegMap: CfnMapping;
 
-  public constructor(scope: Construct, id: string, props: FhirWorksAppRegistryProps) {
+  public constructor(scope: Construct, id: string, props: WorkbenchAppRegistryProps) {
     super(scope, id);
     const stack: Stack = scope as Stack;
     this._solutionId = props.solutionId;
@@ -61,20 +62,23 @@ export class FhirWorksAppRegistry extends Construct {
     this._attributeGroupName = props.attributeGroupName;
     this._accountIds = props.accountIds ? props.accountIds : [];
     this._destroy = props.destroy ? props.destroy : false;
-    this._appRegMap = this._createMap(stack);
-    this._registryApplication = this._createAppRegistry(stack);
+    this._appInsights = props.appInsights ? props.appInsights : false;
+    this._appRegMap = this._createMap(stack, id);
+    this._registryApplication = this._createAppRegistry(stack, id);
     this._applyTagsToApplication();
   }
 
-  public applyAppRegistryToStacks(resourceStacks: Stack[]): void {
+  public applyAppRegistryToStacks(resourceStacks: Stack[], appInsights: boolean): void {
     resourceStacks.forEach((resourceStack) => {
       this._registryApplication.associateApplicationWithStack(resourceStack);
-      createAppInsightsConfiguration(resourceStack);
+      if (appInsights) {
+        createAppInsightsConfiguration(resourceStack);
+      }
     });
   }
 
-  private _createAppRegistry(stack: Stack): appreg.Application {
-    const application = new appreg.Application(stack, 'AppRegistry', {
+  private _createAppRegistry(stack: Stack, id: string): appreg.Application {
+    const application = new appreg.Application(stack, `${id}-Application`, {
       applicationName: Fn.join('-', [
         this._appRegMap.findInMap('Data', 'AppRegistryApplicationName'),
         Aws.REGION,
@@ -95,7 +99,7 @@ export class FhirWorksAppRegistry extends Construct {
     }
     application.associateApplicationWithStack(stack);
 
-    const attributeGroup = new appreg.AttributeGroup(stack, 'DefaultApplicationAttributes', {
+    const attributeGroup = new appreg.AttributeGroup(stack, `${id}-AttributeGroup`, {
       attributeGroupName: this._appRegMap.findInMap('Data', 'AttributeGroupName'),
       description: 'Attribute group for solution information',
       attributes: {
@@ -119,13 +123,19 @@ export class FhirWorksAppRegistry extends Construct {
 
     application.associateAttributeGroup(attributeGroup);
 
-    createAppInsightsConfiguration(stack);
+    if (this._appInsights) {
+      createAppInsightsConfiguration(stack);
+    }
+
+    new CfnOutput(this, `${id}-AppRegistryApplicationArn`, {
+      value: application.applicationArn
+    });
 
     return application;
   }
 
-  private _createMap(stack: Stack): CfnMapping {
-    const map = new CfnMapping(stack, `${this._solutionName}-AppRegMap`);
+  private _createMap(stack: Stack, id: string): CfnMapping {
+    const map = new CfnMapping(stack, `${id}-Solution`);
     map.setValue('Data', 'ID', this._solutionId);
     map.setValue('Data', 'Version', this._solutionVersion);
     map.setValue('Data', 'AppRegistryApplicationName', this._appRegistryApplicationName);
@@ -137,24 +147,20 @@ export class FhirWorksAppRegistry extends Construct {
   }
 
   private _applyTagsToApplication(): void {
+    applyTag(this._registryApplication, 'Solutions:SolutionID', this._appRegMap.findInMap('Data', 'ID'));
     applyTag(
       this._registryApplication,
-      `${this._solutionName}:SolutionID`,
-      this._appRegMap.findInMap('Data', 'ID')
-    );
-    applyTag(
-      this._registryApplication,
-      `${this._solutionName}:SolutionName`,
+      'Solutions:SolutionName',
       this._appRegMap.findInMap('Data', 'SolutionName')
     );
     applyTag(
       this._registryApplication,
-      `${this._solutionName}:SolutionVersion`,
+      'Solutions:SolutionVersion',
       this._appRegMap.findInMap('Data', 'Version')
     );
     applyTag(
       this._registryApplication,
-      `${this._solutionName}:ApplicationType`,
+      'Solutions:ApplicationType',
       this._appRegMap.findInMap('Data', 'ApplicationType')
     );
   }
