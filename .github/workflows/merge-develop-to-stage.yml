@@ -44,7 +44,7 @@ jobs:
           repo: fhir-works-on-aws
           branch: stage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: enable merge commits
         uses: octokit/request-action@v2.x
@@ -60,13 +60,13 @@ jobs:
         run: |
           echo "Set the COMMIT_ID to merge to stage, to current workflow commit id"
           COMMIT_ID=$GITHUB_SHA
-          git checkout stage
+          git checkout test_workflows
           echo
           echo "  Attempting to merge the 'develop' branch ($COMMIT_ID)"
           echo "  into the 'stage' branch ($(git log -1 --pretty=%H stage))"
           echo
           git merge $COMMIT_ID --ff-only --no-edit
-          git push origin stage
+          git push origin test_workflows
 
       - name: disable merge commits
         uses: octokit/request-action@v2.x
@@ -76,7 +76,7 @@ jobs:
           repo: fhir-works-on-aws
           allow_merge_commit: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Enable branch protection on stage
         uses: octokit/request-action@v2.x
@@ -87,4 +87,4 @@ jobs:
           repo: fhir-works-on-aws
           branch: stage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
