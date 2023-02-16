@@ -11,7 +11,7 @@ import {
   getScopes,
   getValidOperationsForScopeTypeAndAccessType,
   rejectInvalidScopeCombination,
-  rejectNonsensicalToken
+  validateTokenScopes
 } from './smartScopeHelper';
 
 const emptyScopeRule = (): ScopeRule => ({
@@ -620,21 +620,35 @@ describe('rejectInvalidScopeCombination', () => {
   });
 });
 
-describe('rejectNonsensicalToken', () => {
-  test('happe cases', () => {
-    const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
-    expect(rejectNonsensicalToken(scopes, 'launchPatient', 'fhirUser')).toBeUndefined();
-  });
-  test('nonsensical token with user/ scopes without a FHIR user', () => {
-    const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
-    expect(() => {
-      rejectNonsensicalToken(scopes, 'launchPatient', undefined);
-    }).toThrow('Invalid user scopes in token.');
-  });
-  test('nonsensical token with patient/ scopes without a patient in context', () => {
-    const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
-    expect(() => {
-      rejectNonsensicalToken(scopes, undefined, 'fhirUser');
-    }).toThrow('Invalid patient scopes in token.');
+describe('validateTokenScopes', () => {
+  const arrayScopesCases: (string | boolean | any)[][] = [
+    ['happy cases', ['user/*.read', 'user/Patient.read', 'patient/*.*'], 'launchPatient', 'fhirUser'],
+    [
+      'nonsensical token with user/ scopes without a FHIR user',
+      ['user/*.read', 'user/Patient.read', 'patient/*.*'],
+      'launchPatient',
+      undefined
+    ],
+    [
+      'nonsensical token with patient/ scopes without a patient in context',
+      ['user/*.read', 'user/Patient.read', 'patient/*.*'],
+      undefined,
+      'fhirUser'
+    ]
+  ];
+  test.each(arrayScopesCases)('CASE: %p', (_firstArg, scopes, patientContextClaim, fhirUserClaim) => {
+    if (patientContextClaim && fhirUserClaim) {
+      expect(validateTokenScopes(scopes, patientContextClaim, fhirUserClaim)).toBeUndefined();
+    }
+    if (patientContextClaim && !fhirUserClaim) {
+      expect(() => {
+        validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
+      }).toThrow('Invalid user scopes in token.');
+    }
+    if (!patientContextClaim && fhirUserClaim) {
+      expect(() => {
+        validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
+      }).toThrow('Invalid patient scopes in token.');
+    }
   });
 });
