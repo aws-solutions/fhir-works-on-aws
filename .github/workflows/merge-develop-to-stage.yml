@@ -7,7 +7,7 @@ name: Merge-develop-to-stage
 on:
   push:
     branches:
-      - 'develop'
+      - test-workflows
 
 jobs:  
   pre-deployment-check:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: "Block Concurrent Deployments"
+      - name: Block Concurrent Deployments
         uses: softprops/turnstyle@v1
         with:
           poll-interval-seconds: 10
