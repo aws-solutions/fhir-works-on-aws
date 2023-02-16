@@ -5,7 +5,7 @@
 
 import * as appreg from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import { SharePermission } from '@aws-cdk/aws-servicecatalogappregistry-alpha';
-import { Aws, CfnMapping, Fn, RemovalPolicy, Stack, Tags } from 'aws-cdk-lib';
+import { Aws, CfnMapping, CfnOutput, Fn, RemovalPolicy, Stack, Tags } from 'aws-cdk-lib';
 import { Construct, IConstruct } from 'constructs';
 import { CfnApplication } from 'aws-cdk-lib/aws-applicationinsights';
 
@@ -36,6 +36,7 @@ export interface FhirWorksAppRegistryProps {
   attributeGroupName: string;
   accountIds?: string[];
   destroy?: boolean;
+  appInsights?: boolean;
 }
 
 export class FhirWorksAppRegistry extends Construct {
@@ -51,7 +52,7 @@ export class FhirWorksAppRegistry extends Construct {
   private readonly _registryApplication: appreg.Application;
   private readonly _appRegMap: CfnMapping;
 
-  public constructor(scope: Construct, id: string, props: WorkbenchAppRegistryProps) {
+  public constructor(scope: Construct, id: string, props: FhirWorksAppRegistryProps) {
     super(scope, id);
     const stack: Stack = scope as Stack;
     this._solutionId = props.solutionId;

@@ -31,7 +31,7 @@ const solutionName: string = 'FHIR Works';
 const solutionVersion: string = '6.0.0';
 const attributeGroupName: string = 'fhir-works-AttributeGroup';
 const applicationType: string = 'AWS-Solutions';
-const appRegistryApplicationName: string = 'FHIR Works';
+const appRegistryApplicationName: string = 'fhir-works';
 
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
