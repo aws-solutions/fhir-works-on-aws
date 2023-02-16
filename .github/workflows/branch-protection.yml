@@ -1,0 +1,30 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Branch protection
+on:
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
+# The purpose of this workflow is to create a failing Status check on pull request against develop. This will prevent
+# PR from being merged into main/stage.
+jobs:
+  main-protection:
+    name: Only create PR against develop branch, not main or stage branch
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v5.1
+      - name: main protection
+        if: |
+          (steps.branch-name.outputs.base_ref_branch == 'main' && startsWith(steps.branch-name.outputs.head_ref_branch, 'release/') == false) || 
+          (steps.branch-name.outputs.base_ref_branch == 'stage')
+        run: |
+          echo "PR has target branch ${{ steps.branch-name.outputs.base_ref_branch }}. Failing workflow..."
+          exit 1
