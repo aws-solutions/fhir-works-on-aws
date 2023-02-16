@@ -60,16 +60,17 @@ jobs:
         run: |
           echo "Set the COMMIT_ID to merge to stage, to current workflow commit id"
           COMMIT_ID=$GITHUB_SHA
-          git checkout test_workflows
+          git checkout test-workflows
           echo
           echo "  Attempting to merge the 'develop' branch ($COMMIT_ID)"
           echo "  into the 'stage' branch ($(git log -1 --pretty=%H stage))"
           echo
           git merge $COMMIT_ID --ff-only --no-edit
-          git push origin test_workflows
+          git push origin test-workflows
 
       - name: disable merge commits
         uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
         with:
           route: PATCH /repos/{owner}/{repo}
           owner: aws-solutions
