@@ -1,6 +1,5 @@
 name: create-release
-# on: workflow_dispatch
-on: push
+on: workflow_dispatch
 jobs:
   create-release-branch:
     # if: ${{github.ref_name == 'stage'}}
