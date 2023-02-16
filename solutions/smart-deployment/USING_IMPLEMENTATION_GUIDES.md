@@ -33,43 +33,44 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
    ```
    > **Note**  
    > This command needs to be invoked in the top level directory of the cloned `fhir-works-on-aws-deployment` repository.
-1. Deploy the Hapi Validator using the following commands:
-
-   ```
-   #fhir-works-on-aws-deployment
-   rushx run compile-igs
-   ```
+1. Compile the Validator package:
+    ```bash
+      cd ../../fwoa-core/javaHapiValidatorLambda
+      mvn clean install
+      cd ../../solutions/smart-deployment
+    ```
+1. Deploy the Hapi Validator using the following commands for CDK:
 
    > **Note**  
    > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-   > comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+   > comments on [pom.xml](../../fwoa-core/javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the optional `fhirVersion` parameter:
 
    ```sh
-   rushx deploy -c useHapiValidator=true -c fhirVersion=4.0.1
+   rushx deploy -c useHapiValidator=true -c fhirVersion=4.0.1 --all
    ```
 
    Or, with Serverless, continue with these steps: (LEGACY)
 
    ```bash
-   #fhir-works-on-aws-deployment/javaHapiValidatorLambda
-   cd javaHapiValidatorLambda
+   #fwoa-core/javaHapiValidatorLambda
+   cd ../../fwoa-core/javaHapiValidatorLambda
    mvn clean install
+   cd ../../solutions/smart-deployment
    serverless deploy
    ```
 
 > **Note**  
 > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-> comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+> comments on [pom.xml](../../fwoa-core/javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
 
     ```bash
-    #fhir-works-on-aws-deployment/javaHapiValidatorLambda
+    #fhir-works-on-aws/solutions/smart-deployment/javaHapiValidatorLambda
     serverless deploy --fhirVersion '3.0.1'
     ```
 
 1. Deploy the FHIR Works on AWS server using the `deploy` command (after navigating back to the top level directory of the cloned repository):
    ```bash
    #fhir-works-on-aws-deployment
-   cd ..
    serverless deploy --useHapiValidator true
    ```
 
