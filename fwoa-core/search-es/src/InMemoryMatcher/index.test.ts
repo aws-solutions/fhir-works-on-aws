@@ -12,7 +12,7 @@ const fhirSearchParametersRegistry = new FHIRSearchParametersRegistry('4.0.1');
 const givenParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'given')!;
 const familyParam = fhirSearchParametersRegistry.getSearchParameter('Patient', 'family')!;
 
-describe('evaluateParsedFhirQueryParams', () => {
+describe('evaluateParsedFhirQueryParams123', () => {
   test('resourceType mismatch', () => {
     const resource = {
       resourceType: 'Patient'
