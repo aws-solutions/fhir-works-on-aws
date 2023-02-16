@@ -54,7 +54,7 @@ jobs:
           repo: fhir-works-on-aws
           allow_merge_commit: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Merge to stage
         run: |
@@ -80,7 +80,7 @@ jobs:
 
       - name: Enable branch protection on stage
         uses: octokit/request-action@v2.x
-        if: always() # Make sure to enable branch protection even if other steps fail test
+        if: always() # Make sure to enable branch protection even if other steps fail
         with:
           route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
           owner: aws-solutions
