@@ -80,7 +80,7 @@ jobs:
 
       - name: Enable branch protection on stage
         uses: octokit/request-action@v2.x
-        if: always() # Make sure to enable branch protection even if other steps fail
+        if: always() # Make sure to enable branch protection even if other steps fail test
         with:
           route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
           owner: aws-solutions
