@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "update License header",
+      "comment": "Update license header for logger middleware files",
       "type": "patch"
     }
   ],
