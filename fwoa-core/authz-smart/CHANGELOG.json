@@ -1,0 +1,25 @@
+{
+  "name": "@aws/fhir-works-on-aws-authz-smart",
+  "entries": [
+    {
+      "version": "4.0.0",
+      "tag": "@aws/fhir-works-on-aws-authz-smart_v4.0.0",
+      "date": "Fri, 17 Feb 2023 17:22:18 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Reject token with scopes that can not be used"
+          },
+          {
+            "comment": "Only allow system/*.read scope for group export"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
+          }
+        ]
+      }
+    }
+  ]
+}

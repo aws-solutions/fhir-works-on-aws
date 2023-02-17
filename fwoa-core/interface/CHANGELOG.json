@@ -1,0 +1,22 @@
+{
+  "name": "@aws/fhir-works-on-aws-interface",
+  "entries": [
+    {
+      "version": "13.0.0",
+      "tag": "@aws/fhir-works-on-aws-interface_v13.0.0",
+      "date": "Fri, 17 Feb 2023 17:22:18 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update license header for logger files"
+          }
+        ],
+        "major": [
+          {
+            "comment": "Remove allowedResourceTypes from bulk export interface"
+          }
+        ]
+      }
+    }
+  ]
+}

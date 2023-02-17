@@ -1,0 +1,17 @@
+{
+  "name": "@aws/fhir-works-on-aws-authz-rbac",
+  "entries": [
+    {
+      "version": "5.0.1",
+      "tag": "@aws/fhir-works-on-aws-authz-rbac_v5.0.1",
+      "date": "Fri, 17 Feb 2023 17:22:18 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
+          }
+        ]
+      }
+    }
+  ]
+}

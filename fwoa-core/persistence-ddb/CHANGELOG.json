@@ -1,0 +1,22 @@
+{
+  "name": "@aws/fhir-works-on-aws-persistence-ddb",
+  "entries": [
+    {
+      "version": "4.0.0",
+      "tag": "@aws/fhir-works-on-aws-persistence-ddb_v4.0.0",
+      "date": "Fri, 17 Feb 2023 17:22:18 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Remove allowedResourceTypes from bulk export"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
+          }
+        ]
+      }
+    }
+  ]
+}
