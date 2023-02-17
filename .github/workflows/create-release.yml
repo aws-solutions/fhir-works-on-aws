@@ -37,7 +37,7 @@ jobs:
 
           echo 'Rush version to bump updates'
           node common/scripts/install-run-rush.js version --bump -b release/$uuid --ignore-git-hooks
-          echo "source_branch=$(format('release', uuid))" >> $GITHUB_OUTPUT
+          echo "source_branch=release/$uuid" >> $GITHUB_OUTPUT
   
   create-release-branch-pr-to-main:
     runs-on: ubuntu-20.04
