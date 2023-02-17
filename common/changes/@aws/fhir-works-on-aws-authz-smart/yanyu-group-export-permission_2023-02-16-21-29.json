@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "comment": "Only allow system/*.read scope for group export",
+      "type": "major"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-smart"
+}

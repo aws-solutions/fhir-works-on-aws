@@ -3,11 +3,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-name: Merge-develop-to-stage
+name: Merge develop to stage
 on:
   push:
     branches:
-      - 'develop'
+      - develop
 
 jobs:  
   pre-deployment-check:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: "Block Concurrent Deployments"
+      - name: Block Concurrent Deployments
         uses: softprops/turnstyle@v1
         with:
           poll-interval-seconds: 10
@@ -46,7 +46,7 @@ jobs:
           repo: fhir-works-on-aws
           branch: stage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: enable merge commits
         uses: octokit/request-action@v2.x
@@ -56,7 +56,7 @@ jobs:
           repo: fhir-works-on-aws
           allow_merge_commit: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Merge to stage
         run: |
@@ -72,13 +72,14 @@ jobs:
 
       - name: disable merge commits
         uses: octokit/request-action@v2.x
+        if: always() # Make sure to disable merge commit even if other steps fail
         with:
           route: PATCH /repos/{owner}/{repo}
           owner: aws-solutions
           repo: fhir-works-on-aws
           allow_merge_commit: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Enable branch protection on stage
         uses: octokit/request-action@v2.x
@@ -89,4 +90,4 @@ jobs:
           repo: fhir-works-on-aws
           branch: stage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
