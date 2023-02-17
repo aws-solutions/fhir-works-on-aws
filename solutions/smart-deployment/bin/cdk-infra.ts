@@ -85,12 +85,12 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
 });
 new FhirWorksAppRegistry(stack, 'SmartFhirWorksAppRegistry', {
-  solutionId: solutionId,
-  solutionName: solutionName,
-  solutionVersion: solutionVersion,
-  attributeGroupName: attributeGroupName,
-  applicationType: applicationType,
-  appRegistryApplicationName: appRegistryApplicationName
+  solutionId,
+  solutionName,
+  solutionVersion,
+  attributeGroupName,
+  applicationType,
+  appRegistryApplicationName
 });
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
 // run cdk nag
