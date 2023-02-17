@@ -32,8 +32,8 @@ This packages uses SMART scopes and the references found in the resources as a w
 
 This resource server supports [SMART' v1.0.0 clinical scopes](http://www.hl7.org/fhir/smart-app-launch/1.0.0/scopes-and-launch-context/#scopes-for-requesting-clinical-data). There are some assumptions made on the authorization and resource server relationship:
 
-- For `patient` scopes, there must be a `launch_response_patient` claim in the access token.
-- For `user` scopes, there must be a `fhirUser` claim in the access token.
+- For `patient` scopes, there must be a `launch_response_patient` claim in the access token. The access token with `patient` scopes but no `launch_response_patient` claim will be rejected. 
+- For `user` scopes, there must be a `fhirUser` claim in the access token. The access token with `user` scopes but no `fhirUser` claim will be rejected.
 - The access modifiers `read` and `write` will give permissions as defined in the incoming [SMARTConfig](./src/smartConfig.ts).
 
 The resource server also supports [SMART's Flat FHIR or Bulk Data `system` scope](https://hl7.org/fhir/uv/bulkdata/authorization/index.html#scopes). `system` scopes have the format `system/(:resourceType|*).(read|write|*)`– which conveys the same access scope as the matching user format `user/(:resourceType|*).(read|write|*)`.
