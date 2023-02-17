@@ -47,8 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-      - run: "echo data: '${{ JSON.stringify(steps.branch-protection.outputs) }}'"
-
+      - name: echo
+        env:
+          OUTPUT: ${{ toJson(steps.branch-protection.outputs) }}
+        run: echo "$OUTPUT"
       # - run: |
       #     curl \
       #     -X DELETE \
