@@ -7,9 +7,10 @@ jobs:
   create-release-branch:
     # if: ${{github.ref_name == 'stage'}}
     runs-on: ubuntu-20.04
+    outputs:
+      source_branch: ${{ steps.create_branch.outputs.source_branch }}
     steps:
       - uses: actions-cool/check-user-permission@v2
-        id: check_admin
         with:
           require: 'admin'
           username: ${{ github.triggering_actor }}
@@ -26,6 +27,7 @@ jobs:
           git config user.email $BOT_USER_EMAIL
           git config user.name $BOT_USER_NAME
       - name: create release branch
+        id: create_branch
         run: |
           echo "Create UUID"
           uuid=`uuidgen`
@@ -34,26 +36,23 @@ jobs:
 
           echo 'Rush version to bump updates'
           node common/scripts/install-run-rush.js version --bump -b release/$uuid --ignore-git-hooks
+          echo "source_branch=$(format('release', uuid))" >> $GITHUB_OUTPUT
   
   create-release-branch-pr-to-main:
     runs-on: ubuntu-20.04
-    needs: [create-release-branch]
+    needs: create-release-branch
     outputs:
       pr_number: ${{ steps.open-pr.outputs.pr_number }}
     steps:
-    - uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
-    
     - name: Get current date
-      id: date      
+      id: date
       run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
     - name: create-pull-request
       id: open-pr
       uses: repo-sync/pull-request@v2
       with:
+        source_branch: ${{ needs.create-release-branch.outputs.source_branch }}
         destination_branch: "test-workflows"
         pr_title: release-${{ steps.date.outputs.date }}
         pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
