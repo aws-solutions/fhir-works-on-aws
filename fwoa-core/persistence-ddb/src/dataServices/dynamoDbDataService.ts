@@ -361,18 +361,6 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
   buildExportJob(initiateExportRequest: InitiateExportRequest): BulkExportJob {
     const initialStatus: ExportJobStatus = 'in-progress';
     const uuid = uuidv4();
-    // Combine allowedResourceTypes and user input parameter type before pass to Glue job
-    let type = initiateExportRequest.allowedResourceTypes.join(',');
-    if (initiateExportRequest.type) {
-      // If the types user requested are not a subset of allowed types, reject
-      if (
-        difference(initiateExportRequest.type.split(','), initiateExportRequest.allowedResourceTypes)
-          .length !== 0
-      ) {
-        throw new UnauthorizedError('User does not have permission for requested resource type.');
-      }
-      type = initiateExportRequest.type;
-    }
     const exportJob: BulkExportJob = {
       jobId: uuid,
       jobOwnerId: initiateExportRequest.requesterUserId,
@@ -381,11 +369,13 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
       serverUrl: initiateExportRequest.serverUrl ?? '',
       outputFormat: initiateExportRequest.outputFormat ?? 'ndjson',
       since: initiateExportRequest.since ?? '1800-01-01T00:00:00.000Z', // Default to a long time ago in the past
-      type,
       transactionTime: initiateExportRequest.transactionTime,
       jobStatus: initialStatus,
       jobFailedMessage: ''
     };
+    if (initiateExportRequest.type) {
+      exportJob.type = initiateExportRequest.type;
+    }
     if (this.enableMultiTenancy) {
       exportJob.tenantId = initiateExportRequest.tenantId;
     }

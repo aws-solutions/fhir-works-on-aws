@@ -112,5 +112,5 @@ FWoA supports 2 types of notifications
 
   > **Note**  
   > The Id-only notifications differ slightly from the FHIR spec.
-  The spec indicates that the entire matching FHIR resource is sent in JSON format, but we chose to only send the Id since
-  sending the entire resource poses a security risk.
+  > The spec indicates that the entire matching FHIR resource is sent in JSON format, but we chose to only send the Id since
+  > sending the entire resource poses a security risk.
