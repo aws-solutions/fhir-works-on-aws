@@ -79,7 +79,6 @@ export class FhirWorksAppRegistry extends Construct {
   }
 
   private _createAppRegistry(stack: Stack, id: string): appreg.Application {
-    console.log(`hh here is the id  nikil ${id}`);
     const application = new appreg.Application(stack, `${id}-Application`, {
       applicationName: Fn.join('-', [
         this._appRegMap.findInMap('Data', 'AppRegistryApplicationName'),
