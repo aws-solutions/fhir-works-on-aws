@@ -6,7 +6,7 @@ import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { HIPAASecurityChecks, NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../src/lib/cdk-infra-stack';
 import * as fs from 'fs';
-
+import { FhirWorksAppRegistry } from '../src/lib/fhirWorksAppRegistry';
 // initialize with defaults
 const app = new cdk.App();
 
@@ -27,6 +27,13 @@ const oAuth2ApiEndpoint: string = app.node.tryGetContext('oAuth2ApiEndpoint') ||
 const patientPickerEndpoint: string = app.node.tryGetContext('patientPickerEndpoint') || '';
 const validateXHTML: boolean = app.node.tryGetContext('validateXHTML') || false;
 
+// FhirWorksAppRegistry Constants
+const solutionId: string = 'SO0128';
+const solutionName: string = 'FHIR Works';
+const solutionVersion: string = '6.0.0';
+const attributeGroupName: string = 'smart-fhir-works-AttributeGroup';
+const applicationType: string = 'AWS-Solutions';
+const appRegistryApplicationName: string = 'smart-fhir-works';
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
 // https://github.com/aws/aws-cdk/blob/main/packages/%40aws-cdk/aws-lambda-nodejs/lib/bundling.ts#L110
@@ -77,7 +84,14 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
 });
-
+new FhirWorksAppRegistry(stack, 'SmartFhirWorksAppRegistry', {
+  solutionId: solutionId,
+  solutionName: solutionName,
+  solutionVersion: solutionVersion,
+  attributeGroupName: attributeGroupName,
+  applicationType: applicationType,
+  appRegistryApplicationName: appRegistryApplicationName
+});
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
 // run cdk nag
 Aspects.of(app).add(new AwsSolutionsChecks());
