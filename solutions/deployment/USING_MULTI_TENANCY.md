@@ -16,9 +16,9 @@ rushx deploy -c enableMultiTenancy=true
 
 > **Note**  
 > Updating an existing (single-tenant) stack to enable multi-tenancy is a breaking change. Multi-tenant
-deployments use a different data partitioning strategy that renders the old, single-tenant, data inaccessible.
-If you wish to switch from single-tenant to a multi-tenant model, it is recommended to create a new multi-tenant stack
-and then migrate the data from the old stack. Switching from multi-tenant to a single-tenant model is also a breaking change.
+> deployments use a different data partitioning strategy that renders the old, single-tenant, data inaccessible.
+> If you wish to switch from single-tenant to a multi-tenant model, it is recommended to create a new multi-tenant stack
+> and then migrate the data from the old stack. Switching from multi-tenant to a single-tenant model is also a breaking change.
 
 ## Tenant identifiers
 

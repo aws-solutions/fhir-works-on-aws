@@ -204,3 +204,13 @@ export function filterOutUnusableScope(
 
   return filteredScopes;
 }
+
+export function validateTokenScopes(scopes: string[], patientContext?: string, fhirUser?: string): void {
+  rejectInvalidScopeCombination(scopes);
+  if (scopes.some((scope: string) => scope.startsWith('patient/')) && !patientContext) {
+    throw new UnauthorizedError('Invalid patient scopes in token.');
+  }
+  if (scopes.some((scope: string) => scope.startsWith('user/')) && !fhirUser) {
+    throw new UnauthorizedError('Invalid user scopes in token.');
+  }
+}
