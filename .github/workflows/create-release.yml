@@ -5,7 +5,7 @@ env:
   BOT_USER_NAME: ${{ vars.BOT_USER_NAME }}
 jobs:
   create-release-branch:
-    # if: ${{github.ref_name == 'stage'}}
+    if: ${{github.ref_name == 'stage'}}
     runs-on: ubuntu-20.04
     outputs:
       source_branch: ${{ steps.create_branch.outputs.source_branch }}
@@ -59,7 +59,7 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
         source_branch: ${{ needs.create-release-branch.outputs.source_branch }}
-        destination_branch: "test-workflows"
+        destination_branch: "main"
         pr_title: release-${{ steps.date.outputs.date }}
         pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
         pr_label: "auto-release-pr"
