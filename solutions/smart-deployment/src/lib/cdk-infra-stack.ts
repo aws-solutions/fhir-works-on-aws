@@ -64,6 +64,7 @@ export interface FhirWorksStackProps extends StackProps {
   patientPickerEndpoint: string;
   fhirVersion: string;
   validateXHTML: boolean;
+  enableLoggerMiddleware: boolean;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -102,7 +103,7 @@ export default class FhirWorksStack extends Stack {
     const PATIENT_COMPARTMENT_V4 = 'patientCompartmentSearchParams.4.0.1.json';
 
     // Create KMS Resources
-    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account);
+    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account, props!.enableLoggerMiddleware,);
 
     // Define ElasticSearch resources here:
     const elasticSearchResources = new ElasticSearchResources(
@@ -350,7 +351,11 @@ export default class FhirWorksStack extends Stack {
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,
-      VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false'
+      VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false',
+      LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.loggerMiddlewareKMSKey
+      ? kmsResources.loggerMiddlewareKMSKey.keyArn
+        : 'ENCRYPTION_TURNED_OFF',
+      ENABLE_LOGGING_MIDDLEWARE: `${props!.enableLoggerMiddleware}`,
     };
 
     const defaultLambdaBundlingOptions = {
@@ -847,7 +852,8 @@ export default class FhirWorksStack extends Stack {
                 resources: [
                   kmsResources.s3KMSKey.keyArn,
                   kmsResources.dynamoDbKMSKey.keyArn,
-                  kmsResources.elasticSearchKMSKey.keyArn
+                  kmsResources.elasticSearchKMSKey.keyArn,
+                  kmsResources.loggerMiddlewareKMSKey?.keyArn as string,
                 ]
               }),
               new PolicyStatement({

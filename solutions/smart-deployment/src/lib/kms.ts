@@ -15,6 +15,8 @@ export default class KMSResources {
 
     snsKMSKey: Key;
 
+    loggerMiddlewareKMSKey?: Key;
+
     s3Alias: Alias;
 
     dynamoDbAlias: Alias;
@@ -25,7 +27,9 @@ export default class KMSResources {
 
     snsAlias: Alias;
 
-    constructor(scope: Construct, region: string, stage: string, account: string) {
+    loggerMiddlewareAlias?: Alias;
+
+    constructor(scope: Construct, region: string, stage: string, account: string, enableLoggerMiddleware: boolean,) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
             description: 'Encryption key for daily',
             enableKeyRotation: true,
@@ -154,6 +158,29 @@ export default class KMSResources {
             }),
         });
 
+        if (enableLoggerMiddleware) {
+            this.loggerMiddlewareKMSKey = new Key(scope, 'loggerMiddlewareKMSKey', {
+                enableKeyRotation: true,
+                description: 'KMS CMK for Logging Middleware',
+                policy: new PolicyDocument({
+                    statements: [
+                        new PolicyStatement({
+                            sid: 'Allow loggermiddleware to use this Key policy',
+                            effect: Effect.ALLOW,
+                            actions: ['kms:*'],
+                            resources: ['*'],
+                            principals: [new AccountRootPrincipal()],
+                        }),
+                    ],
+                }),
+            });
+
+            this.loggerMiddlewareAlias = new Alias(scope, 'loggerMiddlewareAlias', {
+                aliasName: `alias/loggerMiddlewareKey-${stage}`,
+                targetKey: this.loggerMiddlewareKMSKey,
+            });
+        }
+        
         this.s3Alias = new Alias(scope, 's3KMSKeyAlias', {
             aliasName: `alias/s3Key-${stage}`,
             targetKey: this.s3KMSKey,

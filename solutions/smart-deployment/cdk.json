@@ -35,6 +35,7 @@
     "issuerEndpoint": "",
     "oAuth2ApiEndpoint": "",
     "patientPickerEndpoint": "",
-    "validateXHTML": false
+    "validateXHTML": false,
+    "enableLoggerMiddleware": false
   }
 }

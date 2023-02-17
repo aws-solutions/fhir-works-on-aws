@@ -32,6 +32,7 @@
     "logLevel": "error",
     "enableESHardDelete": false,
     "enableBackup": false,
-    "fhirVersion": "4.0.1"
+    "fhirVersion": "4.0.1",
+    "enableLoggerMiddleware": false
   }
 }
