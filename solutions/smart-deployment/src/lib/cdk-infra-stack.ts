@@ -729,7 +729,7 @@ export default class FhirWorksStack extends Stack {
     new CustomResource(this, 'uploadGlueScriptsCustomResource', {
       serviceToken: uploadGlueScriptsLambdaFunction.functionArn,
       properties: {
-        RandomValue: this.artifactId
+        RandomValue: Math.random() // to force redeployment
       }
     });
 

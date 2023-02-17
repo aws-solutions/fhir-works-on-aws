@@ -62,9 +62,8 @@ solutions/smart-deployment/src/integration-tests/search.test.ts:408
 solutions/smart-deployment/src/integration-tests/search.test.ts:424
 fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43 
 fwoa-core/interface/src/InputExampleEncryptLoggerUtilities.json:18 
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:66
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:127
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:185
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:246
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:73
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:134
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:192
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:253
 fwoa-core/interface/src/inputExampleEncryptSelectedField.json:18
-
