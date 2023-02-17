@@ -8,7 +8,7 @@ common
 .next
 build
 lib
-fwoa-core/javaHapiValidatorLambda/src/test/
+fwoa-core/javaHapiValidatorLambda/src/test/resources/
 
 #Third party file
 THIRD-PARTY$

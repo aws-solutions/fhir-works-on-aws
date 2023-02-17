@@ -80,17 +80,17 @@ coverage
 /solutions/smart-on-fhir/compiledImplementationGuides/*
 !/solutions/smart-on-fhir/compiledImplementationGuides/gitkeep
 /solutions/smart-on-fhir/.webpack/
-fwoa-core/javaHapiValidatorLambda/*.class
-fwoa-core/javaHapiValidatorLambda/target
-fwoa-core/javaHapiValidatorLambda/bin/
-fwoa-core/javaHapiValidatorLambda/.settings/
-fwoa-core/javaHapiValidatorLambda/.project
-fwoa-core/javaHapiValidatorLambda/.classpath
+fwoa-utilities/javaHapiValidatorLambda/*.class
+fwoa-utilities/javaHapiValidatorLambda/target
+fwoa-utilities/javaHapiValidatorLambda/bin/
+fwoa-utilities/javaHapiValidatorLambda/.settings/
+fwoa-utilities/javaHapiValidatorLambda/.project
+fwoa-utilities/javaHapiValidatorLambda/.classpath
 
 # Package Files
-fwoa-core/javaHapiValidatorLambda/*.jar
-fwoa-core/javaHapiValidatorLambda/*.war
-fwoa-core/javaHapiValidatorLambda/*.ear
+fwoa-utilities/javaHapiValidatorLambda/*.jar
+fwoa-utilities/javaHapiValidatorLambda/*.war
+fwoa-utilities/javaHapiValidatorLambda/*.ear
 
 # Serverless directories
 fwoa-core/javaHapiValidatorLambda/.serverless
