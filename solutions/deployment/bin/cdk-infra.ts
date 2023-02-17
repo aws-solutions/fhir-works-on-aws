@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { Aspects } from 'aws-cdk-lib';
+import { Aspects, DefaultStackSynthesizer } from 'aws-cdk-lib';
 import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../lib/cdk-infra-stack';
@@ -12,8 +12,17 @@ const app = new cdk.App();
 
 const allowedLogLevels = ['error', 'info', 'debug', 'warn'];
 const allowedFHIRVersions = ['4.0.1', '3.0.1'];
+const solutionId = 'SO0128';
 
-const region: string = app.node.tryGetContext('region') || 'us-west-2';
+let region: string = app.node.tryGetContext('region') || 'us-west-2';
+let account: string = process.env.CDK_DEFAULT_ACCOUNT!;
+
+// In solutions pipeline build, resolve region and account to token value to be resolved on CF deployment
+if (process.env.SOLUTION_ID === solutionId) {
+  region = cdk.Aws.REGION;
+  account = cdk.Aws.ACCOUNT_ID;
+}
+
 const stage: string = app.node.tryGetContext('stage') || 'dev';
 const enableMultiTenancy: boolean = app.node.tryGetContext('enableMultiTenancy') || false;
 const enableSubscriptions: boolean = app.node.tryGetContext('enableSubscriptions') || false;
@@ -41,8 +50,9 @@ if (!allowedLogLevels.includes(logLevel)) {
 }
 
 const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
+  synthesizer: new DefaultStackSynthesizer({ generateBootstrapVersionRule: false }),
   env: {
-    account: process.env.CDK_DEFAULT_ACCOUNT,
+    account,
     region
   },
   tags: {
@@ -59,7 +69,9 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   enableBackup,
   fhirVersion,
   description:
-    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
+    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
+  // Check for build env variable to detect Solutions Pipeline build environment
+  isSolutionsBuild: process.env.SOLUTION_ID === solutionId
 });
 
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
