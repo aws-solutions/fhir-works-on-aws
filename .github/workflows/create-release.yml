@@ -47,8 +47,8 @@ jobs:
         fetch-depth: 0
     
     - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      id: date      
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
     - name: create-pull-request
       id: open-pr
@@ -65,17 +65,6 @@ jobs:
     runs-on: ubuntu-20.04
     needs: create-release-branch-pr-to-main
     steps:
-      - name: Get PR info
-        id: pr_info
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/{owner}/{repo}/pulls/{pull_number}
-          owner: aws-solutions
-          repo: fhir-works-on-aws
-          pull_number: ${{ needs.create-release-branch-pr-to-main.outputs.pr_number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: enable merge commits
         uses: octokit/request-action@v2.x
         with:
@@ -92,7 +81,7 @@ jobs:
           route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
           owner: aws-solutions
           repo: fhir-works-on-aws
-          pull_number: ${{ inputs.pr_number }}
+          pull_number: ${{ needs.create-release-branch-pr-to-main.outputs.pr_number }}
           merge_method: 'merge'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
