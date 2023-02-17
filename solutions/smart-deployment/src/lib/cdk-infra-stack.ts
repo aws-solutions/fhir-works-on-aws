@@ -156,7 +156,6 @@ export default class FhirWorksStack extends Stack {
         fhirVersion: props!.fhirVersion,
         stage: props!.stage,
         fhirLogsBucket,
-        
         s3KMSKey: kmsResources.s3KMSKey,
         igMemoryLimit: props!.igMemoryLimit,
         igMemorySize: props!.igMemorySize,
