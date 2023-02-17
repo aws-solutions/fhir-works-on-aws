@@ -40,7 +40,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: branch-protection
         with:
-          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection
           owner: aws-solutions
           repo: fhir-works-on-aws
           branch: stage-for-testing
