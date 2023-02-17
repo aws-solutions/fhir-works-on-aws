@@ -1,0 +1,93 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Merge develop to stage
+on: ['pull_request']
+
+jobs:  
+  pre-deployment-check:
+    name: Pre deployment check
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Block Concurrent Deployments
+        uses: softprops/turnstyle@v1
+        with:
+          poll-interval-seconds: 10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # TODO: here should be added deployment to environments and integration tests
+  merge-develop-to-stage:
+    name: Merge develop to stage
+    runs-on: ubuntu-20.04
+    # needs: [deploy-fhir, deploy-smart-fhir]
+    steps:    
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      # use merge commit instead of squash
+      - name: Temporarily disable branch protection on stage
+        uses: octokit/request-action@v2.x
+        id: branch-protection
+        with:
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: stage-for-testing
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - run: "echo latest release: '${{ steps.branch-protection.outputs.data }}'"
+
+      - name: enable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Merge to stage
+        run: |
+          echo "Set the COMMIT_ID to merge to stage, to current workflow commit id"
+          COMMIT_ID=$GITHUB_SHA
+          git checkout stage-for-testing
+          echo
+          echo "  Attempting to merge the 'develop' branch ($COMMIT_ID)"
+          echo "  into the 'stage' branch ($(git log -1 --pretty=%H stage))"
+          echo
+          git merge $COMMIT_ID --ff-only --no-edit
+          git push origin stage-for-testing
+
+      # - name: disable merge commits
+      #   uses: octokit/request-action@v2.x
+      #   if: always() # Make sure to disable merge commit even if other steps fail
+      #   with:
+      #     route: PATCH /repos/{owner}/{repo}
+      #     owner: aws-solutions
+      #     repo: fhir-works-on-aws
+      #     allow_merge_commit: false
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      # - name: Enable branch protection on stage
+      #   uses: octokit/request-action@v2.x
+      #   if: always() # Make sure to enable branch protection even if other steps fail
+      #   with:
+      #     route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+      #     owner: aws-solutions
+      #     repo: fhir-works-on-aws
+      #     branch: stage
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
