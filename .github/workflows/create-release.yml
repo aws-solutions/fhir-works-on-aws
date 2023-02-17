@@ -33,6 +33,7 @@ jobs:
           uuid=`uuidgen`
           echo 'Creating release branch'
           git checkout -b release/$uuid
+          git push -u origin release/$uuid
 
           echo 'Rush version to bump updates'
           node common/scripts/install-run-rush.js version --bump -b release/$uuid --ignore-git-hooks
