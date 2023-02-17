@@ -1,5 +1,8 @@
 name: create-release
 on: workflow_dispatch
+env:  
+  BOT_USER_EMAIL: ${{ vars.BOT_USER_EMAIL }}
+  BOT_USER_NAME: ${{ vars.BOT_USER_NAME }}
 jobs:
   create-release-branch:
     # if: ${{github.ref_name == 'stage'}}
@@ -18,6 +21,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+      - name: Set git config
+        run: |
+          git config user.email $BOT_USER_EMAIL
+          git config user.name $BOT_USER_NAME
       - name: create release branch
         run: |
           echo "Create UUID"
