@@ -74,11 +74,11 @@
     "xmlhttprequest-ssl": "^1.6.2"
   },
   "dependencies": {
-    "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.61.0-alpha.0",
     "@aws/fhir-works-on-aws-authz-rbac": "workspace:*",
     "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@aws/fhir-works-on-aws-persistence-ddb": "workspace:*",
     "@aws/fhir-works-on-aws-routing": "workspace:*",
+    "@aws/fhir-works-on-aws-utilities": "workspace:*",
     "@types/aws-lambda": "^8.10.92",
     "aws-cdk-lib": "^2.61.0",
     "aws-embedded-metrics": "^2.0.4",

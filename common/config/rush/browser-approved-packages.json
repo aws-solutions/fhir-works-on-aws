@@ -43,6 +43,10 @@
       "allowedCategories": ["tools"]
     },
     {
+      "name": "@aws/fhir-works-on-aws-utilities",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "@elastic/elasticsearch",
       "allowedCategories": ["production"]
     },

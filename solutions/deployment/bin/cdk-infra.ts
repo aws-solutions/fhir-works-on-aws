@@ -6,7 +6,7 @@ import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../lib/cdk-infra-stack';
 import fs from 'fs';
-import { FhirWorksAppRegistry } from '../lib/fhirWorksAppRegistry';
+import { FhirWorksAppRegistry } from '@aws/fhir-works-on-aws-utilities';
 
 // initialize with defaults
 const app = new cdk.App();
