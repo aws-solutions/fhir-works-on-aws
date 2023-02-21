@@ -40,7 +40,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: branch-protection
         with:
-          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
           owner: aws-solutions
           repo: fhir-works-on-aws
           branch: stage-for-testing
@@ -80,6 +80,8 @@ jobs:
           echo
           git merge $COMMIT_ID --ff-only --no-edit
           git push origin stage-for-testing
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       # - name: disable merge commits
       #   uses: octokit/request-action@v2.x
