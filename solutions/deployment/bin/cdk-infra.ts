@@ -13,7 +13,14 @@ const app = new cdk.App();
 
 const allowedLogLevels = ['error', 'info', 'debug', 'warn'];
 const allowedFHIRVersions = ['4.0.1', '3.0.1'];
-const solutionId = 'SO0128';
+
+// FhirWorksAppRegistry Constants
+const solutionId: string = 'SO0128';
+const solutionName: string = 'FHIR Works';
+const solutionVersion: string = '6.0.0';
+const attributeGroupName: string = 'fhir-works-AttributeGroup';
+const applicationType: string = 'AWS-Solutions';
+const appRegistryApplicationName: string = 'fhir-works';
 
 let region: string = app.node.tryGetContext('region') || 'us-west-2';
 let account: string = process.env.CDK_DEFAULT_ACCOUNT!;
@@ -33,14 +40,6 @@ const enableESHardDelete: boolean = app.node.tryGetContext('enableESHardDelete')
 const enableBackup: boolean = app.node.tryGetContext('enableBackup') || false;
 let logLevel: string = app.node.tryGetContext('logLevel') || 'error';
 const fhirVersion: string = app.node.tryGetContext('fhirVersion') || '4.0.1';
-
-// FhirWorksAppRegistry Constants
-const solutionId: string = 'SO0128';
-const solutionName: string = 'FHIR Works';
-const solutionVersion: string = '6.0.0';
-const attributeGroupName: string = 'fhir-works-AttributeGroup';
-const applicationType: string = 'AWS-Solutions';
-const appRegistryApplicationName: string = 'fhir-works';
 
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
