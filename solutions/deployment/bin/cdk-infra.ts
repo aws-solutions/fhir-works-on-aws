@@ -6,6 +6,7 @@ import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../lib/cdk-infra-stack';
 import fs from 'fs';
+import { FhirWorksAppRegistry } from '@aws/fhir-works-on-aws-utilities';
 
 // initialize with defaults
 const app = new cdk.App();
@@ -26,6 +27,14 @@ const fhirVersion: string = app.node.tryGetContext('fhirVersion') || '4.0.1';
 const igMemoryLimit: number = app.node.tryGetContext('igMemoryLimit') || 128;
 const igMemorySize: number = app.node.tryGetContext('igMemorySize') || 2048;
 const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
+
+// FhirWorksAppRegistry Constants
+const solutionId: string = 'SO0128';
+const solutionName: string = 'FHIR Works';
+const solutionVersion: string = '6.0.0';
+const attributeGroupName: string = 'fhir-works-AttributeGroup';
+const applicationType: string = 'AWS-Solutions';
+const appRegistryApplicationName: string = 'fhir-works';
 
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
@@ -67,7 +76,14 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
 });
-
+new FhirWorksAppRegistry(stack, 'FhirWorksAppRegistry', {
+  solutionId,
+  solutionName,
+  solutionVersion,
+  attributeGroupName,
+  applicationType,
+  appRegistryApplicationName
+});
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
 
 // run cdk nag

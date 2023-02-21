@@ -499,6 +499,61 @@ importers:
       ts-jest: 26.5.6_xuote2qreek47x2di7kesslrai
       typescript: 4.9.5
 
+  ../../fwoa-utilities:
+    specifiers:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': ^2.61.0-alpha.0
+      '@aws/eslint-config-fwoa-eslint-custom': workspace:*
+      '@rushstack/eslint-config': ^3.0.0
+      '@rushstack/heft': 0.49.0
+      '@rushstack/heft-jest-plugin': 0.4.2
+      '@rushstack/heft-node-rig': 1.11.11
+      '@types/heft-jest': ^1.0.3
+      '@types/jest': ^26.0.19
+      '@types/lodash': ^4.14.182
+      '@types/node': ^14
+      aws-cdk-lib: ^2.61.0
+      aws-sdk: ^2.1000.0
+      aws-sdk-mock: ^5.1.0
+      constructs: ^10.0.0
+      eslint: ^8.7.0
+      jest: ^26.6.3
+      jest-each: ^26.6.2
+      jest-mock-extended: ^1.0.8
+      npm-package-json-lint: ^6.3.0
+      npm-package-json-lint-config-default: ^5.0.0
+      prettier: ^2.4.1
+      sort-package-json: ^1.57.0
+      standard-version: ^9.3.2
+      ts-jest: ^26.4.4
+      typescript: ^4.9.4
+    dependencies:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      constructs: 10.1.244
+    devDependencies:
+      '@aws/eslint-config-fwoa-eslint-custom': link:../core/eslint-custom
+      '@rushstack/eslint-config': 3.1.1_4vsywjlpuriuw3tl5oq6zy5a64
+      '@rushstack/heft': 0.49.0
+      '@rushstack/heft-jest-plugin': 0.4.2_@rushstack+heft@0.49.0
+      '@rushstack/heft-node-rig': 1.11.11_@rushstack+heft@0.49.0
+      '@types/heft-jest': 1.0.3
+      '@types/jest': 26.0.24
+      '@types/lodash': 4.14.191
+      '@types/node': 14.18.36
+      aws-sdk: 2.1303.0
+      aws-sdk-mock: 5.8.0
+      eslint: 8.33.0
+      jest: 26.6.3
+      jest-each: 26.6.2
+      jest-mock-extended: 1.0.18_xuote2qreek47x2di7kesslrai
+      npm-package-json-lint: 6.4.0
+      npm-package-json-lint-config-default: 5.0.0_ogc4gh2psjwvuyt5uwb7bwur54
+      prettier: 2.8.4
+      sort-package-json: 1.57.0
+      standard-version: 9.5.0
+      ts-jest: 26.5.6_xuote2qreek47x2di7kesslrai
+      typescript: 4.9.5
+
   ../../solutions/deployment:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
@@ -507,6 +562,7 @@ importers:
       '@aws/fhir-works-on-aws-persistence-ddb': workspace:*
       '@aws/fhir-works-on-aws-routing': workspace:*
       '@aws/fhir-works-on-aws-search-es': workspace:*
+      '@aws/fhir-works-on-aws-utilities': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -525,8 +581,8 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
-      aws-cdk: 2.45.0
-      aws-cdk-lib: 2.45.0
+      aws-cdk: 2.61.0
+      aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -572,12 +628,13 @@ importers:
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
+      '@aws/fhir-works-on-aws-utilities': link:../../fwoa-utilities
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.21.4
-      cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
+      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
       constructs: 10.1.244
       fs-extra: 10.1.0
       inquirer: 5.2.0
@@ -609,7 +666,7 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
-      aws-cdk: 2.45.0
+      aws-cdk: 2.61.0
       chance: 1.1.9
       esbuild: 0.14.54
       eslint: 8.33.0
@@ -642,6 +699,7 @@ importers:
       '@aws/fhir-works-on-aws-persistence-ddb': workspace:*
       '@aws/fhir-works-on-aws-routing': workspace:*
       '@aws/fhir-works-on-aws-search-es': workspace:*
+      '@aws/fhir-works-on-aws-utilities': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -659,8 +717,8 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
-      aws-cdk: 2.45.0
-      aws-cdk-lib: 2.45.0
+      aws-cdk: 2.61.0
+      aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: ^0.21.4
@@ -701,12 +759,13 @@ importers:
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
+      '@aws/fhir-works-on-aws-utilities': link:../../fwoa-utilities
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.21.4
-      cdk-nag: 2.21.86_3kftpotut6azu3igewqexonpnu
+      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
       constructs: 10.1.244
       escape-string-regexp: 4.0.0
       fs-extra: 10.1.0
@@ -735,7 +794,7 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
-      aws-cdk: 2.45.0
+      aws-cdk: 2.61.0
       chance: 1.1.9
       esbuild: 0.14.54
       eslint: 8.33.0
@@ -778,6 +837,41 @@ packages:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
+
+  /@aws-cdk/asset-awscli-v1/2.2.68:
+    resolution:
+      {
+        integrity: sha512-/rx5dTFSSyKtYa1VOFuqt+hjQv5AnEc3x0OAmaHRhHWIepgUQ3aPHCyln/izgnwR4Y4albsptxoerM4lGEoaUg==
+      }
+    dev: false
+
+  /@aws-cdk/asset-kubectl-v20/2.1.1:
+    resolution:
+      {
+        integrity: sha512-U1ntiX8XiMRRRH5J1IdC+1t5CE89015cwyt5U63Cpk0GnMlN5+h9WsWMlKlPXZR4rdq/m806JRlBMRpBUB2Dhw==
+      }
+    dev: false
+
+  /@aws-cdk/asset-node-proxy-agent-v5/2.0.57:
+    resolution:
+      {
+        integrity: sha512-oLxJ9VQdSP2L8EALzChmWdzgq5wc4UidJfWYTCfuiZox6r0vW5ftYIffVgE/+iA0WxRstJUQz/nmpOeGfNbQDQ==
+      }
+    dev: false
+
+  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m:
+    resolution:
+      {
+        integrity: sha512-hbigorGAW0jUc5KhwebD5/gmBztWPuSzV84qsrambSC1RAlDDUFQ9N+jEgyqV6U6D/OsDp/XnbGKjtTh6OIZ1Q==
+      }
+    engines: { node: '>= 14.15.0' }
+    peerDependencies:
+      aws-cdk-lib: ^2.61.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      constructs: 10.1.244
+    dev: false
 
   /@aws-crypto/ie11-detection/3.0.0:
     resolution:
@@ -7555,15 +7649,18 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
-  /aws-cdk-lib/2.45.0_constructs@10.1.244:
+  /aws-cdk-lib/2.64.0_constructs@10.1.244:
     resolution:
       {
-        integrity: sha512-oEeZZF8xjub9KYAB7n01A60wwQXSzNapmiih3t5uf9aEvlvqT+0as8/WrPdNIeAaf9Lhb0WQXdZ2o2DlsFHbAg==
+        integrity: sha512-IrgL7thb6TeOyHgyR/qKWTdA9FBb9lv7Z9QPDzCNJlkKI+0ANjYHy3RYV8Gd+1+kc6l8DG9Z1elij40YCr/Ptg==
       }
     engines: { node: '>= 14.15.0' }
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@aws-cdk/asset-awscli-v1': 2.2.68
+      '@aws-cdk/asset-kubectl-v20': 2.1.1
+      '@aws-cdk/asset-node-proxy-agent-v5': 2.0.57
       '@balena/dockerignore': 1.0.2
       case: 1.6.3
       constructs: 10.1.244
@@ -7586,10 +7683,10 @@ packages:
       - semver
       - yaml
 
-  /aws-cdk/2.45.0:
+  /aws-cdk/2.61.0:
     resolution:
       {
-        integrity: sha512-AIug6Ugvtd3I0+U3gTNZtJVDhOgpGpxwWMoOQUlX6xKGwDgQxWrWdq2QWe7ZyKgCRnY9SM90fa+Yxbx+VYk9Bw==
+        integrity: sha512-5vcDdVR9HG3Kq1LAoRoxb8vmF5eqoT9hCFx85olMXqALx/DQ5/ooCCDKbQrp+zNhYXcALiIo+1W+jJpfRnhA+g==
       }
     engines: { node: '>= 14.15.0' }
     hasBin: true
@@ -8651,7 +8748,7 @@ packages:
     engines: { node: '>= 0.8.0' }
     dev: false
 
-  /cdk-nag/2.21.86_3kftpotut6azu3igewqexonpnu:
+  /cdk-nag/2.21.86_nfqzj33ydgldzoghshyt46jh2m:
     resolution:
       {
         integrity: sha512-FX1PZBtWYDn8VbrnVVyiOvJSmbr5It4CS2Xr0yNi9ReE9qcJFTe3gzJn4CH0Kx2pm9DOrIDXjX1rrz5JZ2oKyw==
@@ -8660,7 +8757,7 @@ packages:
       aws-cdk-lib: ^2.45.0
       constructs: ^10.0.5
     dependencies:
-      aws-cdk-lib: 2.45.0_constructs@10.1.244
+      aws-cdk-lib: 2.64.0_constructs@10.1.244
       constructs: 10.1.244
     dev: false
 
