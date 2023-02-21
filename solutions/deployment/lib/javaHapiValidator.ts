@@ -69,6 +69,7 @@ export default class JavaHapiValidator extends Stack {
         });
         props.s3KMSKey.grantDecrypt(this.hapiValidatorLambda);
         igDeployment.deployedBucket.grantRead(this.hapiValidatorLambda);
-        this.alias = this.hapiValidatorLambda.currentVersion.addAlias(`fhir-service-validator-lambda-${props.stage}`);
+
+        this.alias = this.hapiValidatorLambda.addAlias(`fhir-service-validator-lambda-${props.stage}`);
     }
 }
