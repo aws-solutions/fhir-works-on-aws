@@ -16,11 +16,11 @@ const allowedFHIRVersions = ['4.0.1', '3.0.1'];
 
 // FhirWorksAppRegistry Constants
 const solutionId: string = 'SO0128';
-const solutionName: string = 'FHIR Works';
+const solutionName: string = 'FHIR Works on AWS';
 const solutionVersion: string = '6.0.0';
 const attributeGroupName: string = 'fhir-works-AttributeGroup';
 const applicationType: string = 'AWS-Solutions';
-const appRegistryApplicationName: string = 'fhir-works';
+const appRegistryApplicationName: string = 'fhir-works-on-aws';
 
 let region: string = app.node.tryGetContext('region') || 'us-west-2';
 let account: string = process.env.CDK_DEFAULT_ACCOUNT!;
