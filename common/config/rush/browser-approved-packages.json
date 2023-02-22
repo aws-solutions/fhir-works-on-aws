@@ -40,7 +40,7 @@
     },
     {
       "name": "@aws/fhir-works-on-aws-search-es",
-      "allowedCategories": ["tools"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@aws/fhir-works-on-aws-utilities",
