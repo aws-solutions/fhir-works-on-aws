@@ -33,11 +33,11 @@ const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
 
 // FhirWorksAppRegistry Constants
 const solutionId: string = 'SO0128';
-const solutionName: string = 'FHIR Works';
+const solutionName: string = 'FHIR Works on AWS';
 const solutionVersion: string = '6.0.0';
 const attributeGroupName: string = 'smart-fhir-works-AttributeGroup';
 const applicationType: string = 'AWS-Solutions';
-const appRegistryApplicationName: string = 'smart-fhir-works';
+const appRegistryApplicationName: string = 'smart-fhir-works-on-aws';
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
 // https://github.com/aws/aws-cdk/blob/main/packages/%40aws-cdk/aws-lambda-nodejs/lib/bundling.ts#L110
