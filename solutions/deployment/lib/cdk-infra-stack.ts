@@ -53,17 +53,20 @@ import AlarmsResource from './alarms';
 import JavaHapiValidator from './javaHapiValidator';
 
 export interface FhirWorksStackProps extends StackProps {
-  stage: string;
-  region: string;
-  enableMultiTenancy: boolean;
-  enableSubscriptions: boolean;
-  enableBackup: boolean;
-  useHapiValidator: boolean;
-  enableESHardDelete: boolean;
-  logLevel: string;
-  oauthRedirect: string;
-  fhirVersion: string;
-  isSolutionsBuild: boolean;
+    stage: string;
+    region: string;
+    enableMultiTenancy: boolean;
+    enableSubscriptions: boolean;
+    enableBackup: boolean;
+    useHapiValidator: boolean;
+    enableESHardDelete: boolean;
+    logLevel: string;
+    oauthRedirect: string;
+    fhirVersion: string;
+    igMemoryLimit: number;
+    igMemorySize: number;
+    igStorageSize: number;
+    isSolutionsBuild: boolean;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -175,7 +178,12 @@ export default class FhirWorksStack extends Stack {
       this.javaHapiValidator = new JavaHapiValidator(this, 'javaHapiValidator', {
         region: props!.region,
         fhirVersion: props!.fhirVersion,
-        stage: props!.stage
+        stage: props!.stage,
+        fhirLogsBucket,
+        s3KMSKey: kmsResources.s3KMSKey,
+        igMemoryLimit: props!.igMemoryLimit,
+        igMemorySize: props!.igMemorySize,
+        igStorageSize: props!.igStorageSize,
       });
     }
 

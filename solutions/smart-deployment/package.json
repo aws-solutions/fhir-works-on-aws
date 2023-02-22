@@ -26,7 +26,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
-    "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json ./package.json",
+    "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json . --i ../../.npmpackagejsonlintignore",
     "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
     "test": "heft test --clean --no-build 2>&1 && rushx pkg-json-lint",
