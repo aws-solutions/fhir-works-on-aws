@@ -581,6 +581,7 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
+      '@types/yargs': ^17.0.22
       aws-cdk: 2.61.0
       aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
@@ -589,6 +590,7 @@ importers:
       cdk-nag: ^2.19.0
       chance: ^1.1.7
       constructs: ^10.0.0
+      dotenv: ^16.0.3
       esbuild: ^0.14.39
       eslint: ^8.7.0
       fs-extra: ^10.1.0
@@ -666,8 +668,10 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
+      '@types/yargs': 17.0.22
       aws-cdk: 2.61.0
       chance: 1.1.9
+      dotenv: 16.0.3
       esbuild: 0.14.54
       eslint: 8.33.0
       jest: 26.6.3_ts-node@10.9.1
@@ -6164,6 +6168,15 @@ packages:
       '@types/yargs-parser': 21.0.0
     dev: true
 
+  /@types/yargs/17.0.22:
+    resolution:
+      {
+        integrity: sha512-pet5WJ9U8yPVRhkwuEIp5ktAeAqRZOq4UdAyWLWzxbtpyXnzbtLdKiXAjJzi/KLmPGS9wk86lUFWZFN6sISo4g==
+      }
+    dependencies:
+      '@types/yargs-parser': 21.0.0
+    dev: true
+
   /@typescript-eslint/eslint-plugin/4.33.0_s2qqtxhzmb7vugvfoyripfgp7i:
     resolution:
       {
@@ -10695,6 +10708,14 @@ packages:
         integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
       }
     engines: { node: '>=10' }
+    dev: true
+
+  /dotenv/16.0.3:
+    resolution:
+      {
+        integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+      }
+    engines: { node: '>=12' }
     dev: true
 
   /dotenv/8.6.0:

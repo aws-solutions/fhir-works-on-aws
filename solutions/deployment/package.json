@@ -24,7 +24,7 @@
     "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* cdk.out/*",
     "compile-igs": "ts-node scripts/compile-igs.ts",
     "deploy": "cdk deploy --outputs-file Info_Output.log",
-    "int-test": "jest --testPathPattern=integration-test/* --runInBand",
+    "int-test": "jest --testPathPattern=integration-test/*",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
@@ -118,6 +118,7 @@
     "@types/sinon": "^9.0.0",
     "@types/tmp": "^0.2.3",
     "@types/uuid": "^8.3.4",
+    "@types/yargs": "^17.0.22",
     "aws-cdk": "2.61.0",
     "chance": "^1.1.7",
     "esbuild": "^0.14.39",
@@ -141,10 +142,24 @@
     "ts-node": "^10.3.0",
     "typescript": "^4.9.4",
     "uuid": "^8.3.2",
-    "wait-for-expect": "^3.0.2"
+    "wait-for-expect": "^3.0.2",
+    "dotenv": "^16.0.3"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "stackname": "fhir-works-on-aws-deployment"
+  "stackname": "fhir-works-on-aws-deployment",
+  "jest": {
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".test.ts",
+    "testRunner": "jest-circus/runner",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
+  }
 }
