@@ -128,7 +128,12 @@ export default class FhirWorksStack extends Stack {
     const isDevCondition = new CfnCondition(this, 'isDev', {
       expression: Fn.conditionEquals(props!.stage, 'dev')
     });
-    const isMultiTenancyEnabled = enableMultiTenancy.valueAsString === 'true';
+    const isMultiTenancyEnabled = new CfnCondition(this, 'isMultiTenancyEnabled', {
+      expression: Fn.conditionEquals(enableMultiTenancy, 'true')
+    });
+    const isLogLevelError = new CfnCondition(this, 'isLogLevelError', {
+      expression: Fn.conditionEquals(logLevel, 'error')
+    });
 
     // define other custom variables here
     const resourceTableName = `resource-db-${props!.stage}`;
@@ -325,6 +330,11 @@ export default class FhirWorksStack extends Stack {
       logGroupName: `/aws/api-gateway/fhir-service-${props!.stage}`
     });
 
+    const apiGatewayLogLevel = Fn.conditionIf(
+      isLogLevelError.logicalId,
+      MethodLoggingLevel.ERROR,
+      MethodLoggingLevel.INFO
+    );
     const apiGatewayRestApi = new RestApi(this, 'apiGatewayRestApi', {
       apiKeySourceType: ApiKeySourceType.HEADER,
       restApiName: `${props!.stage}-fhir-service`,
@@ -334,10 +344,7 @@ export default class FhirWorksStack extends Stack {
       deployOptions: {
         stageName: props!.stage,
         tracingEnabled: true,
-        loggingLevel:
-          logLevel.valueAsString === MethodLoggingLevel.ERROR
-            ? MethodLoggingLevel.ERROR
-            : MethodLoggingLevel.INFO,
+        loggingLevel: apiGatewayLogLevel.toString() as MethodLoggingLevel,
         accessLogFormat: AccessLogFormat.custom(
           '{"authorizer.claims.sub":"$context.authorizer.claims.sub","error.message":"$context.error.message","extendedRequestId":"$context.extendedRequestId","httpMethod":"$context.httpMethod","identity.sourceIp":"$context.identity.sourceIp","integration.error":"$context.integration.error","integration.integrationStatus":"$context.integration.integrationStatus","integration.latency":"$context.integration.latency","integration.requestId":"$context.integration.requestId","integration.status":"$context.integration.status","path":"$context.path","requestId":"$context.requestId","responseLatency":"$context.responseLatency","responseLength":"$context.responseLength","stage":"$context.stage","status":"$context.status"}'
         ),
@@ -357,6 +364,11 @@ export default class FhirWorksStack extends Stack {
         {
           id: 'AwsSolutions-APIG3',
           reason: 'Access is configured to be limited by a Usage Plan and API Key'
+        },
+        {
+          id: 'AwsSolutions-APIG6',
+          reason:
+            'False positive result. Logging is always enabled for FWoA. CFN Nag fails to identify as loggingLevel attribute is conditional, not a simple string.'
         }
       ]
     );
@@ -377,7 +389,7 @@ export default class FhirWorksStack extends Stack {
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
-      ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
+      ENABLE_MULTI_TENANCY: enableMultiTenancy.valueAsString,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: logLevel.valueAsString
     };
