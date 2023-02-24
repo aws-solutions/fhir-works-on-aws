@@ -215,6 +215,34 @@ To test this feature on FHIR Works on AWS, make API requests using the [Fhir.pos
 
 **Note**: To cancel an export job, use the `Cancel Export Job` request in the "Export" folder located in the Postman collections.
 
+### Run Integration Test
+
+1. Integration test requires at least 100 patient resources created before running, or it will fail. The best way to do this is posting a bundle of 25 patient resources 4 times.
+2. Create 3 Cognito users, two practitioners and one auditor. You can create users with script [provision-user.py](./scripts/provision-user.py).
+
+- The script requires 3 inputs, userPoolId, userPoolAppClientId and region. These value can be found in the output of the FWoA CloudFormation stack you deployed.
+- The script can be executed with `python3 provision-user.py <userPoolId> <userPoolAppClientId> <region>`
+- To create the first practitioner user, change the username in `provision-user.py` script to `practitionerTest`. Save the change, then run the script.
+- To create the auditor user, change the username to `auditorTest` and group to `auditor`. Save the change, then run the script.
+- To create the second practitioner user, change the username to `otherPractitionerTest`, change the tenant to `tenant2`, revert group back to `practitioner`. Save the change, then run the script.
+
+3. Now all data and users are ready, we need to set up environment variables for integration tests to run
+   These are variables we just created in step 2
+
+- COGNITO_USERNAME_PRACTITIONER=practitionerTest
+- COGNITO_USERNAME_AUDITOR=auditorTest
+- COGNITO_USERNAME_PRACTITIONER_ANOTHER_TENANT=otherPractitionerTest
+- COGNITO_PASSWORD=Master123!
+  These are variables you set in [cdk.json](./cdk.json)
+- MULTI_TENANCY_ENABLED
+- API_AWS_REGION
+  These are variables you can find in AWS Console in CloudFormation output and API Gateway
+- API_URL
+- API_KEY
+- COGNITO_CLIENT_ID
+
+4. Once all the environment variables are set, you can run the integration test with commands `rushx int-test`!
+
 ## Troubleshooting FHIR Works on AWS
 
 - If changes are required for the Elasticsearch instances, you may have to redeploy. Redeployment deletes the Elasticsearch cluster and creates a new one. Redeployment also deletes the data inside your cluster. In future releases, we will create a one-off lambda instance that can retrieve the data from DynamoDB to Elasticsearch. To do this, you can currently use either of the following options:
