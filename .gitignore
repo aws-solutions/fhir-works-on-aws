@@ -76,14 +76,10 @@ dist
 coverage
 
 # Implementation guides
-/solutions/smart-deployment/implementationGuides
-/solutions/smart-deployment/compiledImplementationGuides/*
-!/solutions/smart-deployment/compiledImplementationGuides/gitkeep
-/solutions/smart-deployment/.webpack/
-/solutions/deployment/implementationGuides
-/solutions/deployment/compiledImplementationGuides/*
-!/solutions/deployment/compiledImplementationGuides/gitkeep
-/solutions/deployment/.webpack/
+/solutions/**/implementationGuides
+/solutions/**/compiledImplementationGuides/*
+!/solutions/**/compiledImplementationGuides/gitkeep
+/solutions/**/.webpack/
 fwoa-utilities/javaHapiValidatorLambda/*.class
 fwoa-utilities/javaHapiValidatorLambda/target
 fwoa-utilities/javaHapiValidatorLambda/bin/

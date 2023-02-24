@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    # needs: pre-deployment-check
+    needs: pre-deployment-check
     name: Deploy to Dev - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
     runs-on: ubuntu-20.04
     strategy:
