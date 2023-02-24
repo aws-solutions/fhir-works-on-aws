@@ -89,15 +89,15 @@ export default class FhirWorksStack extends Stack {
     });
 
     // define conditions here:
-    const isDev = props?.stage === 'dev';
+    const isDev = props!.stage === 'dev';
     const isDevCondition = new CfnCondition(this, 'isDev', {
       expression: Fn.conditionEquals(props!.stage, 'dev')
     });
     const isMultiTenancyEnabled = props!.enableMultiTenancy;
 
     // define other custom variables here
-    const resourceTableName = `resource-db-${props?.stage}`;
-    const exportRequestTableName = `export-request-${props?.stage}`;
+    const resourceTableName = `resource-db-${props!.stage}`;
+    const exportRequestTableName = `export-request-${props!.stage}`;
     const exportRequestTableJobStatusIndex = `jobStatus-index`;
 
     const PATIENT_COMPARTMENT_V3 = 'patientCompartmentSearchParams.3.0.2.json';
