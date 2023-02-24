@@ -53,7 +53,6 @@ import AlarmsResource from './alarms';
 import JavaHapiValidator from './javaHapiValidator';
 
 export interface FhirWorksStackProps extends StackProps {
-<<<<<<< HEAD
   stage: string;
   region: string;
   enableMultiTenancy: boolean;
@@ -69,22 +68,6 @@ export interface FhirWorksStackProps extends StackProps {
   igStorageSize: number;
   isSolutionsBuild: boolean;
   enableSecurityLogging: boolean;
-=======
-    stage: string;
-    region: string;
-    enableMultiTenancy: boolean;
-    enableSubscriptions: boolean;
-    enableBackup: boolean;
-    useHapiValidator: boolean;
-    enableESHardDelete: boolean;
-    logLevel: string;
-    oauthRedirect: string;
-    fhirVersion: string;
-    igMemoryLimit: number;
-    igMemorySize: number;
-    igStorageSize: number;
-    isSolutionsBuild: boolean;
->>>>>>> develop
 }
 
 export default class FhirWorksStack extends Stack {
@@ -140,7 +123,6 @@ export default class FhirWorksStack extends Stack {
       description: 'Log level for CloudWatch logs. Valid values are: debug, info, warn, and error.',
       allowedValues: ['debug', 'info', 'warn', 'error']
     });
-
     // define conditions here:
     const isDev = props!.stage === 'dev';
     const isDevCondition = new CfnCondition(this, 'isDev', {
@@ -157,7 +139,7 @@ export default class FhirWorksStack extends Stack {
     const PATIENT_COMPARTMENT_V4 = 'patientCompartmentSearchParams.4.0.1.json';
 
     // Create KMS Resources
-    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account, props!.enableSecurityLogging,);
+    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account, props!.enableSecurityLogging);
 
     // Define ElasticSearch resources here:
     const elasticSearchResources = new ElasticSearchResources(
@@ -353,9 +335,10 @@ export default class FhirWorksStack extends Stack {
         stageName: props!.stage,
         tracingEnabled: true,
         loggingLevel:
-          logLevel.valueAsString === MethodLoggingLevel.ERROR
-            ? MethodLoggingLevel.ERROR
-            : MethodLoggingLevel.INFO,
+
+        logLevel.valueAsString === MethodLoggingLevel.ERROR
+        ? MethodLoggingLevel.ERROR
+        : MethodLoggingLevel.INFO,
         accessLogFormat: AccessLogFormat.custom(
           '{"authorizer.claims.sub":"$context.authorizer.claims.sub","error.message":"$context.error.message","extendedRequestId":"$context.extendedRequestId","httpMethod":"$context.httpMethod","identity.sourceIp":"$context.identity.sourceIp","integration.error":"$context.integration.error","integration.integrationStatus":"$context.integration.integrationStatus","integration.latency":"$context.integration.latency","integration.requestId":"$context.integration.requestId","integration.status":"$context.integration.status","path":"$context.path","requestId":"$context.requestId","responseLatency":"$context.responseLatency","responseLength":"$context.responseLength","stage":"$context.stage","status":"$context.status"}'
         ),
@@ -397,15 +380,11 @@ export default class FhirWorksStack extends Stack {
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
-<<<<<<< HEAD
       LOG_LEVEL: logLevel.valueAsString,
       LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.loggerMiddlewareKMSKey
       ? kmsResources.loggerMiddlewareKMSKey.keyArn
       : 'ENCRYPTION_TURNED_OFF',
       ENABLE_LOGGING_MIDDLEWARE: `${props!.enableSecurityLogging}`,
-=======
-      LOG_LEVEL: logLevel.valueAsString
->>>>>>> develop
     };
 
     const defaultLambdaBundlingOptions = {
@@ -681,7 +660,7 @@ export default class FhirWorksStack extends Stack {
                 resources: [
                   kmsResources.s3KMSKey.keyArn,
                   kmsResources.dynamoDbKMSKey.keyArn,
-                  kmsResources.elasticSearchKMSKey.keyArn,
+                  kmsResources.elasticSearchKMSKey.keyArn
                   kmsResources.loggerMiddlewareKMSKey?.keyArn as string,
                 ]
               }),
@@ -757,7 +736,6 @@ export default class FhirWorksStack extends Stack {
         })
       );
     }
-
     fhirServerLambda.addAlias(`fhir-server-lambda-${props!.stage}`);
 
     const apiGatewayApiKey = apiGatewayRestApi.addApiKey('developerApiKey', {
