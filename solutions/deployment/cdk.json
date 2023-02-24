@@ -33,6 +33,6 @@
     "enableESHardDelete": false,
     "enableBackup": false,
     "fhirVersion": "4.0.1",
-    "enableLoggerMiddleware": false
+    "enableSecurityLogging": false
   }
 }
