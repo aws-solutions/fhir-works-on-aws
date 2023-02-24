@@ -26,7 +26,7 @@ const issuerEndpoint: string = app.node.tryGetContext('issuerEndpoint') || '';
 const oAuth2ApiEndpoint: string = app.node.tryGetContext('oAuth2ApiEndpoint') || '';
 const patientPickerEndpoint: string = app.node.tryGetContext('patientPickerEndpoint') || '';
 const validateXHTML: boolean = app.node.tryGetContext('validateXHTML') || false;
-const enableLoggerMiddleware: boolean = app.node.tryGetContext('enableLoggerMiddleware') || false;
+const enableSecurityLogging: boolean = app.node.tryGetContext('enableSecurityLogging') || false;
 
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
@@ -77,7 +77,7 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
   validateXHTML,
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
-  enableLoggerMiddleware
+  enableSecurityLogging
 });
 
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});

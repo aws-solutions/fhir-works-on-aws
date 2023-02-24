@@ -29,7 +29,7 @@ export default class KMSResources {
 
     loggerMiddlewareAlias?: Alias;
 
-    constructor(scope: Construct, region: string, stage: string, account: string, enableLoggerMiddleware: boolean,) {
+    constructor(scope: Construct, region: string, stage: string, account: string, enableSecurityLogging: boolean,) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
             description: 'Encryption key for daily',
             enableKeyRotation: true,
@@ -158,7 +158,7 @@ export default class KMSResources {
             }),
         });
 
-        if (enableLoggerMiddleware) {
+        if (enableSecurityLogging) {
             this.loggerMiddlewareKMSKey = new Key(scope, 'loggerMiddlewareKMSKey', {
                 enableKeyRotation: true,
                 description: 'KMS CMK for Logging Middleware',

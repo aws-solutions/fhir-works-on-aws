@@ -21,7 +21,7 @@ describe('cdk-nag AwsSolutions Pack', () => {
   const oAuth2ApiEndpoint: string = 'test';
   const patientPickerEndpoint: string = 'test';
   const validateXHTML: boolean = false;
-  const enableLoggerMiddleware: boolean = false;
+  const enableSecurityLogging: boolean = false;
 
   beforeAll(() => {
     // GIVEN
@@ -50,7 +50,7 @@ describe('cdk-nag AwsSolutions Pack', () => {
       validateXHTML,
       description:
         'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.',
-      enableLoggerMiddleware,
+      enableSecurityLogging,
     });
 
     fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
