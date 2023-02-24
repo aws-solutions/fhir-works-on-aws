@@ -1,6 +1,7 @@
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Alias, Key } from 'aws-cdk-lib/aws-kms';
 import { Construct } from 'constructs';
+import { RemovalPolicy } from 'aws-cdk-lib';
 
 export default class KMSResources {
     backupKMSKey: Key;
@@ -15,6 +16,8 @@ export default class KMSResources {
 
     snsKMSKey: Key;
 
+    loggerMiddlewareKMSKey?: Key;
+
     s3Alias: Alias;
 
     dynamoDbAlias: Alias;
@@ -25,7 +28,9 @@ export default class KMSResources {
 
     snsAlias: Alias;
 
-    constructor(scope: Construct, region: string, stage: string, account: string) {
+    loggerMiddlewareAlias?: Alias;
+
+    constructor(scope: Construct, region: string, stage: string, account: string, enableSecurityLogging: boolean) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
             description: 'Encryption key for daily',
             enableKeyRotation: true,
@@ -124,6 +129,29 @@ export default class KMSResources {
             }),
         });
 
+        if (enableSecurityLogging) {
+            this.loggerMiddlewareKMSKey = new Key(scope, 'loggerMiddlewareKMSKey', {
+                enableKeyRotation: true,
+                description: 'KMS CMK for Logging Middleware',
+                policy: new PolicyDocument({
+                    statements: [
+                        new PolicyStatement({
+                            sid: 'Allow loggermiddleware to use this Key policy',
+                            effect: Effect.ALLOW,
+                            actions: ['kms:*'],
+                            resources: ['*'],
+                            principals: [new AccountRootPrincipal()],
+                        }),
+                    ],
+                }),
+            });
+
+            this.loggerMiddlewareKMSKey.applyRemovalPolicy(RemovalPolicy.RETAIN);
+            this.loggerMiddlewareAlias = new Alias(scope, 'loggerMiddlewareAlias', {
+                aliasName: `alias/loggerMiddlewareKey-${stage}`,
+                targetKey: this.loggerMiddlewareKMSKey,
+            });
+        }
         this.snsKMSKey = new Key(scope, 'snsKMSKey', {
             enableKeyRotation: true,
             description: 'KMS CMK for SNS',
