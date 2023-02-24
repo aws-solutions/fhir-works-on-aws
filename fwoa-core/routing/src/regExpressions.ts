@@ -32,7 +32,7 @@ export const captureFhirUserParts =
   /((?:http|https):\/\/[(A-Za-z0-9_\-\\.:%$)*/]+[Patient|Practitioner]\/)([A-Za-z0-9\-.]{1,100}(\/_history\/[A-Za-z0-9\-.]{1,64})?)+/;
 
 // ["/dev/Patient/00000000-0000-0000-0000-000000000000", "/dev/Patient/", "00000000-0000-0000-0000-000000000000"]
-export const capturePathParts = /^(\/\w{1,30}\/\$?\w{1,30}\/)([-\w+]{1,100})$/;
+export const capturePathParts = /^(\/\w{1,30}\/\w{1,30}\/)([-\w+]{1,100})$/;
 
 // ["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
-export const capturePathParametersProxyParts = /^(\/?\$?\w{1,30}\/)([-\w+]{1,100})$/;
+export const capturePathParametersProxyParts = /^(\w{1,30}\/)([-\w+]{1,100})$/;
