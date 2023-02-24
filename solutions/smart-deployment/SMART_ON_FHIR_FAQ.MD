@@ -44,7 +44,8 @@ The authorization server is responsible for:
 We use [v1.0.0](https://hl7.org/fhir/uv/bulkdata/export/index.html) of the Bulk Data Export implementation guide.
 
 **What scopes should I use for Bulk Data Exports?**  
-FWoA only allows `user/*.read` or `system/*.read` scopes to perform an export.
+FWoA only allows `user/*.read` or `system/*.read` scopes to perform a system export.
+FWoA only allows `system/*.read` scope to perform a group export.
 
 > **Note**  
 > This is a scope limiter. If the requester only wants patients, they could use the `_type` parameter. For more information, see [Testing Bulk Data Export](https://github.com/awslabs/fhir-works-on-aws-deployment/tree/smart-mainline#testing-bulk-data-export).

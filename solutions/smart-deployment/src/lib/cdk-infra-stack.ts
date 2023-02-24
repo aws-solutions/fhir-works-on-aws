@@ -155,7 +155,12 @@ export default class FhirWorksStack extends Stack {
       this.javaHapiValidator = new JavaHapiValidator(this, 'javaHapiValidator', {
         region: props!.region,
         fhirVersion: props!.fhirVersion,
-        stage: props!.stage
+        stage: props!.stage,
+        fhirLogsBucket,
+        s3KMSKey: kmsResources.s3KMSKey,
+        igMemoryLimit: props!.igMemoryLimit,
+        igMemorySize: props!.igMemorySize,
+        igStorageSize: props!.igStorageSize,
       });
     }
 

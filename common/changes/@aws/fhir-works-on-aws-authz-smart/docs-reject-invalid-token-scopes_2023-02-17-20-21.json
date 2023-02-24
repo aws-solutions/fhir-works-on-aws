@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "comment": "update documentation for rejecting tokens with invalid scopes",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-smart"
+}

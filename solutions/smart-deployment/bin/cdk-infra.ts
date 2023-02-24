@@ -6,6 +6,7 @@ import { AwsSolutionsChecks } from 'cdk-nag/lib/packs/aws-solutions';
 import { HIPAASecurityChecks, NagSuppressions } from 'cdk-nag';
 import FhirWorksStack from '../src/lib/cdk-infra-stack';
 import * as fs from 'fs';
+import { FhirWorksAppRegistry } from '@aws/fhir-works-on-aws-utilities';
 
 // initialize with defaults
 const app = new cdk.App();
@@ -30,7 +31,13 @@ const igMemoryLimit: number = app.node.tryGetContext('igMemoryLimit') || 128;
 const igMemorySize: number = app.node.tryGetContext('igMemorySize') || 2048;
 const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
 const enableSecurityLogging: boolean = app.node.tryGetContext('enableSecurityLogging') || false;
-
+// FhirWorksAppRegistry Constants
+const solutionId: string = 'SO0128';
+const solutionName: string = 'FHIR Works on AWS';
+const solutionVersion: string = '6.0.0';
+const attributeGroupName: string = 'smart-fhir-works-AttributeGroup';
+const applicationType: string = 'AWS-Solutions';
+const appRegistryApplicationName: string = 'smart-fhir-works-on-aws';
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
 // https://github.com/aws/aws-cdk/blob/main/packages/%40aws-cdk/aws-lambda-nodejs/lib/bundling.ts#L110
@@ -84,6 +91,14 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
   enableSecurityLogging
+});
+new FhirWorksAppRegistry(stack, 'SmartFhirWorksAppRegistry', {
+  solutionId,
+  solutionName,
+  solutionVersion,
+  attributeGroupName,
+  applicationType,
+  appRegistryApplicationName
 });
 
 fs.rm('./pnpm-lock.yaml', { force: true }, () => {});
