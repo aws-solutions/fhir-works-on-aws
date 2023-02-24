@@ -53,7 +53,6 @@ import AlarmsResource from './alarms';
 import JavaHapiValidator from './javaHapiValidator';
 
 export interface FhirWorksStackProps extends StackProps {
-<<<<<<< HEAD
   stage: string;
   region: string;
   enableMultiTenancy: boolean;
@@ -67,7 +66,6 @@ export interface FhirWorksStackProps extends StackProps {
   igMemoryLimit: number;
   igMemorySize: number;
   igStorageSize: number;
-  isSolutionsBuild: boolean;
   enableSecurityLogging: boolean;
 }
 
