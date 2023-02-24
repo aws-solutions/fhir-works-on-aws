@@ -53,20 +53,19 @@ import AlarmsResource from './alarms';
 import JavaHapiValidator from './javaHapiValidator';
 
 export interface FhirWorksStackProps extends StackProps {
-    stage: string;
-    region: string;
-    enableMultiTenancy: boolean;
-    enableSubscriptions: boolean;
-    enableBackup: boolean;
-    useHapiValidator: boolean;
-    enableESHardDelete: boolean;
-    logLevel: string;
-    oauthRedirect: string;
-    fhirVersion: string;
-    igMemoryLimit: number;
-    igMemorySize: number;
-    igStorageSize: number;
-    isSolutionsBuild: boolean;
+  stage: string;
+  region: string;
+  enableMultiTenancy: boolean;
+  enableSubscriptions: boolean;
+  enableBackup: boolean;
+  useHapiValidator: boolean;
+  enableESHardDelete: boolean;
+  logLevel: string;
+  oauthRedirect: string;
+  fhirVersion: string;
+  igMemoryLimit: number;
+  igMemorySize: number;
+  igStorageSize: number;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -89,46 +88,12 @@ export default class FhirWorksStack extends Stack {
       description: 'Number of Glue workers to use during an Export job.'
     });
 
-    // The stage CFN parameter signifies Solutions customers to only use FWoA in dev environment, never in Prod
-    // This parameter is not actually referenced in the template, as all reference to stage would already been resolved to dev
-    if (props!.isSolutionsBuild) {
-      const stage = new CfnParameter(this, 'stage', {
-        type: 'String',
-        default: 'dev',
-        description: 'A short name for identifying the stage. dev is the only option.',
-        allowedValues: ['dev']
-      });
-    }
-
-    const cognitoOAuthDefaultRedirectURL = new CfnParameter(this, 'cognitoOAuthDefaultRedirectURL', {
-      type: 'String',
-      default: props!.oauthRedirect,
-      description:
-        'The authorization endpoint. For details, refer to Configuring a User Pool App Client. ' +
-        'If using Postman, consider using https://oauth.pstmn.io/v1/browser-callback. ' +
-        'If not applicable, use the default.'
-    });
-
-    const enableMultiTenancy = new CfnParameter(this, 'enableMultiTenancy', {
-      type: 'String',
-      default: props!.enableMultiTenancy.toString(),
-      description: 'Enable multi tenancy to host multiple tenants under one fhir instance',
-      allowedValues: ['false', 'true']
-    });
-
-    const logLevel = new CfnParameter(this, 'logLevel', {
-      type: 'String',
-      default: props!.logLevel,
-      description: 'Log level for CloudWatch logs. Valid values are: debug, info, warn, and error.',
-      allowedValues: ['debug', 'info', 'warn', 'error']
-    });
-
     // define conditions here:
     const isDev = props!.stage === 'dev';
     const isDevCondition = new CfnCondition(this, 'isDev', {
       expression: Fn.conditionEquals(props!.stage, 'dev')
     });
-    const isMultiTenancyEnabled = enableMultiTenancy.valueAsString === 'true';
+    const isMultiTenancyEnabled = props!.enableMultiTenancy;
 
     // define other custom variables here
     const resourceTableName = `resource-db-${props!.stage}`;
@@ -183,7 +148,7 @@ export default class FhirWorksStack extends Stack {
         s3KMSKey: kmsResources.s3KMSKey,
         igMemoryLimit: props!.igMemoryLimit,
         igMemorySize: props!.igMemorySize,
-        igStorageSize: props!.igStorageSize,
+        igStorageSize: props!.igStorageSize
       });
     }
 
@@ -314,11 +279,7 @@ export default class FhirWorksStack extends Stack {
     );
 
     // Create Cognito Resources here:
-    const cognitoResources = new CognitoResources(
-      this,
-      this.stackName,
-      cognitoOAuthDefaultRedirectURL.valueAsString
-    );
+    const cognitoResources = new CognitoResources(this, this.stackName, props!.oauthRedirect);
 
     const apiGatewayLogGroup = new LogGroup(this, 'apiGatewayLogGroup', {
       encryptionKey: kmsResources.logKMSKey,
@@ -335,9 +296,7 @@ export default class FhirWorksStack extends Stack {
         stageName: props!.stage,
         tracingEnabled: true,
         loggingLevel:
-          logLevel.valueAsString === MethodLoggingLevel.ERROR
-            ? MethodLoggingLevel.ERROR
-            : MethodLoggingLevel.INFO,
+          props!.logLevel === MethodLoggingLevel.ERROR ? MethodLoggingLevel.ERROR : MethodLoggingLevel.INFO,
         accessLogFormat: AccessLogFormat.custom(
           '{"authorizer.claims.sub":"$context.authorizer.claims.sub","error.message":"$context.error.message","extendedRequestId":"$context.extendedRequestId","httpMethod":"$context.httpMethod","identity.sourceIp":"$context.identity.sourceIp","integration.error":"$context.integration.error","integration.integrationStatus":"$context.integration.integrationStatus","integration.latency":"$context.integration.latency","integration.requestId":"$context.integration.requestId","integration.status":"$context.integration.status","path":"$context.path","requestId":"$context.requestId","responseLatency":"$context.responseLatency","responseLength":"$context.responseLength","stage":"$context.stage","status":"$context.status"}'
         ),
@@ -379,7 +338,7 @@ export default class FhirWorksStack extends Stack {
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
-      LOG_LEVEL: logLevel.valueAsString
+      LOG_LEVEL: props!.logLevel
     };
 
     const defaultLambdaBundlingOptions = {
@@ -730,7 +689,6 @@ export default class FhirWorksStack extends Stack {
         })
       );
     }
-
     fhirServerLambda.addAlias(`fhir-server-lambda-${props!.stage}`);
 
     const apiGatewayApiKey = apiGatewayRestApi.addApiKey('developerApiKey', {
