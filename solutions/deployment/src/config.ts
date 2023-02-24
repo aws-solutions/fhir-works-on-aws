@@ -119,7 +119,7 @@ export const getFhirConfig = async (): Promise<FhirConfig> => {
     profile: {
       systemOperations: ['transaction'],
       bundle: dynamoDbBundleService,
-      compiledImplementationGuides: loadImplementationGuides('@aws/fhir-works-on-aws-routing'),
+      compiledImplementationGuides: loadImplementationGuides('fhir-works-on-aws-routing'),
       systemHistory: stubs.history,
       systemSearch: stubs.search,
       bulkDataAccess: dynamoDbDataService,
