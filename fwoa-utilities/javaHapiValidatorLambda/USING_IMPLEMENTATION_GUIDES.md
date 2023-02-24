@@ -6,7 +6,7 @@ IGs are distributed as [packages similar to NPM packages](https://confluence.hl7
 
 ## Prerequisites
 
-The prerequisites for FHIR IGs are same as in the FHIR [installation documentation](INSTALL.md). In addition, you need the following:
+The prerequisites for FHIR IGs are same as in the FHIR [installation documentation](../../INSTALL.md). In addition, you need the following:
 
 1. Java 8 or higher. We recommend using [Amazon Corretto](https://aws.amazon.com/corretto/)
 2. [Maven](https://maven.apache.org/install.html)
@@ -27,34 +27,37 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
    ```
 
 1. Compile the IGs using the `compile-igs` command:
+   > **Note**  
+   > This command needs to be invoked in the top level directory of the chosen solution within the `solutions` directory.
    ```bash
-   #fhir-works-on-aws-deployment
    rushx compile-igs
    ```
-   > **Note**  
-   > This command needs to be invoked in the top level directory of the cloned `fhir-works-on-aws-deployment` repository.
 1. Deploy the Hapi Validator using the following commands:
+   > **Note**
+   > This command must be run in the [javaHapiValidatorLambda](../javaHapiValidatorLambda/) directory
    ```bash
-   #fhir-works-on-aws-deployment/javaHapiValidatorLambda
-   cd javaHapiValidatorLambda
+   #fwoa-utilities/javaHapiValidatorLambda
    mvn clean install
    ```
-   > **Note**  
-   > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-   > comments on [pom.xml](javaHapiValidatorLambda/pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+1. Deploy the FHIR Works on AWS server using the `deploy` command (after navigating back to the top level directory of the chosen solution):
+
    ```bash
-   #fhir-works-on-aws-deployment/javaHapiValidatorLambda
-   rushx deploy -c fhirVersion="3.0.1"
-   ```
-1. Deploy the FHIR Works on AWS server using the `deploy` command (after navigating back to the top level directory of the cloned repository):
-   ```bash
-   #fhir-works-on-aws-deployment
-   cd ..
    rushx deploy -c useHapiValidator=true --all
    ```
 
+   > **Note**
+   > If you are deploying with implementation guides that are large in file size such as [us.nlm.vsac](https://registry.fhir.org/package/us.nlm.vsac|0.3.0), you can specify the additional context parameters `-c igMemoryLimit`, `-c igMemorySize`, and `-c igStorageSize`. These values are reflected in the `memoryLimit` of the BucketDeployment, and the `memorySize` and `ephemeralStorageSize` values for the Validator Lambda Function. These values can be found [here](../../solutions//smart-deployment/src/lib/javaHapiValidator.ts) for FWoA SMART and [here](../../solutions//smart-deployment/lib/javaHapiValidator.ts) for FWoA
+
+   > **Note**  
+   > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
+   > comments on [pom.xml](./pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+
+   ```bash
+   rushx deploy -c fhirVersion="3.0.1"
+   ```
+
 > **Note**  
-> For more information on how to set up AWS credentials or how to deploy to a specific stage or region, refer to the [installation documentation](INSTALL.md#manual-installation).
+> For more information on how to set up AWS credentials or how to deploy to a specific stage or region, refer to the [installation documentation](../../INSTALL.md#manual-installation).
 
 ## Supported IG features in FHIR Works on AWS
 

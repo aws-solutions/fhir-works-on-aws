@@ -34,7 +34,7 @@ jobs:
     steps:    
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.BOT_TOKEN }}
           fetch-depth: 0
 
       # use merge commit instead of squash

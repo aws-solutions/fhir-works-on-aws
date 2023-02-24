@@ -22,7 +22,7 @@ import {
 import HapiFhirLambdaValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/hapiFhirLambdaValidator';
 import JsonSchemaValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/jsonSchemaValidator';
 import SubscriptionValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
-import { ElasticSearchService } from 'fhir-works-on-aws-search-es';
+import { ElasticSearchService } from '@aws/fhir-works-on-aws-search-es';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import RBACRules from './RBACRules';
 import getAllowListedSubscriptionEndpoints from './subscriptions/allowList';
