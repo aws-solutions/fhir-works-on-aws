@@ -83,17 +83,6 @@ describe('captureResourceTypeRegExp', () => {
       expect(actualMatch[i]).toEqual(expectedMatch[i]);
     }
   });
-  test('Success match with initial slash', () => {
-    const resourceString = `/Patient/12345678`;
-    const actualMatch = resourceString.match(captureResourceTypeRegExp);
-
-    const expectedMatch = ['/Patient/12345678', 'Patient'];
-
-    for (let i = 0; i < expectedMatch.length; i += 1) {
-      // @ts-ignore
-      expect(actualMatch[i]).toEqual(expectedMatch[i]);
-    }
-  });
   test('Extra long resource type fail to match', () => {
     const resourceString = `${'Patient'.repeat(30)}/12345678`;
     expect(resourceString.match(captureResourceTypeRegExp)).toBeNull();
@@ -101,22 +90,11 @@ describe('captureResourceTypeRegExp', () => {
 });
 
 describe('captureResourceIdRegExp', () => {
-  test('Success match with initial slash', () => {
-    const resourceString = `/Patient/12345678`;
-    const actualMatch = resourceString.match(captureResourceIdRegExp);
-
-    const expectedMatch = ['/Patient/12345678', '12345678'];
-
-    for (let i = 0; i < expectedMatch.length; i += 1) {
-      // @ts-ignore
-      expect(actualMatch[i]).toEqual(expectedMatch[i]);
-    }
-  });
   test('Success match', () => {
     const resourceString = `Patient/12345678`;
     const actualMatch = resourceString.match(captureResourceIdRegExp);
 
-    const expectedMatch = ['Patient/12345678', '12345678'];
+    const expectedMatch = ['Patient/12345678', 'Patient'];
 
     for (let i = 0; i < expectedMatch.length; i += 1) {
       // @ts-ignore

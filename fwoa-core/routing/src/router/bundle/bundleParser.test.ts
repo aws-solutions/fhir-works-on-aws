@@ -476,12 +476,6 @@ describe('parseResource', () => {
               method: 'POST',
               url: 'Observation'
             }
-          },
-          {
-            request: {
-              method: 'GET',
-              url: '/Patient/someRandomResource'
-            }
           }
         ]
       };
@@ -660,13 +654,6 @@ describe('parseResource', () => {
           fullUrl: 'https://API_URL.com/Observation/6',
           resourceType: 'Observation',
           id: expect.stringMatching(uuidRegExp)
-        },
-        {
-          operation: 'read',
-          resource: '/Patient/someRandomResource',
-          fullUrl: '',
-          resourceType: 'Patient',
-          id: 'someRandomResource'
         }
       ];
 

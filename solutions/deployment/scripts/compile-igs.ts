@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { SearchImplementationGuides } from '@aws/fhir-works-on-aws-search-es';
+import { SearchImplementationGuides } from 'fhir-works-on-aws-search-es';
 import { RoutingImplementationGuides } from '@aws/fhir-works-on-aws-routing/lib/implementationGuides';
 import { IGCompiler } from '../src/implementationGuides/IGCompiler';
 import { COMPILED_IGS_DIRECTORY } from '../src/implementationGuides/loadCompiledIGs';

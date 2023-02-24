@@ -12,12 +12,10 @@ export const dateTimeWithTimeZoneRegExp =
 export const timeFromEpochInMsRegExp = /\d{13}/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-// Exp. /Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-export const captureResourceIdRegExp = /^\/?\w{1,30}\/([-\w+]{1,100})$/;
+export const captureResourceIdRegExp = /^(\w{1,30})\/[-\w+]{1,100}$/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-// Exp. /Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-export const captureResourceTypeRegExp = /^\/?(\w{1,30})\/[-\w+]{1,100}$/;
+export const captureResourceTypeRegExp = /^(\w{1,30})\/[-\w+]{1,100}$/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a/_history/1
 export const captureVersionIdRegExp = /\w+\/[-\w+]+\/_history\/(\w+)/;

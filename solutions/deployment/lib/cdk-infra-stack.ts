@@ -53,20 +53,21 @@ import AlarmsResource from './alarms';
 import JavaHapiValidator from './javaHapiValidator';
 
 export interface FhirWorksStackProps extends StackProps {
-    stage: string;
-    region: string;
-    enableMultiTenancy: boolean;
-    enableSubscriptions: boolean;
-    enableBackup: boolean;
-    useHapiValidator: boolean;
-    enableESHardDelete: boolean;
-    logLevel: string;
-    oauthRedirect: string;
-    fhirVersion: string;
-    igMemoryLimit: number;
-    igMemorySize: number;
-    igStorageSize: number;
-    enableSecurityLogging: boolean;
+  stage: string;
+  region: string;
+  enableMultiTenancy: boolean;
+  enableSubscriptions: boolean;
+  enableBackup: boolean;
+  useHapiValidator: boolean;
+  enableESHardDelete: boolean;
+  logLevel: string;
+  oauthRedirect: string;
+  fhirVersion: string;
+  igMemoryLimit: number;
+  igMemorySize: number;
+  igStorageSize: number;
+  isSolutionsBuild: boolean;
+  enableSecurityLogging: boolean;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -90,15 +91,15 @@ export default class FhirWorksStack extends Stack {
     });
 
     // define conditions here:
-    const isDev = props!.stage === 'dev';
+    const isDev = props?.stage === 'dev';
     const isDevCondition = new CfnCondition(this, 'isDev', {
       expression: Fn.conditionEquals(props!.stage, 'dev')
     });
     const isMultiTenancyEnabled = props!.enableMultiTenancy;
 
     // define other custom variables here
-    const resourceTableName = `resource-db-${props!.stage}`;
-    const exportRequestTableName = `export-request-${props!.stage}`;
+    const resourceTableName = `resource-db-${props?.stage}`;
+    const exportRequestTableName = `export-request-${props?.stage}`;
     const exportRequestTableJobStatusIndex = `jobStatus-index`;
 
     const PATIENT_COMPARTMENT_V3 = 'patientCompartmentSearchParams.3.0.2.json';
@@ -144,12 +145,7 @@ export default class FhirWorksStack extends Stack {
       this.javaHapiValidator = new JavaHapiValidator(this, 'javaHapiValidator', {
         region: props!.region,
         fhirVersion: props!.fhirVersion,
-        stage: props!.stage,
-        fhirLogsBucket,
-        s3KMSKey: kmsResources.s3KMSKey,
-        igMemoryLimit: props!.igMemoryLimit,
-        igMemorySize: props!.igMemorySize,
-        igStorageSize: props!.igStorageSize
+        stage: props!.stage
       });
     }
 
@@ -339,7 +335,11 @@ export default class FhirWorksStack extends Stack {
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
-      LOG_LEVEL: props!.logLevel
+      LOG_LEVEL: logLevel.valueAsString,
+      LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.loggerMiddlewareKMSKey
+      ? kmsResources.loggerMiddlewareKMSKey.keyArn
+      : 'ENCRYPTION_TURNED_OFF',
+      ENABLE_LOGGING_MIDDLEWARE: `${props!.enableSecurityLogging}`,
     };
 
     const defaultLambdaBundlingOptions = {
@@ -691,7 +691,8 @@ export default class FhirWorksStack extends Stack {
         })
       );
     }
-    fhirServerLambda.addAlias(`fhir-server-lambda-${props!.stage}`);
+
+    fhirServerLambda.currentVersion.addAlias(`fhir-server-lambda-${props!.stage}`);
 
     const apiGatewayApiKey = apiGatewayRestApi.addApiKey('developerApiKey', {
       description: 'Key for developer access to the FHIR Api',
