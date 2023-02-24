@@ -360,10 +360,10 @@ export default class FhirWorksStack extends Stack {
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,
       VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false',
-      LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.loggerMiddlewareKMSKey
-      ? kmsResources.loggerMiddlewareKMSKey.keyArn
+      LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.securityLogKMSKey
+      ? kmsResources.securityLogKMSKey.keyArn
       : 'ENCRYPTION_TURNED_OFF',
-      ENABLE_LOGGING_MIDDLEWARE: `${props!.enableSecurityLogging}`,
+      ENABLE_SCRURITY_LOGGING: `${props!.enableSecurityLogging}`,
     };
 
     const defaultLambdaBundlingOptions = {
@@ -861,7 +861,7 @@ export default class FhirWorksStack extends Stack {
                   kmsResources.s3KMSKey.keyArn,
                   kmsResources.dynamoDbKMSKey.keyArn,
                   kmsResources.elasticSearchKMSKey.keyArn,
-                  kmsResources.loggerMiddlewareKMSKey?.keyArn as string,
+                  kmsResources.securityLogKMSKey?.keyArn as string,
                 ]
               }),
               new PolicyStatement({

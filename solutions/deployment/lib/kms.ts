@@ -16,7 +16,7 @@ export default class KMSResources {
 
     snsKMSKey: Key;
 
-    loggerMiddlewareKMSKey?: Key;
+    securityLogKMSKey?: Key;
 
     s3Alias: Alias;
 
@@ -28,7 +28,7 @@ export default class KMSResources {
 
     snsAlias: Alias;
 
-    loggerMiddlewareAlias?: Alias;
+    securityLogAlias?: Alias;
 
     constructor(scope: Construct, region: string, stage: string, account: string, enableSecurityLogging: boolean) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
@@ -130,13 +130,13 @@ export default class KMSResources {
         });
 
         if (enableSecurityLogging) {
-            this.loggerMiddlewareKMSKey = new Key(scope, 'loggerMiddlewareKMSKey', {
+            this.securityLogKMSKey = new Key(scope, 'securityLogKMSKey', {
                 enableKeyRotation: true,
-                description: 'KMS CMK for Logging Middleware',
+                description: 'KMS CMK for Security Logger Middleware',
                 policy: new PolicyDocument({
                     statements: [
                         new PolicyStatement({
-                            sid: 'Allow loggermiddleware to use this Key policy',
+                            sid: 'Allow root principal to manager key',
                             effect: Effect.ALLOW,
                             actions: ['kms:*'],
                             resources: ['*'],
@@ -146,10 +146,10 @@ export default class KMSResources {
                 }),
             });
 
-            this.loggerMiddlewareKMSKey.applyRemovalPolicy(RemovalPolicy.RETAIN);
-            this.loggerMiddlewareAlias = new Alias(scope, 'loggerMiddlewareAlias', {
-                aliasName: `alias/loggerMiddlewareKey-${stage}`,
-                targetKey: this.loggerMiddlewareKMSKey,
+            this.securityLogKMSKey.applyRemovalPolicy(RemovalPolicy.RETAIN);
+            this.securityLogAlias = new Alias(scope, 'securityLogAlias', {
+                aliasName: `alias/securityLogKMSKey-${stage}`,
+                targetKey: this.securityLogKMSKey,
             });
         }
         this.snsKMSKey = new Key(scope, 'snsKMSKey', {
