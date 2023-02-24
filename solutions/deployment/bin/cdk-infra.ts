@@ -83,9 +83,7 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   igMemorySize,
   igStorageSize,
   description:
-    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
-  // Check for build env variable to detect Solutions Pipeline build environment
-  isSolutionsBuild: process.env.SOLUTION_ID === solutionId
+    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
 });
 new FhirWorksAppRegistry(stack, 'FhirWorksAppRegistry', {
   solutionId,
