@@ -2,6 +2,9 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import { decode } from 'jsonwebtoken';
+
+import isEqual from 'lodash/isEqual';
 import {
   Authorization,
   AuthorizationBundleRequest,
@@ -23,10 +26,7 @@ import {
   KeyValueMap,
   GetSearchFilterBasedOnIdentityRequest,
   SearchFilter
-} from '@aws/fhir-works-on-aws-interface';
-import { decode } from 'jsonwebtoken';
-
-import isEqual from 'lodash/isEqual';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 import { Rule, RBACConfig } from './RBACConfig';
 

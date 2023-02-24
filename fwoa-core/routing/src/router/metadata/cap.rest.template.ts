@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { SystemOperation } from '@aws/fhir-works-on-aws-interface';
+import { SystemOperation } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { makeOperation } from './cap.rest.resource.template';
 
 export default function makeRest(

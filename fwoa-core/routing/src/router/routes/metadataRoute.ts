@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { CapabilityMode, FhirVersion } from '@aws/fhir-works-on-aws-interface';
 import express, { Router } from 'express';
+import { CapabilityMode, FhirVersion } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import ConfigHandler from '../../configHandler';
 import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
 import { FHIRStructureDefinitionRegistry } from '../../registry';

@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError } from '@aws/fhir-works-on-aws-interface';
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
+import { InvalidResourceError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import HapiFhirLambdaValidator from './hapiFhirLambdaValidator';
 
 AWSMock.setSDKInstance(AWS);

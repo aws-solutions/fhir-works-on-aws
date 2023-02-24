@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from '@aws/fhir-works-on-aws-interface';
+import { InvalidSearchParameterError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 export interface TokenSearchValue {
   system?: string;

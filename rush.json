@@ -26,7 +26,7 @@
   "variants": [],
   "projects": [
     {
-      "packageName": "@aws/fhir-works-on-aws-interface",
+      "packageName": "test-e3776dcf-341e-4fc7-bfc6-762082f295fa",
       "projectFolder": "fwoa-core/interface",
       "reviewCategory": "production",
       "shouldPublish": true
@@ -35,7 +35,7 @@
       "packageName": "@aws/fhir-works-on-aws-search-es",
       "projectFolder": "fwoa-core/search-es",
       "reviewCategory": "production",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/fhir-works-on-aws-deployment",
@@ -47,19 +47,19 @@
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
       "projectFolder": "fwoa-core/persistence-ddb",
       "reviewCategory": "production",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
       "projectFolder": "fwoa-core/routing",
       "reviewCategory": "production",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/fhir-works-on-aws-authz-rbac",
       "projectFolder": "fwoa-core/authz-rbac",
       "reviewCategory": "production",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/eslint-config-fwoa-eslint-custom",
@@ -71,7 +71,7 @@
       "packageName": "@aws/fhir-works-on-aws-authz-smart",
       "projectFolder": "fwoa-core/authz-smart",
       "reviewCategory": "tools",
-      "shouldPublish": true
+      "shouldPublish": false
     },
     {
       "packageName": "@aws/fhir-works-on-aws-smart-deployment",

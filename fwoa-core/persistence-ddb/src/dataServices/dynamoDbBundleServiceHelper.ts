@@ -3,14 +3,14 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { DynamoDB } from 'aws-sdk';
 import {
   BatchReadWriteRequest,
   BatchReadWriteResponse,
   TypeOperation,
   SystemOperation,
   isResourceNotFoundError
-} from '@aws/fhir-works-on-aws-interface';
-import { DynamoDB } from 'aws-sdk';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';

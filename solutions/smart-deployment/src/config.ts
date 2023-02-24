@@ -5,14 +5,6 @@
 
 import { SMARTHandler } from '@aws/fhir-works-on-aws-authz-smart';
 import {
-  FhirConfig,
-  FhirVersion,
-  stubs,
-  BASE_R4_RESOURCES,
-  BASE_STU3_RESOURCES,
-  Validator
-} from '@aws/fhir-works-on-aws-interface';
-import {
   DynamoDb,
   DynamoDbDataService,
   DynamoDbBundleService,
@@ -24,6 +16,14 @@ import JsonSchemaValidator from '@aws/fhir-works-on-aws-routing/lib/router/valid
 import SubscriptionValidator from '@aws/fhir-works-on-aws-routing/lib/router/validation/subscriptionValidator';
 import { ElasticSearchService } from '@aws/fhir-works-on-aws-search-es';
 import escapeStringRegexp from 'escape-string-regexp';
+import {
+  FhirConfig,
+  FhirVersion,
+  stubs,
+  BASE_R4_RESOURCES,
+  BASE_STU3_RESOURCES,
+  Validator
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { createAuthZConfig } from './authZConfig';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import getAllowListedSubscriptionEndpoints from './subscriptions/allowList';

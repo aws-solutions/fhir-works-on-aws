@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Auth } from '@aws/fhir-works-on-aws-interface';
+import { Auth } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 export default function makeSecurity(authConfig: Auth, hasCORSEnabled: boolean = false) {
   if (authConfig.strategy.service) {

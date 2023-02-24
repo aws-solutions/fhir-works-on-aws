@@ -5,6 +5,7 @@
 
 /* eslint-disable class-methods-use-this */
 
+import mime from 'mime-types';
 import {
   GenericResponse,
   Persistence,
@@ -19,8 +20,7 @@ import {
   ResourceNotFoundError,
   InitiateExportRequest,
   GetExportStatusResponse
-} from '@aws/fhir-works-on-aws-interface';
-import mime from 'mime-types';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 import { SEPARATOR } from '../constants';
 import ObjectNotFoundError from './ObjectNotFoundError';

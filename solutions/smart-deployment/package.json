@@ -59,7 +59,6 @@
   },
   "dependencies": {
     "@aws/fhir-works-on-aws-authz-smart": "workspace:*",
-    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@aws/fhir-works-on-aws-persistence-ddb": "workspace:*",
     "@aws/fhir-works-on-aws-routing": "workspace:*",
     "@aws/fhir-works-on-aws-search-es": "workspace:*",
@@ -78,6 +77,7 @@
     "path": "^0.12.7",
     "serverless-http": "^2.7.0",
     "source-map-support": "^0.5.16",
+    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "tslib": "^2.3.1",
     "yargs": "^16.2.0"
   },

@@ -1,4 +1,4 @@
-import { BatchReadWriteRequest } from '@aws/fhir-works-on-aws-interface';
+import { BatchReadWriteRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { getFhirUser } from '../smartAuthorizationHelper';
 import { FhirResource, ScopeRule, SMARTConfig } from '../smartConfig';
 import { SEARCH_OPERATIONS } from '../smartScopeHelper';

@@ -1,4 +1,4 @@
-import { WriteRequestAuthorizedRequest } from '@aws/fhir-works-on-aws-interface';
+import { WriteRequestAuthorizedRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { SMARTHandler } from '../smartHandler';
 import TestCaseUtil, { BaseCsvRow } from './testCaseUtil.test';
 import * as testStubs from './testStubs';

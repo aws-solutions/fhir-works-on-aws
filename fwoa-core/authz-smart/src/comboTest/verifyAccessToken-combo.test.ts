@@ -1,4 +1,4 @@
-import { VerifyAccessTokenRequest } from '@aws/fhir-works-on-aws-interface';
+import { VerifyAccessTokenRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import * as smartAuthorizationHelper from '../smartAuthorizationHelper';
 import { SMARTHandler } from '../smartHandler';
 import TestCaseUtil, { BaseCsvRow } from './testCaseUtil.test';

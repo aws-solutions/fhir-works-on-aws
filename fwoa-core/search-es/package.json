@@ -41,7 +41,6 @@
   "dependencies": {
     "@aws-sdk/client-sns": "^3.50.0",
     "@aws-sdk/node-http-handler": "^3.52.0",
-    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@elastic/elasticsearch": "7.13.0",
     "@types/aws-lambda": "^8.10.92",
     "aws-elasticsearch-connector": "^8.2.0",
@@ -52,6 +51,7 @@
     "lodash": "^4.17.21",
     "nearley": "^2.20.0",
     "qs": "^6.10.3",
+    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

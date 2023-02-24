@@ -3,6 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 jest.mock('jsonwebtoken');
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import jwt from 'jsonwebtoken';
 import {
   AccessBulkDataJobRequest,
   AllowedResourceTypesForOperationRequest,
@@ -16,10 +19,7 @@ import {
   UnauthorizedError,
   VerifyAccessTokenRequest,
   WriteRequestAuthorizedRequest
-} from '@aws/fhir-works-on-aws-interface';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import jwt from 'jsonwebtoken';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import * as smartAuthorizationHelper from './smartAuthorizationHelper';
 import { getFhirResource, getFhirUser } from './smartAuthorizationHelper';
 import { ScopeRule, SMARTConfig } from './smartConfig';

@@ -47,7 +47,6 @@
     "set-value": "^4.0.1"
   },
   "dependencies": {
-    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@types/cors": "^2.8.7",
     "@types/express-serve-static-core": "^4.17.2",
     "ajv": "^6.11.0",
@@ -63,6 +62,7 @@
     "mime-types": "^2.1.26",
     "sanitize-html": "^2.8.0",
     "serverless-http": "^2.7.0",
+    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

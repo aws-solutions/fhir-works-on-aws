@@ -6,7 +6,7 @@ import {
   BundleResponse,
   BatchRequest,
   TransactionRequest
-} from '@aws/fhir-works-on-aws-interface';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 const bundleEntryResponses: BatchReadWriteResponse[] = [
   {

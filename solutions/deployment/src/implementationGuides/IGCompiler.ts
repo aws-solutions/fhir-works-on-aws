@@ -1,7 +1,7 @@
 import { existsSync, PathLike, readdir, readFile, writeFile, realpathSync, statSync } from 'fs';
 import path from 'path';
 import util from 'util';
-import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
+import { ImplementationGuides } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 /* eslint no-restricted-syntax: 0 */
 /* eslint no-await-in-loop: 0 */

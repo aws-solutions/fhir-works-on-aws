@@ -5,7 +5,7 @@ env:
   BOT_USER_NAME: ${{ vars.BOT_USER_NAME }}
 jobs:
   create-release-branch:
-    if: ${{github.ref_name == 'copy-stage'}}
+    # if: ${{github.ref_name == 'copy-stage'}}
     runs-on: ubuntu-20.04
     outputs:
       source_branch: ${{ steps.create_branch.outputs.source_branch }}

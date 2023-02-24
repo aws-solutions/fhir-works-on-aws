@@ -3,18 +3,18 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import Ajv from 'ajv';
+// @ts-ignore
+import ajvErrors from 'ajv-errors';
+
+import { isEmpty, groupBy } from 'lodash';
 import {
   InvalidResourceError,
   Validator,
   Search,
   Persistence,
   TypeOperation
-} from '@aws/fhir-works-on-aws-interface';
-import Ajv from 'ajv';
-// @ts-ignore
-import ajvErrors from 'ajv-errors';
-
-import { isEmpty, groupBy } from 'lodash';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 import subscriptionSchema from './subscriptionSchema.json';
 

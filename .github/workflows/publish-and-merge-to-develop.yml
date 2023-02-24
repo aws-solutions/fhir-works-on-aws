@@ -4,7 +4,7 @@ on:
     types:
       - closed
     branches:
-      - test-main
+      - copy-main
 
 jobs:
   rush-publish:

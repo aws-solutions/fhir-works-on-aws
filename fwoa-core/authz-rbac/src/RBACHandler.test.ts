@@ -2,6 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import shuffle from 'shuffle-array';
 import {
   R4Resource,
   BASE_R4_RESOURCES,
@@ -10,8 +11,7 @@ import {
   BASE_STU3_RESOURCES,
   AccessBulkDataJobRequest,
   UnauthorizedError
-} from '@aws/fhir-works-on-aws-interface';
-import shuffle from 'shuffle-array';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { RBACConfig } from './RBACConfig';
 import { RBACHandler } from './RBACHandler';
 

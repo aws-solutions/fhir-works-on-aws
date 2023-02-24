@@ -40,11 +40,11 @@
     "set-value": "^4.0.1"
   },
   "dependencies": {
-    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "axios": "^0.21.4",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^1.12.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",

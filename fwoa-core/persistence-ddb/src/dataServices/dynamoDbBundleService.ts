@@ -4,6 +4,10 @@
  */
 
 /* eslint-disable class-methods-use-this */
+import DynamoDB from 'aws-sdk/clients/dynamodb';
+import flatten from 'flat';
+import { chunk, set } from 'lodash';
+import mapValues from 'lodash/mapValues';
 import {
   BatchRequest,
   TransactionRequest,
@@ -15,11 +19,7 @@ import {
   chunkArray,
   ResourceNotFoundError,
   GenericResponse
-} from '@aws/fhir-works-on-aws-interface';
-import DynamoDB from 'aws-sdk/clients/dynamodb';
-import flatten from 'flat';
-import { chunk, set } from 'lodash';
-import mapValues from 'lodash/mapValues';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 import getComponentLogger from '../loggerBuilder';
 import { captureFullUrlParts } from '../regExpressions';

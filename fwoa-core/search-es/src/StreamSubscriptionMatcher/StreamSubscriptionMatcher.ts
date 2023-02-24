@@ -5,12 +5,12 @@
  */
 
 import https from 'https';
-import { FhirVersion, Persistence } from '@aws/fhir-works-on-aws-interface';
 import { SNSClient, PublishBatchCommand } from '@aws-sdk/client-sns';
 import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
 import { DynamoDBStreamEvent } from 'aws-lambda/trigger/dynamodb-stream';
 import { captureAWSv3Client } from 'aws-xray-sdk';
 import { chunk } from 'lodash';
+import { FhirVersion, Persistence } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { v4 } from 'uuid';
 import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
 import { matchParsedFhirQueryParams } from '../InMemoryMatcher';

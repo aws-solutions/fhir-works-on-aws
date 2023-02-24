@@ -2,15 +2,15 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import Ajv from 'ajv';
+import schemaDraft04 from 'ajv/lib/refs/json-schema-draft-04.json';
+import schemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import {
   FhirVersion,
   InvalidResourceError,
   TypeOperation,
   Validator
-} from '@aws/fhir-works-on-aws-interface';
-import Ajv from 'ajv';
-import schemaDraft04 from 'ajv/lib/refs/json-schema-draft-04.json';
-import schemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 import fhirV3Schema from './schemas/fhir.schema.v3.json';
 import fhirV4Schema from './schemas/fhir.schema.v4.json';

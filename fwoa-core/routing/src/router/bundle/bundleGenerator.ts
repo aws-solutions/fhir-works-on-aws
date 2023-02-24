@@ -4,8 +4,8 @@
  */
 
 import URL from 'url';
-import { SearchResult, BatchReadWriteResponse } from '@aws/fhir-works-on-aws-interface';
 import { isEmpty } from 'lodash';
+import { SearchResult, BatchReadWriteResponse } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { v4 as uuidv4 } from 'uuid';
 
 type LinkType = 'self' | 'previous' | 'next' | 'first' | 'last';

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from '@aws/fhir-works-on-aws-interface';
+import { ImplementationGuides } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 /**
  * Based on the FHIR StructuredDefinition. This type only includes the fields that are required for the compile process.

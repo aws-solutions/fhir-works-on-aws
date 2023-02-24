@@ -48,7 +48,7 @@ importers:
   ../../fwoa-core/authz-rbac:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -73,7 +73,7 @@ importers:
       ts-jest: ^26.4.4
       typescript: ^4.9.4
     dependencies:
-      '@aws/fhir-works-on-aws-interface': link:../interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../interface
       jsonwebtoken: 9.0.0
       lodash: 4.17.21
     devDependencies:
@@ -103,7 +103,7 @@ importers:
   ../../fwoa-core/authz-smart:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -133,7 +133,7 @@ importers:
       ts-jest: ^26.4.4
       typescript: ^4.9.4
     dependencies:
-      '@aws/fhir-works-on-aws-interface': link:../interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../interface
       axios: 0.21.4
       jsonwebtoken: 9.0.0
       jwks-rsa: 1.12.3
@@ -223,7 +223,7 @@ importers:
   ../../fwoa-core/persistence-ddb:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@elastic/elasticsearch': 7.13.0
       '@elastic/elasticsearch-mock': ^0.3.0
       '@rushstack/eslint-config': ^3.0.0
@@ -264,7 +264,7 @@ importers:
       typescript: ^4.9.4
       uuid: ^8.3.2
     dependencies:
-      '@aws/fhir-works-on-aws-interface': link:../interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../interface
       '@elastic/elasticsearch': 7.13.0
       aws-elasticsearch-connector: 8.3.0_ipruhuyphb5vvpdzrh4nzndwjq
       aws-sdk: 2.1303.0
@@ -310,7 +310,7 @@ importers:
   ../../fwoa-core/routing:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@rushstack/eslint-config': ^3.0.0
       '@rushstack/heft': 0.49.0
       '@rushstack/heft-jest-plugin': 0.4.2
@@ -359,7 +359,7 @@ importers:
       typescript: ^4.9.4
       uuid: ^8.3.2
     dependencies:
-      '@aws/fhir-works-on-aws-interface': link:../interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../interface
       '@types/cors': 2.8.13
       '@types/express-serve-static-core': 4.17.33
       ajv: 6.12.6
@@ -415,7 +415,7 @@ importers:
       '@aws-sdk/client-sns': ^3.50.0
       '@aws-sdk/node-http-handler': ^3.52.0
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@elastic/elasticsearch': 7.13.0
       '@elastic/elasticsearch-mock': ^0.3.0
       '@rushstack/eslint-config': ^3.0.0
@@ -457,7 +457,7 @@ importers:
     dependencies:
       '@aws-sdk/client-sns': 3.267.0
       '@aws-sdk/node-http-handler': 3.267.0
-      '@aws/fhir-works-on-aws-interface': link:../interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../interface
       '@elastic/elasticsearch': 7.13.0
       '@types/aws-lambda': 8.10.109
       aws-elasticsearch-connector: 8.3.0_ipruhuyphb5vvpdzrh4nzndwjq
@@ -558,7 +558,7 @@ importers:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-rbac': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@aws/fhir-works-on-aws-persistence-ddb': workspace:*
       '@aws/fhir-works-on-aws-routing': workspace:*
       '@aws/fhir-works-on-aws-search-es': workspace:*
@@ -624,7 +624,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@aws/fhir-works-on-aws-authz-rbac': link:../../fwoa-core/authz-rbac
-      '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
@@ -695,7 +695,7 @@ importers:
     specifiers:
       '@aws/eslint-config-fwoa-eslint-custom': workspace:*
       '@aws/fhir-works-on-aws-authz-smart': workspace:*
-      '@aws/fhir-works-on-aws-interface': workspace:*
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': workspace:*
       '@aws/fhir-works-on-aws-persistence-ddb': workspace:*
       '@aws/fhir-works-on-aws-routing': workspace:*
       '@aws/fhir-works-on-aws-search-es': workspace:*
@@ -755,7 +755,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@aws/fhir-works-on-aws-authz-smart': link:../../fwoa-core/authz-smart
-      '@aws/fhir-works-on-aws-interface': link:../../fwoa-core/interface
+      'test-e3776dcf-341e-4fc7-bfc6-762082f295fa': link:../../fwoa-core/interface
       '@aws/fhir-works-on-aws-persistence-ddb': link:../../fwoa-core/persistence-ddb
       '@aws/fhir-works-on-aws-routing': link:../../fwoa-core/routing
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es

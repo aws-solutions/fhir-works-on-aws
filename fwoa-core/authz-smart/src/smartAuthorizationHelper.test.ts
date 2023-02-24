@@ -4,7 +4,7 @@
  */
 
 import { KeyObject } from 'crypto';
-import { FhirVersion, UnauthorizedError } from '@aws/fhir-works-on-aws-interface';
+import { FhirVersion, UnauthorizedError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 /* eslint-disable import/no-unresolved, import/default, import/namespace, import/no-named-as-default */

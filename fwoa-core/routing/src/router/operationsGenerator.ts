@@ -1,4 +1,4 @@
-import { IssueSeverity, IssueCode } from '@aws/fhir-works-on-aws-interface';
+import { IssueSeverity, IssueCode } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 /*
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.

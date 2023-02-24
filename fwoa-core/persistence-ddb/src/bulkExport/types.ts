@@ -2,8 +2,8 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { ExportJobStatus, ExportType } from '@aws/fhir-works-on-aws-interface';
 import { JobRunState } from 'aws-sdk/clients/glue';
+import { ExportJobStatus, ExportType } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 /**
  * Outputs of intermediate steps of the state machine execution that can be used as parameters for subsequent steps

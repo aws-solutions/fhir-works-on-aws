@@ -34,7 +34,6 @@
     "set-value": "^4.0.1"
   },
   "dependencies": {
-    "@aws/fhir-works-on-aws-interface": "workspace:*",
     "@elastic/elasticsearch": "7.13.0",
     "aws-elasticsearch-connector": "^8.2.0",
     "aws-sdk": "^2.1000.0",
@@ -43,6 +42,7 @@
     "lodash": "^4.17.21",
     "mime-types": "^2.1.26",
     "promise.allsettled": "^1.0.2",
+    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

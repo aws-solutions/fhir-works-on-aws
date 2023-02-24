@@ -4,7 +4,7 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-import { GenericResponse } from '@aws/fhir-works-on-aws-interface';
+import { GenericResponse } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 export default interface ObjectStorageInterface {
   uploadObject(base64Data: string, fileName: string, contentType: string): Promise<GenericResponse>;

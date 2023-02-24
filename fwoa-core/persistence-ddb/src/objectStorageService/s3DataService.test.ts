@@ -16,7 +16,7 @@ import {
   generateMeta,
   ResourceNotFoundError,
   ResourceVersionNotFoundError
-} from '@aws/fhir-works-on-aws-interface';
+} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import DynamoDbDataService from '../dataServices/__mock__dynamoDbDataService';
 import validV3JpegBinary from '../sampleData/validV3JpegBinary.json';
 import validV4JpegBinary from '../sampleData/validV4JpegBinary.json';
