@@ -63,6 +63,10 @@ export interface FhirWorksStackProps extends StackProps {
   logLevel: string;
   oauthRedirect: string;
   fhirVersion: string;
+  igMemoryLimit: number;
+  igMemorySize: number;
+  igStorageSize: number;
+  isSolutionsBuild: boolean;
   enableSecurityLogging: boolean;
 }
 
@@ -331,7 +335,7 @@ export default class FhirWorksStack extends Stack {
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
-      LOG_LEVEL: props!.logLevel,
+      LOG_LEVEL: logLevel.valueAsString,
       LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.loggerMiddlewareKMSKey
       ? kmsResources.loggerMiddlewareKMSKey.keyArn
       : 'ENCRYPTION_TURNED_OFF',

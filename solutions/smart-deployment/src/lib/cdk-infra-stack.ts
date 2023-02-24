@@ -64,6 +64,9 @@ export interface FhirWorksStackProps extends StackProps {
   patientPickerEndpoint: string;
   fhirVersion: string;
   validateXHTML: boolean;
+  igMemoryLimit: number;
+  igMemorySize: number;
+  igStorageSize: number;
   enableSecurityLogging: boolean;
 }
 
