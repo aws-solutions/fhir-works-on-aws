@@ -22,7 +22,6 @@
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../.npmpackagejsonlintrc.json .",
     "prettier": "prettier --config '../.prettierrc.js' 'src/**/*.ts' --write",
-    "prepublish": "tsc",
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",
     "test": "heft test --clean --no-build && rushx pkg-json-lint",
