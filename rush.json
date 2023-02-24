@@ -78,12 +78,6 @@
       "projectFolder": "solutions/smart-deployment",
       "reviewCategory": "tools",
       "shouldPublish": false
-    },
-    {
-      "packageName": "@aws/fhir-works-on-aws-utilities",
-      "projectFolder": "fwoa-utilities",
-      "reviewCategory": "production",
-      "shouldPublish": false
     }
   ]
 }

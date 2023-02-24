@@ -25,6 +25,7 @@ describe('cdk-nag AwsSolutions Pack', () => {
   const igMemorySize: number = 2048;
   const igStorageSize: number = 512;
   const enableSecurityLogging: boolean = false;
+
   beforeAll(() => {
     // GIVEN
 

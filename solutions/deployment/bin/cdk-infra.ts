@@ -44,6 +44,7 @@ const igMemoryLimit: number = app.node.tryGetContext('igMemoryLimit') || 128;
 const igMemorySize: number = app.node.tryGetContext('igMemorySize') || 2048;
 const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
 const enableSecurityLogging: boolean = app.node.tryGetContext('enableSecurityLogging') || false;
+
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
 // https://github.com/aws/aws-cdk/blob/main/packages/%40aws-cdk/aws-lambda-nodejs/lib/bundling.ts#L110

@@ -35,18 +35,18 @@ exports.handler = async (event: any) => {
     const s3 = new AWS.S3();
 
     const filenameAndPath = [
-      { filename: 'export-script.py', path: `${__dirname}/bulkExport/glueScripts/export-script.py` },
+      { filename: 'export-script.py', path: 'bulkExport/glueScripts/export-script.py' },
       {
         filename: 'patientCompartmentSearchParams.3.0.2.json',
-        path: `${__dirname}/bulkExport/schema/patientCompartmentSearchParams.3.0.2.json`
+        path: 'bulkExport/schema/patientCompartmentSearchParams.3.0.2.json'
       },
       {
         filename: 'patientCompartmentSearchParams.4.0.1.json',
-        path: `${__dirname}/bulkExport/schema/patientCompartmentSearchParams.4.0.1.json`
+        path: 'bulkExport/schema/patientCompartmentSearchParams.4.0.1.json'
       },
       {
         filename: 'transitiveReferenceParams.json',
-        path: `${__dirname}/bulkExport/schema/transitiveReferenceParams.json`
+        path: 'bulkExport/schema/transitiveReferenceParams.json'
       }
     ];
 

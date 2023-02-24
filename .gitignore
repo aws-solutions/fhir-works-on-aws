@@ -76,29 +76,10 @@ dist
 coverage
 
 # Implementation guides
-/solutions/smart-deployment/implementationGuides
-/solutions/smart-deployment/compiledImplementationGuides/*
-!/solutions/smart-deployment/compiledImplementationGuides/gitkeep
-/solutions/smart-deployment/.webpack/
-/solutions/deployment/implementationGuides
-/solutions/deployment/compiledImplementationGuides/*
-!/solutions/deployment/compiledImplementationGuides/gitkeep
-/solutions/deployment/.webpack/
-fwoa-utilities/javaHapiValidatorLambda/*.class
-fwoa-utilities/javaHapiValidatorLambda/target
-fwoa-utilities/javaHapiValidatorLambda/bin/
-fwoa-utilities/javaHapiValidatorLambda/.settings/
-fwoa-utilities/javaHapiValidatorLambda/.project
-fwoa-utilities/javaHapiValidatorLambda/.classpath
-
-# Package Files
-fwoa-utilities/javaHapiValidatorLambda/*.jar
-fwoa-utilities/javaHapiValidatorLambda/*.war
-fwoa-utilities/javaHapiValidatorLambda/*.ear
-
-# Serverless directories
-fwoa-utilities/javaHapiValidatorLambda/.serverless
-fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
+/solutions/smart-on-fhir/implementationGuides
+/solutions/smart-on-fhir/compiledImplementationGuides/*
+!/solutions/smart-on-fhir/compiledImplementationGuides/gitkeep
+/solutions/smart-on-fhir/.webpack/
 
 # CDK
 **/cdk.out
