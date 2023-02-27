@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import {
   isInvalidResourceError,
   isResourceNotFoundError,
@@ -12,7 +11,8 @@ import {
   isResourceConflictError,
   isBadRequestError,
   isMethodNotAllowed
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import createError from 'http-errors';
 import OperationsGenerator from '../operationsGenerator';
 
 export const applicationErrorMapper = (

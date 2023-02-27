@@ -4,8 +4,6 @@
  */
 
 /* eslint-disable class-methods-use-this */
-import createError from 'http-errors';
-import isEmpty from 'lodash/isEmpty';
 import {
   BatchReadWriteRequest,
   Bundle,
@@ -17,7 +15,9 @@ import {
   isUnauthorizedError,
   Validator,
   RequestContext
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import createError from 'http-errors';
+import isEmpty from 'lodash/isEmpty';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';
 import { validateResource } from '../validation/validationUtilities';
 import BundleGenerator from './bundleGenerator';

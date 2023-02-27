@@ -3,7 +3,6 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import createError from 'http-errors';
 import {
   AccessBulkDataJobRequest,
   Authorization,
@@ -12,7 +11,8 @@ import {
   InitiateExportRequest,
   KeyValueMap,
   RequestContext
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import createError from 'http-errors';
 
 export default class ExportHandler {
   private bulkDataAccess: BulkDataAccess;

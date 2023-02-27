@@ -85,6 +85,7 @@
     "axios": "^0.21.4",
     "cdk-nag": "^2.19.0",
     "constructs": "^10.0.0",
+    "fhir-interface": "workspace:*",
     "fs-extra": "^10.1.0",
     "inquirer": "^5.0.0",
     "lodash": "^4.17.21",
@@ -94,7 +95,6 @@
     "react-dom": "^16.8.0",
     "serverless-http": "^2.7.0",
     "source-map-support": "^0.5.16",
-    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "tslib": "^2.3.1",
     "yargs": "^16.2.0"
   },

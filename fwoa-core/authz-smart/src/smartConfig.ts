@@ -2,8 +2,8 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import { KeyValueMap } from 'fhir-interface';
 import { Headers } from 'jwks-rsa';
-import { KeyValueMap } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 export type ScopeType = 'patient' | 'user' | 'system';
 export type AccessModifier = 'read' | 'write' | '*';

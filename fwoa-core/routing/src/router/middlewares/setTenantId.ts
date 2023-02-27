@@ -5,8 +5,8 @@
  */
 
 import express from 'express';
+import { FhirConfig, UnauthorizedError } from 'fhir-interface';
 import { get, uniq } from 'lodash';
-import { FhirConfig, UnauthorizedError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import RouteHelper from '../routes/routeHelper';
 
 const tenantIdRegex = /^[a-zA-Z0-9\-_]{1,64}$/;

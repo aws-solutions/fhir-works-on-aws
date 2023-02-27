@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
+import { ExportType, FhirVersion, InitiateExportRequest } from 'fhir-interface';
 import createHttpError from 'http-errors';
 import isString from 'lodash/isString';
-import { ExportType, FhirVersion, InitiateExportRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { dateTimeWithTimeZoneRegExp } from '../../regExpressions';
 
 export default class ExportRouteHelper {

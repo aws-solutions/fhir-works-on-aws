@@ -9,7 +9,7 @@ import {
   SearchCapabilityStatement,
   SearchCapabilities,
   Resource
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
 import {
   OperationCapability,
   OperationCapabilityStatement

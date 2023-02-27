@@ -23,7 +23,7 @@ import {
   BASE_R4_RESOURCES,
   BASE_STU3_RESOURCES,
   Validator
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
 import { createAuthZConfig } from './authZConfig';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import getAllowListedSubscriptionEndpoints from './subscriptions/allowList';

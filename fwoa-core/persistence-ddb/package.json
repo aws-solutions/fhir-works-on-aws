@@ -38,11 +38,11 @@
     "aws-elasticsearch-connector": "^8.2.0",
     "aws-sdk": "^2.1000.0",
     "aws-xray-sdk": "^3.3.3",
+    "fhir-interface": "workspace:*",
     "flat": "^5.0.2",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.26",
     "promise.allsettled": "^1.0.2",
-    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

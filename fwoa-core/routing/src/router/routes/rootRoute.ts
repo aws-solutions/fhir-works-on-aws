@@ -4,7 +4,6 @@
  */
 
 import express, { Router } from 'express';
-import createError from 'http-errors';
 import {
   Authorization,
   Bundle,
@@ -14,7 +13,8 @@ import {
   GenericResource,
   Resources,
   Validator
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import createError from 'http-errors';
 import BundleHandler from '../bundle/bundleHandler';
 import RootHandler from '../handlers/rootHandler';
 import RouteHelper from './routeHelper';

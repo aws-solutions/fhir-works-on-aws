@@ -1,4 +1,4 @@
-import { SmartStrategy } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { SmartStrategy } from 'fhir-interface';
 import { camelToSnakeCase, getWellKnownUriResponse } from './wellKnownUriHandler';
 
 describe('camelToSnakeCase', () => {

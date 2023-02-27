@@ -16,7 +16,7 @@ import {
   generateMeta,
   GenericResponse,
   clone
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
 import validPatient from '../sampleData/validV4Patient.json';
 
 const __mock__dynamoDbDataService: Persistence = class {

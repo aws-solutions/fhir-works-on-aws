@@ -4,7 +4,7 @@
  */
 
 import { Router } from 'express';
-import { SystemOperation, TypeOperation } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { SystemOperation, TypeOperation } from 'fhir-interface';
 import ResourceHandler from '../router/handlers/resourceHandler';
 
 export interface OperationDefinitionImplementation {

@@ -4,8 +4,8 @@
  */
 
 jest.mock('./elasticSearch');
+import { InvalidSearchParameterError, SearchFilter } from 'fhir-interface';
 import each from 'jest-each';
-import { InvalidSearchParameterError, SearchFilter } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { ElasticSearch } from './elasticSearch';
 import { ElasticSearchService } from './elasticSearchService';
 

@@ -3,12 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  BatchReadWriteRequest,
-  clone,
-  ResourceNotFoundError
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
-import { ReadResourceRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa/lib/persistence';
+import { BatchReadWriteRequest, clone, ResourceNotFoundError } from 'fhir-interface';
+import { ReadResourceRequest } from 'fhir-interface/lib/persistence';
 import { resourceTypeWithUuidRegExp, uuidRegExp } from '../../regExpressions';
 import DynamoDbDataService from '../__mocks_/dynamoDbDataService';
 import BundleParser from './bundleParser';

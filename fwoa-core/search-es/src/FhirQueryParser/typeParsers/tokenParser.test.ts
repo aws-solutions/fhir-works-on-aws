@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { InvalidSearchParameterError } from 'fhir-interface';
 import { parseTokenSearchValue } from './tokenParser';
 
 describe('parseTokenSearchValue', () => {

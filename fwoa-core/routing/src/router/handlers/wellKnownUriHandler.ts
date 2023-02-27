@@ -1,5 +1,5 @@
+import { SmartStrategy } from 'fhir-interface';
 import { mapKeys } from 'lodash';
-import { SmartStrategy } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 export function camelToSnakeCase(str: string) {
   const camelCaseStr = str.replace(/[A-Z]/g, (letter: string) => `_${letter.toLowerCase()}`);

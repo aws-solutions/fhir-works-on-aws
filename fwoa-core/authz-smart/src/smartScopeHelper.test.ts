@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { BulkDataAuth, ExportType, UnauthorizedError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { BulkDataAuth, ExportType, UnauthorizedError } from 'fhir-interface';
 import { ScopeRule, ScopeType } from './smartConfig';
 import {
   isScopeSufficient,

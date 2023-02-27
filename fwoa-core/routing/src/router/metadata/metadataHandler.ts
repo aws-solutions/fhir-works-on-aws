@@ -3,13 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { Capabilities, CapabilitiesRequest, FhirVersion, GenericResponse } from 'fhir-interface';
 import createError from 'http-errors';
-import {
-  Capabilities,
-  CapabilitiesRequest,
-  FhirVersion,
-  GenericResponse
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import ConfigHandler from '../../configHandler';
 import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
 import { FHIRStructureDefinitionRegistry } from '../../registry';

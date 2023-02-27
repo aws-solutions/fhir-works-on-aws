@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { JobRunState } from 'aws-sdk/clients/glue';
-import { ExportJobStatus, ExportType } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { ExportJobStatus, ExportType } from 'fhir-interface';
 
 /**
  * Outputs of intermediate steps of the state machine execution that can be used as parameters for subsequent steps

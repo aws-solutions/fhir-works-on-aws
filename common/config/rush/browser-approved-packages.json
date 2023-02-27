@@ -27,7 +27,7 @@
       "allowedCategories": ["tools"]
     },
     {
-      "name": "test-e3776dcf-341e-4fc7-bfc6-762082f295fa",
+      "name": "fhir-interface",
       "allowedCategories": ["production", "tools"]
     },
     {

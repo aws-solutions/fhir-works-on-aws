@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { BatchReadWriteResponse, TypeOperation } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { BatchReadWriteResponse, TypeOperation } from 'fhir-interface';
 import { v4 as uuidv4 } from 'uuid';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 

@@ -28,9 +28,9 @@
     "watch": "tsc -w"
   },
   "dependencies": {
+    "fhir-interface": "workspace:*",
     "jsonwebtoken": "^9.0.0",
-    "lodash": "^4.17.21",
-    "test-e3776dcf-341e-4fc7-bfc6-762082f295fa": "workspace:*"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",

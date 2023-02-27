@@ -4,9 +4,6 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-import flatten from 'flat';
-import get from 'lodash/get';
-import set from 'lodash/set';
 import {
   BatchReadWriteRequest,
   Reference,
@@ -14,7 +11,10 @@ import {
   TypeOperation,
   SystemOperation,
   getRequestInformation
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import flatten from 'flat';
+import get from 'lodash/get';
+import set from 'lodash/set';
 import { v4 as uuidv4 } from 'uuid';
 
 import { MAX_BUNDLE_ENTRY_URL_LENGTH, MAX_REFERENCE_URL_LENGTH } from '../../constants';

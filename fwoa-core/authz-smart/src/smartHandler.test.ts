@@ -5,7 +5,6 @@
 jest.mock('jsonwebtoken');
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import jwt from 'jsonwebtoken';
 import {
   AccessBulkDataJobRequest,
   AllowedResourceTypesForOperationRequest,
@@ -19,7 +18,8 @@ import {
   UnauthorizedError,
   VerifyAccessTokenRequest,
   WriteRequestAuthorizedRequest
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import jwt from 'jsonwebtoken';
 import * as smartAuthorizationHelper from './smartAuthorizationHelper';
 import { getFhirResource, getFhirUser } from './smartAuthorizationHelper';
 import { ScopeRule, SMARTConfig } from './smartConfig';

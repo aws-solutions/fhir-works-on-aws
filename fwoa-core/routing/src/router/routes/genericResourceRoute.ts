@@ -4,9 +4,9 @@
  */
 
 import express, { Router } from 'express';
+import { Authorization, TypeOperation } from 'fhir-interface';
 import createError from 'http-errors';
 import { isEmpty, mergeWith } from 'lodash';
-import { Authorization, TypeOperation } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import CrudHandlerInterface from '../handlers/crudHandlerInterface';
 import RouteHelper from './routeHelper';
 

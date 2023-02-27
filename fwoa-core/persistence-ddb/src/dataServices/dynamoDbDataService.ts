@@ -6,7 +6,6 @@
 /* eslint-disable class-methods-use-this */
 
 import DynamoDB, { ItemList } from 'aws-sdk/clients/dynamodb';
-import { difference } from 'lodash';
 import {
   BatchReadWriteRequest,
   BulkDataAccess,
@@ -30,7 +29,8 @@ import {
   UnauthorizedError,
   UpdateResourceRequest,
   vReadResourceRequest
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import { difference } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { getBulkExportResults, startJobExecution } from '../bulkExport/bulkExport';
 import { BulkExportResultsUrlGenerator } from '../bulkExport/bulkExportResultsUrlGenerator';

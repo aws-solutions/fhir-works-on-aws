@@ -7,13 +7,8 @@
 import AWS from 'aws-sdk';
 import { QueryInput, TransactWriteItemsInput, TransactWriteItem } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
+import { BundleResponse, BatchReadWriteRequest, TypeOperation, ResourceNotFoundError } from 'fhir-interface';
 import { range } from 'lodash';
-import {
-  BundleResponse,
-  BatchReadWriteRequest,
-  TypeOperation,
-  ResourceNotFoundError
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 
 // @ts-ignore
 import { timeFromEpochInMsRegExp, utcTimeRegExp, uuidRegExp } from '../testUtilities/regExpressions';

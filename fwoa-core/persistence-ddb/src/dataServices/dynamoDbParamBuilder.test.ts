@@ -3,8 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { InitiateExportRequest } from 'fhir-interface';
 import { cloneDeep } from 'lodash';
-import { InitiateExportRequest } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { BulkExportJob } from '../bulkExport/types';
 import { timeFromEpochInMsRegExp, utcTimeRegExp } from '../testUtilities/regExpressions';
 import DOCUMENT_STATUS from './documentStatus';

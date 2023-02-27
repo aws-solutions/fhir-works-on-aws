@@ -5,7 +5,6 @@
 
 /* eslint-disable class-methods-use-this */
 
-import mime from 'mime-types';
 import {
   GenericResponse,
   Persistence,
@@ -20,7 +19,8 @@ import {
   ResourceNotFoundError,
   InitiateExportRequest,
   GetExportStatusResponse
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import mime from 'mime-types';
 
 import { SEPARATOR } from '../constants';
 import ObjectNotFoundError from './ObjectNotFoundError';

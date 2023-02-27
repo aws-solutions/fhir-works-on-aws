@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError, Search, Persistence } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { InvalidResourceError, Search, Persistence } from 'fhir-interface';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validPatient from '../../sampleData/validV4Patient.json';
 import DynamoDbDataService from '../__mocks_/dynamoDbDataService';

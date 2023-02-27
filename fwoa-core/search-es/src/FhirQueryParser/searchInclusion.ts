@@ -1,5 +1,5 @@
+import { InvalidSearchParameterError } from 'fhir-interface';
 import { uniq } from 'lodash';
-import { InvalidSearchParameterError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
 import { InclusionSearchParameter, WildcardInclusionSearchParameter } from '../searchInclusions';
 

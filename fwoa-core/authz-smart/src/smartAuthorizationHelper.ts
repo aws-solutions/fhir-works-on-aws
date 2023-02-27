@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import axios from 'axios';
+import { FhirVersion, UnauthorizedError } from 'fhir-interface';
 import { decode, JwtPayload, verify } from 'jsonwebtoken';
 import jwksClient, { JwksClient, Headers } from 'jwks-rsa';
-import { FhirVersion, UnauthorizedError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
 import getComponentLogger from './loggerBuilder';
 import resourceReferencesMatrixV3 from './schema/fhirResourceReferencesMatrix.v3.0.1.json';
 import resourceReferencesMatrixV4 from './schema/fhirResourceReferencesMatrix.v4.0.1.json';

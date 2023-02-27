@@ -14,7 +14,7 @@ import {
   SmartStrategy,
   RequestContext,
   VerbType
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
 import ConfigHandler from './configHandler';
 import { initializeOperationRegistry } from './operationDefinitions';
 import { FHIRStructureDefinitionRegistry } from './registry';

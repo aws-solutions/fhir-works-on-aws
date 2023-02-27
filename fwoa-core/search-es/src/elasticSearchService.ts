@@ -8,7 +8,6 @@ import URL from 'url';
 
 import { Client, RequestParams } from '@elastic/elasticsearch';
 import { ResponseError } from '@elastic/elasticsearch/lib/errors';
-import { partition, merge, isEmpty } from 'lodash';
 import {
   Search,
   TypeSearchRequest,
@@ -19,7 +18,8 @@ import {
   SearchFilter,
   FhirVersion,
   InvalidSearchParameterError
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import { partition, merge, isEmpty } from 'lodash';
 import {
   DEFAULT_SEARCH_RESULTS_PER_PAGE,
   SEARCH_PAGINATION_PARAMS,

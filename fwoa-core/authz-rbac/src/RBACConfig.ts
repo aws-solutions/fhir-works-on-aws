@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { TypeOperation, SystemOperation } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { TypeOperation, SystemOperation } from 'fhir-interface';
 
 export interface Rule {
   operations: (TypeOperation | SystemOperation)[];

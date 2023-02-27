@@ -10,7 +10,7 @@ import {
   TypeOperation,
   SystemOperation,
   isResourceNotFoundError
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_BATCH_WRITE_ITEMS } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';

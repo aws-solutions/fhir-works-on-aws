@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { InvalidSearchParameterError } from 'fhir-interface';
 import { parseNumber } from '../../QueryBuilder/typeQueries/common/number';
 
 export interface NumberSearchValue {

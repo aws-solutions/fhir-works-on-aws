@@ -5,14 +5,14 @@
 
 /* eslint-disable no-underscore-dangle */
 import express, { Router } from 'express';
-import createHttpError from 'http-errors';
 import {
   Authorization,
   BulkDataAccess,
   ExportType,
   FhirVersion,
   InitiateExportRequest
-} from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+} from 'fhir-interface';
+import createHttpError from 'http-errors';
 import ExportHandler from '../handlers/exportHandler';
 import ExportRouteHelper from './exportRouteHelper';
 import RouteHelper from './routeHelper';

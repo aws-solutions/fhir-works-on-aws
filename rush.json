@@ -26,7 +26,7 @@
   "variants": [],
   "projects": [
     {
-      "packageName": "test-e3776dcf-341e-4fc7-bfc6-762082f295fa",
+      "packageName": "fhir-interface",
       "projectFolder": "fwoa-core/interface",
       "reviewCategory": "production",
       "shouldPublish": true

@@ -6,7 +6,7 @@
  */
 
 import express from 'express';
-import { FhirConfig } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { FhirConfig } from 'fhir-interface';
 import RouteHelper from '../routes/routeHelper';
 
 /**

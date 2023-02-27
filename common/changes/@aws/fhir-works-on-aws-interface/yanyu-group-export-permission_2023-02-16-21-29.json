@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "test-e3776dcf-341e-4fc7-bfc6-762082f295fa",
+      "packageName": "fhir-interface",
       "comment": "Remove allowedResourceTypes from bulk export interface",
       "type": "major"
     }
   ],
-  "packageName": "test-e3776dcf-341e-4fc7-bfc6-762082f295fa"
+  "packageName": "fhir-interface"
 }

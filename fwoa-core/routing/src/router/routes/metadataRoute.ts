@@ -4,7 +4,7 @@
  */
 
 import express, { Router } from 'express';
-import { CapabilityMode, FhirVersion } from 'test-e3776dcf-341e-4fc7-bfc6-762082f295fa';
+import { CapabilityMode, FhirVersion } from 'fhir-interface';
 import ConfigHandler from '../../configHandler';
 import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';
 import { FHIRStructureDefinitionRegistry } from '../../registry';
