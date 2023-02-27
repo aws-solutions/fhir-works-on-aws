@@ -4,7 +4,7 @@
  */
 
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
-import { ExportJobStatus, InitiateExportRequest } from 'fhir-interface';
+import { ExportJobStatus, InitiateExportRequest } from 'fhir-interface-core';
 import { BulkExportJob } from '../bulkExport/types';
 import DOCUMENT_STATUS from './documentStatus';
 import {

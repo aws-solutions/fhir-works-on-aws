@@ -5,7 +5,7 @@
  */
 
 import express from 'express';
-import { FhirConfig, UnauthorizedError } from 'fhir-interface';
+import { FhirConfig, UnauthorizedError } from 'fhir-interface-core';
 import { get, uniq } from 'lodash';
 import RouteHelper from '../routes/routeHelper';
 

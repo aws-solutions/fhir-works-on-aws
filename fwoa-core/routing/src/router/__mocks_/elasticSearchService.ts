@@ -4,7 +4,7 @@ import {
   GlobalSearchRequest,
   TypeSearchRequest,
   SearchCapabilityStatement
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 
 const ElasticSearchService: Search = class {
   /*

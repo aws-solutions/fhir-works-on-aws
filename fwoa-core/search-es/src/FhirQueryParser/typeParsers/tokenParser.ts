@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 
 export interface TokenSearchValue {
   system?: string;

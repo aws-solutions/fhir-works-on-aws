@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FhirVersion, ProductInfo } from 'fhir-interface';
+import { FhirVersion, ProductInfo } from 'fhir-interface-core';
 
 export default function makeStatement(
   rest: any,

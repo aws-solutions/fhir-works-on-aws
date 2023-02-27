@@ -10,7 +10,7 @@ import {
   BASE_STU3_RESOURCES,
   AccessBulkDataJobRequest,
   UnauthorizedError
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import shuffle from 'shuffle-array';
 import { RBACConfig } from './RBACConfig';
 import { RBACHandler } from './RBACHandler';

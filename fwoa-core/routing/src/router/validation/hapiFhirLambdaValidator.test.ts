@@ -5,7 +5,7 @@
 
 import AWS from 'aws-sdk';
 import * as AWSMock from 'aws-sdk-mock';
-import { InvalidResourceError } from 'fhir-interface';
+import { InvalidResourceError } from 'fhir-interface-core';
 import HapiFhirLambdaValidator from './hapiFhirLambdaValidator';
 
 AWSMock.setSDKInstance(AWS);

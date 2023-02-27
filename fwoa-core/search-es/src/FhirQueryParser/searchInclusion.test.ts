@@ -1,4 +1,4 @@
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 import each from 'jest-each';
 import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
 import { InclusionSearchParameter, WildcardInclusionSearchParameter } from '../searchInclusions';

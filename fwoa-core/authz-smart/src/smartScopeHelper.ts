@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { BulkDataAuth, SystemOperation, TypeOperation, UnauthorizedError } from 'fhir-interface';
+import { BulkDataAuth, SystemOperation, TypeOperation, UnauthorizedError } from 'fhir-interface-core';
 import getComponentLogger from './loggerBuilder';
 import { AccessModifier, ClinicalSmartScope, ScopeRule, ScopeType } from './smartConfig';
 

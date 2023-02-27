@@ -15,7 +15,7 @@ import {
   isUnauthorizedError,
   Validator,
   RequestContext
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createError from 'http-errors';
 import isEmpty from 'lodash/isEmpty';
 import { MAX_BUNDLE_ENTRIES } from '../../constants';

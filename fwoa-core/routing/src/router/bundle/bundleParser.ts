@@ -11,7 +11,7 @@ import {
   TypeOperation,
   SystemOperation,
   getRequestInformation
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import flatten from 'flat';
 import get from 'lodash/get';
 import set from 'lodash/set';

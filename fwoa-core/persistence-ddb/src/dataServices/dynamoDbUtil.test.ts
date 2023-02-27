@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { clone } from 'fhir-interface';
+import { clone } from 'fhir-interface-core';
 import { utcTimeRegExp } from '../testUtilities/regExpressions';
 import DOCUMENT_STATUS from './documentStatus';
 import {

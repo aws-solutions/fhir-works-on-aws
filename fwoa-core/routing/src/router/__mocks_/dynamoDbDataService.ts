@@ -14,7 +14,7 @@ import {
   clone,
   InitiateExportRequest,
   GetExportStatusResponse
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import validPatient from '../../sampleData/validV4Patient.json';
 
 const DynamoDbDataService: Persistence = class {

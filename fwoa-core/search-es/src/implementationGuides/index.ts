@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from 'fhir-interface';
+import { ImplementationGuides } from 'fhir-interface-core';
 import { uniqBy } from 'lodash';
 import { Parser, Grammar } from 'nearley';
 import getComponentLogger from '../loggerBuilder';

@@ -16,7 +16,7 @@ import {
   generateMeta,
   ResourceNotFoundError,
   ResourceVersionNotFoundError
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import DynamoDbDataService from '../dataServices/__mock__dynamoDbDataService';
 import validV3JpegBinary from '../sampleData/validV3JpegBinary.json';
 import validV4JpegBinary from '../sampleData/validV4JpegBinary.json';

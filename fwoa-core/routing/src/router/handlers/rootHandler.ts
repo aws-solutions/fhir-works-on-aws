@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Search, History, KeyValueMap, Authorization, RequestContext } from 'fhir-interface';
+import { Search, History, KeyValueMap, Authorization, RequestContext } from 'fhir-interface-core';
 import BundleGenerator from '../bundle/bundleGenerator';
 import { hash } from './utils';
 

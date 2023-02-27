@@ -23,7 +23,7 @@ import {
   BASE_R4_RESOURCES,
   BASE_STU3_RESOURCES,
   Validator
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { createAuthZConfig } from './authZConfig';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import getAllowListedSubscriptionEndpoints from './subscriptions/allowList';

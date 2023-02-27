@@ -1,4 +1,4 @@
-import { BatchReadWriteRequest } from 'fhir-interface';
+import { BatchReadWriteRequest } from 'fhir-interface-core';
 import { getFhirUser } from '../smartAuthorizationHelper';
 import { FhirResource, ScopeRule, SMARTConfig } from '../smartConfig';
 import { SEARCH_OPERATIONS } from '../smartScopeHelper';

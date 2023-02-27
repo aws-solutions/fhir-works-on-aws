@@ -13,7 +13,7 @@ import {
   GenericResource,
   Resources,
   Validator
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createError from 'http-errors';
 import BundleHandler from '../bundle/bundleHandler';
 import RootHandler from '../handlers/rootHandler';

@@ -5,7 +5,7 @@
 import AWS from 'aws-sdk';
 import { QueryInput } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
-import { BatchReadWriteRequest, BatchReadWriteResponse, ResourceNotFoundError } from 'fhir-interface';
+import { BatchReadWriteRequest, BatchReadWriteResponse, ResourceNotFoundError } from 'fhir-interface-core';
 import sinon = require('sinon');
 import GenerateRollbackRequestsFactory from '../testUtilities/GenerateRollbackRequestsFactory';
 import GenerateStagingRequestsFactory from '../testUtilities/GenerateStagingRequestsFactory';

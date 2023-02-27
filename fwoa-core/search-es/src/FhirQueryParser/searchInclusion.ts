@@ -1,4 +1,4 @@
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 import { uniq } from 'lodash';
 import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';
 import { InclusionSearchParameter, WildcardInclusionSearchParameter } from '../searchInclusions';

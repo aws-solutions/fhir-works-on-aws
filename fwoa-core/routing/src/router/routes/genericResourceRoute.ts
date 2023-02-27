@@ -4,7 +4,7 @@
  */
 
 import express, { Router } from 'express';
-import { Authorization, TypeOperation } from 'fhir-interface';
+import { Authorization, TypeOperation } from 'fhir-interface-core';
 import createError from 'http-errors';
 import { isEmpty, mergeWith } from 'lodash';
 import CrudHandlerInterface from '../handlers/crudHandlerInterface';

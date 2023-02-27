@@ -18,7 +18,7 @@ import {
   GetSearchFilterBasedOnIdentityRequest,
   SearchFilter,
   clone
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { JwksClient } from 'jwks-rsa';
 import get from 'lodash/get';
 import getComponentLogger from './loggerBuilder';

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { TypeSearchRequest } from 'fhir-interface';
+import { TypeSearchRequest } from 'fhir-interface-core';
 import { isEmpty } from 'lodash';
 import {
   DateSearchValue,

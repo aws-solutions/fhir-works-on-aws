@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable class-methods-use-this */
-import { BatchReadWriteRequest, BatchReadWriteResponse } from 'fhir-interface';
+import { BatchReadWriteRequest, BatchReadWriteResponse } from 'fhir-interface-core';
 import DOCUMENT_STATUS from '../dataServices/documentStatus';
 import { DynamoDBConverter } from '../dataServices/dynamoDb';
 import { ItemRequest } from '../dataServices/dynamoDbBundleServiceHelper';

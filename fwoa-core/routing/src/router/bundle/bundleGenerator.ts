@@ -4,7 +4,7 @@
  */
 
 import URL from 'url';
-import { SearchResult, BatchReadWriteResponse } from 'fhir-interface';
+import { SearchResult, BatchReadWriteResponse } from 'fhir-interface-core';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 

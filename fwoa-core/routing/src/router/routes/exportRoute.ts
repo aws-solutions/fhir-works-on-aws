@@ -11,7 +11,7 @@ import {
   ExportType,
   FhirVersion,
   InitiateExportRequest
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createHttpError from 'http-errors';
 import ExportHandler from '../handlers/exportHandler';
 import ExportRouteHelper from './exportRouteHelper';

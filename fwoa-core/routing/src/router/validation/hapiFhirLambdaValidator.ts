@@ -4,7 +4,7 @@
  */
 
 import { Lambda } from 'aws-sdk';
-import { InvalidResourceError, TypeOperation, Validator } from 'fhir-interface';
+import { InvalidResourceError, TypeOperation, Validator } from 'fhir-interface-core';
 import AWS from '../../AWS';
 import getComponentLogger from '../../loggerBuilder';
 

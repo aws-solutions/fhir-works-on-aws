@@ -14,7 +14,7 @@ import {
   UnauthorizedError,
   AccessBulkDataJobRequest,
   RequestContext
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createError from 'http-errors';
 import { v4 as uuidv4 } from 'uuid';
 import ConfigHandler from '../../configHandler';

@@ -9,7 +9,7 @@ import { SNSClient, PublishBatchCommand } from '@aws-sdk/client-sns';
 import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
 import { DynamoDBStreamEvent } from 'aws-lambda/trigger/dynamodb-stream';
 import { captureAWSv3Client } from 'aws-xray-sdk';
-import { FhirVersion, Persistence } from 'fhir-interface';
+import { FhirVersion, Persistence } from 'fhir-interface-core';
 import { chunk } from 'lodash';
 import { v4 } from 'uuid';
 import { FHIRSearchParametersRegistry } from '../FHIRSearchParametersRegistry';

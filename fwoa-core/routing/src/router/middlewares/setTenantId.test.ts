@@ -5,7 +5,7 @@
  */
 
 import express from 'express';
-import { FhirConfig, UnauthorizedError } from 'fhir-interface';
+import { FhirConfig, UnauthorizedError } from 'fhir-interface-core';
 import { setTenantIdMiddleware } from './setTenantId';
 
 async function sleep(milliseconds: number) {

@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "fhir-interface",
+      "packageName": "fhir-interface-core",
       "comment": "Remove allowedResourceTypes from bulk export interface",
       "type": "major"
     }
   ],
-  "packageName": "fhir-interface"
+  "packageName": "fhir-interface-core"
 }

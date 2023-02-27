@@ -18,7 +18,7 @@ import {
   SearchFilter,
   FhirVersion,
   InvalidSearchParameterError
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { partition, merge, isEmpty } from 'lodash';
 import {
   DEFAULT_SEARCH_RESULTS_PER_PAGE,

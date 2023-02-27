@@ -19,7 +19,7 @@ import {
   ResourceNotFoundError,
   InitiateExportRequest,
   GetExportStatusResponse
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import mime from 'mime-types';
 
 import { SEPARATOR } from '../constants';

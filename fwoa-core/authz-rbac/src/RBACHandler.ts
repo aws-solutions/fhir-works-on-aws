@@ -23,7 +23,7 @@ import {
   KeyValueMap,
   GetSearchFilterBasedOnIdentityRequest,
   SearchFilter
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { decode } from 'jsonwebtoken';
 
 import isEqual from 'lodash/isEqual';

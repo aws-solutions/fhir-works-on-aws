@@ -6,7 +6,7 @@ import {
   BundleResponse,
   BatchRequest,
   TransactionRequest
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 
 const bundleEntryResponses: BatchReadWriteResponse[] = [
   {

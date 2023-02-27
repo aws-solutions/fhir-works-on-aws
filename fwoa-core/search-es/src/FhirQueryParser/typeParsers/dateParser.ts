@@ -5,7 +5,7 @@
  */
 
 import { lastDayOfMonth, lastDayOfYear, isValid, parseISO, set } from 'date-fns';
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 
 export interface DateSearchValue {
   prefix: string;

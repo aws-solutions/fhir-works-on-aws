@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { FhirVersion, BASE_R4_RESOURCES } from 'fhir-interface';
+import { FhirVersion, BASE_R4_RESOURCES } from 'fhir-interface-core';
 import { mockRequest, mockResponse } from 'mock-req-res';
 import { utcTimeRegExp } from '../../regExpressions';
 import ExportRouteHelper from './exportRouteHelper';

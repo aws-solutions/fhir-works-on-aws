@@ -9,7 +9,7 @@ import {
   SearchCapabilityStatement,
   SearchCapabilities,
   Resource
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import {
   OperationCapability,
   OperationCapabilityStatement

@@ -11,7 +11,7 @@ import {
   isResourceConflictError,
   isBadRequestError,
   isMethodNotAllowed
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createError from 'http-errors';
 import OperationsGenerator from '../operationsGenerator';
 

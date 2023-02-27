@@ -16,7 +16,7 @@ import {
   chunkArray,
   ResourceNotFoundError,
   GenericResponse
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import flatten from 'flat';
 import { chunk, set } from 'lodash';
 import mapValues from 'lodash/mapValues';

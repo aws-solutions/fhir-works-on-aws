@@ -1,4 +1,4 @@
-import { SmartStrategy } from 'fhir-interface';
+import { SmartStrategy } from 'fhir-interface-core';
 import { mapKeys } from 'lodash';
 
 export function camelToSnakeCase(str: string) {

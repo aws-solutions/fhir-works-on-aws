@@ -14,7 +14,7 @@ import {
   SmartStrategy,
   RequestContext,
   VerbType
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import ConfigHandler from './configHandler';
 import { initializeOperationRegistry } from './operationDefinitions';
 import { FHIRStructureDefinitionRegistry } from './registry';

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FhirVersion, SearchCapabilityStatement } from 'fhir-interface';
+import { FhirVersion, SearchCapabilityStatement } from 'fhir-interface-core';
 import compiledSearchParamsV3 from '../schema/compiledSearchParameters.3.0.1.json';
 import compiledSearchParamsV4 from '../schema/compiledSearchParameters.4.0.1.json';
 

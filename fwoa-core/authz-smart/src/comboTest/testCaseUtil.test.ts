@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs';
 import * as path from 'path';
-import { SystemOperation, TypeOperation } from 'fhir-interface';
+import { SystemOperation, TypeOperation } from 'fhir-interface-core';
 import { json2csvAsync } from 'json-2-csv';
 import { UserIdentity } from '../smartConfig';
 import { FHIR_PATIENT_SCOPE_REGEX, FHIR_USER_SCOPE_REGEX, filterOutUnusableScope } from '../smartScopeHelper';

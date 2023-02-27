@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { clone, generateMeta } from 'fhir-interface';
+import { clone, generateMeta } from 'fhir-interface-core';
 import flatten from 'flat';
 import { DDB_HASH_KEY_SEPARATOR, SEPARATOR } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';

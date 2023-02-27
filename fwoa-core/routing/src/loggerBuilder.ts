@@ -4,7 +4,7 @@
  *
  */
 
-import { makeLogger, makeEncryptLogger } from 'fhir-interface';
+import { makeLogger, makeEncryptLogger } from 'fhir-interface-core';
 
 const componentLogger = makeLogger({
   component: 'routing'

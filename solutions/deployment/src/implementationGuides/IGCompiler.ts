@@ -1,7 +1,7 @@
 import { existsSync, PathLike, readdir, readFile, writeFile, realpathSync, statSync } from 'fs';
 import path from 'path';
 import util from 'util';
-import { ImplementationGuides } from 'fhir-interface';
+import { ImplementationGuides } from 'fhir-interface-core';
 
 /* eslint no-restricted-syntax: 0 */
 /* eslint no-await-in-loop: 0 */

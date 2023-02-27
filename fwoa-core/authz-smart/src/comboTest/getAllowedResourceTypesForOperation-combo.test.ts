@@ -1,4 +1,4 @@
-import { AllowedResourceTypesForOperationRequest } from 'fhir-interface';
+import { AllowedResourceTypesForOperationRequest } from 'fhir-interface-core';
 import { SMARTHandler } from '../smartHandler';
 import TestCaseUtil, { BaseCsvRow } from './testCaseUtil.test';
 import * as testStubs from './testStubs';

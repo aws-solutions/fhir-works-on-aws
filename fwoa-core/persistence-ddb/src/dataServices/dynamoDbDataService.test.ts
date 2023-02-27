@@ -17,8 +17,8 @@ import {
   isResourceNotFoundError,
   isInvalidResourceError,
   UnauthorizedError
-} from 'fhir-interface';
-import { TooManyConcurrentExportRequestsError } from 'fhir-interface/lib/errors/TooManyConcurrentExportRequestsError';
+} from 'fhir-interface-core';
+import { TooManyConcurrentExportRequestsError } from 'fhir-interface-core/lib/errors/TooManyConcurrentExportRequestsError';
 import each from 'jest-each';
 import { before } from 'lodash';
 import isEqual from 'lodash/isEqual';

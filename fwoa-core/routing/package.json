@@ -56,7 +56,7 @@
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "fhir-interface": "workspace:*",
+    "fhir-interface-core": "workspace:*",
     "flat": "^5.0.2",
     "http-errors": "^1.8.0",
     "lodash": "^4.17.21",

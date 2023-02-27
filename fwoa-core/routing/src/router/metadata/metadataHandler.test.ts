@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { stubs, Persistence } from 'fhir-interface';
+import { stubs, Persistence } from 'fhir-interface-core';
 import each from 'jest-each';
 import ConfigHandler from '../../configHandler';
 import { OperationDefinitionRegistry } from '../../operationDefinitions/OperationDefinitionRegistry';

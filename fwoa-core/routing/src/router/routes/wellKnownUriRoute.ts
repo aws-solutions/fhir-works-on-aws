@@ -4,7 +4,7 @@
  */
 
 import express, { Router } from 'express';
-import { SmartStrategy } from 'fhir-interface';
+import { SmartStrategy } from 'fhir-interface-core';
 import { getWellKnownUriResponse } from '../handlers/wellKnownUriHandler';
 
 export default class WellKnownUriRouteRoute {

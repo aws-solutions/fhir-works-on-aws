@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { ImplementationGuides } from 'fhir-interface';
+import { ImplementationGuides } from 'fhir-interface-core';
 
 /**
  * Based on the FHIR StructuredDefinition. This type only includes the fields that are required for the compile process.

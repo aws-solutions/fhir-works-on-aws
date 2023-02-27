@@ -1,4 +1,4 @@
-import { IssueSeverity, IssueCode } from 'fhir-interface';
+import { IssueSeverity, IssueCode } from 'fhir-interface-core';
 
 /*
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.

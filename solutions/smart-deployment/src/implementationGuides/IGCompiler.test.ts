@@ -4,7 +4,7 @@
 
 import { existsSync, mkdirSync, PathLike } from 'fs';
 import { join } from 'path';
-import { ImplementationGuides } from 'fhir-interface';
+import { ImplementationGuides } from 'fhir-interface-core';
 import { dir, DirectoryResult } from 'tmp-promise';
 import { IGCompiler, IGCompilerOptions, loadJson, storeJson } from './IGCompiler';
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 import { COMPILED_CONDITION_OPERATOR_RESOLVE, NON_SEARCHABLE_PARAMETERS } from '../constants';
 import { parseSearchModifiers, normalizeQueryParams, isChainedParameter } from '../FhirQueryParser/util';
 import { FHIRSearchParametersRegistry, SearchParam } from '../FHIRSearchParametersRegistry';

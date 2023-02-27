@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { KeyValueMap, RequestContext } from 'fhir-interface';
+import { KeyValueMap, RequestContext } from 'fhir-interface-core';
 
 export default interface CrudHandlerInterface {
   create(resourceType: string, resource: any, tenantId?: string): any;

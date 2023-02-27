@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError } from 'fhir-interface';
+import { InvalidResourceError } from 'fhir-interface-core';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validV3Account from '../../sampleData/validV3Account.json';
 import validPatient from '../../sampleData/validV4Patient.json';

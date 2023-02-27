@@ -1,4 +1,4 @@
-import { makeLogger } from 'fhir-interface';
+import { makeLogger } from 'fhir-interface-core';
 
 const componentLogger = makeLogger({
   component: 'search'

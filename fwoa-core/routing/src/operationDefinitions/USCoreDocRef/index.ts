@@ -5,7 +5,7 @@
  */
 
 import express from 'express';
-import { KeyValueMap, RequestContext, TypeOperation } from 'fhir-interface';
+import { KeyValueMap, RequestContext, TypeOperation } from 'fhir-interface-core';
 import ResourceHandler from '../../router/handlers/resourceHandler';
 import RouteHelper from '../../router/routes/routeHelper';
 import { OperationDefinitionImplementation } from '../types';

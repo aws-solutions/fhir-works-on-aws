@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { FhirConfig, FhirVersion, TypeOperation } from 'fhir-interface';
+import { FhirConfig, FhirVersion, TypeOperation } from 'fhir-interface-core';
 import ResourceHandler from './router/handlers/resourceHandler';
 
 export default class ConfigHandler {

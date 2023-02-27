@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 import { parseTokenSearchValue } from './tokenParser';
 
 describe('parseTokenSearchValue', () => {

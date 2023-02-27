@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
-import { ExportType, FhirVersion, InitiateExportRequest } from 'fhir-interface';
+import { ExportType, FhirVersion, InitiateExportRequest } from 'fhir-interface-core';
 import createHttpError from 'http-errors';
 import isString from 'lodash/isString';
 import { dateTimeWithTimeZoneRegExp } from '../../regExpressions';

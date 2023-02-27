@@ -27,7 +27,7 @@
       "allowedCategories": ["tools"]
     },
     {
-      "name": "fhir-interface",
+      "name": "fhir-interface-core",
       "allowedCategories": ["production", "tools"]
     },
     {

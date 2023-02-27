@@ -1,4 +1,4 @@
-import { VerifyAccessTokenRequest } from 'fhir-interface';
+import { VerifyAccessTokenRequest } from 'fhir-interface-core';
 import * as smartAuthorizationHelper from '../smartAuthorizationHelper';
 import { SMARTHandler } from '../smartHandler';
 import TestCaseUtil, { BaseCsvRow } from './testCaseUtil.test';

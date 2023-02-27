@@ -4,7 +4,7 @@
  *
  */
 
-import { InvalidSearchParameterError } from 'fhir-interface';
+import { InvalidSearchParameterError } from 'fhir-interface-core';
 import { parseNumber } from '../../QueryBuilder/typeQueries/common/number';
 
 export interface QuantitySearchValue {

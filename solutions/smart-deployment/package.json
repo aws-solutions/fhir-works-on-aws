@@ -71,7 +71,7 @@
     "cdk-nag": "^2.19.0",
     "constructs": "^10.0.0",
     "escape-string-regexp": "^4.0.0",
-    "fhir-interface": "workspace:*",
+    "fhir-interface-core": "workspace:*",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
     "p-settle": "^4.1.1",

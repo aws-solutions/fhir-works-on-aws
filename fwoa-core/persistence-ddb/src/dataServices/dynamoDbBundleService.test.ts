@@ -7,7 +7,12 @@
 import AWS from 'aws-sdk';
 import { QueryInput, TransactWriteItemsInput, TransactWriteItem } from 'aws-sdk/clients/dynamodb';
 import * as AWSMock from 'aws-sdk-mock';
-import { BundleResponse, BatchReadWriteRequest, TypeOperation, ResourceNotFoundError } from 'fhir-interface';
+import {
+  BundleResponse,
+  BatchReadWriteRequest,
+  TypeOperation,
+  ResourceNotFoundError
+} from 'fhir-interface-core';
 import { range } from 'lodash';
 
 // @ts-ignore

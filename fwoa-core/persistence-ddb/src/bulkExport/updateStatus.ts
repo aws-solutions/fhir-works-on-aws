@@ -4,7 +4,7 @@
  */
 
 import { Handler } from 'aws-lambda';
-import { ExportJobStatus } from 'fhir-interface';
+import { ExportJobStatus } from 'fhir-interface-core';
 import AWS from '../AWS';
 import DynamoDbParamBuilder from '../dataServices/dynamoDbParamBuilder';
 import { BulkExportStateMachineGlobalParameters } from './types';

@@ -29,7 +29,7 @@ import {
   UnauthorizedError,
   UpdateResourceRequest,
   vReadResourceRequest
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { difference } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { getBulkExportResults, startJobExecution } from '../bulkExport/bulkExport';

@@ -7,7 +7,7 @@ import Ajv from 'ajv';
 // @ts-ignore
 import ajvErrors from 'ajv-errors';
 
-import { InvalidResourceError, Validator, Search, Persistence, TypeOperation } from 'fhir-interface';
+import { InvalidResourceError, Validator, Search, Persistence, TypeOperation } from 'fhir-interface-core';
 import { isEmpty, groupBy } from 'lodash';
 
 import subscriptionSchema from './subscriptionSchema.json';

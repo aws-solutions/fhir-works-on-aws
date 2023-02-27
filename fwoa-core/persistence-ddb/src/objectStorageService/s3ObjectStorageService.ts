@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { GenericResponse } from 'fhir-interface';
+import { GenericResponse } from 'fhir-interface-core';
 import getComponentLogger from '../loggerBuilder';
 import ObjectNotFoundError from './ObjectNotFoundError';
 import ObjectStorageInterface from './objectStorageInterface';

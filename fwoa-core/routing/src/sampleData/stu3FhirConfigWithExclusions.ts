@@ -7,7 +7,7 @@ import {
   Persistence,
   Search,
   stubs as fwoaStubs
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 
 const config = (stubs: {
   bundle: Bundle;

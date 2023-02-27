@@ -11,7 +11,7 @@ import {
   KeyValueMap,
   Validator,
   RequestContext
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import BundleGenerator from '../bundle/bundleGenerator';
 import OperationsGenerator from '../operationsGenerator';
 import { validateResource } from '../validation/validationUtilities';

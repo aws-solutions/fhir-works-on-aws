@@ -18,7 +18,7 @@ import {
   UnauthorizedError,
   VerifyAccessTokenRequest,
   WriteRequestAuthorizedRequest
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import jwt from 'jsonwebtoken';
 import * as smartAuthorizationHelper from './smartAuthorizationHelper';
 import { getFhirResource, getFhirUser } from './smartAuthorizationHelper';

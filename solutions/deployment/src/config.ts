@@ -22,7 +22,7 @@ import {
   BASE_R4_RESOURCES,
   BASE_STU3_RESOURCES,
   Validator
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { loadImplementationGuides } from './implementationGuides/loadCompiledIGs';
 import RBACRules from './RBACRules';
 import getAllowListedSubscriptionEndpoints from './subscriptions/allowList';

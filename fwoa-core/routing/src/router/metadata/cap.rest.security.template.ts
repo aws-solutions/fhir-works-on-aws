@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Auth } from 'fhir-interface';
+import { Auth } from 'fhir-interface-core';
 
 export default function makeSecurity(authConfig: Auth, hasCORSEnabled: boolean = false) {
   if (authConfig.strategy.service) {

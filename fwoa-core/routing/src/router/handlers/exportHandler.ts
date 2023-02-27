@@ -11,7 +11,7 @@ import {
   InitiateExportRequest,
   KeyValueMap,
   RequestContext
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import createError from 'http-errors';
 
 export default class ExportHandler {

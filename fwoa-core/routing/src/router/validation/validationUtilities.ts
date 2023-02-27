@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { InvalidResourceError, TypeOperation, Validator } from 'fhir-interface';
+import { InvalidResourceError, TypeOperation, Validator } from 'fhir-interface-core';
 import { validateXHTMLResource } from '../handlers/utils';
 
 export async function validateResource(

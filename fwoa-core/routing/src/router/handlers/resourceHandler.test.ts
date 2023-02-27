@@ -24,7 +24,7 @@ import {
   InitiateExportRequest,
   GetExportStatusResponse,
   RequestContext
-} from 'fhir-interface';
+} from 'fhir-interface-core';
 import { v4 as uuidv4 } from 'uuid';
 import invalidPatient from '../../sampleData/invalidV4Patient.json';
 import validPatient from '../../sampleData/validV4Patient.json';
