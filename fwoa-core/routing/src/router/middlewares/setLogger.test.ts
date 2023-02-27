@@ -35,7 +35,6 @@ describe('createLoggerMiddleware', () => {
   describe('test encryption', () => {
     test('happy case', async () => {
       //BUILD
-      process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'true';
       const nextMock = jest.fn();
       const req = {
         requestContext: {
@@ -98,7 +97,6 @@ describe('createLoggerMiddleware', () => {
 
     test('test null value in a field for encryption case', async () => {
       //BUILD
-      process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'true';
       const nextMock = jest.fn();
       const req = {
         requestContext: {
@@ -156,7 +154,6 @@ describe('createLoggerMiddleware', () => {
     });
     test('test reference launch context value for encryption case', async () => {
       //BUILD
-      process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION = 'true';
       const nextMock = jest.fn();
       const req = {
         requestContext: {

@@ -343,7 +343,7 @@ export default class FhirWorksStack extends Stack {
       LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.securityLogKMSKey
       ? kmsResources.securityLogKMSKey.keyArn
       : 'ENCRYPTION_TURNED_OFF',
-      ENABLE_SCRURITY_LOGGING: `${props!.enableSecurityLogging}`,
+      ENABLE_SECURITY_LOGGING: `${props!.enableSecurityLogging}`,
     };
 
     const defaultLambdaBundlingOptions = {
