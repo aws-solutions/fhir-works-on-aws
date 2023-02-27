@@ -1,0 +1,25 @@
+{
+  "name": "fhir-interface-core",
+  "entries": [
+    {
+      "version": "13.0.0",
+      "tag": "fhir-interface-core_v13.0.0",
+      "date": "Mon, 27 Feb 2023 18:44:55 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update license header for logger files"
+          }
+        ],
+        "major": [
+          {
+            "comment": "Remove allowedResourceTypes from bulk export interface"
+          },
+          {
+            "comment": "test"
+          }
+        ]
+      }
+    }
+  ]
+}
