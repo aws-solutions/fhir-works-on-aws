@@ -99,7 +99,7 @@ jobs:
           pull_number: ${{ needs.create-release-branch-pr-to-main.outputs.pr_number }}
           merge_method: 'merge'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: disable merge commits
         uses: octokit/request-action@v2.x

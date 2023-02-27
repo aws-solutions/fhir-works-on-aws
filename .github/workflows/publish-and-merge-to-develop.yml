@@ -27,7 +27,7 @@ jobs:
       
       - name: Rush Publish
         run: |
-          PUBLISH_CMD="--add-commit-details --apply --npm-auth-token ${{ secrets.NPM_AUTH_TOKEN }} --ignore-git-hooks --include-all --set-access-level public --publish"
+          PUBLISH_CMD="--add-commit-details --apply --npm-auth-token ${{ secrets.NPM_AUTH_TOKEN }} --ignore-git-hooks --include-all --set-access-level public --target-branch copy-main --publish"
           node common/scripts/install-run-rush.js publish $PUBLISH_CMD
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
