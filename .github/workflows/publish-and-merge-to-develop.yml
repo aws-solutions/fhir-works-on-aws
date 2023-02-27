@@ -8,7 +8,7 @@ on:
 
 jobs:
   rush-publish:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && vars.PUBLISH_TO_NPM == 'true'
     runs-on: ubuntu-20.04
     steps:
       - name: git checkout
