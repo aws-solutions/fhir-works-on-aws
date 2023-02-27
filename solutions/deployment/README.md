@@ -222,7 +222,7 @@ To test this feature on FHIR Works on AWS, make API requests using the [Fhir.pos
 
 - The script requires 3 inputs, userPoolId, userPoolAppClientId and region. These value can be found in the output of the FWoA CloudFormation stack you deployed.
 - The script can be executed with `python3 scripts/provision-user.py <userPoolId> <userPoolAppClientId> <region>`
-- The three test users will use the same password. Update the password in `provision-user.py` script with a dummy value and save the change.
+- The three test users will use the same password. Update the password in `provision-user.py` script with your preferred password and save the change.
 - To create the first practitioner user, change the username in `provision-user.py` script to `practitionerTest`. Save the change, then run the script.
 - To create the auditor user, change the username to `auditorTest` and group to `auditor`. Save the change, then run the script.
 - To create the second practitioner user, change the username to `otherPractitionerTest`, change the tenant to `tenant2`, revert group back to `practitioner`. Save the change, then run the script.
