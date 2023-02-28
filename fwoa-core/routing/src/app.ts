@@ -127,7 +127,7 @@ export function generateServerlessRouter(
     }
   });
 
-  if (process.env.ENABLE_LOGGING_MIDDLEWARE === 'true') {
+  if (process.env.ENABLE_SECURITY_LOGGING === 'true') {
     mainRouter.use(setLoggerMiddleware);
   }
 
