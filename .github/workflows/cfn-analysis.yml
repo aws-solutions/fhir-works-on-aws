@@ -28,7 +28,8 @@ jobs:
         run: yarn install
       - name: synthesize cdk template for cfn for analysis
         run: |
-          yarn cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
+          cd ./solutions/smart-deployment
+          rushx cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
       - name: cfn_nag on cdk template
         uses: stelligent/cfn_nag@master
         with:
