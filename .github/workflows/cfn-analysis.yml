@@ -19,19 +19,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18.14.0
+        uses: actions/checkout@v3
       
+      - name: Base Action
+        uses: ./.github/actions/baseAction
       - name: synthesize cdk template for cfn for analysis
         run: |
           cd ./solutions/smart-deployment
-          node ../../common/scripts/install-run-rushx.js build 
-          rushx cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
+          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
       - name: cfn_nag on cdk template
         uses: stelligent/cfn_nag@master
         with:
-          input_path: cdk.out/smart-fhir-service-dev.template.json
-          extra_args:  --blacklist-path cdk-nag-deny-list.yaml -o json
+          input_path: ./cdk.out/smart-fhir-service-dev.template.json
+          extra_args:  --blacklist-path ./cdk-nag-deny-list.yaml -o json
