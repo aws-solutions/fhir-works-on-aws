@@ -33,6 +33,19 @@
     "test-coverage": "jest --coverage --testPathPattern=src/*",
     "watch": "tsc -w"
   },
+  "jest": {
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".test.ts",
+    "testRunner": "jest-circus/runner",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
+  },
   "resolutions": {
     "@types/express-serve-static-core": "^4.17.21",
     "ansi-regex": "^5.0.1",
