@@ -6,8 +6,8 @@
 import * as appreg from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import { SharePermission } from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import { Aws, CfnMapping, CfnOutput, Fn, RemovalPolicy, Stack, Tags } from 'aws-cdk-lib';
-import { Construct, IConstruct } from 'constructs';
 import { CfnApplication } from 'aws-cdk-lib/aws-applicationinsights';
+import { Construct, IConstruct } from 'constructs';
 
 /**
  * @param resource - Construct
@@ -128,6 +128,7 @@ export class FhirWorksAppRegistry extends Construct {
       createAppInsightsConfiguration(stack);
     }
 
+    // eslint-disable-next-line no-new
     new CfnOutput(this, `${id}-AppRegistryApplicationArn`, {
       value: application.applicationArn
     });
