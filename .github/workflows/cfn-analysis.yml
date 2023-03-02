@@ -1,0 +1,35 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: CloudFormation Scanning
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - smart-develop
+    paths:
+      - '**.yaml'
+      - '**.yml'
+
+jobs:
+  cfn-analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+      - name: synthesize cdk template for cfn for analysis
+        run: |
+          cd ./solutions/smart-deployment
+          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
+      - name: cfn_nag on cdk template
+        uses: stelligent/cfn_nag@master
+        with:
+          input_path: cdk.out/smart-fhir-service-dev.template.json
+          extra_args:  --blacklist-path cdk-nag-deny-list.yaml -o json
+          
