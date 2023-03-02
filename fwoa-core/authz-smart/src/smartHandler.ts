@@ -42,8 +42,8 @@ import {
   getScopes,
   getValidOperationsForScopeTypeAndAccessType,
   isScopeSufficient,
-  rejectInvalidScopeCombination,
-  SEARCH_OPERATIONS
+  SEARCH_OPERATIONS,
+  validateTokenScopes
 } from './smartScopeHelper';
 
 const logger = getComponentLogger();
@@ -128,7 +128,7 @@ export class SMARTHandler implements Authorization {
 
     // get just the scopes that apply to this request
     const scopes = getScopes(decodedToken[this.config.scopeKey]);
-    rejectInvalidScopeCombination(scopes);
+    validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
     const usableScopes = filterOutUnusableScope(
       scopes,
       this.config.scopeRule,

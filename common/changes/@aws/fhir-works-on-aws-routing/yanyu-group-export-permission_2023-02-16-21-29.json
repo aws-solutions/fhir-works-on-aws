@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-routing",
+      "comment": "Remove allowedResourceTypes from bulk export",
+      "type": "major"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-routing"
+}

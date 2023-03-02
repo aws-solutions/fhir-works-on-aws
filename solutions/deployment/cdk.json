@@ -32,6 +32,10 @@
     "logLevel": "error",
     "enableESHardDelete": false,
     "enableBackup": false,
-    "fhirVersion": "4.0.1"
+    "fhirVersion": "4.0.1",
+    "igMemoryLimit": 128,
+    "igMemorySize": 2048,
+    "igStorageSize": 512,
+    "enableSecurityLogging": false
   }
 }

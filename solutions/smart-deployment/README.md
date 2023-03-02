@@ -84,7 +84,7 @@ git clone https://github.com/awslabs/fhir-works-on-aws-deployment.git
 - [Windows](./INSTALL.md#windows-installation)
 - [Docker](./INSTALL.md#docker-installation)
 
-If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](./USING_IMPLEMENTATION_GUIDES.md) documentation first.
+If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](../../fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md) documentation first.
 
 If you intend to do a multi-tenant deployment read the [Using Multi-Tenancy](./USING_MULTI_TENANCY.md) documentation first.
 
@@ -143,7 +143,7 @@ Yes, adding MFA delete adds an additional layer of security to your S3 buckets. 
 
 ### Development
 
-[Instructions for making local code changes](./DEVELOPMENT.md)
+[Instructions for making local code changes](../../DEVELOPMENT.md)
 
 ## License
 

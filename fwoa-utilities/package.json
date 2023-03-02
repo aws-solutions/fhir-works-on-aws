@@ -1,0 +1,63 @@
+{
+  "name": "@aws/fhir-works-on-aws-utilities",
+  "version": "1.1.0",
+  "description": "FHIR Works on AWS utilities",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/utilities",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/fhir-works-on-aws-utilities.git"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Amazon Web Services",
+    "email": "fhir-works-on-aws-dev@amazon.com",
+    "url": "https://aws.amazon.com/"
+  },
+  "main": "fhirWorksAppRegistry.ts",
+  "scripts": {
+    "build": "heft build --clean && rushx pkg-json-lint",
+    "build-test": "heft test --clean && rushx pkg-json-lint",
+    "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* lib/*",
+    "lint-fix": "eslint . --fix",
+    "local": "node .",
+    "pkg-json-lint": "npmPkgJsonLint -c ../.npmpackagejsonlintrc.json .",
+    "prettier": "prettier --config '../.prettierrc.js' 'src/**/*.ts' --write",
+    "sort-package-json": "sort-package-json package.json",
+    "standard-version": "standard-version --skip.tag=true",
+    "test": "heft test --clean --no-build && rushx pkg-json-lint",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.61.0-alpha.0",
+    "aws-cdk-lib": "^2.61.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
+    "@rushstack/eslint-config": "^3.0.0",
+    "@rushstack/heft": "0.49.0",
+    "@rushstack/heft-jest-plugin": "0.4.2",
+    "@rushstack/heft-node-rig": "1.11.11",
+    "@types/heft-jest": "^1.0.3",
+    "@types/jest": "^26.0.19",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^14",
+    "aws-sdk": "^2.1000.0",
+    "aws-sdk-mock": "^5.1.0",
+    "eslint": "^8.7.0",
+    "jest": "^26.6.3",
+    "jest-each": "^26.6.2",
+    "jest-mock-extended": "^1.0.8",
+    "npm-package-json-lint": "^6.3.0",
+    "npm-package-json-lint-config-default": "^5.0.0",
+    "prettier": "^2.4.1",
+    "sort-package-json": "^1.57.0",
+    "standard-version": "^9.3.2",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.9.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "stackname": "fhir-works-on-aws-utilities"
+}

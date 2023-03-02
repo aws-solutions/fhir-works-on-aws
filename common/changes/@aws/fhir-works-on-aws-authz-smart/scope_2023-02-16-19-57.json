@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "comment": "Reject token with scopes that can not be used",
+      "type": "major"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-smart"
+}

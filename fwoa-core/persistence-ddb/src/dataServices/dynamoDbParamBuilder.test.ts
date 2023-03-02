@@ -423,7 +423,6 @@ describe('buildPutCreateExportRequest', () => {
   };
 
   const initiateExportRequest: InitiateExportRequest = {
-    allowedResourceTypes: ['Patient'],
     exportType: 'system',
     requesterUserId: 'fakeUserId',
     transactionTime,
