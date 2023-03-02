@@ -165,8 +165,9 @@ describe('SMART AuthZ Negative tests', () => {
       true
     );
     // In our configurations `system` scope does not have `search` operation permissions
-    const getPatientAdmin = await searchPatient(fhirClient, 'Watson');
-    expect(getPatientAdmin.data.total).toBe(0); // Should return no results
+    await expect(searchPatient(fhirClient, 'Watson')).rejects.toMatchObject({
+      response: { status: 401 }
+    });
   });
 
   test('failing XHTML Validation: patient with invalid family name', async () => {

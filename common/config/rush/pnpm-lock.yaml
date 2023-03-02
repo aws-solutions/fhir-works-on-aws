@@ -717,6 +717,7 @@ importers:
       '@types/sinon': ^9.0.0
       '@types/tmp': ^0.2.3
       '@types/uuid': ^8.3.4
+      '@types/yargs': ^17.0.22
       aws-cdk: 2.61.0
       aws-cdk-lib: ^2.61.0
       aws-embedded-metrics: ^2.0.4
@@ -794,6 +795,7 @@ importers:
       '@types/sinon': 9.0.11
       '@types/tmp': 0.2.3
       '@types/uuid': 8.3.4
+      '@types/yargs': 17.0.22
       aws-cdk: 2.61.0
       chance: 1.1.9
       esbuild: 0.14.54
@@ -6159,6 +6161,15 @@ packages:
     resolution:
       {
         integrity: sha512-AxO/ADJOBFJScHbWhq2xAhlWP24rY4aCEG/NFaMvbT3X2MgRsLjhjQwsn0Zi5zn0LG9jUhCCZMeX9Dkuw6k+vQ==
+      }
+    dependencies:
+      '@types/yargs-parser': 21.0.0
+    dev: true
+
+  /@types/yargs/17.0.22:
+    resolution:
+      {
+        integrity: sha512-pet5WJ9U8yPVRhkwuEIp5ktAeAqRZOq4UdAyWLWzxbtpyXnzbtLdKiXAjJzi/KLmPGS9wk86lUFWZFN6sISo4g==
       }
     dependencies:
       '@types/yargs-parser': 21.0.0
