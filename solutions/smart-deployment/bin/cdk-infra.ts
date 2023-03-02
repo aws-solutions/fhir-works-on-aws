@@ -30,6 +30,7 @@ const validateXHTML: boolean = app.node.tryGetContext('validateXHTML') || false;
 const igMemoryLimit: number = app.node.tryGetContext('igMemoryLimit') || 128;
 const igMemorySize: number = app.node.tryGetContext('igMemorySize') || 2048;
 const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
+const enableSecurityLogging: boolean = app.node.tryGetContext('enableSecurityLogging') || false;
 
 // FhirWorksAppRegistry Constants
 const solutionId: string = 'SO0128';
@@ -89,7 +90,8 @@ const stack = new FhirWorksStack(app, `smart-fhir-service-${stage}`, {
   igMemorySize,
   igStorageSize,
   description:
-    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.'
+    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
+  enableSecurityLogging
 });
 new FhirWorksAppRegistry(stack, 'SmartFhirWorksAppRegistry', {
   solutionId,
