@@ -24,6 +24,7 @@ describe('cdk-nag AwsSolutions Pack', () => {
   const igMemoryLimit: number = 128;
   const igMemorySize: number = 2048;
   const igStorageSize: number = 512;
+  const enableSecurityLogging: boolean = true;
 
   beforeAll(() => {
     // GIVEN
@@ -54,7 +55,8 @@ describe('cdk-nag AwsSolutions Pack', () => {
       igMemorySize,
       igStorageSize,
       description:
-        'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.'
+        'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.',
+      enableSecurityLogging
     });
 
     fs.rm('./pnpm-lock.yaml', { force: true }, () => {});

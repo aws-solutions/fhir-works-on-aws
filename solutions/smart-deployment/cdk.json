@@ -38,6 +38,7 @@
     "validateXHTML": false,
     "igMemoryLimit": 128,
     "igMemorySize": 2048,
-    "igStorageSize": 512
+    "igStorageSize": 512,
+    "enableSecurityLogging": false
   }
 }

@@ -285,28 +285,22 @@ export const setLoggerMiddleware = async (
         }
       }
     };
-    let encryptedField: string;
-    let logger: any;
-    if (process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION === 'true') {
-      loggerDesign = preprocessFieldsToEncrypted(
-        [
-          'who.userIdentity.sub',
-          'who.userIdentity.fhirUser',
-          'what.apiGateway.event.queryStringParameters',
-          'what.requestContext.path',
-          'what.apiGateway.event.pathParameters.proxy',
-          'where.requestContext.identity.sourceIp',
-          'responseOther.userIdentity.launch-response-patient'
-        ],
-        loggerDesign
-      );
-      encryptedField = 'logMetadata.payLoadToEncrypt';
-      logger = getEncryptLogger({ encryptedField });
-      await logger.error(loggerDesign);
-    } else {
-      logger = getComponentLogger();
-      logger.error(JSON.stringify(loggerDesign, null, ' '));
-    }
+
+    loggerDesign = preprocessFieldsToEncrypted(
+      [
+        'who.userIdentity.sub',
+        'who.userIdentity.fhirUser',
+        'what.apiGateway.event.queryStringParameters',
+        'what.requestContext.path',
+        'what.apiGateway.event.pathParameters.proxy',
+        'where.requestContext.identity.sourceIp',
+        'responseOther.userIdentity.launch-response-patient'
+      ],
+      loggerDesign
+    );
+    const encryptedField = 'logMetadata.payLoadToEncrypt';
+    const logger = getEncryptLogger({ encryptedField });
+    await logger.error(loggerDesign);
 
     next();
   } catch (e) {
