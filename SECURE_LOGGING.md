@@ -70,7 +70,9 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 4. To decrypt by storing an encrypted string inside a text file, create a .txt file in the folder and name the .txt file something such as `encryptedfile.txt`.
 5. Paste the copied encrypted string into `encryptedfile.txt` and save it.
 6. Run the following decrypt command after entering the file name and correct Region of your FHIR  deployment.  
-`aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) —query Plaintext —output text —region <REGION> | base64 —decode`
+```
+aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) —query Plaintext —output text —region <REGION> | base64 —decode
+```
 
 ## Log Deep Dive for Incident Analysis
 
@@ -78,7 +80,7 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 2. Switch to the AWS Region where FWoA is deployed, if necessary.
 3. From the console, go to **Amazon CloudWatch**.
 4. In the sidebar, expand **Logs** and choose **Log** **groups**. 
-5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` **** log group. The uniqueID is apiURL domain id. For example, `API-Gateway-Execution-Logs_0000000000/dev`. 
+5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` log group. The uniqueID is apiURL domain id. For example, `API-Gateway-Execution-Logs_0000000000/dev`. 
 6. Choose the log group to see the log stream events. Note the **AWS Integration Endpoint RequestId** from the event details.  
 7. Locate the fhirserver log which will be: `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated. For example, `/aws/lambda/smart-fhir-service-dev-fhirServer00000000-000000000000`.
 8. Choose the name of the Log group to view the log group page.   
