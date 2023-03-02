@@ -22,7 +22,7 @@
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/*",
     "compile-igs": "ts-node scripts/compile-igs.ts",
     "deploy": "cdk deploy --outputs-file Info_Output.log",
-    "int-test": "jest --testPathPattern=integration-test/* --runInBand",
+    "int-test": "jest test --testPathPattern=integration-test/* --runInBand",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
