@@ -23,8 +23,6 @@ jobs:
       
       - name: Base Action
         uses: ./.github/actions/baseAction
-      - name: Install dependencies
-        run: npm install -g stelligent/cfn_nag@master
       - name: synthesize cdk template for cfn for analysis
         run: |
           cd ./solutions/smart-deployment
