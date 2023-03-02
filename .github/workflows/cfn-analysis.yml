@@ -23,6 +23,8 @@ jobs:
       
       - name: Base Action
         uses: ./.github/actions/baseAction
+      - name: Install dependencies
+        run: npm install -g stelligent/cfn_nag@master
       - name: synthesize cdk template for cfn for analysis
         run: |
           cd ./solutions/smart-deployment
@@ -31,4 +33,5 @@ jobs:
         uses: stelligent/cfn_nag@master
         with:
           input_path: ./cdk.out/smart-fhir-service-dev.template.json
-          extra_args:  --blacklist-path ./cdk-nag-deny-list.yaml -o json
+          extra_args:  --blacklist-path ./solutions/smart-deployment/cdk-nag-deny-list.yaml -o json
+          
