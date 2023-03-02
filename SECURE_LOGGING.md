@@ -69,8 +69,8 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 3. Decrypt the encrypted string using the AWS CLI Decrypt function in your terminal. For more information, see [AWS CLI Decrypt](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/kms/decrypt.html). [](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/kms/decrypt.html)
 4. To decrypt by storing an encrypted string inside a text file, create a .txt file in the folder and name the .txt file something such as `encryptedfile.txt`.
 5. Paste the copied encrypted string into `encryptedfile.txt` and save it.
-6. Run the following decrypt command after entering the file name and correct Region of your FHIR  deployment.
-7. aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) —query Plaintext —output text —region <REGION> | base64 —decode
+6. Run the following decrypt command after entering the file name and correct Region of your FHIR  deployment.  
+`aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) —query Plaintext —output text —region <REGION> | base64 —decode`
 
 ## Log Deep Dive for Incident Analysis
 
@@ -78,11 +78,11 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 2. Switch to the AWS Region where FWoA is deployed, if necessary.
 3. From the console, go to **Amazon CloudWatch**.
 4. In the sidebar, expand **Logs** and choose **Log** **groups**. 
-5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` **** log group. The uniqueID is apiURL domain id.For example, `API-Gateway-Execution-Logs_0000000000/dev`. 
+5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` **** log group. The uniqueID is apiURL domain id. For example, `API-Gateway-Execution-Logs_0000000000/dev`. 
 6. Choose the log group to see the log stream events. Note the **AWS Integration Endpoint RequestId** from the event details.  
 7. Locate the fhirserver log which will be: `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated. For example, `/aws/lambda/smart-fhir-service-dev-fhirServer00000000-000000000000`.
 8. Choose the name of the Log group to view the log group page.   
-9. Search for **`AWS Integration Endpoint RequestId`** and review the secure logging information for your incident analysis. You can have two screen shows of apigateway log group and show secure logging data in fhirserver. 
+9. Search for `AWS Integration Endpoint RequestId` and review the secure logging information for your incident analysis. You can have two screen shows of apigateway log group and show secure logging data in fhirserver. 
 
 ## Searching logs
 
@@ -93,17 +93,17 @@ Ideally, you should search or localize API Gateway base on the time stamp to fig
 1. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` log group, and choose it to view details.
 2. Under **Log Streams**, choose **Search all log streams**.
 3. If the Timestamp column is not shown, choose the **Display** menu, and choose the **View in columns with details**. Alternatively, choose **Settings** and turn on **Timestamp**.
-4. Choose **Custom** to select the date range or time stamp you want to show. For example, choose log stream from 01/03/2023 9:00am to 10:am.
+4. Choose **Custom** to select the date range or time stamp you want to show. For example, choose log stream from 01/03/2023 9:00am to 10:00am.
 5. Choose the Log stream name once you find the log stream you want to view.
 6. In the log stream details, you can find the request status and the extended request id which is `AWS Integration Endpoint RequestId`.
 
 ### Search extended request id in lambda logs to get to who/what/when log
 
-1. Search the `fhirserver` **** log group (Lambda function log group). It will be `/aws/lambda/${stackname}-fhirServer${UniqueId}` . The uniqueID is randomly generated. 
+1. Search the `fhirserver` log group (Lambda function log group). It will be `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated. 
 2. Choose the **log group name**.
 3. Under **Log Streams**, choose **Search all log streams**.
 4. Enter the request id in double quotations.
-5. Choose **Display**, and then choose **View in plain text**. **** You will see the log details for the following categories: `logMetadata/who/what/when/where/how/requestOther/responseOther`
+5. Choose **Display**, and then choose **View in plain text**. You will see the log details for the following categories: `logMetadata/who/what/when/where/how/requestOther/responseOther`
 
 > **Note**  
 > You can use the **jti** key found the in how attribute to correlate jti in IDP. For example, in Okta, you can open the system log page found under Reports to view system logs in Okta using **jti**. You can download the CSV and search the file to find the corresponding jti log.
