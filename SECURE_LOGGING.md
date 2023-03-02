@@ -6,55 +6,42 @@ Follow your organizational best practices and the [shared responsibility model](
 
 See the following as an example of Amazon CloudWatch logs for every API request:
 
-|	|	|	|Definition	|Example	|Encrypted Information	|
-|---	|---	|---	|---	|---	|---	|
-|logMetadata	|	|uid	|Randomly created id to record the log	|`"0b4d1252-b786-4900-8240-a7671813c8ef"`	|	|
-|timestamp	|Time point when the logger middleware is triggered	|`"2023-01-17T15:57:560Z"`	|	|
-|category	|Event category	|`"Audit Event"`	|	|
-|encryptedFields	|Fields which have informtion needed to be encrypte	|`[
-            "who.userIdentity.sub",
-            "who.userIdentity.fhirUser",
-            "what.requestContext.path",
-            "what.apiGateway.event.pathParameters.proxy",
-            "where.requestContext.identity.sourceIp",
-            "responseOther.userIdentity.launch-response-patient"
-        ]`	|	|
-|encryptedPayLoad	|Corresponded encrypted string created by encrypting all fields in encryptedFields field	|`"QWERTYUIOPLKJHGFDSA"`	|	|
-|who	|request	|identity.apiKeyId	|Api Key Id	|`"0000000000"`	|	|
-|response	|sub	|The subject of the token	|``"encrypted"``	|entire content	|
-|fhirUser	|Full url for fhir user (smart-deployment only)	|` https://domain.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted`	|resourceId	|
-|"cognito:groups"	|Coginto groups name (deployment only)	|`[
-                "practitioner"
-            ]`	|	|
-|"cognito:username"	|Coginto user name (deployment only)	|`"workshopuser"`	|	|
-|"custom:tenantId"	|Coginto tenant id (deployment only)	|`"tenant1"`	|	|
-|what	|request	|path	|Request path	|` "/dev/Patient/encrypted"`	|resourceId	|
-|httpMethod	|Http method from request	|`"GET"`	|	|
-|apiGateway.event.httpmethod	|Http method from apiGateway	|`"GET"`	|	|
-|apiGateway.event.queryStringParameters	|Query strings used for a search request	|`"encrypted"`	|query strings used for a request	|
-|apiGateway.event.pathParameters	|PathParameter for the request	|`{
-"proxy":"Patient/encrypted"             
-}`	|resourceId	|
-|response	|scopes	|The scopes that authz package intiallizes to allow user have (smart-deployment only)	|`[ ``"fhirUser"``, ``"openid"``, ``"patient/*.*"``, ``"launch/patient"``, ``"profile"``, ``"user/*.*"``, ``"patient_selection"`` ]`	|	|
-|usableScopes	|The scopes a user can have after our authorization package has filtered what allowed  (smart-deployment only)	|`[ ``"patient/*.*"``, ``"user/*.*"`` ]`	|	|
-|when	|request	|requestTimeEpoch	|The time when the request is made	|`"2023-01-17T15:53:46.000Z"`	|	|
-|where	|request	|logGroupName	|Log group name	|`"/aws/lambda/smart-fhir-service-dev-fhirServer7884A170-4dPkO6El2pLG"`	|	|
-|logStreamName	|Log stream name	|`"2023/01/17/[$LATEST]7b5e5e7edb1443dfa16bcc789bf41321"`	|	|
-|domainName	|The url of the fhir works deployment	|` ``"domain.execute-api.us-east-1.amazonaws.com"`	|	|
-|user-agent	|The agent the user uses to make request	|`"PostmanRuntime/7.30.0"`	|	|
-|sourceIp	|Ip address where the request is made	|`"encrypted"`	|ip address	|
-|how	|	|awsRequestId	|Integration.requestId	|`"4f193f8f-a213-4767-a03b-9b8c736c757a"`` }`	|	|
-|	|
-userIdentity.Jti	|The unique token identifier	|`"AT.-WlAh-NEcSdoxIwpqeE6KswC0PLA-dgAJZjlAoXsMDQ"`	|	|
-|requestOther	|request	|stage	|Stage environment	|`"dev"`	|	|
-|responseOther	|response	|launch_response patient	|Resource url for the patient that was selected from the list during the auth flow (smart-deployment only)	|"https://domain.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"	|resourceId	|
-|iss	|The issuer of the token. This value must be the same as the `client_id` of the application that you are accessing.	|`"https://dev-44142793.okta.com/oauth2/aus7j8ulrovP5Ppzb5d7"`	|	|
-|aud	|The dev URL of the fhir works that you're trying to access using the JWT to authenticate	|"`https://domain.execute-api.us-east-1.amazonaws.com/dev"`	|	|
-|scp	|The scopes from the original request  (smart-deployment only)	|`[ ``"fhirUser"``, ``"patient/*.*"``, ``"launch/patient"``, ``"profile"``, ``"user/*.*"``, ``"patient_selection"``, ``"openid"`` ]`	|	|
-|
-iat	|When the token was issued	|`"2023-01-17T15:43:56.000Z"`	|	|
-|exp	|The token expiration time	|`"2023-01-17T16:43:56.000Z"`	|	|
-|auth_time	|When the authentication occurs	|`"2023-02-17T15:43:02.000Z"`	|	|
+|               |          |                                        | Definition                                                                                                       | Example                                                                                                                                                                                                                           | Encrypted Information            |
+|---------------|----------|----------------------------------------|------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| logMetadata   |          | uid                                    | Randomly created id to record the log                                                                            | "0b4d1252-b786-4900-8240-a7671813c8ef"                                                                                                                                                                                            |                                  |
+|               |          | timestamp                              | Time point when the logger middleware is triggered                                                               | "2023-01-17T15:57:560Z"                                                                                                                                                                                                           |                                  |
+|               |          | category                               | Event category                                                                                                   | "Audit Event"                                                                                                                                                                                                                     |                                  |
+|               |          | encryptedFields                        | Fields which have informtion needed to be encrypte                                                               | [ "who.userIdentity.sub", "who.userIdentity.fhirUser", "what.requestContext.path", "what.apiGateway.event.pathParameters.proxy", "where.requestContext.identity.sourceIp", "responseOther.userIdentity.launch-response-patient" ] |                                  |
+|               |          | encryptedPayLoad                       | Corresponded encrypted string created by encrypting all fields in encryptedFields field                          | "QWERTYUIOPLKJHGFDSA"                                                                                                                                                                                                             |                                  |
+| who           | request  | identity.apiKeyId                      | Api Key Id                                                                                                       | "0000000000"                                                                                                                                                                                                                      |                                  |
+|               | response | sub                                    | The subject of the token                                                                                         | "encrypted"                                                                                                                                                                                                                       | entire content                   |
+|               |          | fhirUser                               | Full url for fhir user (smart-deployment only)                                                                   | https://domain.execute-api.us-east-1.amazonaws.com/dev/Practitioner/encrypted                                                                                                                                                     | resourceId                       |
+|               |          | "cognito:groups"                       | Coginto groups name (deployment only)                                                                            | [ "practitioner" ]                                                                                                                                                                                                                |                                  |
+|               |          | "cognito:username"                     | Coginto user name (deployment only)                                                                              | "workshopuser"                                                                                                                                                                                                                    |                                  |
+|               |          | "custom:tenantId"                      | Coginto tenant id (deployment only)                                                                              | "tenant1"                                                                                                                                                                                                                         |                                  |
+| what          | request  | path                                   | Request path                                                                                                     | "/dev/Patient/encrypted"                                                                                                                                                                                                          | resourceId                       |
+|               |          | httpMethod                             | Http method from request                                                                                         | "GET"                                                                                                                                                                                                                             |                                  |
+|               |          | apiGateway.event.httpmethod            | Http method from apiGateway                                                                                      | "GET"                                                                                                                                                                                                                             |                                  |
+|               |          | apiGateway.event.queryStringParameters | Query strings used for a search request                                                                          | "encrypted"                                                                                                                                                                                                                       | query strings used for a request |
+|               |          | apiGateway.event.pathParameters        | PathParameter for the request                                                                                    | { "proxy":"Patient/encrypted"   }                                                                                                                                                                                                 | resourceId                       |
+|               | response | scopes                                 | The scopes that authz package intiallizes to allow user have (smart-deployment only)                             | [ "fhirUser", "openid", "patient/*.*", "launch/patient", "profile", "user/*.*", "patient_selection" ]                                                                                                                             |                                  |
+|               |          | usableScopes                           | The scopes a user can have after our authorization package has filtered what allowed (smart-deployment only)     | [ "patient/*.*", "user/*.*" ]                                                                                                                                                                                                     |                                  |
+| when          | request  | requestTimeEpoch                       | The time when the request is made                                                                                | "2023-01-17T15:53:46.000Z"                                                                                                                                                                                                        |                                  |
+| where         | request  | logGroupName                           | Log group name                                                                                                   | "/aws/lambda/smart-fhir-service-dev-fhirServer7884A170-4dPkO6El2pLG"                                                                                                                                                              |                                  |
+|               |          | logStreamName                          | Log stream name                                                                                                  | "2023/01/17/[$LATEST]7b5e5e7edb1443dfa16bcc789bf41321"                                                                                                                                                                            |                                  |
+|               |          | domainName                             | The url of the fhir works deployment                                                                             | "domain.execute-api.us-east-1.amazonaws.com"                                                                                                                                                                                      |                                  |
+|               |          | user-agent                             | The agent the user uses to make request                                                                          | "PostmanRuntime/7.30.0"                                                                                                                                                                                                           |                                  |
+|               |          | sourceIp                               | Ip address where the request is made                                                                             | "encrypted"                                                                                                                                                                                                                       | ip address                       |
+| how           |          | awsRequestId                           | Integration.requestId                                                                                            | "4f193f8f-a213-4767-a03b-9b8c736c757a" }                                                                                                                                                                                          |                                  |
+|               |          | userIdentity.Jti                       | The unique token identifier                                                                                      | "AT.-WlAh-NEcSdoxIwpqeE6KswC0PLA-dgAJZjlAoXsMDQ"                                                                                                                                                                                  |                                  |
+| requestOther  | request  | stage                                  | Stage environment                                                                                                | "dev"                                                                                                                                                                                                                             |                                  |
+| responseOther | response | launch_response patient                | Resource url for the patient that was selected from the list during the auth flow (smart-deployment only)        | "https://domain.execute-api.us-east-1.amazonaws.com/dev/Patient/encrypted"                                                                                                                                                        | resourceId                       |
+|               |          | iss                                    | The issuer of the token. This value must be the same as the client_id of the application that you are accessing. | "https://dev-44142793.okta.com/oauth2/aus7j8ulrovP5Ppzb5d7"                                                                                                                                                                       |                                  |
+|               |          | aud                                    | The dev URL of the fhir works that you're trying to access using the JWT to authenticate                         | "https://domain.execute-api.us-east-1.amazonaws.com/dev"                                                                                                                                                                          |                                  |
+|               |          | scp                                    | The scopes from the original request (smart-deployment only)                                                     | [ "fhirUser", "patient/*.*", "launch/patient", "profile", "user/*.*", "patient_selection", "openid" ]                                                                                                                             |                                  |
+|               |          | iat                                    | When the token was issued                                                                                        | "2023-01-17T15:43:56.000Z"                                                                                                                                                                                                        |                                  |
+|               |          | exp                                    | The token expiration time                                                                                        | "2023-01-17T16:43:56.000Z"                                                                                                                                                                                                        |                                  |
+|               |          | auth_time                              | When the authentication occurs                                                                                   | "2023-02-17T15:43:02.000Z"                                                                                                                                                                                                        |                                  |
 
 ## Enabling Secure Logging
 
@@ -99,7 +86,7 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 
 ## Searching logs
 
-### **Find logs by time period**
+### Find logs by time period
 
 Ideally, you should search or localize API Gateway base on the time stamp to figure out the extended request ID. These steps will use the `api-gateway-execution-logs` log group as the example.
 
@@ -110,7 +97,7 @@ Ideally, you should search or localize API Gateway base on the time stamp to fig
 5. Choose the Log stream name once you find the log stream you want to view.
 6. In the log stream details, you can find the request status and the extended request id which is `AWS Integration Endpoint RequestId`.
 
-### **Search extended request id in lambda logs to get to who/what/when log**
+### Search extended request id in lambda logs to get to who/what/when log
 
 1. Search the `fhirserver` **** log group (Lambda function log group). It will be `/aws/lambda/${stackname}-fhirServer${UniqueId}` . The uniqueID is randomly generated. 
 2. Choose the **log group name**.
@@ -118,7 +105,7 @@ Ideally, you should search or localize API Gateway base on the time stamp to fig
 4. Enter the request id in double quotations.
 5. Choose **Display**, and then choose **View in plain text**. **** You will see the log details for the following categories: `logMetadata/who/what/when/where/how/requestOther/responseOther`
 
-> Note  
+> **Note**  
 > You can use the **jti** key found the in how attribute to correlate jti in IDP. For example, in Okta, you can open the system log page found under Reports to view system logs in Okta using **jti**. You can download the CSV and search the file to find the corresponding jti log.
 
 
