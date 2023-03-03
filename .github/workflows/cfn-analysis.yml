@@ -23,14 +23,24 @@ jobs:
       
       - name: Base Action
         uses: ./.github/actions/baseAction
-      - name: synthesize cdk template for cfn for analysis
+      - name: synthesize smart cdk template for cfn for analysis
         run: |
           cd ./solutions/smart-deployment
           node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
-      - name: cfn_nag on cdk template
+      - name: cfn_nag on smart cdk template
         uses: stelligent/cfn_nag@master
         with:
           input_path: ./solutions/smart-deployment/cdk.out/smart-fhir-service-dev.template.json
           extra_args:  --blacklist-path ./solutions/smart-deployment/cdk-nag-deny-list.yaml --fail-on-warnings
+      - name: synthesize fwoa cdk template for cfn for analysis
+        run: |
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js cdk synth
+      - name: cfn_nag on fwoa cdk template
+        uses: stelligent/cfn_nag@master
+        with:
+          input_path: ./solutions/deployment/cdk.out/fhir-service-dev.template.json
+          extra_args:  --blacklist-path ./solutions/deployment/cdk-nag-deny-list.yaml --fail-on-warnings
           
+           
           

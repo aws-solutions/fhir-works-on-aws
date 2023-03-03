@@ -146,10 +146,6 @@ export default class FhirWorksStack extends Stack {
       {
         id: 'HIPAA.Security-S3DefaultEncryptionKMS',
         reason: 'bucket is encrypted by S3 Managed enryption'
-      },
-      {
-        id: 'W35',
-        reason: 'this is the logs bucket'
       }
     ]);
 
