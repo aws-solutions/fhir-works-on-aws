@@ -59,5 +59,6 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "stackname": "fhir-works-on-aws-utilities"
 }
