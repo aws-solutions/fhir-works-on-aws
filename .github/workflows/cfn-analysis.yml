@@ -27,28 +27,40 @@ jobs:
         run: |
           cd ./fwoa-utilities/javaHapiValidatorLambda
           mvn --batch-mode --update-snapshots --no-transfer-progress clean install
-      
-      - name: Download US Core IG and Compile IGs
-      # NOTE if updating the IG version. Please see update implementationGuides.test.ts test too.
+
+      # for compile igs we would need to use node v16 due to ERR_PACKAGE_PATH_NOT_EXPORTED in elasticsearch package
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Download US Core IG
+        # NOTE if updating the IG version. Please see update implementationGuides.test.ts test too.
         run: |
           cd ./solutions/deployment
           mkdir -p implementationGuides
           curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
-          ../../common/scripts/install-run-rushx.js compile-igs
-
-      - name: synthesize smart cdk template for cfn for analysis
+      
+      - name: Compile IGs
         run: |
-          cd ./solutions/smart-deployment
+          npm install -g ts-node
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js compile-igs
+
+      - name: synthesize deployment and smart cdk template for cfn for analysis
+        run: |
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js cdk synth -c enableSubscriptions=true -c useHapiValidator=true --all
+      
+          cd ../smart-deployment
           node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' -c enableSubscriptions=true -c useHapiValidator=true --all --require-approval=never
+      
       - name: cfn_nag on smart cdk template
         uses: stelligent/cfn_nag@master
         with:
           input_path: ./solutions/smart-deployment/cdk.out/smart-fhir-service-dev.template.json
           extra_args:  --blacklist-path ./solutions/smart-deployment/cdk-nag-deny-list.yaml --fail-on-warnings
-      - name: synthesize fwoa cdk template for cfn for analysis
-        run: |
-          cd ./solutions/deployment
-          node ../../common/scripts/install-run-rushx.js cdk synth -c enableSubscriptions=true -c useHapiValidator=true --all
+      
       - name: cfn_nag on fwoa cdk template
         uses: stelligent/cfn_nag@master
         with:

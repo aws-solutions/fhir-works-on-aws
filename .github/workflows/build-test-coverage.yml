@@ -3,11 +3,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-name: Build-and-test
+name: Build-test-coverage
 on: ['pull_request']
 
 jobs:
-  build-and-test:
+  build-test-coverage:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
