@@ -3,7 +3,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-name: Build-test-coverage
+name: Build, test, and test-coverage
 on: ['pull_request']
 
 jobs:
