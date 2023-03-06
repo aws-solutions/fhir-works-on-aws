@@ -22,7 +22,7 @@
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/*",
     "compile-igs": "ts-node scripts/compile-igs.ts",
     "deploy": "cdk deploy --outputs-file Info_Output.log",
-    "int-test": "jest test --test-path-pattern=src/integration-tests/*",
+    "int-test": "jest test --testPathPattern=integration-test/* --runInBand",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
@@ -32,6 +32,19 @@
     "test": "heft test --clean --no-build 2>&1 && rushx pkg-json-lint",
     "test-coverage": "jest --coverage --testPathPattern=src/*",
     "watch": "tsc -w"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".test.ts",
+    "testRunner": "jest-circus/runner",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
   },
   "resolutions": {
     "@types/express-serve-static-core": "^4.17.21",

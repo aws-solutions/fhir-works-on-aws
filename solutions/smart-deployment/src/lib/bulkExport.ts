@@ -260,7 +260,7 @@ export default class BulkExportResources {
                 pythonVersion: '3',
             },
             executionProperty: {
-                maxConcurrentRuns: multiTenancyEnabled ? 30 : 2,
+                maxConcurrentRuns: multiTenancyEnabled ? 30 : 3,
             },
             defaultArguments: {
                 '--TempDir': this.bulkExportResultsBucket.s3UrlForObject('/temp'),
