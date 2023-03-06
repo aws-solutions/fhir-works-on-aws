@@ -10,7 +10,6 @@ import { SubscriptionEndpoint } from '@aws/fhir-works-on-aws-routing/lib/router/
  * When multi-tenancy is enabled you must specify the tenantId associated with each endpoint.
  */
 const getAllowListedSubscriptionEndpoints = async (): Promise<SubscriptionEndpoint[]> => {
-  const testEndpoint: RegExp = /^https:\/\/\w+\.execute-api\.[\w-]+\.amazonaws.com\/\w+/;
   return [];
   // [
   // Schema:
