@@ -25,7 +25,7 @@ jobs:
       - name: synthesize smart cdk template for cfn for analysis
         run: |
           cd ./solutions/smart-deployment
-          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' --require-approval=never
+          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' -c enableSubscriptions=true -c useHapiValidator=true --all --require-approval=never
       - name: cfn_nag on smart cdk template
         uses: stelligent/cfn_nag@master
         with:
@@ -34,7 +34,7 @@ jobs:
       - name: synthesize fwoa cdk template for cfn for analysis
         run: |
           cd ./solutions/deployment
-          node ../../common/scripts/install-run-rushx.js cdk synth
+          node ../../common/scripts/install-run-rushx.js cdk synth -c enableSubscriptions=true -c useHapiValidator=true --all
       - name: cfn_nag on fwoa cdk template
         uses: stelligent/cfn_nag@master
         with:
