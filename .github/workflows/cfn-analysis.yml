@@ -9,9 +9,6 @@ on:
   pull_request:
     branches:
       - develop
-    paths:
-      - '**.yaml'
-      - '**.yml'
 
 jobs:
   cfn-analyze:
