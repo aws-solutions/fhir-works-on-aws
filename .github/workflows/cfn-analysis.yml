@@ -53,7 +53,7 @@ jobs:
           node ../../common/scripts/install-run-rushx.js cdk synth -c enableSubscriptions=true -c useHapiValidator=true --all
       
           cd ../smart-deployment
-          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' -c enableSubscriptions=true -c useHapiValidator=true --all --require-approval=never
+          node ../../common/scripts/install-run-rushx.js cdk synth -c issuerEndpoint='test' -c oAuth2ApiEndpoint='test' -c patientPickerEndpoint='test' -c enableSubscriptions=true -c useHapiValidator=true --all
       
       - name: cfn_nag on smart cdk template
         uses: stelligent/cfn_nag@master
