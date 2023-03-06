@@ -35,7 +35,9 @@ jobs:
           curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
       
       - name: Compile IGs
-        run: yarn run compile-igs
+        run: |
+          cd ./solutions/deployment
+          ../../common/scripts/install-run-rushx.js compile-igs
 
       - name: synthesize smart cdk template for cfn for analysis
         run: |
