@@ -107,8 +107,8 @@ create_template_json()
 
     # Rename all *.template.json files to *.template
     echo "Rename fhir stack template.json to fhir-works-on-aws.template"
-    for f in fhir-service-*.template.json; do        
-        mv -- "$f" "fhir-works-on-aws.template"
+    for f in $template_dist_dir/fhir-service-*.template.json; do        
+        mv -- "$f" "$template_dist_dir/fhir-works-on-aws.template"
     done
     
     echo "Rename rest *.template.json to *.template"
