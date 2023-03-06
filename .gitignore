@@ -64,7 +64,6 @@ common/autoinstallers/*/.npmrc
 # Heft
 .heft
 
-/.serverless
 /.vscode
 !/.gitignore
 /build
@@ -92,8 +91,6 @@ fwoa-utilities/javaHapiValidatorLambda/*.jar
 fwoa-utilities/javaHapiValidatorLambda/*.war
 fwoa-utilities/javaHapiValidatorLambda/*.ear
 
-# Serverless directories
-fwoa-utilities/javaHapiValidatorLambda/.serverless
 fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
 
 # CDK
@@ -103,10 +100,6 @@ fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
 ##############################
 ## local Development
 ##############################
-serverless-output.yml
-serverless-output.yaml
-serverless_config.json
-
 **/lib/**/*.js
 **/lib/**/*.map
 **/lib/**/*d.ts

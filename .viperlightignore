@@ -20,10 +20,8 @@ INSTALL.md
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
-solutions/deployment/scripts/install.sh:332
 solutions/deployment/scripts/provision-user.py:26
 solutions/deployment/scripts/provision-user.py:41
-solutions/deployment/scripts/win_install.ps1:325
 solutions/smart-deployment/README.md:67
 solutions/smart-deployment/README.md:111
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
@@ -56,8 +54,6 @@ fwoa-core/authz-smart/src/smartHandler.test.ts:90
 solutions/deployment/src/integration-tests/search.test.ts:382
 solutions/deployment/src/integration-tests/search.test.ts:412
 solutions/deployment/src/integration-tests/search.test.ts:428
-solutions/smart-deployment/scripts/install.sh:338
-solutions/smart-deployment/scripts/win_install.ps1:318
 solutions/smart-deployment/src/integration-tests/search.test.ts:378
 solutions/smart-deployment/src/integration-tests/search.test.ts:408
 solutions/smart-deployment/src/integration-tests/search.test.ts:424
