@@ -13,7 +13,8 @@
     "email": "fhir-works-on-aws-dev@amazon.com",
     "url": "https://aws.amazon.com/"
   },
-  "main": "fhirWorksAppRegistry.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
