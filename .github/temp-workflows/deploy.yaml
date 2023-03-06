@@ -107,8 +107,8 @@ jobs:
       # - name: Deploy auditLogMover
       #   run: |
       #     cd auditLogMover
-      #     yarn install
-      #     serverless deploy --stage dev --region ${{ matrix.region }} --conceal
+      #     rush install
+      #     rushx deploy --stage dev --region ${{ matrix.region }} --conceal
   crucible-test:
     needs: deploy
     name: Run Crucible Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}

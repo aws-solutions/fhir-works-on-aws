@@ -14,7 +14,7 @@ import { getFhirClient, randomSubscription, sleep } from './utils';
 
 jest.setTimeout(700_000);
 
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: '.env' });
 
 const {
   SUBSCRIPTIONS_ENABLED,
