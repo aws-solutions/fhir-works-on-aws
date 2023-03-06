@@ -11,19 +11,7 @@ import { SubscriptionEndpoint } from '@aws/fhir-works-on-aws-routing/lib/router/
  */
 const getAllowListedSubscriptionEndpoints = async (): Promise<SubscriptionEndpoint[]> => {
   const testEndpoint: RegExp = /^https:\/\/\w+\.execute-api\.[\w-]+\.amazonaws.com\/\w+/;
-  return [
-    {
-      tenantId: 'tenant1',
-      endpoint: testEndpoint
-    },
-    {
-      tenantId: 'tenant2',
-      endpoint: testEndpoint
-    },
-    {
-      endpoint: testEndpoint
-    }
-  ];
+  return [];
   // [
   // Schema:
   //     {
