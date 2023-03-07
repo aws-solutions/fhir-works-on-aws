@@ -121,15 +121,15 @@ jobs:
         run: |
           gem install bundler
           bundle install
-      - name: Execute tests on CDK
+      - name: Execute Inferno tests
         env:
           SERVICE_URL: ${{ secrets[matrix.smartServiceURLSecretName]}}${{ matrix.serviceUrlSuffix }}
-          CLIENT_ID: ${{ secrets.CDK_SMART_AUTH_CLIENT_ID}}
-          CLIENT_SECRET: ${{ secrets.CDK_SMART_AUTH_CLIENT_SECRET }}
-          AUTH_ENDPOINT: ${{ secrets.CDK_SMART_AUTH_ENDPOINT }}
-          TOKEN_ENDPOINT: ${{ secrets.CDK_SMART_TOKEN_ENDPOINT}}
-          AUTH_USERNAME: ${{ secrets.CDK_SMART_AUTH_USERNAME}}
-          AUTH_PASSWORD: ${{ secrets.CDK_SMART_AUTH_PASSWORD}}
+          CLIENT_ID: ${{ secrets.SMART_AUTH_CLIENT_ID}}
+          CLIENT_SECRET: ${{ secrets.SMART_AUTH_CLIENT_SECRET }}
+          AUTH_ENDPOINT: ${{ secrets.SMART_AUTH_ENDPOINT }}
+          TOKEN_ENDPOINT: ${{ secrets.SMART_TOKEN_ENDPOINT}}
+          AUTH_USERNAME: ${{ secrets.SMART_AUTH_USERNAME}}
+          AUTH_PASSWORD: ${{ secrets.SMART_AUTH_PASSWORD}}
         run: |
           cp fhir-works-example.json fhir-works.json
           sed -i -e "s#SERVER_ENDPOINT#$SERVICE_URL#g" fhir-works.json
