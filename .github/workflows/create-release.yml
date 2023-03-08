@@ -59,7 +59,7 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
         source_branch: ${{ needs.create-release-branch.outputs.source_branch }}
-        destination_branch: "main"
+        destination_branch: main
         pr_title: release-${{ steps.date.outputs.date }}
         pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
         pr_label: "auto-release-pr"
@@ -80,6 +80,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
+      - name: Temporarily disable branch protection on main
+        uses: octokit/request-action@v2.x
+        with:
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
       - name: merge release branch pr to main
         uses: octokit/request-action@v2.x
         with:
@@ -89,7 +99,7 @@ jobs:
           pull_number: ${{ needs.create-release-branch-pr-to-main.outputs.pr_number }}
           merge_method: 'merge'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: disable merge commits
         uses: octokit/request-action@v2.x
@@ -99,5 +109,16 @@ jobs:
           owner: aws-solutions
           repo: fhir-works-on-aws
           allow_merge_commit: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+      
+      - name: Enable branch protection on main
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
+        with:
+          route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}

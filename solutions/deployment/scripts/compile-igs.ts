@@ -8,7 +8,7 @@ import { COMPILED_IGS_DIRECTORY } from '../src/implementationGuides/loadCompiled
 
 const PROJECT_DIR = join(__dirname, '..');
 
-function parseCmdOptions() {
+function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
     .usage('Usage: $0 [--ignoreVersion, -i ] [--igPath, -p IG pack directory] [--outputDir, -o output ]')
     .describe(

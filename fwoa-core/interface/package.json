@@ -18,7 +18,7 @@
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
-    "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* lib/*",
+    "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
     "lint-fix": "eslint . --fix",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",

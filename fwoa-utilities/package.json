@@ -13,11 +13,12 @@
     "email": "fhir-works-on-aws-dev@amazon.com",
     "url": "https://aws.amazon.com/"
   },
-  "main": "fhirWorksAppRegistry.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
-    "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* lib/*",
+    "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
     "lint-fix": "eslint . --fix",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../.npmpackagejsonlintrc.json .",
