@@ -19,12 +19,6 @@ FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/s
 rushx deploy -c enableSubscriptions=true
 ```
 
-Or with Serverless (LEGACY),
-
-```bash
-serverless deploy --enableSubscriptions true
-```
-
 > **Note**  
 > Enabling subscriptions incurs a cost even if there are no active subscriptions. It is recommended to only enable it if you intend to use it.
 
