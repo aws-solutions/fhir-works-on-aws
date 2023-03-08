@@ -1,8 +1,6 @@
 name: (SMART) Unit Tests, Deploy, Integration Test periodically
 on:
   pull_request:
-    branches:
-      - 'jay/Workflow-run-integ-inferno-tests-monthly'
     types: [opened, synchronize, edited, reopened]
 
 env:
