@@ -1,10 +1,9 @@
 name: (SMART) Unit Tests, Deploy, Integration Test periodically
 on:
-  push:
+  pull_request:
     branches:
-      - stage
-    schedule:
-      - cron: '0 0 1,15 * *'
+      - 'jay/Workflow-run-integ-inferno-tests-monthly'
+    types: [opened, synchronize, edited, reopened]
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.SMART_AWS_ACCESS_KEY_ID }}
