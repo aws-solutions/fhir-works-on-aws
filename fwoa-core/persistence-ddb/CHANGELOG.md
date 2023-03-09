@@ -1,165 +1,234 @@
-# Changelog
+# Change Log - @aws/fhir-works-on-aws-persistence-ddb
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
 
-## [3.12.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.11.0...v3.12.0) (2022-08-21)
+## 4.0.0
 
-### Features
+Mon, 06 Mar 2023 14:22:44 GMT
 
-- Issue 674 added support for up to 100 items in a FHIR transaction ([#153](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/153)) ([32242ce](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/32242ce1fa6315229b00efd67928384466ac3d5e))
+### Breaking changes
 
-## [3.11.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.10.1...v3.11.0) (2022-04-06)
+- Remove allowedResourceTypes from bulk export
 
-### Features
+## 3.12.0
 
-- add Batch Bundle support ([#144](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/144)) ([dc17145](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/dc17145ebd73eba2c6fe9fe519263f92617ce493))
+Sun, 21 August 2022 14:22:44 GMT
 
-### [3.10.1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.10.0...v3.10.1) (2022-03-07)
+### Minor changes
 
-### Bug Fixes
+- - Issue 674 added support for up to 100 items in a FHIR transaction ([#153](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/153)) ([32242ce](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/32242ce1fa6315229b00efd67928384466ac3d5e))
 
-- fix update query for Subscriptions ([#142](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/142)) ([3c41f05](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/3c41f0534fb5cf99ce0ecce7ca27b34793154226))
+## 3.11.0
 
-## [3.10.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.9.0...v3.10.0) (2022-03-03)
+Wed, 06 April 2022 14:22:44 GMT
 
-### Features
+### Minor changes
 
-- add support for FHIR Subscriptions ([#138](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/138)) ([f73ed96](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/f73ed96ffb0f4ca9886a96e9049530ce9a008040)), closes [#131](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/131) [#132](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/132) [#135](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/135) [#139](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/139) [#140](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/140)
+- - add Batch Bundle support ([#144](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/144)) ([dc17145](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/dc17145ebd73eba2c6fe9fe519263f92617ce493))
 
-## [3.9.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.8.2...v3.9.0) (2021-10-13)
+## 3.10.1
 
-### Features
+Mon, 07 March 2022 14:22:44 GMT
 
-- pass jobOwnerId param to bulk export job ([#124](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/124)) ([85a5912](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/85a59129b293d858f29189dda9281fe9e7addf2e))
-- support custom bulk export results URLs ([#123](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/123)) ([37e3473](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/37e34732817d5053e9a3f57d69ed16e63147c979))
+### Patches
 
-### [3.8.2](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.8.1...v3.8.2) (2021-09-30)
+- - fix update query for Subscriptions ([#142](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/142)) ([3c41f05](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/3c41f0534fb5cf99ce0ecce7ca27b34793154226))
 
-### [3.8.1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.8.0...v3.8.1) (2021-09-17)
+## 3.10.0
 
-### Bug Fixes
+Thu, 03 March 2022 14:22:44 GMT
 
-- have bulk export return the correct content type ([#112](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/112)) ([bbf22ae](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/bbf22ae94bf03d843966d8b62c9aeee5410e7bf7))
+### Minor changes
 
-## [3.8.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.7.0...v3.8.0) (2021-08-30)
+- - add support for FHIR Subscriptions ([#138](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/138)) ([f73ed96](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/f73ed96ffb0f4ca9886a96e9049530ce9a008040)), closes [#131](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/131) [#132](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/132) [#135](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/135) [#139](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/139) [#140](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/140)
 
-### Features
+## 3.9.0
 
-- add config options to DdbToEsSync ([#108](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/108)) ([f9c9414](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/f9c9414a326f2e458b4e1c82ad29a694facee70e))
+Wed, 13 October 2021 14:22:44 GMT
 
-### Bug Fixes
+### Minor changes
 
-- reroute locking errors from server errors to conflict errors where applicable ([#102](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/102)) ([fbe19c7](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/fbe19c75acaa7b8cf5777578aad83b778e93579f))
+- - pass jobOwnerId param to bulk export job ([#124](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/124)) ([85a5912](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/85a59129b293d858f29189dda9281fe9e7addf2e))
+- - support custom bulk export results URLs ([#123](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/123)) ([37e3473](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/37e34732817d5053e9a3f57d69ed16e63147c979))
 
-## [3.7.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.6.1...v3.7.0) (2021-08-17)
+## 3.8.2
 
-### Features
+Thu, 30 September 2021 14:22:44 GMT
 
-- implement multi-tenancy and group export ([#106](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/106)) ([860e27d](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/860e27dac6711ff0b8998d4ab43e983304effa59)), closes [#87](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/87) [#86](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/86) [#91](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/91) [#90](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/90) [#94](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/94) [#98](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/98) [#100](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/100)
+_Version update only_
 
-### [3.6.1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.6.0...v3.6.1) (2021-08-02)
+## 3.8.1
 
-### Bug Fixes
+Fri, 17 September 2021 14:22:44 GMT
 
-- change ES writes to use Bulk APIs ([#97](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/97)) ([7eee06e](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/7eee06e5955bb980abd17dced35a86236ea10189))
+### Patches
 
-## [3.6.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.5.0...v3.6.0) (2021-07-09)
+- - have bulk export return the correct content type ([#112](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/112)) ([bbf22ae](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/bbf22ae94bf03d843966d8b62c9aeee5410e7bf7))
 
-### Features
+## 3.8.0
 
-- Adding support for versioned reference links ([#88](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/88)) ([acef8d1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/acef8d17b934214e49b47bff0ddc438acedf99e8))
+Mon, 30 August 2021 14:22:44 GMT
 
-## [3.5.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.4.0...v3.5.0) (2021-06-11)
+### Minor changes
 
-### Features
+- - add config options to DdbToEsSync ([#108](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/108)) ([f9c9414](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/f9c9414a326f2e458b4e1c82ad29a694facee70e))
 
-- add alias for new and existing index ([#83](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/83)) ([af637d4](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/af637d442ca328507ce2dcf457f173c07bb8e3aa))
+### Patches
 
-## [3.4.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.3.4...v3.4.0) (2021-06-01)
+- - reroute locking errors from server errors to conflict errors where applicable ([#102](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/102)) ([fbe19c7](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/fbe19c75acaa7b8cf5777578aad83b778e93579f))
 
-### Features
+## 3.7.0
 
-- support update as create in bundle service ([#80](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/80)) ([bf1366d](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/bf1366dd82d08afe9eea862c792518505ed8bf54))
+Tue, 17 August 2021 14:22:44 GMT
 
-### Bug Fixes
+### Minor changes
 
-- initialize ES client only once ([#79](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/79)) ([b6e6b80](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/b6e6b8097cec335ec12a4e28b822387615add5e5))
+- - implement multi-tenancy and group export ([#106](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/106)) ([860e27d](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/860e27dac6711ff0b8998d4ab43e983304effa59)), closes [#87](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/87) [#86](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/86) [#91](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/91) [#90](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/90) [#94](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/94) [#98](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/98) [#100](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/100)
 
-### [3.3.4](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.3.3...v3.3.4) (2021-05-17)
+## 3.6.1
 
-### [3.3.3](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.3.2...v3.3.3) (2021-04-26)
+Mon, 02 August 2021 14:22:44 GMT
 
-### Bug Fixes
+### Patches
 
-- improve error logging for ddbToEs sync ([#68](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/68)) ([5774b34](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/5774b3428392d828132bca1b611f02b5c6479d48))
+- - change ES writes to use Bulk APIs ([#97](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/97)) ([7eee06e](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/7eee06e5955bb980abd17dced35a86236ea10189))
 
-### [3.3.2](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.3.1...v3.3.2) (2021-04-14)
+## 3.6.0
 
-### Bug Fixes
+Fri, 09 July 2021 14:22:44 GMT
 
-- return the newly create meta field from bundle processer ([#65](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/65)) ([a2b5206](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/a2b5206d353c25d464e5290d08d375cb1b6d806e))
+### Minor changes
 
-### [3.3.1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.3.0...v3.3.1) (2021-04-09)
+- - Adding support for versioned reference links ([#88](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/88)) ([acef8d1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/acef8d17b934214e49b47bff0ddc438acedf99e8))
 
-### Bug Fixes
+## 3.5.0
 
-- don't overwrite meta param in Resource update/create ([#62](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/62)) ([e913c71](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/e913c711c842d922a9aa1902b6705d240af6ad68))
-- Only add customUserAgent when code is running on AWS, not when code is running locally ([#61](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/61)) ([c304ffd](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/c304ffd5b1a5d7bf1f9dc5bc2e1088859f4a4968))
+Fri, 11 June 2021 14:22:44 GMT
 
-## [3.3.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.2.1...v3.3.0) (2021-03-26)
+### Minor changes
 
-### Features
+- - add alias for new and existing index ([#83](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/83)) ([af637d4](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/af637d442ca328507ce2dcf457f173c07bb8e3aa))
 
-- add support for Update as Create ([#57](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/57)) ([14a254e](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/14a254e7c290b459660506c637de4601a0c36aa8))
+## 3.4.0
 
-### [3.2.1](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.2.0...v3.2.1) (2021-02-08)
+Tue, 01 June 2021 14:22:44 GMT
 
-### Bug Fixes
+### Minor changes
 
-- match on resourceType as well as id when executing Read/VRead/DeleteVersionedRes operations ([#51](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/51)) ([4f433d2](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/4f433d2eacdd81c25bdc6e5a2d5e9ea755a33204))
-- resolve vid and meta attribute mismatch on concurrent Update requests ([#53](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/53)) ([2ecc1cd](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/2ecc1cd894c9b10b984598f654654a92a1ae5c50))
+- - support update as create in bundle service ([#80](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/80)) ([bf1366d](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/bf1366dd82d08afe9eea862c792518505ed8bf54))
 
-## [3.2.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.1.0...v3.2.0) (2021-01-27)
+### Patches
 
-### Features
+- - initialize ES client only once ([#79](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/79)) ([b6e6b80](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/b6e6b8097cec335ec12a4e28b822387615add5e5))
 
-- Change ES mapping for keyword parameters ([#48](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/48)) ([1a72433](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/1a72433817752e707af9ea52508b083415149ecc))
+## 3.3.4
 
-## [3.1.0](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/compare/v3.0.0...v3.1.0) (2021-01-20)
+Mon, 17 May 2021 14:22:44 GMT
 
-### Features
+_Version update only_
 
-- Add reference to data model ([#44](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/44)) ([7a74313](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/7a74313e88b8620346791d865b35787914889306))
+## 3.3.3
 
-### Bug Fixes
+M, 26 April 2021 14:22:44 GMT
 
-- We no longer need to store presignedS3Urls as they are now dynamically generated when a user request for the S3 files ([#42](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/42)) ([823fb57](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/823fb573e29a37ba2c83f1c4c33e2cdd1cfef449))
+### Patches
 
-## [3.0.0] - 2020-11-10
+- - improve error logging for ddbToEs sync ([#68](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/68)) ([5774b34](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/5774b3428392d828132bca1b611f02b5c6479d48))
 
-### Added
+## 3.3.2
 
-- Support for DB export by implementing BulkDataAccess interfaces in `fhir-works-on-aws-interface` v3.0.0
+Wed, 14 April 2021 14:22:44 GMT
 
-## [2.0.1] - 2020-10-31
+### Patches
 
-- chore: Upgrade fhir-works-on-aws-interface dependency
+- - return the newly create meta field from bundle processer ([#65](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/65)) ([a2b5206](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/a2b5206d353c25d464e5290d08d375cb1b6d806e))
 
-## [2.0.0] - 2020-08-31
+## 3.3.1
 
-### Added
+Fri, 09 April 2021 14:22:44 GMT
 
-- feat: Assume that the Resource DDB sort key is a number not a String
-  - BREAKING CHANGE: This change will not be successful if sort key is still a String
+### Patches
 
-## [1.1.0] - 2020-08-31
+- - don't overwrite meta param in Resource update/create ([#62](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/62)) ([e913c71](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/e913c711c842d922a9aa1902b6705d240af6ad68))
+- - Only add customUserAgent when code is running on AWS, not when code is running locally ([#61](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/61)) ([c304ffd](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/c304ffd5b1a5d7bf1f9dc5bc2e1088859f4a4968))
 
-### Added
+## 3.3.0
 
-- feat: X-Ray integration
+Fri, 26 March 2021 14:22:44 GMT
 
-## [1.0.0] - 2020-08-31
+### Minor changes
 
-### Added
+- - add support for Update as Create ([#57](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/57)) ([14a254e](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/14a254e7c290b459660506c637de4601a0c36aa8))
 
-- Initial launch! :rocket:
+## 3.2.1
+
+Mon, 08 February 2021 14:22:44 GMT
+
+### Patches
+
+- - match on resourceType as well as id when executing Read/VRead/DeleteVersionedRes operations ([#51](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/51)) ([4f433d2](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/4f433d2eacdd81c25bdc6e5a2d5e9ea755a33204))
+- - resolve vid and meta attribute mismatch on concurrent Update requests ([#53](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/53)) ([2ecc1cd](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/2ecc1cd894c9b10b984598f654654a92a1ae5c50))
+
+## 3.2.0
+
+Wed, 27 January 2021 14:22:44 GMT
+
+### Minor changes
+
+- - Change ES mapping for keyword parameters ([#48](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/48)) ([1a72433](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/1a72433817752e707af9ea52508b083415149ecc))
+
+## 3.1.0
+
+Wed, 20 January 2021 14:22:44 GMT
+
+### Minor changes
+
+- - Add reference to data model ([#44](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/44)) ([7a74313](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/7a74313e88b8620346791d865b35787914889306))
+
+### Patches
+
+- - We no longer need to store presignedS3Urls as they are now dynamically generated when a user request for the S3 files ([#42](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/issues/42)) ([823fb57](https://github.com/awslabs/fhir-works-on-aws-persistence-ddb/commit/823fb573e29a37ba2c83f1c4c33e2cdd1cfef449))
+
+## 3.0.0
+
+Tue, 10 November 2020 14:22:44 GMT
+
+### Breaking changes
+
+- - Support for DB export by implementing BulkDataAccess interfaces in `fhir-works-on-aws-interface` v3.0.0
+
+## 2.0.1
+
+Sat, 31 October 2020 14:22:44 GMT
+
+### Patches
+
+- - chore: Upgrade fhir-works-on-aws-interface dependency
+
+## 2.0.0
+
+Mon, 31 August 2020 14:22:44 GMT
+
+### Breaking changes
+
+- - BREAKING CHANGE: This change will not be successful if sort key is still a String
+
+### Minor changes
+
+- - feat: Assume that the Resource DDB sort key is a number not a String
+
+## 1.1.0
+
+Mon, 31 August 2020 14:22:44 GMT
+
+### Minor changes
+
+- - feat: X-Ray integration
+
+## 1.0.0
+
+Mon, 31 August 2020 14:22:44 GMT
+
+### Breaking changes
+
+- - Initial launch! :rocket:
