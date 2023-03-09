@@ -102,13 +102,6 @@ jobs:
         run: |
           cd ./solutions/deployment
           node ../../common/scripts/install-run-rushx.js deploy -c region=${{ matrix.region }} -c useHapiValidator=true -c enableMultiTenancy=${{ matrix.enableMultiTenancy }} -c enableSubscriptions=true --all --require-approval never
-
-      # TODO: add auditLogMover
-      # - name: Deploy auditLogMover
-      #   run: |
-      #     cd auditLogMover
-      #     rush install
-      #     rushx deploy --stage dev --region ${{ matrix.region }} --conceal
   crucible-test:
     needs: deploy
     name: Run Crucible Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
