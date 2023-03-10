@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { clone, generateMeta } from '@aws/fhir-works-on-aws-interface';
+import { BadRequestError, clone, generateMeta } from '@aws/fhir-works-on-aws-interface';
 import flatten from 'flat';
 import { DDB_HASH_KEY_SEPARATOR, SEPARATOR } from '../constants';
 import DOCUMENT_STATUS from './documentStatus';
@@ -17,10 +17,11 @@ export const INTERNAL_ID_FIELD = '_id';
 export const SUBSCRIPTION_FIELD = '_subscriptionStatus';
 
 export const buildHashKey = (id: string, tenantId?: string): string => {
-  if (tenantId) {
-    return `${tenantId}|${id}`;
+  const hashKey = tenantId ? `${tenantId}|${id}` : id;
+  if (Buffer.byteLength(hashKey, 'utf8') >= 2048) {
+    throw new BadRequestError('id length is too long');
   }
-  return id;
+  return hashKey;
 };
 
 export class DynamoDbUtil {
