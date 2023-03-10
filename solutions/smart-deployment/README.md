@@ -195,22 +195,11 @@ FHIR Works on AWS assumes the SMART authorization server is set-up outside of th
 
 Binary resources are FHIR resources that consist of binary/unstructured data of any kind. This could be X-rays, PDF, video or other files. This implementation of the FHIR API has a dependency on the API Gateway and Lambda services, which currently have limitations in request/response sizes of 10MB and 6MB respectively. This size limitation forced us to look for a workaround. The workaround is a hybrid approach of storing a Binary resource’s _metadata_ in DynamoDB and using S3's get/putPreSignedUrl APIs. So in your requests to the FHIR API you will store/get the Binary's _metadata_ from DynamoDB and in the response object it will also contain a pre-signed S3 URL, which should be used to interact directly with the Binary file.
 
-### Testing Bulk Data Export
+### Additional Documentation
 
-Bulk Export allows you to export all of your data from DDB to S3. We currently support [System Level](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---system-level-export) and [Group](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---group-of-patients) export.
-The `system/*.read` scope is required for Group export. System export works with either `system/*.read` or `user/*.read`
-
-For more information about Bulk Export, please refer to this [implementation guide](https://hl7.org/fhir/uv/bulkdata/export/index.html).
-
-The easiest way to test this feature on FHIR Works on AWS is to make API requests using the provided [FHIR_SMART.postman_collection.json](./postman/FHIR_SMART.postman_collection.json).
-
-1. In the collection, under the "Export" folder, use `GET System Export` or `GET Group export` request to initiate an Export request.
-2. In the response, check the header field `Content-Location` for a URL. The url should be in the format `<base-url>/$export/<jobId>`.
-3. To get the status of the export job, in the "Export" folder used the `GET System Job Status` request. That request will ask for the `jobId` value from step 2.
-4. Check the response that is returned from `GET System Job Status`. If the job is in progress you will see a header with the field `x-progress: in-progress`. Keep polling that URL until the job is complete. Once the job is complete you'll get a JSON body with presigned S3 URLs of your exported data. You can download the exported data using those URLs.
-
-> **Note**  
-> To cancel an export job that is in progress, you can use the `Cancel Export Job` request in the "Export" folder in POSTMAN collections.
+[Multi-tenancy](./USING_MULTI_TENANCY.md): Multi-tenancy allows a single `fhir-works-on-aws` stack to serve as multiple FHIR servers for different tenants.
+[Subscriptions](./USING_SUBSCRIPTIONS.md): FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/subscription.html
+[BulkDataExport](./USING_BULK_DATA_EXPORT.md): Bulk Export allows you to export data from DDB to S3.
 
 #### Postman (recommended)
 
