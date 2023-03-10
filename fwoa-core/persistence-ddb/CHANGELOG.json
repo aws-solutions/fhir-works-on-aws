@@ -4,7 +4,7 @@
     {
       "version": "3.12.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.12.0",
-      "date": "Sun, 21 August 2022 14:22:44 GMT",
+      "date": "2022-08-21",
       "comments": {
         "minor": [
           {
@@ -16,7 +16,7 @@
     {
       "version": "3.11.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.11.0",
-      "date": "Wed, 06 April 2022 14:22:44 GMT",
+      "date": "2022-04-06",
       "comments": {
         "minor": [
           {
@@ -28,7 +28,7 @@
     {
       "version": "3.10.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.10.1",
-      "date": "Mon, 07 March 2022 14:22:44 GMT",
+      "date": "2022-03-07",
       "comments": {
         "patch": [
           {
@@ -40,7 +40,7 @@
     {
       "version": "3.10.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.10.0",
-      "date": "Thu, 03 March 2022 14:22:44 GMT",
+      "date": "2022-03-03",
       "comments": {
         "minor": [
           {
@@ -52,7 +52,7 @@
     {
       "version": "3.9.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.9.0",
-      "date": "Wed, 13 October 2021 14:22:44 GMT",
+      "date": "2021-10-13",
       "comments": {
         "minor": [
           {
@@ -67,19 +67,13 @@
     {
       "version": "3.8.2",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.8.2",
-      "date": "Thu, 30 September 2021 14:22:44 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "date": "2021-09-30",
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "3.8.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.8.1",
-      "date": "Fri, 17 September 2021 14:22:44 GMT",
+      "date": "2021-09-17",
       "comments": {
         "patch": [
           {
@@ -91,7 +85,7 @@
     {
       "version": "3.8.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.8.0",
-      "date": "Mon, 30 August 2021 14:22:44 GMT",
+      "date": "2021-08-30",
       "comments": {
         "minor": [
           {
@@ -108,7 +102,7 @@
     {
       "version": "3.7.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.7.0",
-      "date": "Tue, 17 August 2021 14:22:44 GMT",
+      "date": "2021-08-17",
       "comments": {
         "minor": [
           {
@@ -120,7 +114,7 @@
     {
       "version": "3.6.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.6.1",
-      "date": "Mon, 02 August 2021 14:22:44 GMT",
+      "date": "2021-08-02",
       "comments": {
         "patch": [
           {
@@ -132,7 +126,7 @@
     {
       "version": "3.6.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.6.0",
-      "date": "Fri, 09 July 2021 14:22:44 GMT",
+      "date": "2021-07-09",
       "comments": {
         "minor": [
           {
@@ -144,7 +138,7 @@
     {
       "version": "3.5.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.5.0",
-      "date": "Fri, 11 June 2021 14:22:44 GMT",
+      "date": "2021-06-11",
       "comments": {
         "minor": [
           {
@@ -156,7 +150,7 @@
     {
       "version": "3.4.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.4.0",
-      "date": "Tue, 01 June 2021 14:22:44 GMT",
+      "date": "2021-06-01",
       "comments": {
         "minor": [
           {
@@ -173,19 +167,13 @@
     {
       "version": "3.3.4",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.4",
-      "date": "Mon, 17 May 2021 14:22:44 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "date": "2021-05-17",
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "3.3.3",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.3",
-      "date": "M, 26 April 2021 14:22:44 GMT",
+      "date": "2021-04-26",
       "comments": {
         "patch": [
           {
@@ -197,7 +185,7 @@
     {
       "version": "3.3.2",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.2",
-      "date": "Wed, 14 April 2021 14:22:44 GMT",
+      "date": "2021-04-14",
       "comments": {
         "patch": [
           {
@@ -209,7 +197,7 @@
     {
       "version": "3.3.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.1",
-      "date": "Fri, 09 April 2021 14:22:44 GMT",
+      "date": "2021-04-09",
       "comments": {
         "patch": [
           {
@@ -224,7 +212,7 @@
     {
       "version": "3.3.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.0",
-      "date": "Fri, 26 March 2021 14:22:44 GMT",
+      "date": "2021-03-26",
       "comments": {
         "minor": [
           {
@@ -236,7 +224,7 @@
     {
       "version": "3.2.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.2.1",
-      "date": "Mon, 08 February 2021 14:22:44 GMT",
+      "date": "2021-02-08",
       "comments": {
         "patch": [
           {
@@ -251,7 +239,7 @@
     {
       "version": "3.2.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.2.0",
-      "date": "Wed, 27 January 2021 14:22:44 GMT",
+      "date": "2021-01-27",
       "comments": {
         "minor": [
           {
@@ -263,7 +251,7 @@
     {
       "version": "3.1.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.1.0",
-      "date": "Wed, 20 January 2021 14:22:44 GMT",
+      "date": "2021-01-20",
       "comments": {
         "minor": [
           {
@@ -280,7 +268,7 @@
     {
       "version": "3.0.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.0.0",
-      "date": "Tue, 10 November 2020 14:22:44 GMT",
+      "date": "2020-11-10",
       "comments": {
         "major": [
           {
@@ -292,48 +280,32 @@
     {
       "version": "2.0.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v2.0.1",
-      "date": "Sat, 31 October 2020 14:22:44 GMT",
-      "comments": {
-        "patch": [
-          {
-            "comment": "- chore: Upgrade fhir-works-on-aws-interface dependency"
-          }
-        ]
-      }
+      "date": "2020-10-31",
+      "comments": { "patch": [{ "comment": "- chore: Upgrade fhir-works-on-aws-interface dependency" }] }
     },
     {
       "version": "2.0.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v2.0.0",
-      "date": "Mon, 31 August 2020 14:22:44 GMT",
+      "date": "2020-08-31",
       "comments": {
         "major": [
           {
             "comment": "  - BREAKING CHANGE: This change will not be successful if sort key is still a String"
           }
         ],
-        "minor": [
-          {
-            "comment": "- feat: Assume that the Resource DDB sort key is a number not a String"
-          }
-        ]
+        "minor": [{ "comment": "- feat: Assume that the Resource DDB sort key is a number not a String" }]
       }
     },
     {
       "version": "1.1.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v1.1.0",
-      "date": "Mon, 31 August 2020 14:22:44 GMT",
-      "comments": {
-        "minor": [
-          {
-            "comment": "- feat: X-Ray integration"
-          }
-        ]
-      }
+      "date": "2020-08-31",
+      "comments": { "minor": [{ "comment": "- feat: X-Ray integration" }] }
     },
     {
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v1.0.0",
-      "date": "Mon, 31 August 2020 14:22:44 GMT",
+      "date": "2020-08-31",
       "comments": {}
     }
   ]

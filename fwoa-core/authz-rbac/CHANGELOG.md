@@ -1,10 +1,10 @@
 # Change Log - @aws/fhir-works-on-aws-authz-rbac
 
-This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Mar 2023 19:30:48 GMT and should not be manually modified.
 
 ## 5.0.0
 
-Tue, 17 Aug 2021 20:22:44 GMT
+2021-08-17
 
 ### Breaking changes
 
@@ -16,13 +16,13 @@ Tue, 17 Aug 2021 20:22:44 GMT
 
 ## 4.1.1
 
-Wed, 27 Jan 2021 20:22:44 GMT
+2021-01-27
 
 _Version update only_
 
 ## 4.1.0
 
-Wed, 13 Jan 2021 20:22:44 GMT
+2021-01-13
 
 ### Minor changes
 
@@ -30,7 +30,7 @@ Wed, 13 Jan 2021 20:22:44 GMT
 
 ## 4.0.1
 
-Mon, 07 Dec 2020 20:22:44 GMT
+2020-12-07
 
 ### Patches
 
@@ -38,7 +38,7 @@ Mon, 07 Dec 2020 20:22:44 GMT
 
 ## 4.0.0
 
-Tue, 20 Oct 2020 20:22:44 GMT
+2020-10-20
 
 ### Breaking changes
 
@@ -49,7 +49,7 @@ Tue, 20 Oct 2020 20:22:44 GMT
 
 ## 3.0.0
 
-Tue, 11 Aug 2020 20:22:44 GMT
+2020-08-11
 
 ### Breaking changes
 
@@ -59,7 +59,7 @@ Tue, 11 Aug 2020 20:22:44 GMT
 
 ## 2.0.0
 
-Fri, 25 Sep 2020 20:22:44 GMT
+2020-09-25
 
 ### Breaking changes
 
@@ -67,6 +67,6 @@ Fri, 25 Sep 2020 20:22:44 GMT
 
 ## 1.0.0
 
-Tue, 31 Aug 2020 20:22:44 GMT
+2020-08-31
 
 _Initial release_

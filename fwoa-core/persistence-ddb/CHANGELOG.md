@@ -1,10 +1,10 @@
 # Change Log - @aws/fhir-works-on-aws-persistence-ddb
 
-This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Mar 2023 19:30:48 GMT and should not be manually modified.
 
 ## 3.12.0
 
-Sun, 21 August 2022 14:22:44 GMT
+2022-08-21
 
 ### Minor changes
 
@@ -12,7 +12,7 @@ Sun, 21 August 2022 14:22:44 GMT
 
 ## 3.11.0
 
-Wed, 06 April 2022 14:22:44 GMT
+2022-04-06
 
 ### Minor changes
 
@@ -20,7 +20,7 @@ Wed, 06 April 2022 14:22:44 GMT
 
 ## 3.10.1
 
-Mon, 07 March 2022 14:22:44 GMT
+2022-03-07
 
 ### Patches
 
@@ -28,7 +28,7 @@ Mon, 07 March 2022 14:22:44 GMT
 
 ## 3.10.0
 
-Thu, 03 March 2022 14:22:44 GMT
+2022-03-03
 
 ### Minor changes
 
@@ -36,7 +36,7 @@ Thu, 03 March 2022 14:22:44 GMT
 
 ## 3.9.0
 
-Wed, 13 October 2021 14:22:44 GMT
+2021-10-13
 
 ### Minor changes
 
@@ -45,13 +45,13 @@ Wed, 13 October 2021 14:22:44 GMT
 
 ## 3.8.2
 
-Thu, 30 September 2021 14:22:44 GMT
+2021-09-30
 
 _Version update only_
 
 ## 3.8.1
 
-Fri, 17 September 2021 14:22:44 GMT
+2021-09-17
 
 ### Patches
 
@@ -59,7 +59,7 @@ Fri, 17 September 2021 14:22:44 GMT
 
 ## 3.8.0
 
-Mon, 30 August 2021 14:22:44 GMT
+2021-08-30
 
 ### Minor changes
 
@@ -71,7 +71,7 @@ Mon, 30 August 2021 14:22:44 GMT
 
 ## 3.7.0
 
-Tue, 17 August 2021 14:22:44 GMT
+2021-08-17
 
 ### Minor changes
 
@@ -79,7 +79,7 @@ Tue, 17 August 2021 14:22:44 GMT
 
 ## 3.6.1
 
-Mon, 02 August 2021 14:22:44 GMT
+2021-08-02
 
 ### Patches
 
@@ -87,7 +87,7 @@ Mon, 02 August 2021 14:22:44 GMT
 
 ## 3.6.0
 
-Fri, 09 July 2021 14:22:44 GMT
+2021-07-09
 
 ### Minor changes
 
@@ -95,7 +95,7 @@ Fri, 09 July 2021 14:22:44 GMT
 
 ## 3.5.0
 
-Fri, 11 June 2021 14:22:44 GMT
+2021-06-11
 
 ### Minor changes
 
@@ -103,7 +103,7 @@ Fri, 11 June 2021 14:22:44 GMT
 
 ## 3.4.0
 
-Tue, 01 June 2021 14:22:44 GMT
+2021-06-01
 
 ### Minor changes
 
@@ -115,13 +115,13 @@ Tue, 01 June 2021 14:22:44 GMT
 
 ## 3.3.4
 
-Mon, 17 May 2021 14:22:44 GMT
+2021-05-17
 
 _Version update only_
 
 ## 3.3.3
 
-M, 26 April 2021 14:22:44 GMT
+2021-04-26
 
 ### Patches
 
@@ -129,7 +129,7 @@ M, 26 April 2021 14:22:44 GMT
 
 ## 3.3.2
 
-Wed, 14 April 2021 14:22:44 GMT
+2021-04-14
 
 ### Patches
 
@@ -137,7 +137,7 @@ Wed, 14 April 2021 14:22:44 GMT
 
 ## 3.3.1
 
-Fri, 09 April 2021 14:22:44 GMT
+2021-04-09
 
 ### Patches
 
@@ -146,7 +146,7 @@ Fri, 09 April 2021 14:22:44 GMT
 
 ## 3.3.0
 
-Fri, 26 March 2021 14:22:44 GMT
+2021-03-26
 
 ### Minor changes
 
@@ -154,7 +154,7 @@ Fri, 26 March 2021 14:22:44 GMT
 
 ## 3.2.1
 
-Mon, 08 February 2021 14:22:44 GMT
+2021-02-08
 
 ### Patches
 
@@ -163,7 +163,7 @@ Mon, 08 February 2021 14:22:44 GMT
 
 ## 3.2.0
 
-Wed, 27 January 2021 14:22:44 GMT
+2021-01-27
 
 ### Minor changes
 
@@ -171,7 +171,7 @@ Wed, 27 January 2021 14:22:44 GMT
 
 ## 3.1.0
 
-Wed, 20 January 2021 14:22:44 GMT
+2021-01-20
 
 ### Minor changes
 
@@ -183,7 +183,7 @@ Wed, 20 January 2021 14:22:44 GMT
 
 ## 3.0.0
 
-Tue, 10 November 2020 14:22:44 GMT
+2020-11-10
 
 ### Breaking changes
 
@@ -191,7 +191,7 @@ Tue, 10 November 2020 14:22:44 GMT
 
 ## 2.0.1
 
-Sat, 31 October 2020 14:22:44 GMT
+2020-10-31
 
 ### Patches
 
@@ -199,7 +199,7 @@ Sat, 31 October 2020 14:22:44 GMT
 
 ## 2.0.0
 
-Mon, 31 August 2020 14:22:44 GMT
+2020-08-31
 
 ### Breaking changes
 
@@ -211,7 +211,7 @@ Mon, 31 August 2020 14:22:44 GMT
 
 ## 1.1.0
 
-Mon, 31 August 2020 14:22:44 GMT
+2020-08-31
 
 ### Minor changes
 
@@ -219,6 +219,6 @@ Mon, 31 August 2020 14:22:44 GMT
 
 ## 1.0.0
 
-Mon, 31 August 2020 14:22:44 GMT
+2020-08-31
 
 _Initial release_

@@ -4,7 +4,7 @@
     {
       "version": "3.12.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.12.1",
-      "date": "Thu, 12 January 2023 14:22:44 GMT",
+      "date": "2023-01-12",
       "comments": {
         "patch": [
           {
@@ -16,7 +16,7 @@
     {
       "version": "3.12.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.12.0",
-      "date": "Wed, 16 Mar 2022 14:22:44 GMT",
+      "date": "2022-03-16",
       "comments": {
         "minor": [
           {
@@ -28,7 +28,7 @@
     {
       "version": "3.11.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.11.0",
-      "date": "Wed, 03 Mar 2022 14:22:44 GMT",
+      "date": "2022-03-03",
       "comments": {
         "minor": [
           {
@@ -40,7 +40,7 @@
     {
       "version": "3.10.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.10.0",
-      "date": "Wed, 09 February 2022 14:22:44 GMT",
+      "date": "2022-02-09",
       "comments": {
         "minor": [
           {
@@ -52,7 +52,7 @@
     {
       "version": "3.9.4",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.9.4",
-      "date": "Thu, 03 February 2022 14:22:44 GMT",
+      "date": "2022-02-03",
       "comments": {
         "patch": [
           {
@@ -67,7 +67,7 @@
     {
       "version": "3.9.3",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.9.3",
-      "date": "Mon, 01 February 2022 14:22:44 GMT",
+      "date": "2022-02-01",
       "comments": {
         "patch": [
           {
@@ -79,7 +79,7 @@
     {
       "version": "3.9.2",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.9.2",
-      "date": "Mon, 09 December 2021 14:22:44 GMT",
+      "date": "2021-12-09",
       "comments": {
         "patch": [
           {
@@ -91,7 +91,7 @@
     {
       "version": "3.9.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.9.1",
-      "date": "Mon, 12 November 2021 14:22:44 GMT",
+      "date": "2021-11-12",
       "comments": {
         "patch": [
           {
@@ -103,7 +103,7 @@
     {
       "version": "3.9.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.9.0",
-      "date": "Mon, 06 November 2021 14:22:44 GMT",
+      "date": "2021-11-06",
       "comments": {
         "minor": [
           {
@@ -115,7 +115,7 @@
     {
       "version": "3.8.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.8.0",
-      "date": "Mon, 02 November 2021 14:22:44 GMT",
+      "date": "2021-11-02",
       "comments": {
         "minor": [
           {
@@ -127,7 +127,7 @@
     {
       "version": "3.7.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.7.0",
-      "date": "Mon, 28 October 2021 14:22:44 GMT",
+      "date": "2021-10-28",
       "comments": {
         "minor": [
           {
@@ -139,7 +139,7 @@
     {
       "version": "3.6.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.6.0",
-      "date": "Mon, 08 October 2021 14:22:44 GMT",
+      "date": "2021-10-08",
       "comments": {
         "minor": [
           {
@@ -159,7 +159,7 @@
     {
       "version": "3.5.2",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.5.2",
-      "date": "Mon, 15 September 2021 14:22:44 GMT",
+      "date": "2021-09-15",
       "comments": {
         "patch": [
           {
@@ -171,7 +171,7 @@
     {
       "version": "3.5.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.5.1",
-      "date": "Mon, 14 September 2021 14:22:44 GMT",
+      "date": "2021-09-14",
       "comments": {
         "patch": [
           {
@@ -183,7 +183,7 @@
     {
       "version": "3.5.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.5.0",
-      "date": "Mon, 13 September 2021 14:22:44 GMT",
+      "date": "2021-09-13",
       "comments": {
         "minor": [
           {
@@ -198,7 +198,7 @@
     {
       "version": "3.4.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.4.0",
-      "date": "Mon, 27 August 2021 14:22:44 GMT",
+      "date": "2021-08-27",
       "comments": {
         "minor": [
           {
@@ -210,7 +210,7 @@
     {
       "version": "3.3.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.3.0",
-      "date": "Mon, 17 August 2021 14:22:44 GMT",
+      "date": "2021-08-17",
       "comments": {
         "minor": [
           {
@@ -222,7 +222,7 @@
     {
       "version": "3.2.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.2.1",
-      "date": "Mon, 05 August 2021 14:22:44 GMT",
+      "date": "2021-08-05",
       "comments": {
         "patch": [
           {
@@ -237,7 +237,7 @@
     {
       "version": "3.2.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.2.0",
-      "date": "Wed, 28 July 2021 14:22:44 GMT",
+      "date": "2021-07-28",
       "comments": {
         "minor": [
           {
@@ -249,7 +249,7 @@
     {
       "version": "3.1.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.1.0",
-      "date": "Mon, 02 July 2021 14:22:44 GMT",
+      "date": "2021-07-02",
       "comments": {
         "minor": [
           {
@@ -264,12 +264,10 @@
     {
       "version": "3.0.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.0.0",
-      "date": "Mon, 14 June 2021 14:22:44 GMT",
+      "date": "2021-06-14",
       "comments": {
         "major": [
-          {
-            "comment": "- Aliases need to be added to existing index"
-          },
+          { "comment": "- Aliases need to be added to existing index" },
           {
             "comment": "- Run the addAlias [script](https://github.com/awslabs/fhir-works-on-aws-deployment/blob/94a3187a6fb7a673946a215869c154048603389b/scripts/elasticsearch-operations.js) created in this [PR](https://github.com/awslabs/fhir-works-on-aws-deployment/pull/346) will create aliases for all existing indices"
           },
@@ -295,7 +293,7 @@
     {
       "version": "2.7.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.7.0",
-      "date": "Mon, 28 June 2021 14:22:44 GMT",
+      "date": "2021-06-28",
       "comments": {
         "minor": [
           {
@@ -318,7 +316,7 @@
     {
       "version": "2.6.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.6.1",
-      "date": "Mon, 21 May 2021 14:22:44 GMT",
+      "date": "2021-05-21",
       "comments": {
         "patch": [
           {
@@ -330,7 +328,7 @@
     {
       "version": "2.6.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.6.0",
-      "date": "Mon, 20 May 2021 14:22:44 GMT",
+      "date": "2021-05-20",
       "comments": {
         "minor": [
           {
@@ -342,7 +340,7 @@
     {
       "version": "2.5.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.5.1",
-      "date": "Mon, 28 April 2021 14:22:44 GMT",
+      "date": "2021-04-28",
       "comments": {
         "patch": [
           {
@@ -357,7 +355,7 @@
     {
       "version": "2.5.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.5.0",
-      "date": "Mon, 23 April 2021 14:22:44 GMT",
+      "date": "2021-04-23",
       "comments": {
         "minor": [
           {
@@ -375,7 +373,7 @@
     {
       "version": "2.4.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.4.0",
-      "date": "Mon, 19 April 2021 14:22:44 GMT",
+      "date": "2021-04-19",
       "comments": {
         "minor": [
           {
@@ -387,7 +385,7 @@
     {
       "version": "2.3.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.3.0",
-      "date": "Mon, 09 April 2021 14:22:44 GMT",
+      "date": "2021-04-09",
       "comments": {
         "minor": [
           {
@@ -405,7 +403,7 @@
     {
       "version": "2.2.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.2.0",
-      "date": "Mon, 29 March 2021 14:22:44 GMT",
+      "date": "2021-03-29",
       "comments": {
         "minor": [
           {
@@ -417,7 +415,7 @@
     {
       "version": "2.1.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.1.0",
-      "date": "Mon, 09 February 2021 14:22:44 GMT",
+      "date": "2021-02-09",
       "comments": {
         "minor": [
           {
@@ -440,7 +438,7 @@
     {
       "version": "2.0.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.0.1",
-      "date": "Mon, 27 January 2021 14:22:44 GMT",
+      "date": "2021-01-27",
       "comments": {
         "patch": [
           {
@@ -452,7 +450,7 @@
     {
       "version": "2.0.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v2.0.0",
-      "date": "Mon, 13 January 2021 14:22:44 GMT",
+      "date": "2021-01-13",
       "comments": {
         "major": [
           {
@@ -475,22 +473,18 @@
     {
       "version": "1.1.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v1.1.0",
-      "date": "Mon, 01 October 2020 14:22:44 GMT",
+      "date": "2020-10-01",
       "comments": {
         "minor": [
-          {
-            "comment": "- feat: Implement _include and _revinclude search parameters"
-          },
-          {
-            "comment": "- feat: Support _id search parameter"
-          }
+          { "comment": "- feat: Implement _include and _revinclude search parameters" },
+          { "comment": "- feat: Support _id search parameter" }
         ]
       }
     },
     {
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v1.0.0",
-      "date": "Mon, 31 August 2020 14:22:44 GMT",
+      "date": "2020-08-31",
       "comments": {}
     }
   ]

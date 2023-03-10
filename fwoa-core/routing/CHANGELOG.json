@@ -4,7 +4,7 @@
     {
       "version": "6.6.2",
       "tag": "@aws/fhir-works-on-aws-routing_v6.6.2",
-      "date": "Tue, 24 January 2023 14:22:44 GMT",
+      "date": "2023-01-24",
       "comments": {
         "patch": [
           {
@@ -16,7 +16,7 @@
     {
       "version": "6.6.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.6.1",
-      "date": "Thu, 08 September 2022 14:22:44 GMT",
+      "date": "2022-09-08",
       "comments": {
         "patch": [
           {
@@ -28,7 +28,7 @@
     {
       "version": "6.6.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.6.0",
-      "date": "Sun, 21 August 2022 14:22:44 GMT",
+      "date": "2022-08-21",
       "comments": {
         "minor": [
           {
@@ -40,7 +40,7 @@
     {
       "version": "6.5.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.5.1",
-      "date": "mon, 06 June 2022 14:22:44 GMT",
+      "date": "2022-06-06",
       "comments": {
         "patch": [
           {
@@ -52,7 +52,7 @@
     {
       "version": "6.5.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.5.0",
-      "date": "Wed, 06 April 2022 14:22:44 GMT",
+      "date": "2022-04-06",
       "comments": {
         "minor": [
           {
@@ -64,7 +64,7 @@
     {
       "version": "6.4.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.4.1",
-      "date": "Mon, 07 March 2022 14:22:44 GMT",
+      "date": "2022-03-07",
       "comments": {
         "patch": [
           {
@@ -76,7 +76,7 @@
     {
       "version": "6.4.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.4.0",
-      "date": "Thu, 03 March 2022 14:22:44 GMT",
+      "date": "2022-03-03",
       "comments": {
         "minor": [
           {
@@ -88,7 +88,7 @@
     {
       "version": "6.3.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.3.1",
-      "date": "Fri, 10 December 2021 14:22:44 GMT",
+      "date": "2021-12-10",
       "comments": {
         "patch": [
           {
@@ -100,7 +100,7 @@
     {
       "version": "6.3.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.3.0",
-      "date": "Thu, 28 October 2021 14:22:44 GMT",
+      "date": "2021-10-28",
       "comments": {
         "minor": [
           {
@@ -112,7 +112,7 @@
     {
       "version": "6.2.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.2.0",
-      "date": "Wed, 13 October 2021 14:22:44 GMT",
+      "date": "2021-10-13",
       "comments": {
         "minor": [
           {
@@ -124,7 +124,7 @@
     {
       "version": "6.1.2",
       "tag": "@aws/fhir-works-on-aws-routing_v6.1.2",
-      "date": "Mon, 20 September 2021 14:22:44 GMT",
+      "date": "2021-09-20",
       "comments": {
         "patch": [
           {
@@ -136,7 +136,7 @@
     {
       "version": "6.1.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.1.1",
-      "date": "Thu, 02 September 2021 14:22:44 GMT",
+      "date": "2021-09-02",
       "comments": {
         "patch": [
           {
@@ -148,7 +148,7 @@
     {
       "version": "6.1.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.1.0",
-      "date": "Wed, 01 September 2021 14:22:44 GMT",
+      "date": "2021-09-01",
       "comments": {
         "minor": [
           {
@@ -165,7 +165,7 @@
     {
       "version": "6.0.2",
       "tag": "@aws/fhir-works-on-aws-routing_v6.0.2",
-      "date": "Thu, 26 August 2021 14:22:44 GMT",
+      "date": "2021-08-26",
       "comments": {
         "patch": [
           {
@@ -177,7 +177,7 @@
     {
       "version": "6.0.1",
       "tag": "@aws/fhir-works-on-aws-routing_v6.0.1",
-      "date": "Thu, 19 August 2021 14:22:44 GMT",
+      "date": "2021-08-19",
       "comments": {
         "patch": [
           {
@@ -189,7 +189,7 @@
     {
       "version": "6.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v6.0.0",
-      "date": "Tue, 17 August 2021 14:22:44 GMT",
+      "date": "2021-08-17",
       "comments": {
         "major": [
           {
@@ -211,7 +211,7 @@
     {
       "version": "5.4.4",
       "tag": "@aws/fhir-works-on-aws-routing_v5.4.4",
-      "date": "Fri, 06 August 2021 14:22:44 GMT",
+      "date": "2021-08-06",
       "comments": {
         "patch": [
           {
@@ -226,7 +226,7 @@
     {
       "version": "5.4.3",
       "tag": "@aws/fhir-works-on-aws-routing_v5.4.3",
-      "date": "Tue, 27 July 2021 14:22:44 GMT",
+      "date": "2021-07-27",
       "comments": {
         "patch": [
           {
@@ -241,7 +241,7 @@
     {
       "version": "5.4.2",
       "tag": "@aws/fhir-works-on-aws-routing_v5.4.2",
-      "date": "Fri, 04 June 2021 14:22:44 GMT",
+      "date": "2021-06-04",
       "comments": {
         "patch": [
           {
@@ -256,19 +256,13 @@
     {
       "version": "5.4.1",
       "tag": "@aws/fhir-works-on-aws-routing_v5.4.1",
-      "date": "Fri, 21 May 2021 14:22:44 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "date": "2021-05-21",
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "5.4.0",
       "tag": "@aws/fhir-works-on-aws-routing_v5.4.0",
-      "date": "Fri, 21 May 2021 14:22:44 GMT",
+      "date": "2021-05-21",
       "comments": {
         "minor": [
           {
@@ -280,7 +274,7 @@
     {
       "version": "5.3.0",
       "tag": "@aws/fhir-works-on-aws-routing_v5.3.0",
-      "date": "Wed, 19 May 2021 14:22:44 GMT",
+      "date": "2021-05-19",
       "comments": {
         "minor": [
           {
@@ -292,7 +286,7 @@
     {
       "version": "5.2.1",
       "tag": "@aws/fhir-works-on-aws-routing_v5.2.1",
-      "date": "Tue, 04 May 2021 14:22:44 GMT",
+      "date": "2021-05-04",
       "comments": {
         "patch": [
           {
@@ -307,7 +301,7 @@
     {
       "version": "5.2.0",
       "tag": "@aws/fhir-works-on-aws-routing_v5.2.0",
-      "date": "Thu, 15 April 2021 14:22:44 GMT",
+      "date": "2021-04-15",
       "comments": {
         "minor": [
           {
@@ -319,19 +313,13 @@
     {
       "version": "5.1.1",
       "tag": "@aws/fhir-works-on-aws-routing_v5.1.1",
-      "date": "Mon, 29 March 2021 14:22:44 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "date": "2021-03-29",
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "5.1.0",
       "tag": "@aws/fhir-works-on-aws-routing_v5.1.0",
-      "date": "Mon, 29 March 2021 14:22:44 GMT",
+      "date": "2021-03-29",
       "comments": {
         "minor": [
           {
@@ -360,7 +348,7 @@
     {
       "version": "5.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v5.0.0",
-      "date": "Thu, 11 February 2021 14:22:44 GMT",
+      "date": "2021-02-11",
       "comments": {
         "major": [
           {
@@ -377,7 +365,7 @@
     {
       "version": "4.0.3",
       "tag": "@aws/fhir-works-on-aws-routing_v4.0.3",
-      "date": "Wed, 27 January 2021 14:22:44 GMT",
+      "date": "2021-01-27",
       "comments": {
         "patch": [
           {
@@ -389,7 +377,7 @@
     {
       "version": "4.0.2",
       "tag": "@aws/fhir-works-on-aws-routing_v4.0.2",
-      "date": "Wed, 20 January 2021 14:22:44 GMT",
+      "date": "2021-01-20",
       "comments": {
         "patch": [
           {
@@ -401,7 +389,7 @@
     {
       "version": "4.0.1",
       "tag": "@aws/fhir-works-on-aws-routing_v4.0.1",
-      "date": "Thu, 14 January 2021 14:22:44 GMT",
+      "date": "2021-01-14",
       "comments": {
         "patch": [
           {
@@ -413,7 +401,7 @@
     {
       "version": "4.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v4.0.0",
-      "date": "Wed, 13 January 2021 14:22:44 GMT",
+      "date": "2021-01-13",
       "comments": {
         "major": [
           {
@@ -447,7 +435,7 @@
     {
       "version": "3.0.1",
       "tag": "@aws/fhir-works-on-aws-routing_v3.0.1",
-      "date": "Mon, 07 December 2020 14:22:44 GMT",
+      "date": "2020-12-07",
       "comments": {
         "minor": [
           {
@@ -462,25 +450,19 @@
     {
       "version": "3.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v3.0.0",
-      "date": "Wed, 11 November 2020 14:22:44 GMT",
+      "date": "2020-11-11",
       "comments": {
         "major": [
-          {
-            "comment": "- Support SMART's .well_known endpoint"
-          },
-          {
-            "comment": "- Supporting new authorization interface"
-          },
-          {
-            "comment": "- Add optional OAuth urls to the capability statement"
-          }
+          { "comment": "- Support SMART's .well_known endpoint" },
+          { "comment": "- Supporting new authorization interface" },
+          { "comment": "- Add optional OAuth urls to the capability statement" }
         ]
       }
     },
     {
       "version": "2.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v2.0.0",
-      "date": "Wed, 11 November 2020 14:22:44 GMT",
+      "date": "2020-11-11",
       "comments": {
         "major": [
           {
@@ -492,28 +474,20 @@
           {
             "comment": "- Improved error handling to allow matching of same error objects across different `fhir-works-on-aws-interface` versions"
           },
-          {
-            "comment": "- Support for configuring CORs header"
-          }
+          { "comment": "- Support for configuring CORs header" }
         ]
       }
     },
     {
       "version": "1.1.0",
       "tag": "@aws/fhir-works-on-aws-routing_v1.0.1",
-      "date": "Fri, 25 September 2020 14:22:44 GMT",
-      "comments": {
-        "minor": [
-          {
-            "comment": "- feat: Pass down allowed resource types to search service"
-          }
-        ]
-      }
+      "date": "2020-09-25",
+      "comments": { "minor": [{ "comment": "- feat: Pass down allowed resource types to search service" }] }
     },
     {
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v1.0.0",
-      "date": "Mon, 31 August 2020 14:22:44 GMT",
+      "date": "2020-08-31",
       "comments": {}
     }
   ]
