@@ -942,37 +942,14 @@ describe('getExportStatus', () => {
 
   test('Bad Request get export job status because jobId is too long', async () => {
     // BUILD
-    AWSMock.mock('DynamoDB', 'getItem', (params: QueryInput, callback: Function) => {
-      callback(null, {
-        Item: DynamoDBConverter.marshall({
-          jobFailedMessage: '',
-          outputFormat: 'ndjson',
-          exportType: 'system',
-          transactionTime: '2020-09-13T17:19:21.475Z',
-          since: '2020-09-02T05:00:00.000Z',
-          requesterUserId: 'userId-1',
-          groupId: '',
-          jobId: '2a937fe2-8bb1-442b-b9be-434c94f30e15',
-          jobStatus: 'in-progress',
-          stepFunctionExecutionArn: '',
-          type: 'Patient'
-        })
-      });
-    });
 
     const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
 
     // OPERATE
-    await expect(
-      dynamoDbDataService.getExportStatus(
-        '1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo1e51046c-b70a-4570-93f2-c2f3b8f43686shdksndkfjsfnsjkdfnsdjkfsfbndsjdfbsdhjkfsbfshfsdbh339u48u824u2oi4u2o4iu24io2u4o2y4u2o4y2ou4y2oui4y2oi3uyoi32yu432o5yh24u5y24uo5y24ou5y24ou5y24ou524y54uo2y542uo5y42ouy52ou5y24uo'
-      )
-    ).rejects.toMatchObject(new BadRequestError('id length is too long'));
-
     // CHECK
-    // expect(exportStatus).toMatchObject(
-    //   )
-    // );
+    await expect(dynamoDbDataService.getExportStatus('1234567890'.repeat(50))).rejects.toMatchObject(
+      new BadRequestError('id length is too long')
+    );
   });
 });
 

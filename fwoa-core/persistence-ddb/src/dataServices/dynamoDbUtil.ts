@@ -18,7 +18,7 @@ export const SUBSCRIPTION_FIELD = '_subscriptionStatus';
 
 export const buildHashKey = (id: string, tenantId?: string): string => {
   const hashKey = tenantId ? `${tenantId}|${id}` : id;
-  if (Buffer.byteLength(hashKey, 'utf8') >= 2048) {
+  if (Buffer.byteLength(hashKey, 'utf8') >= 100) {
     throw new BadRequestError('id length is too long');
   }
   return hashKey;
