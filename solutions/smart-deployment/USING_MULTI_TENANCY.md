@@ -14,12 +14,6 @@ Use the `enableMultiTenancy` option when deploying the stack:
 rushx deploy -c enableMultiTenancy=true
 ```
 
-or with Serverless, (LEGACY)
-
-```bash
-serverless deploy --enableMultiTenancy true
-```
-
 > **Note**  
 > Updating an existing (single-tenant) stack to enable multi-tenancy is a breaking change. Multi-tenant
 > deployments use a different data partitioning strategy that renders the old, single-tenant, data inaccessible.
