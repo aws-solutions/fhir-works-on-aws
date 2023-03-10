@@ -52,7 +52,7 @@
     {
       "version": "4.0.0",
       "tag": "@aws/fhir-works-on-aws-authz-rbac_v4.0.0",
-      "date": "2020-10-20",
+      "date": "2020-11-20",
       "comments": {
         "major": [
           { "comment": "Implement `fhir-works-on-aws-interface` v4.0.0" },
@@ -65,7 +65,7 @@
     {
       "version": "3.0.0",
       "tag": "@aws/fhir-works-on-aws-authz-rbac_v3.0.0",
-      "date": "2020-08-11",
+      "date": "2020-11-11",
       "comments": {
         "major": [
           { "comment": "Implement `fhir-works-on-aws-interface` v3.0.0" },
