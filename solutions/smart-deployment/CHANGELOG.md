@@ -1,6 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-smart-deployment
 
-This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
 
 ## 3.1.2
 

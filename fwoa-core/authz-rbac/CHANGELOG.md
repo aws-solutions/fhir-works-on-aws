@@ -1,12 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-authz-rbac
 
-This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
-
-## 5.0.1
-
-Mon, 06 Mar 2023 14:22:44 GMT
-
-_Version update only_
+This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
 
 ## 5.0.0
 
@@ -38,7 +32,9 @@ Wed, 13 Jan 2021 20:22:44 GMT
 
 Mon, 07 Dec 2020 20:22:44 GMT
 
-_Version update only_
+### Patches
+
+- chore: We no longer require Auth for metadata route, because router does not Authorize metadata route
 
 ## 4.0.0
 
@@ -73,6 +69,4 @@ Fri, 25 Sep 2020 20:22:44 GMT
 
 Tue, 31 Aug 2020 20:22:44 GMT
 
-### Breaking changes
-
-- Initial launch! :rocket:
+_Initial release_

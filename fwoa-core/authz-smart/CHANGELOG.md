@@ -1,20 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-authz-smart
 
-This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
-
-## 4.0.0
-
-Mon, 06 Mar 2023 14:22:44 GMT
-
-### Breaking changes
-
-- Reject token with scopes that can not be used
-- Only allow system/\*.read scope for group export
-
-### Patches
-
-- update documentation for rejecting tokens with invalid scopes
-- whitespace changes
+This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
 
 ## 3.1.4
 
@@ -196,6 +182,4 @@ Thu, 14 Jan 2021 14:22:44 GMT
 
 Fri, 06 Nov 2020 14:22:44 GMT
 
-### Breaking changes
-
-- - Initial launch! :rocket:
+_Initial release_

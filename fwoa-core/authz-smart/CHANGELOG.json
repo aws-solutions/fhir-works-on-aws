@@ -2,39 +2,6 @@
   "name": "@aws/fhir-works-on-aws-authz-smart",
   "entries": [
     {
-      "version": "4.0.0",
-      "tag": "@aws/fhir-works-on-aws-authz-smart_v4.0.0",
-      "date": "Mon, 06 Mar 2023 14:22:44 GMT",
-      "comments": {
-        "patch": [
-          {
-            "comment": "update documentation for rejecting tokens with invalid scopes"
-          },
-          {
-            "comment": "whitespace changes"
-          }
-        ],
-        "major": [
-          {
-            "comment": "Reject token with scopes that can not be used"
-          },
-          {
-            "comment": "Only allow system/*.read scope for group export"
-          }
-        ],
-        "none": [
-          {
-            "comment": "remove prepublish script"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "3.1.4",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v3.1.4",
       "date": "Thu, 26 Jan 2023 14:22:44 GMT",
@@ -316,13 +283,7 @@
       "version": "0.0.1",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v0.0.1",
       "date": "Fri, 06 Nov 2020 14:22:44 GMT",
-      "comments": {
-        "major": [
-          {
-            "comment": "- Initial launch! :rocket:"
-          }
-        ]
-      }
+      "comments": {}
     }
   ]
 }

@@ -1,20 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-routing
 
-This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
-
-## 7.0.0
-
-Mon, 06 Mar 2023 14:22:44 GMT
-
-### Breaking changes
-
-- fix regex for marking export request resourceid as encrypted and open encryption if loggermiddleware is used
-- Remove allowedResourceTypes from bulk export
-
-### Patches
-
-- Update resource type and resource id regex match
-- Update license header for logger middleware files
+This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
 
 ## 6.6.2
 
@@ -342,6 +328,4 @@ Fri, 25 September 2020 14:22:44 GMT
 
 Mon, 31 August 2020 14:22:44 GMT
 
-### Breaking changes
-
-- - Initial launch! :rocket:
+_Initial release_

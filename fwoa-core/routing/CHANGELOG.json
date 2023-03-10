@@ -2,39 +2,6 @@
   "name": "@aws/fhir-works-on-aws-routing",
   "entries": [
     {
-      "version": "7.0.0",
-      "tag": "@aws/fhir-works-on-aws-routing_v7.0.0",
-      "date": "Mon, 06 Mar 2023 14:22:44 GMT",
-      "comments": {
-        "major": [
-          {
-            "comment": "fix regex for marking export request resourceid as encrypted and open encryption if loggermiddleware is used"
-          },
-          {
-            "comment": "Remove allowedResourceTypes from bulk export"
-          }
-        ],
-        "patch": [
-          {
-            "comment": "Update resource type and resource id regex match"
-          },
-          {
-            "comment": "Update license header for logger middleware files"
-          }
-        ],
-        "none": [
-          {
-            "comment": "remove prepublish script"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "6.6.2",
       "tag": "@aws/fhir-works-on-aws-routing_v6.6.2",
       "date": "Tue, 24 January 2023 14:22:44 GMT",
@@ -547,13 +514,7 @@
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-routing_v1.0.0",
       "date": "Mon, 31 August 2020 14:22:44 GMT",
-      "comments": {
-        "major": [
-          {
-            "comment": "- Initial launch! :rocket:"
-          }
-        ]
-      }
+      "comments": {}
     }
   ]
 }

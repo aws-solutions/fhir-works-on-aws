@@ -2,23 +2,6 @@
   "name": "@aws/fhir-works-on-aws-search-es",
   "entries": [
     {
-      "version": "3.12.2",
-      "tag": "@aws/fhir-works-on-aws-search-es_v3.12.2",
-      "date": "Mon, 06 Mar 2023 14:22:44 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "remove prepublish script"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "3.12.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.12.1",
       "date": "Thu, 12 January 2023 14:22:44 GMT",
@@ -508,13 +491,7 @@
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-search-es_v1.0.0",
       "date": "Mon, 31 August 2020 14:22:44 GMT",
-      "comments": {
-        "major": [
-          {
-            "comment": "- Initial launch! :rocket:"
-          }
-        ]
-      }
+      "comments": {}
     }
   ]
 }

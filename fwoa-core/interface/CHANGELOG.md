@@ -1,18 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-interface
 
-This log was last generated on Thu, 09 Mar 2023 15:32:50 GMT and should not be manually modified.
-
-## 13.0.0
-
-Mon, 06 Mar 2023 14:22:44 GMT
-
-### Breaking changes
-
-- Remove allowedResourceTypes from bulk export interface
-
-### Patches
-
-- Update license header for logger files
+This log was last generated on Fri, 10 Mar 2023 13:18:53 GMT and should not be manually modified.
 
 ## 12.1.0
 
@@ -245,6 +233,4 @@ Fri, 25 September 2020 14:22:44 GMT
 
 Mon, 31 August 2020 14:22:44 GMT
 
-### Breaking changes
-
-- - Initial launch! :rocket:
+_Initial release_
