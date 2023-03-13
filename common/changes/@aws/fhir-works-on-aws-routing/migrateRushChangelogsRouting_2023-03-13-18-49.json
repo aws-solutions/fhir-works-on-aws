@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "",
+      "comment": "modified changelogs compatible for rush for routing",
       "type": "none"
     }
   ],
