@@ -19333,7 +19333,50 @@
           "response": []
         },
         {
-          "name": "GET System Job Status",
+          "name": "GET Group Export",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{COGNITO_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "type": "text",
+                "value": "{{API_KEY}}"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/Group/:groupId/$export?_outputFormat=ndjson&_since=2020-10-13T15:47:51.15Z&_type=Patient",
+              "host": ["{{API_URL}}"],
+              "path": ["Group", "$export", ":groupId"],
+              "query": [
+                {
+                  "key": "_outputFormat",
+                  "value": "ndjson"
+                },
+                {
+                  "key": "_since",
+                  "value": "2020-10-13T15:47:51.15Z"
+                },
+                {
+                  "key": "_type",
+                  "value": "Patient"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Job Status",
           "request": {
             "auth": {
               "type": "bearer",
