@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
+      "comment": "Use const for hahkey length",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-persistence-ddb"
+}

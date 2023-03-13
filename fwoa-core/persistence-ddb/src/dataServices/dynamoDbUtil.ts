@@ -15,10 +15,11 @@ export const REFERENCES_FIELD = '_references';
 export const TENANT_ID_FIELD = '_tenantId';
 export const INTERNAL_ID_FIELD = '_id';
 export const SUBSCRIPTION_FIELD = '_subscriptionStatus';
+const HASH_KEY_MAX_LENGTH = 100;
 
 export const buildHashKey = (id: string, tenantId?: string): string => {
   const hashKey = tenantId ? `${tenantId}|${id}` : id;
-  if (Buffer.byteLength(hashKey, 'utf8') >= 100) {
+  if (hashKey.length >= HASH_KEY_MAX_LENGTH) {
     throw new BadRequestError('id length is too long');
   }
   return hashKey;
