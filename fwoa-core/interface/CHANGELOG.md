@@ -1,6 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-interface
 
-This log was last generated on Mon, 13 Mar 2023 20:04:05 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Mar 2023 21:05:07 GMT and should not be manually modified.
 
 ## 12.1.0
 
@@ -58,7 +58,7 @@ This log was last generated on Mon, 13 Mar 2023 20:04:05 GMT and should not be m
 
 - - Removes ttlInSeconds from the persistence interface
 
-### Minor changes
+### Patches
 
 - - add missing fhirServiceBaseUrl to AuthorizationBundleRequest ([#78](https://github.com/awslabs/fhir-works-on-aws-interface/issues/78)) ([3c56239](https://github.com/awslabs/fhir-works-on-aws-interface/commit/3c562396f54735053ea61a3f2127b079561279ff))
 - - Remove ttlInSeconds ([#69](https://github.com/awslabs/fhir-works-on-aws-interface/issues/69)) ([4662772](https://github.com/awslabs/fhir-works-on-aws-interface/commit/466277287d7101f9aa841550faf9afde69cc1278))
