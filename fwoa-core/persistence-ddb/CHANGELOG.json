@@ -1,0 +1,33 @@
+{
+  "name": "@aws/fhir-works-on-aws-persistence-ddb",
+  "entries": [
+    {
+      "version": "4.0.0",
+      "tag": "@aws/fhir-works-on-aws-persistence-ddb_v4.0.0",
+      "date": "Mon, 13 Mar 2023 19:51:33 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "modified changelogs compatible for rush for persistence"
+          },
+          {
+            "comment": "remove prepublish script"
+          }
+        ],
+        "major": [
+          {
+            "comment": "deprecate serverless"
+          },
+          {
+            "comment": "Remove allowedResourceTypes from bulk export"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
+          }
+        ]
+      }
+    }
+  ]
+}
