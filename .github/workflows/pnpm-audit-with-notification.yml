@@ -58,13 +58,14 @@ jobs:
           pnpm audit --prod
 
       - name: Report Status
-        if: always()
+        if: ${{ failure() && github.ref == 'refs/remotes/origin/jay/pnpm-audit-workflow-with-notification' }}
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
             payload: |
-            {
-              "status": ${{ job.status }}
-            }
+              {
+                "status": ${{ job.status }}
+              }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
+
