@@ -58,7 +58,7 @@ jobs:
           pnpm audit --prod
 
       - name: Report Status
-        if: ${{ failure() && github.ref == 'refs/remotes/origin/jay/pnpm-audit-workflow-with-notification' }}
+        if: failure()
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
