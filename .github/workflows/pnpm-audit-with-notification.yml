@@ -65,10 +65,10 @@ jobs:
         with:
             payload: |
               {
-                "slack_message": "GitHub pnpm audit workflow result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                "workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "status": "${{ job.status }}"
-                'ref_output': "${{ github.head_ref }}"
+              	"slack_message": "Github pnpm audit workflow result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              	"status": "${{ job.status }}",
+              	"ref_output": "${{ github.head_ref }}"
               }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
