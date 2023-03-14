@@ -59,7 +59,7 @@ jobs:
 
       - name: Report Status
         if: |
-          success() && github.ref == 'refs/remotes/origin/jay/pnpm-audit-workflow-with-notification'
+          success() && github.head_ref
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
@@ -68,6 +68,7 @@ jobs:
                 "slack_message": "GitHub pnpm audit workflow result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                 "workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                 "status": "${{ job.status }}"
+                'ref_output': "${{ github.head_ref }}"
               }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
