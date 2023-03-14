@@ -37,11 +37,16 @@ jobs:
           cd ./solutions/deployment
           mkdir -p implementationGuides
           curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
+          cd ../smart-deployment
+          mkdir -p implementationGuides
+          curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
       
       - name: Compile IGs
         run: |
           npm install -g ts-node
           cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js compile-igs
+          cd ../smart-deployment
           node ../../common/scripts/install-run-rushx.js compile-igs
 
       - name: synthesize deployment and smart cdk template for cfn for analysis
