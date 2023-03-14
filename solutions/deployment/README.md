@@ -177,35 +177,11 @@ curl -H "Accept: application/json" -H "Authorization: Bearer <COGNITO_AUTH_TOKEN
 curl -v -T "<LOCATION_OF_FILE_TO_UPLOAD>" "<PRESIGNED_PUT_URL>"
 ```
 
-### Testing bulk data export
+### Additional Documentation
 
-Bulk Export allows you to export all of your data from DDB to S3. We currently support the [System Level](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---system-level-export) export. For more information about bulk export, refer to the FHIR [Implementation Guide](https://hl7.org/fhir/uv/bulkdata/export/index.html).
-
-To test this feature on FHIR Works on AWS, make API requests using the [Fhir.postman_collection.json](./postman/Fhir.postman_collection.json) file by following these steps:
-
-1. In the FHIR Examples collection, under the **Export** folder, use `GET System Export` request to initiate an export request.
-2. In the response, check the Content-Location header field for a URL. The URL should be in the `<base-url>/$export/<jobId>` format.
-3. To get the status of the export job, in the **Export** folder, use the GET System Job Status request. Enter the `jobId` value from step 2 in that request.
-4. Check the response that is returned from `GET System Job Status`. If the job is in progress, the response header will have the field `x-progress: in-progress`. Keep polling that URL every 10 seconds until the job is complete. Once the job is complete, you'll get a JSON body with presigned S3 URLs of your exported data. You can download the exported data using those URLs.
-   Example:
-
-```sh
-{
-    "transactionTime": "2021-03-29T16:49:00.819Z",
-    "request": "https://xyz.execute-api.us-west-2.amazonaws.com/$export?_outputFormat=ndjson&_since=1800-01-01T00%3A00%3A00.000Z&_type=Patient",
-    "requiresAccessToken": false,
-    "output":
-    [
-        {
-            "type": "Patient",
-            "url": "https://fhir-service-dev-bulkexportresultsbucket-.com/abc"
-        }
-    ],
-    "error": []
-}
-```
-
-**Note**: To cancel an export job, use the `Cancel Export Job` request in the "Export" folder located in the Postman collections.
+[Multi-tenancy](./USING_MULTI_TENANCY.md): Multi-tenancy allows a single `fhir-works-on-aws` stack to serve as multiple FHIR servers for different tenants.
+[Subscriptions](./USING_SUBSCRIPTIONS.md): FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/subscription.html
+[BulkDataExport](./USING_BULK_DATA_EXPORT.md): Bulk Export allows you to export data from DDB to S3.
 
 ### Run Integration Test
 
