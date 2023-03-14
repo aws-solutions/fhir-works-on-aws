@@ -2,18 +2,6 @@
   "name": "@aws/fhir-works-on-aws-interface",
   "entries": [
     {
-      "version": "12.1.0",
-      "tag": "@aws/fhir-works-on-aws-interface_v12.1.0",
-      "date": "2022-04-05",
-      "comments": {
-        "minor": [
-          {
-            "comment": "- add support for Batch Bundle ([#102](https://github.com/awslabs/fhir-works-on-aws-interface/issues/102)) ([f77720b](https://github.com/awslabs/fhir-works-on-aws-interface/commit/f77720b6d039138830d7d8d665608ffbf235a04e))"
-          }
-        ]
-      }
-    },
-    {
       "version": "12.0.0",
       "tag": "@aws/fhir-works-on-aws-interface_v12.0.0",
       "date": "2022-03-03",

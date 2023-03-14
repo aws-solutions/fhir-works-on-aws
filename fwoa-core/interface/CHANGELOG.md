@@ -1,14 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-interface
 
-This log was last generated on Mon, 13 Mar 2023 21:05:07 GMT and should not be manually modified.
-
-## 12.1.0
-
-2022-04-05
-
-### Minor changes
-
-- - add support for Batch Bundle ([#102](https://github.com/awslabs/fhir-works-on-aws-interface/issues/102)) ([f77720b](https://github.com/awslabs/fhir-works-on-aws-interface/commit/f77720b6d039138830d7d8d665608ffbf235a04e))
+This log was last generated on Tue, 14 Mar 2023 14:26:34 GMT and should not be manually modified.
 
 ## 12.0.0
 
