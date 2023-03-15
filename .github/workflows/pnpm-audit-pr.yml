@@ -5,6 +5,8 @@
 
 name: pnpm-audit
 on: 
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
   workflow_call:
 jobs:
   pnpm-audit:

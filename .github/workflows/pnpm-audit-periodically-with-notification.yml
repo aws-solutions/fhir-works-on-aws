@@ -5,8 +5,8 @@
 
 name: pnpm-audit-schedule-with-notification 
 on:
-  pull_request:
-    types: [opened, synchronize, edited, reopened]
+  schedule:
+    - cron: '0 15 * * 1-5'
 jobs:
   pnpm-audit-work:
     uses:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Slack notification when workflow fails
         if: |
-          success()
+          failure()
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
