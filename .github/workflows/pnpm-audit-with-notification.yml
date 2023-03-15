@@ -59,16 +59,16 @@ jobs:
 
       - name: Report Status
         if: |
-          success() && github.head_ref
+          success() && github.head_ref=='refs/remotes/origin/develop'
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
             payload: |
               {
-              	"slack_message": "Github pnpm audit workflow result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              	"slack_message": "Github pnpm audit workflow result: ${{ job.status }}",
               	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               	"status": "${{ job.status }}",
-              	"ref_output": "${{ github.head_ref }}"
+              	"default_ref": "${{ github.head_ref }}"
               }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
