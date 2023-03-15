@@ -6,6 +6,7 @@
 import * as AWS from 'aws-sdk';
 import axios, { AxiosInstance } from 'axios';
 import { Chance } from 'chance';
+import * as dotenv from 'dotenv';
 import { decode } from 'jsonwebtoken';
 import { cloneDeep } from 'lodash';
 import { stringify } from 'qs';
@@ -82,6 +83,8 @@ export const getFhirClient = async ({
   providedAccessToken,
   tenant = 'tenant1'
 }: { role?: 'auditor' | 'practitioner'; providedAccessToken?: string; tenant?: string } = {}) => {
+  dotenv.config({ path: '.env' });
+
   const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID, MULTI_TENANCY_ENABLED } = process.env;
   if (API_URL === undefined) {
     throw new Error('API_URL environment variable is not defined');

@@ -2,12 +2,12 @@
 
 Secure logging includes metadata such as who, what, when, where, how, and other associated request and response data for incident analysis. You can enable secure logging during deployment. Amazon CloudWatch maintains secure logs as error logging only.
 
-Follow your organizational best practices and the [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/) by reviewing logged fields and access controls. All PII and PHI fields are encrypted using KMS keys. Customers can decrypt the encrypted fields for incident analysis using their KMS keys. 
+Follow your organizational best practices and the [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/) by reviewing logged fields and access controls. All PII and PHI fields are encrypted using KMS keys. Customers can decrypt the encrypted fields for incident analysis using their KMS keys.
 
 See the following as an example of Amazon CloudWatch logs for every API request:
 
 | Metadata      | Origin   | Fields                                 | Definition                                                                                                       | Example                                                                                                                                                                                                                           | Encrypted Information            |
-|---------------|----------|----------------------------------------|------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| ------------- | -------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | logMetadata   |          | uid                                    | Randomly created id to record the log                                                                            | "0b4d1252-b786-4900-8240-a7671813c8ef"                                                                                                                                                                                            |                                  |
 |               |          | timestamp                              | Time point when the logger middleware is triggered                                                               | "2023-01-17T15:57:560Z"                                                                                                                                                                                                           |                                  |
 |               |          | category                               | Event category                                                                                                   | "Audit Event"                                                                                                                                                                                                                     |                                  |
@@ -23,7 +23,7 @@ See the following as an example of Amazon CloudWatch logs for every API request:
 |               |          | httpMethod                             | Http method from request                                                                                         | "GET"                                                                                                                                                                                                                             |                                  |
 |               |          | apiGateway.event.httpmethod            | Http method from apiGateway                                                                                      | "GET"                                                                                                                                                                                                                             |                                  |
 |               |          | apiGateway.event.queryStringParameters | Query strings used for a search request                                                                          | "encrypted"                                                                                                                                                                                                                       | query strings used for a request |
-|               |          | apiGateway.event.pathParameters        | PathParameter for the request                                                                                    | { "proxy":"Patient/encrypted"   }                                                                                                                                                                                                 | resourceId                       |
+|               |          | apiGateway.event.pathParameters        | PathParameter for the request                                                                                    | { "proxy":"Patient/encrypted" }                                                                                                                                                                                                   | resourceId                       |
 |               | response | scopes                                 | The scopes that authz package intiallizes to allow user have (smart-deployment only)                             | [ "fhirUser", "openid", "patient/*.*", "launch/patient", "profile", "user/*.*", "patient_selection" ]                                                                                                                             |                                  |
 |               |          | usableScopes                           | The scopes a user can have after our authorization package has filtered what allowed (smart-deployment only)     | [ "patient/*.*", "user/*.*" ]                                                                                                                                                                                                     |                                  |
 | when          | request  | requestTimeEpoch                       | The time when the request is made                                                                                | "2023-01-17T15:53:46.000Z"                                                                                                                                                                                                        |                                  |
@@ -64,12 +64,13 @@ rushx deploy —-profile YOUR_AWS_PROFILE -c issuerEndpoint=YOUR_ISSUER_ENDPOINT
 
 ## Decrypting Security Logs
 
-1. Copy the encrypted string in the `encryptedPayLoad` field from the request in the Amazon CloudWatch log. 
+1. Copy the encrypted string in the `encryptedPayLoad` field from the request in the Amazon CloudWatch log.
 2. Configure AWS CLI to your AWS Account that has FHIR Deployment.
 3. Decrypt the encrypted string using the AWS CLI Decrypt function in your terminal. For more information, see [AWS CLI Decrypt](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/kms/decrypt.html). [](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/kms/decrypt.html)
 4. To decrypt by storing an encrypted string inside a text file, create a .txt file in the folder and name the .txt file something such as `encryptedfile.txt`.
 5. Paste the copied encrypted string into `encryptedfile.txt` and save it.
-6. Run the following decrypt command after entering the file name and correct Region of your FHIR  deployment.  
+6. Run the following decrypt command after entering the file name and correct Region of your FHIR deployment.
+
 ```
 aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) —query Plaintext —output text —region <REGION> | base64 —decode
 ```
@@ -79,12 +80,12 @@ aws kms decrypt —ciphertext-blob fileb://<(cat encryptedfile.txt | base64 -D) 
 1. Sign in to the **AWS Management Console** using the account where FWoA is deployed.
 2. Switch to the AWS Region where FWoA is deployed, if necessary.
 3. From the console, go to **Amazon CloudWatch**.
-4. In the sidebar, expand **Logs** and choose **Log** **groups**. 
-5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` log group. The uniqueID is apiURL domain id. For example, `API-Gateway-Execution-Logs_0000000000/dev`. 
-6. Choose the log group to see the log stream events. Note the **AWS Integration Endpoint RequestId** from the event details.  
+4. In the sidebar, expand **Logs** and choose **Log** **groups**.
+5. Find the `api-gateway-execution-logs_${uniqueID}/${stage}` log group. The uniqueID is apiURL domain id. For example, `API-Gateway-Execution-Logs_0000000000/dev`.
+6. Choose the log group to see the log stream events. Note the **AWS Integration Endpoint RequestId** from the event details.
 7. Locate the fhirserver log which will be: `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated. For example, `/aws/lambda/smart-fhir-service-dev-fhirServer00000000-000000000000`.
-8. Choose the name of the Log group to view the log group page.   
-9. Search for `AWS Integration Endpoint RequestId` and review the secure logging information for your incident analysis. You can have two screen shows of apigateway log group and show secure logging data in fhirserver. 
+8. Choose the name of the Log group to view the log group page.
+9. Search for `AWS Integration Endpoint RequestId` and review the secure logging information for your incident analysis. You can have two screen shows of apigateway log group and show secure logging data in fhirserver.
 
 ## Searching logs
 
@@ -101,7 +102,7 @@ Ideally, you should search or localize API Gateway base on the time stamp to fig
 
 ### Search extended request id in lambda logs to get to who/what/when log
 
-1. Search the `fhirserver` log group (Lambda function log group). It will be `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated. 
+1. Search the `fhirserver` log group (Lambda function log group). It will be `/aws/lambda/${stackname}-fhirServer${UniqueId}`. The uniqueID is randomly generated.
 2. Choose the **log group name**.
 3. Under **Log Streams**, choose **Search all log streams**.
 4. Enter the request id in double quotations.
@@ -109,5 +110,3 @@ Ideally, you should search or localize API Gateway base on the time stamp to fig
 
 > **Note**  
 > You can use the **jti** key found the in how attribute to correlate jti in IDP. For example, in Okta, you can open the system log page found under Reports to view system logs in Okta using **jti**. You can download the CSV and search the file to find the corresponding jti log.
-
-
