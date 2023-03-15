@@ -13,7 +13,8 @@ import {
   InvalidResourceError,
   isResourceNotFoundError,
   isInvalidResourceError,
-  UnauthorizedError
+  UnauthorizedError,
+  BadRequestError
 } from '@aws/fhir-works-on-aws-interface';
 import { TooManyConcurrentExportRequestsError } from '@aws/fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
 import AWS from 'aws-sdk';
@@ -940,6 +941,18 @@ describe('getExportStatus', () => {
       errorArray: [],
       errorMessage: ''
     });
+  });
+
+  test('Bad Request get export job status because jobId is too long', async () => {
+    // BUILD
+
+    const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
+
+    // OPERATE
+    // CHECK
+    await expect(dynamoDbDataService.getExportStatus('1234567890'.repeat(50))).rejects.toMatchObject(
+      new BadRequestError('id length is too long')
+    );
   });
 });
 
