@@ -1,6 +1,9 @@
 name: pnpm-audit
 on: 
   workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 jobs:
   pnpm-audit:
     runs-on: ubuntu-20.04
