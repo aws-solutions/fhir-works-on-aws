@@ -9,9 +9,10 @@ on:
     types: [opened, synchronize, edited, reopened]
 jobs:
   pnpm-audit-work:
-    Uses:
+    uses:
       ./.github/workflows/pnpm-audit-pr.yml
   slack-notification:
+    runs-on: ubuntu-20.04
     steps:
       - name: Slack notification when workflow fails
         if: |
