@@ -42,7 +42,7 @@ export default class JavaHapiValidator extends Stack {
             encryptionKey: props.s3KMSKey,
         });
         const igDeployment = new BucketDeployment(scope, `IGDeployment-${props.stage}`, {
-            sources: [Source.asset(path.resolve(__dirname, '../implementationGuides'))],
+            sources: [Source.asset(path.resolve(__dirname, '../../implementationGuides'))],
             destinationBucket: igBucket,
             memoryLimit: props.igMemoryLimit, // can be updated to increase the size of files being uploaded to S3
         });

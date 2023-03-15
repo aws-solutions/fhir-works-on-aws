@@ -129,13 +129,23 @@ export default class FhirWorksStack extends Stack {
         blockPublicPolicy: true,
         ignorePublicAcls: true,
         restrictPublicBuckets: true
-      }
+      },
+      versioned: true,
+      enforceSSL: true,
     });
     NagSuppressions.addResourceSuppressions(fhirLogsBucket, [
       {
         id: 'AwsSolutions-S1',
         reason: 'This is the logs bucket for access logs'
-      }
+      },
+      {
+        id: 'HIPAA.Security-S3BucketLoggingEnabled',
+        reason: 'This is the logs bucket for access logs',
+      },
+      {
+        id: 'HIPAA.Security-S3DefaultEncryptionKMS',
+        reason: 'bucket is encrypted by S3 Managed enryption',
+      },
     ]);
 
     if (props!.useHapiValidator) {
@@ -189,7 +199,8 @@ export default class FhirWorksStack extends Stack {
       },
       encryption: TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: kmsResources.dynamoDbKMSKey,
-      billingMode: BillingMode.PAY_PER_REQUEST
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      pointInTimeRecovery: true,
     });
     exportRequestDynamoDbTable.addGlobalSecondaryIndex({
       indexName: exportRequestTableJobStatusIndex,
@@ -221,6 +232,7 @@ export default class FhirWorksStack extends Stack {
       kmsResources.logKMSKey,
       props!.stage,
       props!.region,
+      this.partition,
       exportGlueWorkerType,
       exportGlueNumberWorkers,
       isMultiTenancyEnabled
@@ -317,23 +329,29 @@ export default class FhirWorksStack extends Stack {
         {
           id: 'AwsSolutions-APIG3',
           reason: 'Access is configured to be limited by a Usage Plan and API Key'
-        }
+        },
+        {
+          id: 'HIPAA.Security-APIGWSSLEnabled',
+          reason: 'Requests to the API Gateway are validated by the Lambda',
+        },
+        {
+          id: 'HIPAA.Security-APIGWCacheEnabledAndEncrypted',
+          reason: 'Requests are parsed for paths in the Lambda',
+        },
       ]
     );
 
     const lambdaDefaultEnvVars = {
-      API_URL: `https://${apiGatewayRestApi.restApiId}.execute-api.${props!.region}.amazonaws.com/${
-        props!.stage
-      }`,
+      API_URL: `https://${apiGatewayRestApi.restApiId}.execute-api.${props!.region}.amazonaws.com/${props!.stage
+        }`,
       S3_KMS_KEY: kmsResources.s3KMSKey.keyArn,
       RESOURCE_TABLE: resourceDynamoDbTable.tableName,
       EXPORT_REQUEST_TABLE: exportRequestDynamoDbTable.tableName,
       EXPORT_REQUEST_TABLE_JOB_STATUS_INDEX: exportRequestTableJobStatusIndex,
       FHIR_BINARY_BUCKET: fhirBinaryBucket.bucketName,
       ELASTICSEARCH_DOMAIN_ENDPOINT: `https://${elasticSearchResources.elasticSearchDomain.domainEndpoint}`,
-      OAUTH2_DOMAIN_ENDPOINT: `https://${cognitoResources.userPoolDomain.ref}.auth.${
-        props!.region
-      }.amazoncognito.com/oauth2`,
+      OAUTH2_DOMAIN_ENDPOINT: `https://${cognitoResources.userPoolDomain.ref}.auth.${props!.region
+        }.amazoncognito.com/oauth2`,
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
       CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v4.3.0',
@@ -341,8 +359,8 @@ export default class FhirWorksStack extends Stack {
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,
       LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.securityLogKMSKey
-      ? kmsResources.securityLogKMSKey.keyArn
-      : 'ENCRYPTION_TURNED_OFF',
+        ? kmsResources.securityLogKMSKey.keyArn
+        : 'ENCRYPTION_TURNED_OFF',
       ENABLE_SECURITY_LOGGING: `${props!.enableSecurityLogging}`,
     };
 
@@ -363,35 +381,200 @@ export default class FhirWorksStack extends Stack {
       }
     };
 
+    const startExportJobLambdaFunctionDLQ = new Queue(this, 'startExportJobLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'startExportJobLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(startExportJobLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const startExportJobLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'startExportJobLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [startExportJobLambdaFunctionDLQ],
+      },
+    );
+    startExportJobLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [startExportJobLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
+
     const startExportJobLambdaFunction = new NodejsFunction(this, 'startExportJobLambdaFunction', {
       ...defaultBulkExportLambdaProps,
-      handler: 'startExportJobHandler'
+      handler: 'startExportJobHandler',
+      reservedConcurrentExecutions: isDev ? 10 : 200,
+      deadLetterQueue: startExportJobLambdaFunctionDLQ,
     });
+
+    const stopExportJobLambdaFunctionDLQ = new Queue(this, 'stopExportJobLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'stopExportJobLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(stopExportJobLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const stopExportJobLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'stopExportJobLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [stopExportJobLambdaFunctionDLQ],
+      },
+    );
+    stopExportJobLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [stopExportJobLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
 
     const stopExportJobLambdaFunction = new NodejsFunction(this, 'stopExportJobLambdaFunction', {
       ...defaultBulkExportLambdaProps,
-      handler: 'stopExportJobHandler'
+      handler: 'stopExportJobHandler',
+      reservedConcurrentExecutions: isDev ? 10 : 200,
+      deadLetterQueue: stopExportJobLambdaFunctionDLQ,
     });
+
+    const getJobStatusLambdaFunctionDLQ = new Queue(this, 'getJobStatusLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'getJobStatusLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(getJobStatusLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const getJobStatusLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'getJobStatusLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [getJobStatusLambdaFunctionDLQ],
+      },
+    );
+    getJobStatusLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [getJobStatusLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
 
     const getJobStatusLambdaFunction = new NodejsFunction(this, 'getJobStatusLambdaFunction', {
       ...defaultBulkExportLambdaProps,
-      handler: 'getJobStatusHandler'
+      handler: 'getJobStatusHandler',
+      reservedConcurrentExecutions: isDev ? 10 : 200,
+      deadLetterQueue: getJobStatusLambdaFunctionDLQ,
     });
+
+    const updateStatusLambdaFunctionDLQ = new Queue(this, 'updateStatusLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'updateStatusLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(updateStatusLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const updateStatusLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'updateStatusLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [updateStatusLambdaFunctionDLQ],
+      },
+    );
+    updateStatusLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [updateStatusLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
 
     const updateStatusLambdaFunction = new NodejsFunction(this, 'updateStatusLambdaFunction', {
       ...defaultBulkExportLambdaProps,
       handler: 'updateStatusStatusHandler',
-      role: bulkExportResources.updateStatusLambdaRole
+      role: bulkExportResources.updateStatusLambdaRole,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
+      deadLetterQueue: updateStatusLambdaFunctionDLQ,
     });
+
+    const uploadGlueScriptsLambdaFunctionDLQ = new Queue(this, 'uploadGlueScriptsLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'uploadGlueScriptsLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(uploadGlueScriptsLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const uploadGlueScriptsLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'uploadGlueScriptsLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [uploadGlueScriptsLambdaFunctionDLQ],
+      },
+    );
+    uploadGlueScriptsLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [uploadGlueScriptsLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
 
     const uploadGlueScriptsLambdaFunction = new NodejsFunction(this, 'uploadGlueScriptsLambdaFunction', {
       timeout: Duration.seconds(30),
       memorySize: 192,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       runtime: Runtime.NODEJS_16_X,
       role: bulkExportResources.uploadGlueScriptsLambdaRole,
       description: 'Upload glue scripts to s3',
       handler: 'handler',
       entry: path.join(__dirname, '../bulkExport/uploadGlueScriptsToS3.ts'),
+      deadLetterQueue: uploadGlueScriptsLambdaFunctionDLQ,
       bundling: {
         ...defaultLambdaBundlingOptions,
         commandHooks: {
@@ -421,6 +604,37 @@ export default class FhirWorksStack extends Stack {
       }
     });
 
+    const updateSearchMappingsLambdaFunctionDLQ = new Queue(this, 'updateSearchMappingsLambdaFunctionDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'updateSearchMappingsLambdaFunctionDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(updateSearchMappingsLambdaFunctionDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const updateSearchMappingsLambdaFunctionDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'updateSearchMappingsLambdaFunctionDLQHttpsOnlyPolicy',
+      {
+        queues: [updateSearchMappingsLambdaFunctionDLQ],
+      },
+    );
+    updateSearchMappingsLambdaFunctionDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [updateSearchMappingsLambdaFunctionDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
+
     const updateSearchMappingsLambdaFunction = new NodejsFunction(
       this,
       'updateSearchMappingsLambdaFunction',
@@ -428,7 +642,9 @@ export default class FhirWorksStack extends Stack {
         timeout: Duration.seconds(300),
         memorySize: 512,
         runtime: Runtime.NODEJS_16_X,
+        reservedConcurrentExecutions: isDev ? 10 : 200,
         description: 'Custom resource Lambda to update the search mappings',
+        deadLetterQueue: updateSearchMappingsLambdaFunctionDLQ,
         role: new Role(this, 'updateSearchMappingsLambdaRole', {
           assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
           inlinePolicies: {
@@ -442,7 +658,10 @@ export default class FhirWorksStack extends Stack {
                 new PolicyStatement({
                   effect: Effect.ALLOW,
                   actions: ['xray:PutTraceSegments', 'xray:PutTelemetryRecords'],
-                  resources: ['*']
+                  resources: [
+                    `arn:${this.partition}:logs:${props!.region}:*:*`,
+                    `${elasticSearchResources.elasticSearchDomain.domainArn}/*`,
+                  ],
                 }),
                 new PolicyStatement({
                   effect: Effect.ALLOW,
@@ -497,7 +716,8 @@ export default class FhirWorksStack extends Stack {
       startExportJobLambdaFunction,
       getJobStatusLambdaFunction,
       stopExportJobLambdaFunction,
-      props!.stage
+      props!.stage,
+      kmsResources.logKMSKey,
     );
 
     // Define Backup Resources here:
@@ -557,12 +777,41 @@ export default class FhirWorksStack extends Stack {
       })
     );
 
+    const fhirServerDLQ = new Queue(this, 'fhirServerDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'fhirServerDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(fhirServerDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const fhirServerDLQHttpsOnlyPolicy = new QueuePolicy(this, 'fhirServerDLQHttpsOnlyPolicy', {
+      queues: [fhirServerDLQ],
+    });
+    fhirServerDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [fhirServerDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
+
     const fhirServerLambda = new NodejsFunction(this, 'fhirServer', {
       timeout: Duration.seconds(40),
       memorySize: 512,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'FHIR API Server',
       entry: path.join(__dirname, '../src/index.ts'),
       handler: 'handler',
+      deadLetterQueue: fhirServerDLQ,
       currentVersionOptions: {
         provisionedConcurrentExecutions: 5
       },
@@ -668,7 +917,21 @@ export default class FhirWorksStack extends Stack {
               new PolicyStatement({
                 effect: Effect.ALLOW,
                 actions: ['xray:PutTraceSegments', 'xray:PutTelemtryRecords'],
-                resources: ['*']
+                resources: [
+                  `arn:${this.partition}:logs:${props!.region}:*:*`,
+                  kmsResources.dynamoDbKMSKey.keyArn,
+                  resourceDynamoDbTable.tableArn,
+                  `${resourceDynamoDbTable.tableArn}/index/*`,
+                  exportRequestDynamoDbTable.tableArn,
+                  `${exportRequestDynamoDbTable.tableArn}/index/*`,
+                  `${elasticSearchResources.elasticSearchDomain.domainArn}/*`,
+                  fhirBinaryBucket.bucketArn,
+                  fhirBinaryBucket.arnForObjects('*'),
+                  bulkExportResources.bulkExportResultsBucket.bucketArn,
+                  `${bulkExportResources.bulkExportResultsBucket.bucketArn}/*`,
+                  bulkExportResources.exportResultsSignerRole.roleArn,
+                  bulkExportStateMachine.bulkExportStateMachine.stateMachineArn,
+                ],
               }),
               new PolicyStatement({
                 effect: Effect.ALLOW,
@@ -772,9 +1035,17 @@ export default class FhirWorksStack extends Stack {
       encryptionMasterKey: Alias.fromAliasName(this, 'ddbToEsDLQMasterKeyId', 'alias/aws/sqs')
     });
 
+    NagSuppressions.addResourceSuppressions(ddbToEsDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+
     const ddbToEsLambda = new NodejsFunction(this, 'ddbToEs', {
       timeout: Duration.seconds(300),
       runtime: Runtime.NODEJS_16_X,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'Write DDB changes from `resource` table to ElasticSearch service',
       handler: 'handler',
       entry: path.join(__dirname, '../src/ddbToEsLambda/index.ts'),
@@ -785,6 +1056,7 @@ export default class FhirWorksStack extends Stack {
         ENABLE_ES_HARD_DELETE: `${props!.enableESHardDelete}`,
         ...lambdaDefaultEnvVars
       },
+      deadLetterQueue: ddbToEsDLQ,
       role: new Role(this, 'DdbToEsLambdaRole', {
         assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
         inlinePolicies: {
@@ -808,7 +1080,12 @@ export default class FhirWorksStack extends Stack {
               new PolicyStatement({
                 effect: Effect.ALLOW,
                 actions: ['xray:PutTraceSegments', 'xray:PutTelemetryRecords'],
-                resources: ['*']
+                resources: [
+                  `arn:${this.partition}:logs:${props!.region}:*:*`,
+                  resourceDynamoDbTable.tableStreamArn!,
+                  `${elasticSearchResources.elasticSearchDomain.domainArn}/*`,
+                  ddbToEsDLQ.queueArn,
+                ],
               }),
               new PolicyStatement({
                 effect: Effect.ALLOW,
@@ -851,10 +1128,39 @@ export default class FhirWorksStack extends Stack {
       })
     );
 
+    const subscriptionReaperDLQ = new Queue(this, 'subscriptionReaperDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'subscriptionReaperDLQKey', 'alias/aws/sqs'),
+    });
+    const subscriptionReaperDLQHttpsOnlyPolicy = new QueuePolicy(this, 'subscriptionReaperDLQHttpsOnlyPolicy', {
+      queues: [subscriptionReaperDLQ],
+    });
+    subscriptionReaperDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [subscriptionReaperDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
+    NagSuppressions.addResourceSuppressions(subscriptionReaperDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+
     const subscriptionReaper = new NodejsFunction(this, 'subscriptionReaper', {
       timeout: Duration.seconds(30),
       runtime: Runtime.NODEJS_16_X,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'Scheduled Lambda to remove expired Subscriptions',
+      deadLetterQueue: subscriptionReaperDLQ,
       role: new Role(this, 'subscriptionReaperRole', {
         assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
         inlinePolicies: {
@@ -935,6 +1241,7 @@ export default class FhirWorksStack extends Stack {
       reservedConcurrentExecutions: isDev ? 10 : 200,
       runtime: Runtime.NODEJS_16_X,
       description: 'Match ddb events against active Subscriptions and emit notifications',
+      deadLetterQueue: subscriptionsMatcherDLQ,
       role: new Role(this, 'subscriptionsMatcherLambdaRole', {
         assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
         inlinePolicies: {
@@ -968,7 +1275,13 @@ export default class FhirWorksStack extends Stack {
               new PolicyStatement({
                 effect: Effect.ALLOW,
                 actions: ['xray:PutTraceSegments', 'xray:PutTelemetryRecords'],
-                resources: ['*']
+                resources: [
+                  `arn:${this.partition}:logs:${props!.region}:*:*`,
+                  resourceDynamoDbTable.tableStreamArn!,
+                  resourceDynamoDbTable.tableArn,
+                  `${resourceDynamoDbTable.tableArn}/index/*`,
+                  subscriptionsMatcherDLQ.queueArn,
+                ],
               }),
               new PolicyStatement({
                 effect: Effect.ALLOW,
@@ -1031,14 +1344,47 @@ export default class FhirWorksStack extends Stack {
       );
     }
 
+    const subscriptionsRestHookDLQ = new Queue(this, 'subscriptionsRestHookDLQ', {
+      retentionPeriod: Duration.days(14),
+      encryptionMasterKey: Alias.fromAliasName(this, 'subscriptionsRestHookDLQKey', 'alias/aws/sqs'),
+    });
+    NagSuppressions.addResourceSuppressions(subscriptionsRestHookDLQ, [
+      {
+        id: 'AwsSolutions-SQS3',
+        reason: 'This is a DLQ.',
+      },
+    ]);
+    const subscriptionsRestHookDLQHttpsOnlyPolicy = new QueuePolicy(
+      this,
+      'subscriptionsRestHookDLQHttpsOnlyPolicy',
+      {
+        queues: [subscriptionsRestHookDLQ],
+      },
+    );
+    subscriptionsRestHookDLQHttpsOnlyPolicy.document.addStatements(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ['SQS:*'],
+        resources: [subscriptionsRestHookDLQ.queueArn],
+        principals: [new AnyPrincipal()],
+        conditions: {
+          Bool: {
+            'aws:SecureTransport': false,
+          },
+        },
+      }),
+    );
+
     // eslint-disable-next-line no-new
     new NodejsFunction(this, 'subscriptionsRestHook', {
       timeout: Duration.seconds(10),
       runtime: Runtime.NODEJS_16_X,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'Send rest-hook notification for subscription',
       role: subscriptionsResources.restHookLambdaRole,
       handler: 'handler',
       entry: path.join(__dirname, '../src/subscriptions/restHookLambda/index.ts'),
+      deadLetterQueue: subscriptionsRestHookDLQ,
       bundling: {
         target: 'es2020'
       },
