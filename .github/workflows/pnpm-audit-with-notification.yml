@@ -59,7 +59,7 @@ jobs:
 
       - name: Report Status
         if: |
-          success() && github.head_ref=='refs/remotes/origin/jay/pnpm-audit-workflow-with-notification'
+          success() && github.head_ref=='jay/pnpm-audit-workflow-with-notification'
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
