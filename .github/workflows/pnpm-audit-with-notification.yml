@@ -57,9 +57,9 @@ jobs:
           cd common/temp
           pnpm audit --prod
 
-      - name: Report Status
+      - name: Slack notification when workflow fails
         if: |
-          success() && github.head_ref=='jay/pnpm-audit-workflow-with-notification'
+          failure() && github.head_ref=='develop'
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
