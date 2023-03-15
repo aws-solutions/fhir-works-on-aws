@@ -6,12 +6,15 @@
 
 import * as AWS from 'aws-sdk';
 import { AxiosInstance } from 'axios';
+import * as dotenv from 'dotenv';
 import { v4 } from 'uuid';
 import waitForExpect from 'wait-for-expect';
 import { SubscriptionsHelper } from './SubscriptionsHelper';
 import { getFhirClient, randomSubscription, sleep } from './utils';
 
 jest.setTimeout(700_000);
+
+dotenv.config({ path: '.env' });
 
 const {
   SUBSCRIPTIONS_ENABLED,
