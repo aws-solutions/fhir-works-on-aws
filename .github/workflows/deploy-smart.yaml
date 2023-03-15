@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - enableMultiTenancy: true
+          - enableMultiTenancy: false
             region: us-east-1
             issuerEndpointSecretName: SMART_ISSUER_ENDPOINT
             oAuth2ApiEndpointSecretName: SMART_OAUTH2_API_ENDPOINT
