@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Slack notification when workflow fails
         if: |
-          failure()
+          success()
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
