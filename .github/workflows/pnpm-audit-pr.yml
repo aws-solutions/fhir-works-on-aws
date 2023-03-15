@@ -1,15 +1,6 @@
-#
-#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-#  SPDX-License-Identifier: Apache-2.0
-#
-
 name: pnpm-audit
 on: 
-  pull_request:
-    types: [opened, synchronize, edited, reopened]
-
-  schedule:
-    - cron: '0 15 * * 1-5'
+  workflow_call:
 jobs:
   pnpm-audit:
     runs-on: ubuntu-20.04
@@ -56,20 +47,3 @@ jobs:
         run: |
           cd common/temp
           pnpm audit --prod
-
-      - name: Slack notification when workflow fails
-        if: |
-          failure() && github.head_ref=='develop'
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-            payload: |
-              {
-              	"slack_message": "Github pnpm audit workflow result: ${{ job.status }}",
-              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              	"status": "${{ job.status }}",
-              	"default_ref": "${{ github.head_ref }}"
-              }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
-
