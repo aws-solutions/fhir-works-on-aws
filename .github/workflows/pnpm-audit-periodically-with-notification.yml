@@ -5,8 +5,8 @@
 
 name: pnpm-audit-schedule-with-notification 
 on:
-  schedule:
-    - cron: '0 15 * * 1-5'
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
 jobs:
   pnpm-audit:
     Uses:
