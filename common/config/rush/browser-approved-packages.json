@@ -108,7 +108,7 @@
     },
     {
       "name": "aws-sdk-mock",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-xray-sdk",
@@ -153,6 +153,10 @@
     {
       "name": "depcheck",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "dotenv",
+      "allowedCategories": ["production"]
     },
     {
       "name": "errorhandler",
@@ -248,7 +252,7 @@
     },
     {
       "name": "jest-each",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-mock-extended",
