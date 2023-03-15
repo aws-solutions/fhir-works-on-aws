@@ -1,0 +1,30 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: pnpm-audit-schedule-with-notification 
+on:
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
+jobs:
+  pnpm-audit-work:
+    Uses:
+      ./.github/workflows/pnpm-audit-pr.yml
+  slack-notification:
+    steps:
+      - name: Slack notification when workflow fails
+        if: |
+          failure()
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+            payload: |
+              {
+              	"slack_message": "Github pnpm audit workflow result: ${{ job.status }}",
+              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              	"status": "${{ job.status }}",
+              	"default_ref": "${{ github.ref_name }}"
+              }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
