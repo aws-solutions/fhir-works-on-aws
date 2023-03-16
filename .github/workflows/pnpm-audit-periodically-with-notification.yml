@@ -1,0 +1,29 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: pnpm-audit-schedule-with-notification 
+on:
+  schedule:
+    - cron: '0 15 * * 1-5'
+jobs:
+  pnpm-audit-work:
+    uses:
+      ./.github/workflows/pnpm-audit-pr.yml
+  slack-notification:
+    needs: pnpm-audit-work
+    runs-on: ubuntu-20.04
+    if: failure()
+    steps:
+      - name: Slack notification when pnpm-audit-work fails
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+            payload: |
+              {
+              	"slack_message": "On ${{ github.ref_name }} branch of ${{ github.repository }}:\nGithub pnpm audit workflow result: ${{ needs.pnpm-audit-work.result }}",
+              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
