@@ -141,6 +141,9 @@ Yes, adding MFA delete adds an additional layer of security to your S3 buckets. 
 **What is recommended to configure data-event logging?**
 [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) is recommended for logging FWoA data events. To configure data-event logging, [create a “trail”](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html) for your AWS account. Be sure to follow [CloudTrail security best practices](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html) when doing so.
 
+**What is recommended for Export API throttling**
+AWS Glue is used in Bulk Export jobs. [Prevent ThrottlingException or Rate exceeded errors when using AWS Glue](https://aws.amazon.com/premiumsupport/knowledge-center/glue-throttling-rate-exceeded/) is recommended to throttle requests to match the number of workers configured for AWS Glue in your cloud formation template.
+
 ### Development
 
 [Instructions for making local code changes](../../DEVELOPMENT.md)
