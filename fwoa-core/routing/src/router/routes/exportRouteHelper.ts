@@ -18,14 +18,23 @@ export default class ExportRouteHelper {
     if (req.headers.prefer && req.headers.prefer !== 'respond-async') {
       throw new createHttpError.BadRequest('We only support asyncronous export job request');
     }
-    if (
+
+    const timeFormatErrorMsg =
+      "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)";
+    let since;
+    if (req.query._since && isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)) {
+      try {
+        since = new Date(req.query._since).toISOString();
+      } catch (error) {
+        throw new createHttpError.BadRequest(timeFormatErrorMsg);
+      }
+    } else if (
       (req.query._since && !isString(req.query._since)) ||
       (req.query._since && isString(req.query._since) && !dateTimeWithTimeZoneRegExp.test(req.query._since))
     ) {
-      throw new createHttpError.BadRequest(
-        "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
-      );
+      throw new createHttpError.BadRequest(timeFormatErrorMsg);
     }
+
     const { userIdentity } = res.locals;
 
     const initiateExportRequest: InitiateExportRequest = {
@@ -33,10 +42,7 @@ export default class ExportRouteHelper {
       exportType,
       transactionTime: new Date().toISOString(),
       outputFormat: isString(req.query._outputFormat) ? req.query._outputFormat : undefined,
-      since:
-        isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)
-          ? new Date(req.query._since).toISOString()
-          : undefined,
+      since,
       type: isString(req.query._type) ? req.query._type : undefined,
       groupId: isString(req.params.id) ? req.params.id : undefined,
       tenantId: res.locals.tenantId,

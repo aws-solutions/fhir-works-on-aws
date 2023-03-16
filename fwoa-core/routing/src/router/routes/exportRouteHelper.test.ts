@@ -44,6 +44,24 @@ describe('buildInitiateExportRequest', () => {
     });
   });
 
+  test('System Export request with invalid _since query parameter', () => {
+    const req = mockRequest({
+      query: {
+        _outputFormat: 'ndjson',
+        _since: 'a2020-09-01T00:00:00Z',
+        _type: 'Patient'
+      },
+      headers: {
+        prefer: 'respond-async'
+      }
+    });
+    try {
+      ExportRouteHelper.buildInitiateExportRequest(req, mockedResponse, 'system', r4Version);
+    } catch (e) {
+      expect((e as any).name).toEqual('BadRequestError');
+    }
+  });
+
   test('Group Export request with query parameters', () => {
     const req = mockRequest({
       query: {
