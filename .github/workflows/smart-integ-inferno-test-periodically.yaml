@@ -1,7 +1,7 @@
 name: (SMART) Unit Tests, Integration Test periodically
 on:
   schedule:
-    - cron: '0 0 1,15 * *'
+    - cron: '0 13 1,15 * *'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.SMART_AWS_ACCESS_KEY_ID }}
