@@ -49,7 +49,7 @@ describe('buildInitiateExportRequest', () => {
     const req = mockRequest({
       query: {
         _outputFormat: 'ndjson',
-        _since: 'a2020-09-01T00:00:00Z',
+        _since: '/2020-09-01T00:00:00Z',
         _type: 'Patient'
       },
       headers: {

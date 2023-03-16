@@ -22,17 +22,16 @@ export default class ExportRouteHelper {
     const timeFormatErrorMsg =
       "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)";
     let since;
-    if (req.query._since && isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)) {
-      try {
-        since = new Date(req.query._since).toISOString();
-      } catch (error) {
+    if (req.query._since) {
+      if (isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)) {
+        try {
+          since = new Date(req.query._since).toISOString();
+        } catch (error) {
+          throw new createHttpError.BadRequest(timeFormatErrorMsg);
+        }
+      } else {
         throw new createHttpError.BadRequest(timeFormatErrorMsg);
       }
-    } else if (
-      (req.query._since && !isString(req.query._since)) ||
-      (req.query._since && isString(req.query._since) && !dateTimeWithTimeZoneRegExp.test(req.query._since))
-    ) {
-      throw new createHttpError.BadRequest(timeFormatErrorMsg);
     }
 
     const { userIdentity } = res.locals;
