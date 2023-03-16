@@ -24,11 +24,7 @@ export default class ExportRouteHelper {
     let since;
     if (req.query._since) {
       if (isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)) {
-        try {
-          since = new Date(req.query._since).toISOString();
-        } catch (error) {
-          throw new createHttpError.BadRequest(timeFormatErrorMsg);
-        }
+        since = new Date(req.query._since).toISOString();
       } else {
         throw new createHttpError.BadRequest(timeFormatErrorMsg);
       }
