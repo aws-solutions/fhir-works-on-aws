@@ -55,7 +55,7 @@ describe('buildInitiateExportRequest', () => {
         prefer: 'respond-async'
       }
     });
-    return expect(() =>
+    await expect(() =>
       ExportRouteHelper.buildInitiateExportRequest(req, mockedResponse, 'system', r4Version)
     ).toThrowError(
       "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
