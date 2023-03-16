@@ -63,11 +63,17 @@ describe('captureFullUrlParts', () => {
     const estTimeZone = '2020-09-02T00:00:00-05:00';
     const invalidUtcTimeZone = '2020-09-02T00:00:00R';
     const timeWithoutTimeZone = '2020-09-02T00:00:00';
+    const invalidStringTimeStart = '/2020-09-02T00:00:00Z';
+    const invalidStringTimeEnd = '2020-09-02T00:00:00Z"';
+    const invalidStringTimeMid = '2020-09-02/T00:00:00Z';
 
     expect(dateTimeWithTimeZoneRegExp.test(utcTimeZone)).toBeTruthy();
     expect(dateTimeWithTimeZoneRegExp.test(estTimeZone)).toBeTruthy();
     expect(dateTimeWithTimeZoneRegExp.test(invalidUtcTimeZone)).toBeFalsy();
     expect(dateTimeWithTimeZoneRegExp.test(timeWithoutTimeZone)).toBeFalsy();
+    expect(dateTimeWithTimeZoneRegExp.test(invalidStringTimeStart)).toBeFalsy();
+    expect(dateTimeWithTimeZoneRegExp.test(invalidStringTimeEnd)).toBeFalsy();
+    expect(dateTimeWithTimeZoneRegExp.test(invalidStringTimeMid)).toBeFalsy();
   });
 });
 
