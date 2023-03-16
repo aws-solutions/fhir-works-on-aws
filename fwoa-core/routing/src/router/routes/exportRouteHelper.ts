@@ -19,14 +19,14 @@ export default class ExportRouteHelper {
       throw new createHttpError.BadRequest('We only support asyncronous export job request');
     }
 
-    const timeFormatErrorMsg =
-      "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)";
     let since;
     if (req.query._since) {
       if (isString(req.query._since) && dateTimeWithTimeZoneRegExp.test(req.query._since)) {
         since = new Date(req.query._since).toISOString();
       } else {
-        throw new createHttpError.BadRequest(timeFormatErrorMsg);
+        throw new createHttpError.BadRequest(
+          "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
+        );
       }
     }
 
