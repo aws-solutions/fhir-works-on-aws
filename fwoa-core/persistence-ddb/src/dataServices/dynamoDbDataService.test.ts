@@ -635,7 +635,7 @@ describe('initiateExport', () => {
     );
   });
 
-  test('Export request is rejected if user request type they do not have permission for', async () => {
+  test('Export request is rejected if user request invalid type', async () => {
     // BUILD
     // Return an export request that is in-progress
     AWSMock.mock('DynamoDB', 'query', (params: QueryInput, callback: Function) => {
@@ -657,7 +657,7 @@ describe('initiateExport', () => {
     const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
     // OPERATE
     await expect(
-      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Group' })
+      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Invalid' })
     ).rejects.toMatchObject(
       new UnauthorizedError('User does not have permission for requested resource type.')
     );
