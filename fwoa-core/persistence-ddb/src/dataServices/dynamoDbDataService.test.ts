@@ -565,6 +565,7 @@ describe('updateCreateSupported flag', () => {
 
 describe('initiateExport', () => {
   const initiateExportRequest: InitiateExportRequest = {
+    allowedResourceTypes: ['Patient', 'DocumentReference'],
     requesterUserId: 'userId-1',
     exportType: 'system',
     transactionTime: '2020-09-01T12:00:00Z',
@@ -575,6 +576,7 @@ describe('initiateExport', () => {
   };
 
   const initiateExportRequestWithMultiTenancy: InitiateExportRequest = {
+    allowedResourceTypes: ['Patient', 'DocumentReference'],
     requesterUserId: 'userId-1',
     exportType: 'system',
     transactionTime: '2020-09-01T12:00:00Z',
@@ -633,7 +635,7 @@ describe('initiateExport', () => {
     );
   });
 
-  test('Export request goes through if user request specific resource type', async () => {
+  test('Export request is rejected if user request invalid type', async () => {
     // BUILD
     // Return an export request that is in-progress
     AWSMock.mock('DynamoDB', 'query', (params: QueryInput, callback: Function) => {
@@ -654,10 +656,11 @@ describe('initiateExport', () => {
 
     const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
     // OPERATE
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
     await expect(
-      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Group' })
-    ).resolves.toMatch(uuidRegex);
+      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Invalid' })
+    ).rejects.toMatchObject(
+      new UnauthorizedError('User does not have permission for requested resource type.')
+    );
   });
 
   each(['in-progress', 'canceling']).test(
