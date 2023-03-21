@@ -4,3 +4,4 @@
  */
 
 export { FhirWorksAppRegistry } from './fhirWorksAppRegistry';
+export { getTestCondition, getMedicationRequest } from './testData';

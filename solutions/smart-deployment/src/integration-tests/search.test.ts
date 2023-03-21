@@ -2,8 +2,8 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import { getMedicationRequest, getTestCondition } from '@aws/fhir-works-on-aws-utilities';
 import { AxiosInstance } from 'axios';
-import { getMedicationRequest, getTestCondition } from './testData';
 import {
   aFewMinutesAgoAsDate,
   expectResourceToBePartOfSearchResults,
@@ -452,7 +452,7 @@ describe('search', () => {
 
       const codingWithoutDash: typeof codingWithDash = {
         code: '123456',
-        display: 'code with dashes',
+        display: 'code without dashes',
         system: 'http://snomed.info/sct'
       };
 

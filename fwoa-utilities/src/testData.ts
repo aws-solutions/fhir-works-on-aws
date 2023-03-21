@@ -5,7 +5,7 @@
 
 import { Chance } from 'chance';
 
-// eslint-disable-next-line import/prefer-default-export
+// eslint-disable-next-line import/prefer-default-export, @typescript-eslint/explicit-function-return-type
 export const getTestCondition = () => {
   const chance = new Chance();
   return {
@@ -85,6 +85,7 @@ export const getTestCondition = () => {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getMedicationRequest = () => {
   const chance = new Chance();
   return {
