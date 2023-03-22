@@ -66,10 +66,6 @@ FHIR Works on AWS is powered by single-function components. These functions prov
 - [Search](https://github.com/awslabs/fhir-works-on-aws-search-es) - Enables system-wide searching (/?name=bob) and type searching (/Patient/?name=bob).
 - History - (_Not implemented_) Searches all archived/older versioned resources. This can be done at a system, type or instance level.
 
-## Best Practices
-
-[Best Practices](https://github.com/aws-solutions/fhir-works-on-aws/tree/develop/solutions/smart-deployment#best-practices)
-
 ## License
 
 This project is licensed under the Apache-2.0 license.
