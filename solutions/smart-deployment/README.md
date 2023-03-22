@@ -112,7 +112,7 @@ Avoid using TLSv1.0, TLS v1.1, and insecure 3DES and CBC cipher suites, which ha
 
 To create a custom domain, see [Setting up custom domain names for REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html).
 
-**What are the recommendations for scope settings?**
+**What are the recommendations for scope settings? (SMART Deployment Only)**
 
 When your IdP vends [SMART scopes](http://hl7.org/fhir/smart-app-launch/1.0.0/scopes-and-launch-context/index.html) in the JWT, the requestor has permission to perform defined scope actions.
 
@@ -140,6 +140,9 @@ Yes, adding MFA delete adds an additional layer of security to your S3 buckets. 
 
 **What is recommended to configure data-event logging?**
 [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) is recommended for logging FWoA data events. To configure data-event logging, [create a “trail”](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html) for your AWS account. Be sure to follow [CloudTrail security best practices](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html) when doing so.
+
+**What is recommended for concurrect lambda executions**
+Lambda concurrent executions are defined in each lambda function in solutions/smart-deployment/src/lib/cdk-infra-stack.ts. We are using [reserved concurrency](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html) and [provisioned concurrency](https://docs.aws.amazon.com/lambda/latest/dg/provisioned-concurrency.html) to configure the number of requests a function can handle at the same time. Follow the guidance [here](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) to customize lambda scaling and concurrency.
 
 ### Development
 
