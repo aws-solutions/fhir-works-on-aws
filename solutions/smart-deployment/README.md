@@ -112,7 +112,7 @@ Avoid using TLSv1.0, TLS v1.1, and insecure 3DES and CBC cipher suites, which ha
 
 To create a custom domain, see [Setting up custom domain names for REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html).
 
-**What are the recommendations for scope settings?**
+**What are the recommendations for scope settings? (SMART Deployment Only)**
 
 When your IdP vends [SMART scopes](http://hl7.org/fhir/smart-app-launch/1.0.0/scopes-and-launch-context/index.html) in the JWT, the requestor has permission to perform defined scope actions.
 
