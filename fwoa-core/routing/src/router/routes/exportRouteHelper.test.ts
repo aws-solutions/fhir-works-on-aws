@@ -6,6 +6,7 @@ import ExportRouteHelper from './exportRouteHelper';
 
 describe('buildInitiateExportRequest', () => {
   const r4Version: FhirVersion = '4.0.1';
+  const mockedAllowedResourceTypes = BASE_R4_RESOURCES;
   const mockedResponse = mockResponse({
     locals: {
       userIdentity: { sub: 'abcd-1234' },
@@ -30,6 +31,7 @@ describe('buildInitiateExportRequest', () => {
       req,
       mockedResponse,
       'system',
+      mockedAllowedResourceTypes,
       r4Version
     );
     expect(actualInitiateExportRequest).toMatchObject({
@@ -40,6 +42,7 @@ describe('buildInitiateExportRequest', () => {
       since: '2020-09-01T00:00:00.000Z',
       type: 'Patient',
       serverUrl: 'http://test.acme.com',
+      allowedResourceTypes: mockedAllowedResourceTypes,
       fhirVersion: r4Version
     });
   });
@@ -56,7 +59,13 @@ describe('buildInitiateExportRequest', () => {
       }
     });
     await expect(() =>
-      ExportRouteHelper.buildInitiateExportRequest(req, mockedResponse, 'system', r4Version)
+      ExportRouteHelper.buildInitiateExportRequest(
+        req,
+        mockedResponse,
+        'system',
+        BASE_R4_RESOURCES,
+        r4Version
+      )
     ).toThrowError(
       "Query '_since' should be in the FHIR Instant format: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
     );
@@ -78,6 +87,7 @@ describe('buildInitiateExportRequest', () => {
       req,
       mockedResponse,
       'group',
+      mockedAllowedResourceTypes,
       r4Version
     );
     expect(actualInitiateExportRequest).toMatchObject({
@@ -89,6 +99,7 @@ describe('buildInitiateExportRequest', () => {
       type: 'Patient',
       groupId: '1',
       serverUrl: 'http://test.acme.com',
+      allowedResourceTypes: mockedAllowedResourceTypes,
       fhirVersion: r4Version
     });
   });
@@ -104,6 +115,7 @@ describe('buildInitiateExportRequest', () => {
       req,
       mockedResponse,
       'group',
+      mockedAllowedResourceTypes,
       r4Version
     );
     expect(actualInitiateExportRequest).toMatchObject({
@@ -114,6 +126,7 @@ describe('buildInitiateExportRequest', () => {
       type: undefined,
       groupId: '1',
       serverUrl: 'http://test.acme.com',
+      allowedResourceTypes: mockedAllowedResourceTypes,
       fhirVersion: r4Version
     });
   });
@@ -130,7 +143,13 @@ describe('buildInitiateExportRequest', () => {
     });
 
     try {
-      ExportRouteHelper.buildInitiateExportRequest(req, mockedResponse, 'group', r4Version);
+      ExportRouteHelper.buildInitiateExportRequest(
+        req,
+        mockedResponse,
+        'group',
+        mockedAllowedResourceTypes,
+        r4Version
+      );
     } catch (e) {
       expect((e as any).name).toEqual('BadRequestError');
       expect((e as any).message).toEqual('We only support exporting resources into ndjson formatted file');
@@ -148,7 +167,13 @@ describe('buildInitiateExportRequest', () => {
     });
 
     try {
-      ExportRouteHelper.buildInitiateExportRequest(req, mockedResponse, 'group', r4Version);
+      ExportRouteHelper.buildInitiateExportRequest(
+        req,
+        mockedResponse,
+        'group',
+        mockedAllowedResourceTypes,
+        r4Version
+      );
     } catch (e) {
       expect((e as any).name).toEqual('BadRequestError');
       expect((e as any).message).toEqual(
