@@ -141,8 +141,8 @@ Yes, adding MFA delete adds an additional layer of security to your S3 buckets. 
 **What is recommended to configure data-event logging?**
 [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) is recommended for logging FWoA data events. To configure data-event logging, [create a “trail”](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html) for your AWS account. Be sure to follow [CloudTrail security best practices](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html) when doing so.
 
-**What is recommended for Export API throttling**
-AWS Glue is used in Bulk Export jobs. [Prevent ThrottlingException or Rate exceeded errors when using AWS Glue](https://aws.amazon.com/premiumsupport/knowledge-center/glue-throttling-rate-exceeded/) is recommended to throttle requests to match the number of workers configured for AWS Glue in your cloud formation template.
+**What is recommended for concurrect lambda executions**
+Lambda concurrent executions are defined in each lambda function in solutions/smart-deployment/src/lib/cdk-infra-stack.ts. We are using [reserved concurrency](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html) and [provisioned concurrency](https://docs.aws.amazon.com/lambda/latest/dg/provisioned-concurrency.html) to configure the number of requests a function can handle at the same time. Follow the guidance [here](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) to customize lambda scaling and concurrency.
 
 ### Development
 
