@@ -193,6 +193,8 @@ FWoA provides the following additional features on top of the standard offering.
 | Enable OpenSearch Hard Delete                                                                        | enableESHardDelete                                        | FWoA uses soft delete for resource deletion by default. Set enableESHardDelete to true to enable hard delete in OpenSearch cluster.                                                  |
 | [Dynamodb Daily Backup](../../../INSTALL.md#dynamodb-table-backups)                                  | enableBackup                                              | Daily DynamoDB Table back-ups can be optionally deployed via an additional fhir-server-backups stack.                                                                                |
 
+Additional customization information can be found in document [CUSTOMIZE.md](../documentation/CUSTOMIZE.md).
+
 ### Run Integration Test
 
 1. Integration test requires at least 100 patient resources created before running, or it will fail. The best way to do this is posting a bundle of 25 patient resources 4 times.

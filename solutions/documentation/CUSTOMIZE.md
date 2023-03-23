@@ -2,7 +2,7 @@
 
 ## API customization
 
-To change what this FHIR server supports, both in terms of operations and in resource types, please check out the [config.ts](src/config.ts) file.
+To change what this FHIR server supports, both in terms of operations and in resource types, please check out the [config.ts](../smart-deployment/src/config.ts) file.
 
 ### Resource types
 
@@ -55,7 +55,7 @@ You will also need to specify how the access_tokens your authorization server mi
 
 The FHIR Works on AWS deployment can be customized to provide CORS support for browser-based applications. The following configuration steps are required:
 
-- Supply a [CorsOptions](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/cors/index.d.ts) configuration when building the [serverless router](src/index.ts). For example
+- Supply a [CorsOptions](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/cors/index.d.ts) configuration when building the [serverless router](../smart-deployment/src/index.ts). For example
   ```ts
   const corsOptions: CorsOptions = {...};
   ...

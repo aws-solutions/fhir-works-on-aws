@@ -212,6 +212,8 @@ FWoA provides the following additional features on top of the standard offering.
 | Enable OpenSearch Hard Delete                                                                        | enableESHardDelete                                        | FWoA uses soft delete for resource deletion by default. Set enableESHardDelete to true to enable hard delete in OpenSearch cluster.                                                  |
 | [Dynamodb Daily Backup](../../../INSTALL.md#dynamodb-table-backups)                                  | enableBackup                                              | Daily DynamoDB Table back-ups can be optionally deployed via an additional fhir-server-backups stack.                                                                                |
 
+Additional customization information can be found in document [CUSTOMIZE.md](../documentation/CUSTOMIZE.md).
+
 #### Postman (recommended)
 
 To test we suggest you to use Postman, please see [here](#using-postman-to-make-api-requests) for steps.
