@@ -6,12 +6,12 @@ and if the resource matches the given criteria, it sends a message on the define
 
 FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/subscription.html
 
-![Architecture diagram](../smart-deployment/resources/FWoA-subscriptions.svg)
+![Architecture diagram](./FWoA-subscriptions.svg)
 
 ## Getting Started
 
 1. As an additional security measure, all destination endpoints must be allow-listed before notifications can be delivered to them.
-   Update [src/subscriptions/allowList.ts](../smart-deployment/src/subscriptions/allowList.ts) to configure your allow-list.
+   Update src/subscriptions/allowList.ts([smart-deployment](../smart-deployment/src/subscriptions/allowList.ts), [deployment](../deployment/src/subscriptions/allowList.ts)) to configure your allow-list.
 
 2. Use the `enableSubscriptions` option when deploying the stack:
 
