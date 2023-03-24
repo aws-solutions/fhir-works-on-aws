@@ -419,7 +419,7 @@ describe('UPDATE', () => {
       // CHECK
       expect(isResourceNotFoundError(e)).toEqual(true);
       if (isResourceNotFoundError(e)) {
-        expect(e.message).toEqual(`Resource Patient/${id} is not known`);
+        expect(e.message).toEqual('Resource is not known');
       }
     }
   });
@@ -489,7 +489,7 @@ describe('UPDATE', () => {
       // CHECK
       expect(isInvalidResourceError(e)).toEqual(true);
       if (isInvalidResourceError(e)) {
-        expect(e.message).toEqual(`Resource creation failed, id ${id} is not valid`);
+        expect(e.message).toEqual(`Resource creation failed, id is not valid`);
       }
     }
   });
