@@ -3,7 +3,7 @@
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
       "comment": "Check length of dynamodb hash id",
-      "type": "minor"
+      "type": "patch"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-persistence-ddb"

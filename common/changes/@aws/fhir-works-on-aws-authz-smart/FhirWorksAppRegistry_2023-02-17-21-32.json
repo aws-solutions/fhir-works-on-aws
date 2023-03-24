@@ -3,7 +3,7 @@
     {
       "packageName": "@aws/fhir-works-on-aws-authz-smart",
       "comment": "whitespace changes",
-      "type": "patch"
+      "type": "none"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-authz-smart"

@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "fix regex for marking export request resourceid as encrypted and open encryption if loggermiddleware is used",
-      "type": "major"
+      "comment": "Add security logging for all incoming requests.",
+      "type": "minor"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-routing"
