@@ -10,7 +10,7 @@ is logically partitioned to ensure that tenants are prevented from accessing ano
 
 Use the `enableMultiTenancy` option when deploying the stack:
 
-```sh
+```bash
 rushx deploy -c enableMultiTenancy=true
 ```
 
@@ -28,13 +28,17 @@ dashes, and underscores and have a maximum length of 64 characters.
 There are 2 ways to include a tenant Id in the auth token:
 
 1. Add the tenant Id in a custom claim. This is the recommended approach.
-   The default configuration adds the tenant Id on the `tenantId` claim
-
-1. Encode the tenant Id in the `aud` claim by providing an URL that matches `<baseUrl>/tenant/<tenantId>`.
+   **In deployment package**, the default configuration adds the tenant Id on the `custom:tenantId` claim[link](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/solutions/deployment/src/config.ts#L148).
+   **In smart-deployment package**, the default configuration adds the tenant Id on the `tenantId` claim[link](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/solutions/smart-deployment/src/config.ts#L175).
+2. Encode the tenant Id in the `aud` claim by providing an URL that matches `<baseUrl>/tenant/<tenantId>`.
    This can be useful when using an IDP that does not support custom claims.
 
 If a token has a tenant Id in a custom claim and in the aud claim, then both claims must have the same tenant Id value,
 otherwise an Unauthorized error is thrown.
+
+**In deployment package**, the default deployment adds a custom claim `custom:tenantId` to the Cognito User Pool. You can manage the tenant Id value
+for the different users on the AWS Cognito Console. The [provision-user.py](https://github.com/awslabs/fhir-works-on-aws-deployment/blob/mainline/scripts/provision-user.py)
+script will also create users with a set tenant Id.
 
 ## Additional Configuration
 
@@ -52,4 +56,5 @@ Additional configuration values can be set on [config.ts](https://github.com/aws
 
   Enabling this setting is useful to give each tenant a unique FHIR server base URL.
 
-- `tenantIdClaimPath`: Path to the tenant Id claim in the auth token JSON. Defaults to `tenantId`
+- **In smart-deployment package**, `tenantIdClaimPath`: Path to the tenant Id claim in the auth token JSON. Defaults to `tenantId`
+- **In deployment package**, `tenantIdClaimPath`: Path to the tenant Id claim in the auth token JSON. Defaults to `custom:tenantId`

@@ -5,9 +5,12 @@ For more information about bulk export, refer to the FHIR [Implementation Guide]
 
 In FWoA, bulk export was implemented using AWS Glue and AWS Step Functions, together with other FWoA resources.
 
-![bulkExport.png](resources/bulkExport.png)
+![bulkExport.png](./bulkExport.png)
 
-To test this feature on FHIR Works on AWS, make API requests using the [Fhir.postman_collection.json](./postman/Fhir.postman_collection.json) file by following these steps:
+To test this feature on FHIR Works on AWS:
+
+- **For deployment package**, make API requests using the [Fhir.postman_collection.json](../deployment/postman/Fhir.postman_collection.json) file.
+- **For smart-deployment package**, make API requests using the [Fhir.postman_collection.json](../smart-deployment/postman/FHIR_SMART.postman_collection.json) file.
 
 1. In the FHIR Examples collection, under the **Export** folder, use `GET System Export` or `GET Group Export` request to initiate an export request.
 2. In the response, check the Content-Location header field for a URL. The URL should be in the `<base-url>/$export/<jobId>` format.
