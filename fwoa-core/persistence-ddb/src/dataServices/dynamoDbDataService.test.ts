@@ -489,7 +489,7 @@ describe('UPDATE', () => {
       // CHECK
       expect(isInvalidResourceError(e)).toEqual(true);
       if (isInvalidResourceError(e)) {
-        expect(e.message).toEqual(`Resource creation failed, id is not valid`);
+        expect(e.message).toEqual('Resource creation failed, id is not valid');
       }
     }
   });
