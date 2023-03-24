@@ -1,6 +1,20 @@
 # Change Log - @aws/fhir-works-on-aws-authz-smart
 
-This log was last generated on Mon, 13 Mar 2023 13:27:27 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Mar 2023 18:27:43 GMT and should not be manually modified.
+
+## 4.0.0
+
+Fri, 24 Mar 2023 18:27:43 GMT
+
+### Breaking changes
+
+- Reject token with scopes that can not be used
+- deprecate serverless
+- Only allow system/\*.read scope for group export
+
+### Patches
+
+- update documentation for rejecting tokens with invalid scopes
 
 ## 3.1.4
 

@@ -2,11 +2,37 @@
   "name": "@aws/fhir-works-on-aws-authz-rbac",
   "entries": [
     {
+      "version": "6.0.0",
+      "tag": "@aws/fhir-works-on-aws-authz-rbac_v6.0.0",
+      "date": "Fri, 24 Mar 2023 18:27:43 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "deprecate serverless"
+          }
+        ],
+        "none": [
+          {
+            "comment": "remove prepublish script"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.0.0",
       "tag": "@aws/fhir-works-on-aws-authz-rbac_v5.0.0",
       "date": "2021-08-17",
       "comments": {
-        "none": [{ "comment": "chore: Update dependencies" }],
+        "none": [
+          {
+            "comment": "chore: Update dependencies"
+          }
+        ],
         "minor": [
           {
             "comment": "allow partial patient and group export ([#29](https://github.com/awslabs/fhir-works-on-aws-authz-rbac/issues/29)) ([dd07460](https://github.com/awslabs/fhir-works-on-aws-authz-rbac/commit/dd07460f1b966375af9daed066b244458cfa5b58)), closes [#27](https://github.com/awslabs/fhir-works-on-aws-authz-rbac/issues/27)"
@@ -23,7 +49,13 @@
       "version": "4.1.1",
       "tag": "@aws/fhir-works-on-aws-authz-rbac_v4.1.1",
       "date": "2021-01-27",
-      "comments": { "none": [{ "comment": "chore: Update dependencies" }] }
+      "comments": {
+        "none": [
+          {
+            "comment": "chore: Update dependencies"
+          }
+        ]
+      }
     },
     {
       "version": "4.1.0",
@@ -55,10 +87,18 @@
       "date": "2020-11-20",
       "comments": {
         "major": [
-          { "comment": "Implement `fhir-works-on-aws-interface` v4.0.0" },
-          { "comment": "- Authorization interfaces to use `userIdentity` instead of access_token" },
-          { "comment": "- `isAuthorized` renamed to `verifyAccessToken`" },
-          { "comment": "- `getRequesterUserId` method removed, as it is now redundant" }
+          {
+            "comment": "Implement `fhir-works-on-aws-interface` v4.0.0"
+          },
+          {
+            "comment": "- Authorization interfaces to use `userIdentity` instead of access_token"
+          },
+          {
+            "comment": "- `isAuthorized` renamed to `verifyAccessToken`"
+          },
+          {
+            "comment": "- `getRequesterUserId` method removed, as it is now redundant"
+          }
         ]
       }
     },
@@ -68,9 +108,15 @@
       "date": "2020-11-11",
       "comments": {
         "major": [
-          { "comment": "Implement `fhir-works-on-aws-interface` v3.0.0" },
-          { "comment": "- This adds 4 new methods to this package" },
-          { "comment": "- Throwing UnauthorizedError instead of a boolean" }
+          {
+            "comment": "Implement `fhir-works-on-aws-interface` v3.0.0"
+          },
+          {
+            "comment": "- This adds 4 new methods to this package"
+          },
+          {
+            "comment": "- Throwing UnauthorizedError instead of a boolean"
+          }
         ]
       }
     },
@@ -78,7 +124,13 @@
       "version": "2.0.0",
       "tag": "@aws/fhir-works-on-aws-authz-rbac_v2.0.0",
       "date": "2020-09-25",
-      "comments": { "major": [{ "comment": "Implement `fhir-works-on-aws-interface` v2.0.0" }] }
+      "comments": {
+        "major": [
+          {
+            "comment": "Implement `fhir-works-on-aws-interface` v2.0.0"
+          }
+        ]
+      }
     },
     {
       "version": "1.0.0",

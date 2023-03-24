@@ -1,6 +1,14 @@
 # Change Log - @aws/fhir-works-on-aws-search-es
 
-This log was last generated on Mon, 13 Mar 2023 18:24:27 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Mar 2023 18:27:43 GMT and should not be manually modified.
+
+## 4.0.0
+
+Fri, 24 Mar 2023 18:27:43 GMT
+
+### Breaking changes
+
+- deprecate serverless
 
 ## 3.12.1
 

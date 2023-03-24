@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-search-es",
-  "version": "3.12.1",
+  "version": "4.0.0",
   "description": "FHIR Works on AWS search Elasticsearch implementation",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/search-es",
   "repository": {
