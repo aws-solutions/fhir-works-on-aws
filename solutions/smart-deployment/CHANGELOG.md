@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0] (2022-04-03)
+
+### ⚠ BREAKING CHANGES
+
+- Serverless is deprecated, please use CDK for deployment.
+- All npm packages are moved to namespace @aws, old packages are deprecated.
+- Rush is introduced as monorepo package manager, yarn command is not supported anymore.
+- **auth:** Reject token with scopes that can not be used
+- **auth:** Only allow system/\*.read scope for group export
+
+### Features
+
+- Support large IGs [IG documentation](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md)
+- **routing:** Add security logging for all incoming request. [logging documentation](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/solutions/documentation/SECURE_LOGGING.md)
+
+### Fixes
+
+- **persistence:** validate length of dynamodb hash id
+- **persistence:** sanitize error messages to exclude user input
+- **routing:** Enhance validation for since parameter in export request
+
 ## [3.1.2-smart](https://github.com/awslabs/fhir-works-on-aws-deployment/compare/v3.1.1-smart...v3.1.2-smart) (2023-01-26)
 
 ### Bug Fixes
