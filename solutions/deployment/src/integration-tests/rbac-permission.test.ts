@@ -31,7 +31,7 @@ describe('Negative tests', () => {
       return;
     }
     // BUILD
-    const client = await getFhirClient({ role: 'practitioner', providedAccessToken: 'Invalid token' });
+    const client = await getFhirClient({ role: 'practitioner' });
     const patient = randomPatient();
     patient.name[0].family = '<script>alert(123);</script>';
 
