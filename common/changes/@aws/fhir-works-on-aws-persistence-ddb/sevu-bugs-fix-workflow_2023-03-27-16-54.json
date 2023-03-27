@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-persistence-ddb"
+}
