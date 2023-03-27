@@ -26,4 +26,18 @@ describe('Negative tests', () => {
       response: { status: 401 }
     });
   });
+  test('failing XHTML Validation: patient with invalid family name', async () => {
+    if (process.env.VALIDATE_XHTML !== 'true') {
+      return;
+    }
+    // BUILD
+    const client = await getFhirClient({ role: 'practitioner', providedAccessToken: 'Invalid token' });
+    const patient = randomPatient();
+    patient.name[0].family = '<script>alert(123);</script>';
+
+    // OPERATE & CHECK
+    await expect(client.post('/Patient/', patient)).rejects.toMatchObject({
+      response: { status: 400 }
+    });
+  });
 });
