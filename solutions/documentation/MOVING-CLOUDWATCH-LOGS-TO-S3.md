@@ -89,4 +89,29 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
     ![Verify exported logs in S3 bucket](/imgs/verifyexportins3bucket.jpg)
 
 ### Step 4: Deleting CloudWatch logs after export
+1. From the AWS Console, open AWS CLI in the same region as your logs. It should open a terminal inside your console.  
+    ![AWS CLI terminal](/imgs/awscliterminal.jpg)
+1. Run the following command to delete the exported logs from the specified Log group. 
+    1. Replace the timestamp with the time range previously noted. Use an online epoch converter to convert your time range into epoch time. For example, [EpochConverter](https://www.epochconverter.com).
+    1. Change the `log-group-name` to your log group name.  
+    > **Warning**  
+    > Use caution when deleting data. Data deletion is permanent.
+    ```
+    aws logs filter-log-events \
+    --log-group-name */aws/api-gateway/fhir-service-dev* \
+    --start-time *1640995200000* \
+    --end-time *1643462400000* \
+    --query 'events[*].eventId' \
+    --output text | \
+    xargs -I {} aws logs delete-log-events \
+    --log-group-name CloudwatchAccessLogGroup-dev-Arn \
+    --log-event-id {}
+    ```
+    No response from the terminal means the deletion was successful.
+    <!--- What does unsuccessful look like? --->
+    ![AWS CloudShell](/imgs/awscloudshell.jpg)
+1. Verify the logs were deleting by going to the log group and searching for logs in the specified time range.  
+    ![Search logs by time range](/imgs/searchlogsbytimerange.jpg)  
+    If the search returns no logs, then the logs were successfully deleted.
 
+:congratulations:
