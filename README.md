@@ -1,26 +1,33 @@
-## FHIR Works on AWS
+# FHIR Works on AWS
+The FHIR Works on AWS solution helps software engineers at independent software vendors,
+system integrators, and healthcare information technology teams to enhance their own products.
+Using this solution, they can transfer medical records to both mobile devices and web portals in
+minutes rather than days or hours by integrating with the [Fast Healthcare Interoperability
+Resources (FHIR)](https://www.hl7.org/implement/standards/product_brief.cfm?product_id=491) standard APIs. The FHIR standard was developed by [Health Level Seven
+International (HL7)](https://www.hl7.org/) to improve the exchange of health data between software systems such as
+practice management, electronic health records, billing, and data exchange interfaces. It uses a
+serverless FHIR API that supports FHIR resource types and operations to help healthcare providers
+leverage the FHIR standard to manage healthcare records. It is a reference implementation,
+designed to be extensible.
 
-FHIR Works on AWS(FWoA) is a framework that can be used to deploy a [FHIR server](https://www.hl7.org/fhir/overview.html) on AWS.
-Using this framework, you can customize and add different FHIR functionality to best serve your use cases.
+To learn more about FWoA, download the [FWoA Implementation Guide](./FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf)
+and see the following README files for individual FWoA packages:
 
-To learn more about FWoA, check the [FWoA Implementation Guide](./FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf)
-and the links below for README files for individual FWoA packages.
-
-[deployment](./solutions/deployment/README.md)
-[smart-deployment](./solutions/smart-deployment/README.md)
-[authz-rbac](./fwoa-core/authz-rbac/README.md)
-[authz-smart](./fwoa-core/authz-smart/README.md)
-[interface](./fwoa-core/interface/README.md)
-[persistence-ddb](./fwoa-core/persistence-ddb/README.md)
-[routing](./fwoa-core/routing/README.md)
-[search-es](./fwoa-core/search-es/README.md)
+- [deployment](./solutions/deployment/README.md)  
+- [smart-deployment](./solutions/smart-deployment/README.md)  
+- [authz-rbac](./fwoa-core/authz-rbac/README.md)  
+- [authz-smart](./fwoa-core/authz-smart/README.md)  
+- [interface](./fwoa-core/interface/README.md)  
+- [persistence-ddb](./fwoa-core/persistence-ddb/README.md)  
+- [routing](./fwoa-core/routing/README.md)  
+- [search-es](./fwoa-core/search-es/README.md)  
 
 ## Contributing Guidelines
 
 Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional documentation,
 we greatly value feedback and contributions from our community.
 
-Please read through [this document](CONTRIBUTING.md) before submitting any issues or pull requests to ensure we have all the necessary information to effectively
+Please review the [Contributing Guidelines](CONTRIBUTING.md) before submitting any issues or pull requests to ensure we have all the necessary information to effectively
 respond to your bug report or contribution.
 
 ## Code of Conduct
@@ -35,4 +42,6 @@ If you discover a potential security issue in this project we ask that you notif
 
 ## Licensing
 
-See the [LICENSE](LICENSE) file for our project's licensing. We will ask you to confirm the licensing of your contribution.
+This project is licensed under the Apache-2.0 license.  
+
+For more information, see the [LICENSE](LICENSE) file. If you choose to contribute, we will ask you to confirm your contribution's license.
