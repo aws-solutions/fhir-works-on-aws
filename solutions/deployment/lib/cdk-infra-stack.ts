@@ -67,6 +67,7 @@ export interface FhirWorksStackProps extends StackProps {
   igMemorySize: number;
   igStorageSize: number;
   enableSecurityLogging: boolean;
+  validateXHTML: boolean;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -362,6 +363,7 @@ export default class FhirWorksStack extends Stack {
         ? kmsResources.securityLogKMSKey.keyArn
         : 'ENCRYPTION_TURNED_OFF',
       ENABLE_SECURITY_LOGGING: `${props!.enableSecurityLogging}`,
+      VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false',
     };
 
     const defaultLambdaBundlingOptions = {
