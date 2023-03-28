@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-search-es",
-      "comment": "",
+      "comment": "remove prepublish script",
       "type": "none"
     }
   ],
