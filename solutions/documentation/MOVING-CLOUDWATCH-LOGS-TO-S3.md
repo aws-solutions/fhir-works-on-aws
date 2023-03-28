@@ -114,4 +114,4 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
     ![Search logs by time range](/imgs/searchlogsbytimerange.jpg)  
     If the search returns no logs, then the logs were successfully deleted.
 
-:congratulations:
+:tada:
