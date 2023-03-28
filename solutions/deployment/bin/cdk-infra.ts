@@ -44,6 +44,7 @@ const igMemoryLimit: number = app.node.tryGetContext('igMemoryLimit') || 128;
 const igMemorySize: number = app.node.tryGetContext('igMemorySize') || 2048;
 const igStorageSize: number = app.node.tryGetContext('igStorageSize') || 512;
 const enableSecurityLogging: boolean = app.node.tryGetContext('enableSecurityLogging') || false;
+const validateXHTML: boolean = app.node.tryGetContext('validateXHTML') || false;
 
 // workaround for https://github.com/aws/aws-cdk/issues/15054
 // CDK won't allow having lock file with ".." relatively to project folder
@@ -85,7 +86,8 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   igStorageSize,
   description:
     '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS.',
-  enableSecurityLogging
+  enableSecurityLogging,
+  validateXHTML
 });
 new FhirWorksAppRegistry(stack, 'FhirWorksAppRegistry', {
   solutionId,
