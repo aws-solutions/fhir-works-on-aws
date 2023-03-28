@@ -24,7 +24,7 @@
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* cdk.out/*",
     "compile-igs": "ts-node scripts/compile-igs.ts",
     "deploy": "cdk deploy --outputs-file Info_Output.log",
-    "int-test": "jest --testPathPattern=src/integration-tests/rbac-permission.test.ts --runInBand",
+    "int-test": "jest --testPathPattern=src/integration-tests/* --runInBand",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
