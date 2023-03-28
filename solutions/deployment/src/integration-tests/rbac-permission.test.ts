@@ -26,6 +26,10 @@ describe('Negative tests', () => {
       response: { status: 401 }
     });
   });
+  /*
+  LOCAL TESTING ONLY - configure your env file to include VALIDATE_XHTML = 'true' 
+  to run integration test locally
+  */
   test('failing XHTML Validation: patient with invalid family name', async () => {
     if (process.env.VALIDATE_XHTML !== 'true') {
       return;
