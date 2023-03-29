@@ -100,7 +100,7 @@ jobs:
   slack-notification-tests-failure:
     runs-on: ubuntu-20.04
     needs: [deploy-fhir, deploy-smart-fhir]
-    if: ${{ always() && ((needs.deploy-fhir.result!='success') || (needs.deploy-smart-fhir.result!='success')) }}
+    if: failure()
     steps:
       - name: Slack notification when tests in deployment or smart-deployment failed
         id: slack
@@ -114,4 +114,4 @@ jobs:
               	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INTEGRATION_WEBHOOK_URL }} 
