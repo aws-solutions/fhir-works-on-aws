@@ -23,6 +23,7 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
 1. In the **Bucket Policy Editor**, add the following policy.  
     1. Change `my-exported-logs` to the name of your S3 bucket.
     1. Specify the Region endpoint for Principal.
+    1. Enter your `AccountId`.
 
     ```
         {
