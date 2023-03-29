@@ -25,13 +25,14 @@ jobs:
           poll-interval-seconds: 10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   deploy-fhir:
     uses:
-      ./.github/workflows/deploy.yaml      
+      ./.github/workflows/deploy.yaml  
+    secrets: inherit 
   deploy-smart-fhir:
     uses:
-      ./.github/workflows/deploy-smart.yaml     
+      ./.github/workflows/deploy-smart.yaml  
+    secrets: inherit  
   merge-develop-to-stage:
     name: Merge develop to stage
     runs-on: ubuntu-20.04
