@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "Add security logging for all incoming requests.",
+      "comment": "Added security logging for all incoming requests.",
       "type": "minor"
     }
   ],

@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
-      "comment": "sanitize error messages to exclude user input",
+      "comment": "sanitized error messages to exclude user input",
       "type": "patch"
     }
   ],

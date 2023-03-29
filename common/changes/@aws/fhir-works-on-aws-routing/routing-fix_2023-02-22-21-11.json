@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "Update resource type and resource id regex match",
+      "comment": "Updated resource type and resource id regex match",
       "type": "patch"
     }
   ],

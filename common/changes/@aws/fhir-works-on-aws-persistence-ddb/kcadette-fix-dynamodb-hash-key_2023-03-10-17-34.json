@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
-      "comment": "Check length of dynamodb hash id",
+      "comment": "Validate length of dynamodb hash id for incoming request",
       "type": "patch"
     }
   ],
