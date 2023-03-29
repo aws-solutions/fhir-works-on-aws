@@ -799,7 +799,7 @@ export default class FhirWorksStack extends Stack {
     const fhirServerLambda = new NodejsFunction(this, 'fhirServer', {
       timeout: Duration.seconds(40),
       memorySize: 512,
-      reservedConcurrentExecutions: isDev ? 10 : 200,
+      reservedConcurrentExecutions: isDev ? 100 : 200,
       description: 'FHIR API Server',
       entry: path.join(__dirname, '../index.ts'),
       handler: 'handler',
