@@ -13,7 +13,7 @@ jobs:
   pre-deployment-check:
     name: Pre deployment check
     runs-on: ubuntu-20.04
-    timeout-minutes: 10
+    timeout-minutes: 40
     steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
@@ -26,11 +26,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # TODO: here should be added deployment to environments and integration tests
+  deploy-fhir:
+    uses:
+      ./.github/workflows/deploy.yaml      
+  deploy-smart-fhir:
+    uses:
+      ./.github/workflows/deploy-smart.yaml     
   merge-develop-to-stage:
     name: Merge develop to stage
     runs-on: ubuntu-20.04
-    # needs: [deploy-fhir, deploy-smart-fhir]
+    needs: [deploy-fhir, deploy-smart-fhir]
+    if: ${{ (needs.deploy-fhir.result=='success') && (needs.deploy-smart-fhir.result=='success') }}
     steps:    
       - uses: actions/checkout@v3
         with:
@@ -91,3 +97,21 @@ jobs:
           branch: stage
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+  slack-notification-tests-failure:
+    runs-on: ubuntu-20.04
+    needs: [deploy-fhir, deploy-smart-fhir]
+    if: failure()
+    steps:
+      - name: Slack notification when tests in deployment or smart-deployment failed
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+            payload: |
+              {
+              	"slack_message": "On ${{ github.ref_name }} branch of ${{ github.repository }}:",
+                "deploy_result": "${{ needs.deploy-fhir.result }}",
+                "smart_deploy_result": "${{ needs.deploy-smart-fhir.result }}",
+              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INTEGRATION_WEBHOOK_URL }} 
