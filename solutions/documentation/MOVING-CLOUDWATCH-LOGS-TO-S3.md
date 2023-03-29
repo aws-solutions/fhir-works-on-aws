@@ -80,7 +80,6 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
 1. Select the **Actions** menu and choose **Export data to S3**.
    ![Select Log group](/imgs/selectloggroup.jpg)
 1. Choose a date range for the exported logs and note the time range used. 
-    <!--- There was a comment in the quip about adding a note about time granularity in seconds, but I didn't see where it was addressed in the text. Also something about conversion to epoch time? --->
 1. Choose the S3 bucket to which you want to export the logs. You should see a **Successfully created export task** notification.
     ![Successfully created export task](/imgs/successfullycreatedexporttask.jpg)
 1. *(Optional)* Monitor the progress in the **Export tasks** tab.
