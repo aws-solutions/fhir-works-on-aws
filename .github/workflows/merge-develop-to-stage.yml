@@ -28,15 +28,11 @@ jobs:
   deploy-fhir:
     uses:
       ./.github/workflows/deploy.yaml  
-    secrets:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+    secrets: inherit 
   deploy-smart-fhir:
     uses:
       ./.github/workflows/deploy-smart.yaml  
-    secrets:
-      aws-access-key-id: ${{ secrets.SMART_AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.SMART_AWS_SECRET_ACCESS_KEY }}  
+    secrets: inherit  
   merge-develop-to-stage:
     name: Merge develop to stage
     runs-on: ubuntu-20.04
