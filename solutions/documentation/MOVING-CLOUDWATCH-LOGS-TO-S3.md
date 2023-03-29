@@ -85,8 +85,8 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
 1. *(Optional)* Monitor the progress in the **Export tasks** tab.
     ![Monitor export tasks](/imgs/monitorexporttasks.jpg)
 1. Once the export task completes, verify the exported logs in the specified S3 bucket. Repeat the process for each additional log group.
-    <!--- What happens if the export fails? --->
     ![Verify exported logs in S3 bucket](/imgs/verifyexportins3bucket.jpg)
+    If your export fails, go to the export status page and check the error status message. 
 
 ### Step 4: Deleting CloudWatch logs after export
 1. From the AWS Console, open AWS CLI in the same region as your logs. It should open a terminal inside your console.  
@@ -107,8 +107,7 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
     --log-group-name CloudwatchAccessLogGroup-dev-Arn \
     --log-event-id {}
     ```
-    No response from the terminal means the deletion was successful.
-    <!--- What does unsuccessful look like? --->
+    No response from the terminal means the deletion was successful. If you receive an error, the deletion was unsuccessful. 
     ![AWS CloudShell](/imgs/awscloudshell.jpg)
 1. Verify the logs were deleting by going to the log group and searching for logs in the specified time range.  
     ![Search logs by time range](/imgs/searchlogsbytimerange.jpg)  
