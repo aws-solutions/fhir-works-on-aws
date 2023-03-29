@@ -145,8 +145,7 @@ jobs:
           echo User authenticated
           bundle exec rake crucible:execute_hearth_tests[$SERVICE_URL,$API_KEY,$ACCESS_TOKEN]
   custom-integration-tests:
-    # TODO: confirm that running integ tests and crucible tests won't interfere with each other
-    # needs: deploy
+    needs: crucible-test
     name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
     runs-on: ubuntu-20.04
     strategy:
