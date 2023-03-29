@@ -1,6 +1,8 @@
 name: (SMART) Unit Tests, Deploy, Integration Test
 on:
-  workflow_call:
+  push:
+    branches:
+      - stage
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.SMART_AWS_ACCESS_KEY_ID }}
