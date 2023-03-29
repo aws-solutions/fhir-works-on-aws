@@ -28,10 +28,10 @@ jobs:
 
   deploy-fhir:
     uses:
-      ./.github/workflows/deploy.yml      
+      ./.github/workflows/deploy.yaml      
   deploy-smart-fhir:
     uses:
-      ./.github/workflows/deploy-smart.yml     
+      ./.github/workflows/deploy-smart.yaml     
   merge-develop-to-stage:
     name: Merge develop to stage
     runs-on: ubuntu-20.04
