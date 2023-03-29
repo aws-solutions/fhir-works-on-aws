@@ -1,10 +1,11 @@
 name: (SMART) Unit Tests, Deploy, Integration Test
 on:
   workflow_call:
-
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.SMART_AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.SMART_AWS_SECRET_ACCESS_KEY }}
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
 
 jobs:
   build-validate:
