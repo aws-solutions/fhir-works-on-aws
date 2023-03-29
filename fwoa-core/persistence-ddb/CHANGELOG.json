@@ -2,45 +2,6 @@
   "name": "@aws/fhir-works-on-aws-persistence-ddb",
   "entries": [
     {
-      "version": "4.0.0",
-      "tag": "@aws/fhir-works-on-aws-persistence-ddb_v4.0.0",
-      "date": "Fri, 24 Mar 2023 18:27:43 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "Add back allowedResourceTypes in bulk export"
-          },
-          {
-            "comment": "modified changelogs compatible for rush for persistence"
-          },
-          {
-            "comment": "remove prepublish script"
-          },
-          {
-            "comment": "Remove allowedResourceTypes from bulk export"
-          }
-        ],
-        "patch": [
-          {
-            "comment": "Check length of dynamodb hash id"
-          },
-          {
-            "comment": "sanitize error messages to exclude user input"
-          }
-        ],
-        "major": [
-          {
-            "comment": "deprecate serverless"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "3.12.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.12.0",
       "date": "2022-08-21",
@@ -107,13 +68,7 @@
       "version": "3.8.2",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.8.2",
       "date": "2021-09-30",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "3.8.1",
@@ -213,13 +168,7 @@
       "version": "3.3.4",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v3.3.4",
       "date": "2021-05-17",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "3.3.3",
@@ -332,13 +281,7 @@
       "version": "2.0.1",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v2.0.1",
       "date": "2020-10-31",
-      "comments": {
-        "patch": [
-          {
-            "comment": "- chore: Upgrade fhir-works-on-aws-interface dependency"
-          }
-        ]
-      }
+      "comments": { "patch": [{ "comment": "- chore: Upgrade fhir-works-on-aws-interface dependency" }] }
     },
     {
       "version": "2.0.0",
@@ -350,24 +293,14 @@
             "comment": "  - BREAKING CHANGE: This change will not be successful if sort key is still a String"
           }
         ],
-        "minor": [
-          {
-            "comment": "- feat: Assume that the Resource DDB sort key is a number not a String"
-          }
-        ]
+        "minor": [{ "comment": "- feat: Assume that the Resource DDB sort key is a number not a String" }]
       }
     },
     {
       "version": "1.1.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v1.1.0",
       "date": "2020-08-31",
-      "comments": {
-        "minor": [
-          {
-            "comment": "- feat: X-Ray integration"
-          }
-        ]
-      }
+      "comments": { "minor": [{ "comment": "- feat: X-Ray integration" }] }
     },
     {
       "version": "1.0.0",

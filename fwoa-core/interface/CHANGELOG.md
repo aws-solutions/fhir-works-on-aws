@@ -1,18 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-interface
 
-This log was last generated on Fri, 24 Mar 2023 18:27:43 GMT and should not be manually modified.
-
-## 13.0.0
-
-Fri, 24 Mar 2023 18:27:43 GMT
-
-### Breaking changes
-
-- deprecate serverless
-
-### Patches
-
-- sanitize error messages to exclude user input
+This log was last generated on Tue, 14 Mar 2023 14:26:34 GMT and should not be manually modified.
 
 ## 12.0.0
 

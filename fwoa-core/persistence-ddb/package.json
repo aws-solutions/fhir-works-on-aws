@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-persistence-ddb",
-  "version": "4.0.0",
+  "version": "3.12.0",
   "description": "FHIR Works on AWS persistence DynamoDB implementation",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {

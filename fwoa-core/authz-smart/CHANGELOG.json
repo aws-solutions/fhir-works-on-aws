@@ -2,45 +2,6 @@
   "name": "@aws/fhir-works-on-aws-authz-smart",
   "entries": [
     {
-      "version": "4.0.0",
-      "tag": "@aws/fhir-works-on-aws-authz-smart_v4.0.0",
-      "date": "Fri, 24 Mar 2023 18:27:43 GMT",
-      "comments": {
-        "patch": [
-          {
-            "comment": "update documentation for rejecting tokens with invalid scopes"
-          }
-        ],
-        "none": [
-          {
-            "comment": "whitespace changes"
-          },
-          {
-            "comment": "modified the changelog compatible for rush forAuthSmart"
-          },
-          {
-            "comment": "remove prepublish script"
-          }
-        ],
-        "major": [
-          {
-            "comment": "Reject token with scopes that can not be used"
-          },
-          {
-            "comment": "deprecate serverless"
-          },
-          {
-            "comment": "Only allow system/*.read scope for group export"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "3.1.4",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v3.1.4",
       "date": "2023-01-26",
@@ -211,9 +172,7 @@
           {
             "comment": "- Renamed `fhirUserClaimKey` to `fhirUserClaimPath` and `launchContextKeyPrefix` to `launchContextPathPrefix` in `SMARTConfig`"
           },
-          {
-            "comment": "- You must now define how you want to handle the `system` scope found in ScopeRule"
-          }
+          { "comment": "- You must now define how you want to handle the `system` scope found in ScopeRule" }
         ],
         "minor": [
           {
@@ -229,25 +188,13 @@
       "version": "1.0.1",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v1.0.1",
       "date": "2021-05-18",
-      "comments": {
-        "none": [
-          {
-            "comment": ""
-          }
-        ]
-      }
+      "comments": { "none": [{ "comment": "" }] }
     },
     {
       "version": "1.0.0",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v1.0.0",
       "date": "2021-02-12",
-      "comments": {
-        "major": [
-          {
-            "comment": "- Major version bump! :rocket:"
-          }
-        ]
-      }
+      "comments": { "major": [{ "comment": "- Major version bump! :rocket:" }] }
     },
     {
       "version": "0.1.3",
@@ -283,13 +230,7 @@
       "version": "0.1.1",
       "tag": "@aws/fhir-works-on-aws-authz-smart_v0.1.1",
       "date": "2021-01-20",
-      "comments": {
-        "patch": [
-          {
-            "comment": "- chore: change REGEX hostname not to include `/`"
-          }
-        ]
-      }
+      "comments": { "patch": [{ "comment": "- chore: change REGEX hostname not to include `/`" }] }
     },
     {
       "version": "0.1.0",

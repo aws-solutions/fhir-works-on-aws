@@ -1,14 +1,6 @@
 # Change Log - @aws/fhir-works-on-aws-authz-rbac
 
-This log was last generated on Fri, 24 Mar 2023 18:27:43 GMT and should not be manually modified.
-
-## 6.0.0
-
-Fri, 24 Mar 2023 18:27:43 GMT
-
-### Breaking changes
-
-- deprecate serverless
+This log was last generated on Fri, 10 Mar 2023 22:32:28 GMT and should not be manually modified.
 
 ## 5.0.0
 
@@ -46,7 +38,7 @@ _Version update only_
 
 ## 4.0.0
 
-2020-11-20
+2020-10-20
 
 ### Breaking changes
 
@@ -57,7 +49,7 @@ _Version update only_
 
 ## 3.0.0
 
-2020-11-11
+2020-08-11
 
 ### Breaking changes
 

@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-interface",
-  "version": "13.0.0",
+  "version": "12.1.0",
   "description": "FHIR Works on AWS hosted on AWS Lambda",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/interface",
   "repository": {

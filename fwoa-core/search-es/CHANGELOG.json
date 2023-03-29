@@ -2,31 +2,6 @@
   "name": "@aws/fhir-works-on-aws-search-es",
   "entries": [
     {
-      "version": "4.0.0",
-      "tag": "@aws/fhir-works-on-aws-search-es_v4.0.0",
-      "date": "Fri, 24 Mar 2023 18:27:43 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "modified changelogs compatible for rush for search"
-          },
-          {
-            "comment": "remove prepublish script"
-          }
-        ],
-        "major": [
-          {
-            "comment": "deprecate serverless"
-          }
-        ],
-        "dependency": [
-          {
-            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.0`"
-          }
-        ]
-      }
-    },
-    {
       "version": "3.12.1",
       "tag": "@aws/fhir-works-on-aws-search-es_v3.12.1",
       "date": "2023-01-12",
@@ -292,9 +267,7 @@
       "date": "2021-06-14",
       "comments": {
         "major": [
-          {
-            "comment": "- Aliases need to be added to existing index"
-          },
+          { "comment": "- Aliases need to be added to existing index" },
           {
             "comment": "- Run the addAlias [script](https://github.com/awslabs/fhir-works-on-aws-deployment/blob/94a3187a6fb7a673946a215869c154048603389b/scripts/elasticsearch-operations.js) created in this [PR](https://github.com/awslabs/fhir-works-on-aws-deployment/pull/346) will create aliases for all existing indices"
           },
@@ -503,12 +476,8 @@
       "date": "2020-10-01",
       "comments": {
         "minor": [
-          {
-            "comment": "- feat: Implement _include and _revinclude search parameters"
-          },
-          {
-            "comment": "- feat: Support _id search parameter"
-          }
+          { "comment": "- feat: Implement _include and _revinclude search parameters" },
+          { "comment": "- feat: Support _id search parameter" }
         ]
       }
     },
