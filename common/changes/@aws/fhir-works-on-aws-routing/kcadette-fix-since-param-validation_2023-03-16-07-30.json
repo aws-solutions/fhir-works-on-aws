@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-routing",
-      "comment": "Add validation check on since parameter in export handler",
+      "comment": "Added validation check on since parameter in export handler",
       "type": "minor"
     }
   ],

@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-interface",
-      "comment": "Update license header for logger files",
-      "type": "patch"
+      "comment": "Updated license header for logger files",
+      "type": "none"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-interface"
