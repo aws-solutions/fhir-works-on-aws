@@ -107,8 +107,9 @@ Moving your Amazon CloudWatch logs to Amazon Simple Storage Service (S3) could i
     --log-group-name CloudwatchAccessLogGroup-dev-Arn \
     --log-event-id {}
     ```
-    No response from the terminal means the deletion was successful. If you receive an error, the deletion was unsuccessful. 
-    ![AWS CloudShell](/imgs/awscloudshell.jpg)
+    No response from the terminal means the deletion was successful. 
+    ![AWS CloudShell](/imgs/awscloudshell.jpg)  
+    If you receive an error, the deletion was unsuccessful. Check that all steps were completed properly. If you are unable to resolve the error, visit the [AWS Knowledge Center.](https://repost.aws/knowledge-center)
 1. Verify the logs were deleting by going to the log group and searching for logs in the specified time range.  
     ![Search logs by time range](/imgs/searchlogsbytimerange.jpg)  
     If the search returns no logs, then the logs were successfully deleted.
