@@ -3,7 +3,7 @@
     {
       "packageName": "@aws/fhir-works-on-aws-interface",
       "comment": "Remove allowedResourceTypes from bulk export interface",
-      "type": "major"
+      "type": "none"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-interface"

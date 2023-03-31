@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-authz-rbac",
-      "comment": "deprecate serverless",
+      "comment": "deprecated serverless",
       "type": "major"
     }
   ],
