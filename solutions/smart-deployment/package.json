@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-smart-deployment",
-  "version": "3.1.2-smart",
+  "version": "6.0.0-smart",
   "description": "FHIR Works on AWS deployment with SMART",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/solutions/smart-deployment",
   "repository": {
@@ -22,16 +22,29 @@
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/*",
     "compile-igs": "ts-node scripts/compile-igs.ts",
     "deploy": "cdk deploy --outputs-file Info_Output.log",
-    "int-test": "jest test --test-path-pattern=src/integration-tests/*",
+    "int-test": "jest --testPathPattern=src/integration-tests/* --runInBand",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
-    "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json ./package.json",
+    "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json . --i ../../.npmpackagejsonlintignore",
     "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
     "test": "heft test --clean --no-build 2>&1 && rushx pkg-json-lint",
     "test-coverage": "jest --coverage --testPathPattern=src/*",
     "watch": "tsc -w"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".test.ts",
+    "testRunner": "jest-circus/runner",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
   },
   "resolutions": {
     "@types/express-serve-static-core": "^4.17.21",
@@ -63,8 +76,9 @@
     "@aws/fhir-works-on-aws-persistence-ddb": "workspace:*",
     "@aws/fhir-works-on-aws-routing": "workspace:*",
     "@aws/fhir-works-on-aws-search-es": "workspace:*",
+    "@aws/fhir-works-on-aws-utilities": "workspace:*",
     "@types/aws-lambda": "^8.10.92",
-    "aws-cdk-lib": "2.45.0",
+    "aws-cdk-lib": "^2.61.0",
     "aws-embedded-metrics": "^2.0.4",
     "aws-sdk": "^2.1000.0",
     "axios": "^0.21.4",
@@ -98,7 +112,8 @@
     "@types/sinon": "^9.0.0",
     "@types/tmp": "^0.2.3",
     "@types/uuid": "^8.3.4",
-    "aws-cdk": "2.45.0",
+    "@types/yargs": "^17.0.22",
+    "aws-cdk": "2.61.0",
     "chance": "^1.1.7",
     "esbuild": "^0.14.39",
     "eslint": "^8.7.0",

@@ -12,7 +12,7 @@ import {
     StarPrincipal,
 } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
-import { Bucket, BucketEncryption, BucketPolicy } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import { NagSuppressions } from 'cdk-nag';
 import { Construct } from 'constructs';
 
@@ -21,11 +21,7 @@ export default class BulkExportResources {
 
     glueScriptsBucket: Bucket;
 
-    glueScriptsBucketHttpsOnlyPolicy: BucketPolicy;
-
     bulkExportResultsBucket: Bucket;
-
-    bulkExportResultsBucketHttpsOnlyPolicy: BucketPolicy;
 
     glueJobRole: Role;
 
@@ -122,15 +118,10 @@ export default class BulkExportResources {
             },
         ]);
 
-        this.glueScriptsBucketHttpsOnlyPolicy = new BucketPolicy(scope, 'glueScriptsBucketHttpsOnlyPolicy', {
-            bucket: this.glueScriptsBucket,
-        });
-        this.glueScriptsBucketHttpsOnlyPolicy.document.addStatements(
-            new PolicyStatement({
-                ...AllowSSLRequestsOnlyStatement,
-                resources: [this.glueScriptsBucket.bucketArn, `${this.glueScriptsBucket.bucketArn}/*`],
-            }),
-        );
+        this.glueScriptsBucket.addToResourcePolicy(new PolicyStatement({
+            ...AllowSSLRequestsOnlyStatement,
+            resources: [this.glueScriptsBucket.bucketArn, `${this.glueScriptsBucket.bucketArn}/*`],
+        }));
 
         this.bulkExportResultsBucket = new Bucket(scope, 'bulkExportResultsBucket', {
             encryption: BucketEncryption.S3_MANAGED,
@@ -154,20 +145,11 @@ export default class BulkExportResources {
             },
         ]);
 
-        this.bulkExportResultsBucketHttpsOnlyPolicy = new BucketPolicy(
-            scope,
-            'bulkExportResultsBucketHttpsOnlyPolicy',
-            {
-                bucket: this.bulkExportResultsBucket,
-            },
-        );
-        this.bulkExportResultsBucketHttpsOnlyPolicy.document.addStatements(
-            new PolicyStatement({
-                ...AllowSSLRequestsOnlyStatement,
-                resources: [this.bulkExportResultsBucket.bucketArn, `${this.bulkExportResultsBucket.bucketArn}/*`],
-            }),
-        );
-
+        this.bulkExportResultsBucket.addToResourcePolicy(new PolicyStatement({
+            ...AllowSSLRequestsOnlyStatement,
+            resources: [this.bulkExportResultsBucket.bucketArn, `${this.bulkExportResultsBucket.bucketArn}/*`],
+        }));
+        
         this.glueJobRole = new Role(scope, 'glueJobRole', {
             assumedBy: new ServicePrincipal('glue.amazonaws.com'),
             managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSGlueServiceRole')],
@@ -260,7 +242,7 @@ export default class BulkExportResources {
                 pythonVersion: '3',
             },
             executionProperty: {
-                maxConcurrentRuns: multiTenancyEnabled ? 30 : 2,
+                maxConcurrentRuns: multiTenancyEnabled ? 30 : 3,
             },
             defaultArguments: {
                 '--TempDir': this.bulkExportResultsBucket.s3UrlForObject('/temp'),

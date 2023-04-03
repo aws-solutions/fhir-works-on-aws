@@ -3,6 +3,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@aws-cdk/aws-servicecatalogappregistry-alpha",
+      "allowedCategories": ["production", "tools"]
+    },
+    {
       "name": "@aws-sdk/client-sns",
       "allowedCategories": ["production"]
     },
@@ -36,7 +40,11 @@
     },
     {
       "name": "@aws/fhir-works-on-aws-search-es",
-      "allowedCategories": ["tools"]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@aws/fhir-works-on-aws-utilities",
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@elastic/elasticsearch",
@@ -100,7 +108,7 @@
     },
     {
       "name": "aws-sdk-mock",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "aws-xray-sdk",
@@ -145,6 +153,10 @@
     {
       "name": "depcheck",
       "allowedCategories": ["tools"]
+    },
+    {
+      "name": "dotenv",
+      "allowedCategories": ["production"]
     },
     {
       "name": "errorhandler",
@@ -240,7 +252,7 @@
     },
     {
       "name": "jest-each",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "jest-mock-extended",

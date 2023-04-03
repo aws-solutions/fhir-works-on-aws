@@ -92,7 +92,7 @@ describe('Bulk Export', () => {
 
     beforeAll(async () => {
       const fhirUserAxios = await getFhirClient('fhirUser user/*.*', true);
-      const systemScopeFhirClient = await getFhirClient('fhirUser system/*.*', true);
+      const systemScopeFhirClient = await getFhirClient('fhirUser system/*.read', true);
       bulkExportTestHelper = new BulkExportTestHelper(systemScopeFhirClient, {
         bundleClientOverride: fhirUserAxios
       });
@@ -188,6 +188,19 @@ describe('Bulk Export', () => {
 
       // CHECK
       return expect(responseBody.output.length).toEqual(0);
+    });
+    test('Ensure `system/Patient.read` scope cannot do a group export', async () => {
+      // BUILD
+      const invalidSystemScopeFhirClient = await getFhirClient('fhirUser system/Patient.read', true);
+      const systemTestHelper = new BulkExportTestHelper(invalidSystemScopeFhirClient);
+      // OPERATE & CHECK
+      // Only allow group export with system/*.read'
+      await expect(systemTestHelper.startExportJob({})).rejects.toMatchObject({
+        response: {
+          status: 401,
+          statusText: 'Unauthorized'
+        }
+      });
     });
   });
 });

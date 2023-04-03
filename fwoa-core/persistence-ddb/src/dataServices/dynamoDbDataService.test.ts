@@ -13,7 +13,8 @@ import {
   InvalidResourceError,
   isResourceNotFoundError,
   isInvalidResourceError,
-  UnauthorizedError
+  UnauthorizedError,
+  BadRequestError
 } from '@aws/fhir-works-on-aws-interface';
 import { TooManyConcurrentExportRequestsError } from '@aws/fhir-works-on-aws-interface/lib/errors/TooManyConcurrentExportRequestsError';
 import AWS from 'aws-sdk';
@@ -418,7 +419,7 @@ describe('UPDATE', () => {
       // CHECK
       expect(isResourceNotFoundError(e)).toEqual(true);
       if (isResourceNotFoundError(e)) {
-        expect(e.message).toEqual(`Resource Patient/${id} is not known`);
+        expect(e.message).toEqual('Resource is not known');
       }
     }
   });
@@ -488,7 +489,7 @@ describe('UPDATE', () => {
       // CHECK
       expect(isInvalidResourceError(e)).toEqual(true);
       if (isInvalidResourceError(e)) {
-        expect(e.message).toEqual(`Resource creation failed, id ${id} is not valid`);
+        expect(e.message).toEqual('Resource creation failed, id is not valid');
       }
     }
   });
@@ -634,7 +635,7 @@ describe('initiateExport', () => {
     );
   });
 
-  test('Export request is rejected if user request type they do not have permission for', async () => {
+  test('Export request is rejected if user request invalid type', async () => {
     // BUILD
     // Return an export request that is in-progress
     AWSMock.mock('DynamoDB', 'query', (params: QueryInput, callback: Function) => {
@@ -656,7 +657,7 @@ describe('initiateExport', () => {
     const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
     // OPERATE
     await expect(
-      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Group' })
+      dynamoDbDataService.initiateExport({ ...initiateExportRequest, type: 'Patient,Invalid' })
     ).rejects.toMatchObject(
       new UnauthorizedError('User does not have permission for requested resource type.')
     );
@@ -940,6 +941,18 @@ describe('getExportStatus', () => {
       errorArray: [],
       errorMessage: ''
     });
+  });
+
+  test('Bad Request get export job status because jobId is too long', async () => {
+    // BUILD
+
+    const dynamoDbDataService = new DynamoDbDataService(new AWS.DynamoDB());
+
+    // OPERATE
+    // CHECK
+    await expect(dynamoDbDataService.getExportStatus('1234567890'.repeat(50))).rejects.toMatchObject(
+      new BadRequestError('id length is too long')
+    );
   });
 });
 

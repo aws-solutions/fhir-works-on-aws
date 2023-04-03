@@ -1,0 +1,120 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Merge develop to stage
+on:
+  push:
+    branches:
+      - develop
+
+jobs:  
+  pre-deployment-check:
+    name: Pre deployment check
+    runs-on: ubuntu-20.04
+    timeout-minutes: 120
+    steps:
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Block Concurrent Deployments
+        uses: softprops/turnstyle@v1
+        with:
+          poll-interval-seconds: 10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy-fhir:
+    needs: pre-deployment-check
+    uses:
+      ./.github/workflows/deploy.yaml  
+    secrets: inherit 
+  deploy-smart-fhir:
+    needs: pre-deployment-check
+    uses:
+      ./.github/workflows/deploy-smart.yaml  
+    secrets: inherit  
+  merge-develop-to-stage:
+    name: Merge develop to stage
+    runs-on: ubuntu-20.04
+    needs: [deploy-fhir, deploy-smart-fhir]
+    if: ${{ (needs.deploy-fhir.result=='success') && (needs.deploy-smart-fhir.result=='success') }}
+    steps:    
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          fetch-depth: 0
+
+      # use merge commit instead of squash
+      - name: Temporarily disable branch protection on stage
+        uses: octokit/request-action@v2.x
+        with:
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: stage
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: enable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Merge to stage
+        run: |
+          echo "Set the COMMIT_ID to merge to stage, to current workflow commit id"
+          COMMIT_ID=$GITHUB_SHA
+          git checkout stage
+          echo
+          echo "  Attempting to merge the 'develop' branch ($COMMIT_ID)"
+          echo "  into the 'stage' branch ($(git log -1 --pretty=%H stage))"
+          echo
+          git merge $COMMIT_ID --ff-only --no-edit
+          git push origin stage
+
+      - name: disable merge commits
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to disable merge commit even if other steps fail
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Enable branch protection on stage
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
+        with:
+          route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: stage
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+  slack-notification-tests-failure:
+    runs-on: ubuntu-20.04
+    needs: [deploy-fhir, deploy-smart-fhir]
+    if: failure()
+    steps:
+      - name: Slack notification when tests in deployment or smart-deployment failed
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+            payload: |
+              {
+              	"slack_message": "On ${{ github.ref_name }} branch of ${{ github.repository }}:",
+                "deploy_result": "${{ needs.deploy-fhir.result }}",
+                "smart_deploy_result": "${{ needs.deploy-smart-fhir.result }}",
+              	"workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INTEGRATION_WEBHOOK_URL }} 

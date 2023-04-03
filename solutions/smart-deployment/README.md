@@ -84,11 +84,11 @@ git clone https://github.com/awslabs/fhir-works-on-aws-deployment.git
 - [Windows](./INSTALL.md#windows-installation)
 - [Docker](./INSTALL.md#docker-installation)
 
-If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](./USING_IMPLEMENTATION_GUIDES.md) documentation first.
+If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](../../fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md) documentation first.
 
-If you intend to do a multi-tenant deployment read the [Using Multi-Tenancy](./USING_MULTI_TENANCY.md) documentation first.
+If you intend to do a multi-tenant deployment read the [Using Multi-Tenancy](../documentation/USING_MULTI_TENANCY.md) documentation first.
 
-If you intend to use FHIR Subscriptions read the [Using Subscriptions](./USING_SUBSCRIPTIONS.md) documentation first.
+If you intend to use FHIR Subscriptions read the [Using Subscriptions](../documentation/USING_SUBSCRIPTIONS.md) documentation first.
 
 ### Post installation
 
@@ -112,7 +112,7 @@ Avoid using TLSv1.0, TLS v1.1, and insecure 3DES and CBC cipher suites, which ha
 
 To create a custom domain, see [Setting up custom domain names for REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html).
 
-**What are the recommendations for scope settings?**
+**What are the recommendations for scope settings? (SMART Deployment Only)**
 
 When your IdP vends [SMART scopes](http://hl7.org/fhir/smart-app-launch/1.0.0/scopes-and-launch-context/index.html) in the JWT, the requestor has permission to perform defined scope actions.
 
@@ -141,9 +141,12 @@ Yes, adding MFA delete adds an additional layer of security to your S3 buckets. 
 **What is recommended to configure data-event logging?**
 [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) is recommended for logging FWoA data events. To configure data-event logging, [create a “trail”](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html) for your AWS account. Be sure to follow [CloudTrail security best practices](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html) when doing so.
 
+**What is recommended for concurrect lambda executions**
+Lambda concurrent executions are defined in each lambda function in solutions/smart-deployment/src/lib/cdk-infra-stack.ts. We are using [reserved concurrency](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html) and [provisioned concurrency](https://docs.aws.amazon.com/lambda/latest/dg/provisioned-concurrency.html) to configure the number of requests a function can handle at the same time. Follow the guidance [here](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) to customize lambda scaling and concurrency.
+
 ### Development
 
-[Instructions for making local code changes](./DEVELOPMENT.md)
+[Instructions for making local code changes](../../DEVELOPMENT.md)
 
 ## License
 
@@ -154,10 +157,6 @@ This project is licensed under the Apache-2.0 license.
 ### Retrieving user variables
 
 After installation, all user-specific variables (such as `SERVICE_ENDPOINT`) can be found in the `Info_Output.log` file.
-
-If you have deployed using serverless, you can also retrieve these values by running `serverless info --verbose --region <REGION> --stage <STAGE>`. **NOTE:** default stage is `dev` and region is `us-west-2`.
-
-If you are receiving `Error: EACCES: permission denied` when executing a command, try re-running the command with `sudo`.
 
 ### Accessing the FHIR API
 
@@ -180,7 +179,6 @@ After you import the collection, you need to set up your environment. You can se
 Instructions for importing the environment JSON is located [here](https://thinkster.io/tutorials/testing-backend-apis-with-postman/managing-environments-in-postman). The environment file is [FHIR_SMART.postman_environment.json](./postman/FHIR_SMART.postman_environment.json)
 
 The API_URL & API_KEY variables required in the POSTMAN collection can be found in `Info_Output.log`.
-If you have deployed with serverless, you can also run `serverless info --verbose`.
 
 The remaining variables should be found within your authorization server.
 
@@ -200,22 +198,21 @@ FHIR Works on AWS assumes the SMART authorization server is set-up outside of th
 
 Binary resources are FHIR resources that consist of binary/unstructured data of any kind. This could be X-rays, PDF, video or other files. This implementation of the FHIR API has a dependency on the API Gateway and Lambda services, which currently have limitations in request/response sizes of 10MB and 6MB respectively. This size limitation forced us to look for a workaround. The workaround is a hybrid approach of storing a Binary resource’s _metadata_ in DynamoDB and using S3's get/putPreSignedUrl APIs. So in your requests to the FHIR API you will store/get the Binary's _metadata_ from DynamoDB and in the response object it will also contain a pre-signed S3 URL, which should be used to interact directly with the Binary file.
 
-### Testing Bulk Data Export
+### Additional Features
 
-Bulk Export allows you to export all of your data from DDB to S3. We currently support [System Level](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---system-level-export) and [Group](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---group-of-patients) export.
-The `system/*.read` scope is required for Group export. System export works with either `system/*.read` or `user/*.read`
+FWoA provides the following additional features on top of the standard offering. Most of these features are turned off by default, and can be turned on through CDK context.
 
-For more information about Bulk Export, please refer to this [implementation guide](https://hl7.org/fhir/uv/bulkdata/export/index.html).
+| Name                                                                                                 | CDK context key(s)                                        | Description                                                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Multi-tenancy](../documentation/USING_MULTI_TENANCY.md)                                             | enableMultiTenancy                                        | Multi-tenancy allows a single `fhir-works-on-aws` stack to serve as multiple FHIR servers for different tenants.                                                                     |
+| [Subscriptions](../documentation/USING_SUBSCRIPTIONS.md)                                             | enableSubscriptions                                       | FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/subscription.html                                                                                     |
+| [Bulk Data Export](../documentation/USING_BULK_DATA_EXPORT.md)                                       | Always enabled                                            | Bulk Export allows you to export data from DDB to S3.                                                                                                                                |
+| [Secure Logging](../documentation/SECURE_LOGGING.md)                                                 | enableSecurityLogging logLevel                            | Secure logging includes metadata such as who, what, when, where, how, and other associated request and response data.                                                                |
+| [Implementation Guides](../../fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md) | useHapiValidator igMemoryLimit igMemorySize igStorageSize | An [Implementation Guide (IG)] ( https://www.hl7.org/fhir/implementationguide.html) is a set of rules that describe how FHIR resources should be used to solve a particular problem. |
+| Enable OpenSearch Hard Delete                                                                        | enableESHardDelete                                        | FWoA uses soft delete for resource deletion by default. Set enableESHardDelete to true to enable hard delete in OpenSearch cluster.                                                  |
+| [Dynamodb Daily Backup](../../../INSTALL.md#dynamodb-table-backups)                                  | enableBackup                                              | Daily DynamoDB Table back-ups can be optionally deployed via an additional fhir-server-backups stack.                                                                                |
 
-The easiest way to test this feature on FHIR Works on AWS is to make API requests using the provided [FHIR_SMART.postman_collection.json](./postman/FHIR_SMART.postman_collection.json).
-
-1. In the collection, under the "Export" folder, use `GET System Export` or `GET Group export` request to initiate an Export request.
-2. In the response, check the header field `Content-Location` for a URL. The url should be in the format `<base-url>/$export/<jobId>`.
-3. To get the status of the export job, in the "Export" folder used the `GET System Job Status` request. That request will ask for the `jobId` value from step 2.
-4. Check the response that is returned from `GET System Job Status`. If the job is in progress you will see a header with the field `x-progress: in-progress`. Keep polling that URL until the job is complete. Once the job is complete you'll get a JSON body with presigned S3 URLs of your exported data. You can download the exported data using those URLs.
-
-> **Note**  
-> To cancel an export job that is in progress, you can use the `Cancel Export Job` request in the "Export" folder in POSTMAN collections.
+Additional customization information can be found in document [CUSTOMIZE.md](../documentation/CUSTOMIZE.md).
 
 #### Postman (recommended)
 

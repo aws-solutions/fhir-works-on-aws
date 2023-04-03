@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0] (2022-04-03)
+
+### ⚠ BREAKING CHANGES
+
+- Serverless is deprecated, please use CDK for deployment.
+- All npm packages are moved to namespace @aws, old packages are deprecated.
+- Rush is introduced as monorepo package manager, yarn command is not supported anymore.
+- **auth:** Reject token with scopes that can not be used
+- **auth:** Only allow system/\*.read scope for group export
+
+### Features
+
+- Support large IGs [IG documentation](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md)
+- **routing:** Add security logging for all incoming request. [logging documentation](https://github.com/aws-solutions/fhir-works-on-aws/blob/develop/solutions/documentation/SECURE_LOGGING.md)
+
+### Fixes
+
+- **persistence:** validate length of dynamodb hash id
+- **persistence:** sanitize error messages to exclude user input
+- **routing:** Enhance validation for since parameter in export request
+
 ## [3.1.2-smart](https://github.com/awslabs/fhir-works-on-aws-deployment/compare/v3.1.1-smart...v3.1.2-smart) (2023-01-26)
 
 ### Bug Fixes
@@ -73,7 +94,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 - add support for FHIR subscriptions ([#585](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/585)) ([3ed101b](https://github.com/awslabs/fhir-works-on-aws-deployment/commit/3ed101babe86845d8148e0e7c0836cc908fe8449)), closes [#579](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/579) [#582](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/582)
 
-  Check out our [Subscriptions documentation](USING_SUBSCRIPTIONS.md) for more details.
+  Check out our [Subscriptions documentation](../documentation/USING_SUBSCRIPTIONS.md) for more details.
 
 - **search:** add extension.valueReference to search mappings ([#162](https://github.com/awslabs/fhir-works-on-aws-search-es/issues/162)) ([7fd7057](https://github.com/awslabs/fhir-works-on-aws-search-es/commit/7fd705758f56fb6d725d4acff080b61852bc51df))
 
@@ -121,7 +142,7 @@ All notable changes to this project will be documented in this file. See [standa
 - implement multi-tenancy and group export ([#421](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/421)) ([5335807](https://github.com/awslabs/fhir-works-on-aws-deployment/commit/5335807c1b295b3929b9259020b5d297c0a9ecac)), closes [#367](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/367) [#382](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/382) [#389](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/389) [#397](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/397) [#398](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/398) [#400](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/400) [#387](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/387) [#393](https://github.com/awslabs/fhir-works-on-aws-deployment/issues/393)
 
   Multi-tenancy allows a single `fhir-works-on-aws` stack to serve as multiple FHIR servers for different tenants.
-  Check out our [multi-tenancy documentation](USING_MULTI_TENANCY.md) for more details.
+  Check out our [multi-tenancy documentation](../documentation/USING_MULTI_TENANCY.md) for more details.
 
   **NOTE:** Multi-tenancy itself is not a breaking change, you can continue to use FHIR works on single-tenant mode
   by not using the `enableMultiTenancy` flag.

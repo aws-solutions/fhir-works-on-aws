@@ -1,3 +1,4 @@
+import { RemovalPolicy } from 'aws-cdk-lib';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Alias, Key } from 'aws-cdk-lib/aws-kms';
 import { Construct } from 'constructs';
@@ -15,6 +16,8 @@ export default class KMSResources {
 
     snsKMSKey: Key;
 
+    securityLogKMSKey?: Key;
+
     s3Alias: Alias;
 
     dynamoDbAlias: Alias;
@@ -25,7 +28,9 @@ export default class KMSResources {
 
     snsAlias: Alias;
 
-    constructor(scope: Construct, region: string, stage: string, account: string) {
+    securityLogAlias?: Alias;
+
+    constructor(scope: Construct, region: string, stage: string, account: string, enableSecurityLogging: boolean) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
             description: 'Encryption key for daily',
             enableKeyRotation: true,
@@ -153,6 +158,30 @@ export default class KMSResources {
                 ],
             }),
         });
+
+        if (enableSecurityLogging) {
+            this.securityLogKMSKey = new Key(scope, 'securityLogKMSKey', {
+                enableKeyRotation: true,
+                description: 'KMS CMK for Security Logger Middleware',
+                policy: new PolicyDocument({
+                    statements: [
+                        new PolicyStatement({
+                            sid: 'Allow root principal to manager key',
+                            effect: Effect.ALLOW,
+                            actions: ['kms:*'],
+                            resources: ['*'],
+                            principals: [new AccountRootPrincipal()],
+                        }),
+                    ],
+                }),
+            });
+
+            this.securityLogKMSKey.applyRemovalPolicy(RemovalPolicy.RETAIN);
+            this.securityLogAlias = new Alias(scope, 'securityLogAlias', {
+                aliasName: `alias/securityLogKMSKey-${stage}`,
+                targetKey: this.securityLogKMSKey,
+            });
+        }
 
         this.s3Alias = new Alias(scope, 's3KMSKeyAlias', {
             aliasName: `alias/s3Key-${stage}`,

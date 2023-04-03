@@ -126,6 +126,18 @@ By default, using `rush` commands triggers them for all of the projects in the m
 3. `rush install --bypass-policy` (This will install the `cinstall` and `cupdate` commands)
 4. Start using `rush cinstall` or `rush cupdate` instead of `rush install` or `rush update`.
 
+### Fix pnpm audit errors
+
+1.  In `<rootDir>/common/config/rush/pnpm-config.json` update:
+
+        "globalOverrides": {
+            "`<packageName>`":  "`<suggestedVersion>`"
+        }
+
+2.  `rush update --recheck --bypass-policy`
+3.  `rush cinstall/cupdate`
+4.  `cd common/temp; pnpm audit --prod` -> this should report no vulnerabilities
+
 ## Getting support for rush
 
 [Getting Support](https://rushjs.io/pages/help/support/)

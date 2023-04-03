@@ -1,0 +1,55 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: pnpm-audit
+on: 
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
+  workflow_call:
+jobs:
+  pnpm-audit:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache Rush
+        uses: actions/cache@v3
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-rush-${{ hashFiles('rush.json') }}
+          restore-keys: |
+            ${{ runner.os }}-rush-
+            ${{ runner.os }}-
+      - name: Cache pnpm
+        uses: actions/cache@v3
+        with:
+          path: |
+            common/temp/pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+            ${{ runner.os }}-
+      - name: install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 6.32
+
+      - name: Install dependecies
+        run: node common/scripts/install-run-rush.js install
+
+      - name: pnpm-audit
+        run: |
+          cd common/temp
+          pnpm audit --prod

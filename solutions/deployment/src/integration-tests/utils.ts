@@ -6,6 +6,7 @@
 import * as AWS from 'aws-sdk';
 import axios, { AxiosInstance } from 'axios';
 import { Chance } from 'chance';
+import * as dotenv from 'dotenv';
 import { decode } from 'jsonwebtoken';
 import { cloneDeep } from 'lodash';
 import { stringify } from 'qs';
@@ -82,6 +83,8 @@ export const getFhirClient = async ({
   providedAccessToken,
   tenant = 'tenant1'
 }: { role?: 'auditor' | 'practitioner'; providedAccessToken?: string; tenant?: string } = {}) => {
+  dotenv.config({ path: '.env' });
+
   const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID, MULTI_TENANCY_ENABLED } = process.env;
   if (API_URL === undefined) {
     throw new Error('API_URL environment variable is not defined');
@@ -345,25 +348,28 @@ export const randomChainedParamBundle = () => {
   };
 };
 
-const expectSearchResultsToFulfillExpectation = async (
+export const expectSearchResultsToFulfillExpectations = async (
   client: AxiosInstance,
   search: { url: string; params?: any; postQueryParams?: any },
-  bundleEntryExpectation: jest.Expect
+  bundleEntryExpectations: jest.Expect[]
 ) => {
+  const expectMatchAll = (result: any, expectations: jest.Expect[]) => {
+    expectations.forEach((expectation: jest.Expect) => {
+      expect(result).toMatchObject({
+        resourceType: 'Bundle',
+        entry: expectation
+      });
+    });
+  };
+
   if (search.postQueryParams === undefined) {
     console.log('GET Searching with params:', search);
     const searchResult = (await client.get(search.url, { params: search.params })).data;
-    expect(searchResult).toMatchObject({
-      resourceType: 'Bundle',
-      entry: bundleEntryExpectation
-    });
+    expectMatchAll(searchResult, bundleEntryExpectations);
 
     console.log('POST Searching with params as x-www-form-urlencoded in body:', search);
     const postSearchResult = (await client.post(`${search.url}/_search`, stringify(search.params))).data;
-    expect(postSearchResult).toMatchObject({
-      resourceType: 'Bundle',
-      entry: bundleEntryExpectation
-    });
+    expectMatchAll(postSearchResult, bundleEntryExpectations);
   } else {
     console.log('POST Searching with params in body and in query:', search);
     const postSearchRepeatingParamsResult = (
@@ -371,11 +377,16 @@ const expectSearchResultsToFulfillExpectation = async (
         params: search.postQueryParams
       })
     ).data;
-    expect(postSearchRepeatingParamsResult).toMatchObject({
-      resourceType: 'Bundle',
-      entry: bundleEntryExpectation
-    });
+    expectMatchAll(postSearchRepeatingParamsResult, bundleEntryExpectations);
   }
+};
+
+const expectSearchResultsToFulfillExpectation = async (
+  client: AxiosInstance,
+  search: { url: string; params?: any; postQueryParams?: any },
+  bundleEntryExpectation: jest.Expect
+) => {
+  await expectSearchResultsToFulfillExpectations(client, search, [bundleEntryExpectation]);
 };
 
 export const expectResourceToBePartOfSearchResults = async (

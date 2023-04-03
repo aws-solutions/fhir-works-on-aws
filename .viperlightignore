@@ -8,6 +8,7 @@ common
 .next
 build
 lib
+fwoa-utilities/javaHapiValidatorLambda/src/test/resources/
 
 #Third party file
 THIRD-PARTY$
@@ -19,10 +20,8 @@ INSTALL.md
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
-solutions/deployment/scripts/install.sh:332
 solutions/deployment/scripts/provision-user.py:26
 solutions/deployment/scripts/provision-user.py:41
-solutions/deployment/scripts/win_install.ps1:325
 solutions/smart-deployment/README.md:67
 solutions/smart-deployment/README.md:111
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
@@ -33,6 +32,7 @@ fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
 fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
 fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
+fwoa-utilities/javaHapiValidatorLambda/src/test/resources/testImplementationGuides-r4/us-core/ValueSet-us-core-allergy-substance.json:1
 
 # Team Email
 .github/temp-workflows/release-pr.yml:28
@@ -46,24 +46,23 @@ fwoa-core/persistence-ddb/package.json:13
 fwoa-core/search-es/package.json:13
 solutions/deployment/package.json:13
 solutions/deployment/src/integration-tests/infrastructure/subscriptions-endpoint/src/package.json:12
-
+fwoa-utilities/package.json:13
 # Dummy Email for tests
 fwoa-core/authz-smart/src/comboTest/testStubs.ts:56
 fwoa-core/authz-smart/src/smartAuthorizationHelper.test.ts:352
 fwoa-core/authz-smart/src/smartHandler.test.ts:90
-solutions/deployment/src/integration-tests/search.test.ts:382
-solutions/deployment/src/integration-tests/search.test.ts:412
-solutions/deployment/src/integration-tests/search.test.ts:428
-solutions/smart-deployment/scripts/install.sh:338
-solutions/smart-deployment/scripts/win_install.ps1:318
-solutions/smart-deployment/src/integration-tests/search.test.ts:378
-solutions/smart-deployment/src/integration-tests/search.test.ts:408
-solutions/smart-deployment/src/integration-tests/search.test.ts:424
+solutions/deployment/src/integration-tests/search.test.ts:386
+solutions/deployment/src/integration-tests/search.test.ts:416
+solutions/deployment/src/integration-tests/search.test.ts:432
+solutions/smart-deployment/src/integration-tests/search.test.ts:383
+solutions/smart-deployment/src/integration-tests/search.test.ts:413
+solutions/smart-deployment/src/integration-tests/search.test.ts:429
 fwoa-core/search-es/src/StreamSubscriptionMatcher/subscriptions.test.ts:43 
 fwoa-core/interface/src/InputExampleEncryptLoggerUtilities.json:18 
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:66
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:127
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:185
-fwoa-core/routing/src/router/middlewares/setLogger.test.ts:246
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:72
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:132
+fwoa-core/routing/src/router/middlewares/setLogger.test.ts:189
 fwoa-core/interface/src/inputExampleEncryptSelectedField.json:18
 
+# PDF Implementation Guide
+FHIR Works on AWS Implementation Guide - 24-MAR-2023 - v6.0.0.pdf
