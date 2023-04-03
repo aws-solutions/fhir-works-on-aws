@@ -21,10 +21,6 @@ describe('cdk-nag AwsSolutions Pack', () => {
   const oAuth2ApiEndpoint: string = 'test';
   const patientPickerEndpoint: string = 'test';
   const validateXHTML: boolean = false;
-  const igMemoryLimit: number = 128;
-  const igMemorySize: number = 2048;
-  const igStorageSize: number = 512;
-  const enableSecurityLogging: boolean = true;
 
   beforeAll(() => {
     // GIVEN
@@ -51,12 +47,8 @@ describe('cdk-nag AwsSolutions Pack', () => {
       enableBackup,
       fhirVersion,
       validateXHTML,
-      igMemoryLimit,
-      igMemorySize,
-      igStorageSize,
       description:
-        'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.',
-      enableSecurityLogging
+        'Test - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. It will be used to run cdk-nag.'
     });
 
     fs.rm('./pnpm-lock.yaml', { force: true }, () => {});

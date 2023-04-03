@@ -1,14 +1,14 @@
 import yargs from 'yargs';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { SearchImplementationGuides } from '@aws/fhir-works-on-aws-search-es';
-import { RoutingImplementationGuides } from '@aws/fhir-works-on-aws-routing/lib/implementationGuides';
+import { SearchImplementationGuides } from 'fhir-works-on-aws-search-es';
+import { RoutingImplementationGuides } from 'fhir-works-on-aws-routing/lib/implementationGuides';
 import { IGCompiler } from '../src/implementationGuides/IGCompiler';
 import { COMPILED_IGS_DIRECTORY } from '../src/implementationGuides/loadCompiledIGs';
 
 const PROJECT_DIR = join(__dirname, '..');
 
-function parseCmdOptions(): any {
+function parseCmdOptions() {
   return yargs(process.argv.slice(2))
     .usage('Usage: $0 [--ignoreVersion, -i ] [--igPath, -p IG pack directory] [--outputDir, -o output ]')
     .describe(

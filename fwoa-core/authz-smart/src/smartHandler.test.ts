@@ -566,7 +566,7 @@ describe('verifyAccessToken; System level export requests', () => {
         bulkDataAuth: { exportType: 'system', operation: 'initiate-export' }
       },
       { ...baseAccessNoScopes, scp: ['user/*.*', 'patient/*.write'], ...practitionerFhirUser },
-      false
+      true
     ],
     [
       'Read Access: initiate-export',
@@ -577,7 +577,7 @@ describe('verifyAccessToken; System level export requests', () => {
         bulkDataAuth: { exportType: 'system', operation: 'initiate-export' }
       },
       { ...baseAccessNoScopes, scp: ['user/*.read', 'patient/*.*'], ...practitionerFhirUser },
-      false
+      true
     ],
     [
       'Read and Write Access: get-status-export',

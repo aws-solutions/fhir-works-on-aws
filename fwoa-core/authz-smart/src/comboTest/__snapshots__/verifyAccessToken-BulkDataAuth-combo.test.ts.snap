@@ -265,7 +265,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 8",
@@ -723,6 +723,7 @@ Object {
   "sub": "test@test.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
+    "system/Patient.read",
     "system/*.read",
   ],
   "ver": 1,
@@ -760,7 +761,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Patient/id"
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 22",
@@ -1095,7 +1096,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Patient/id"
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: User does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 32",
@@ -1326,7 +1327,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     }
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid user scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 39",
@@ -1423,7 +1424,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 42",
@@ -1488,7 +1489,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 44",
@@ -1522,7 +1523,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     }
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid user scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 45",
@@ -1812,7 +1813,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 54",
@@ -1968,7 +1969,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 58",
@@ -2724,7 +2725,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 80",
@@ -2880,7 +2881,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 84",
@@ -2946,7 +2947,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     }
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid user scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 86",
@@ -3012,7 +3013,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 88",
@@ -3080,7 +3081,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     }
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid user scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 90",
@@ -3143,7 +3144,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 92",
@@ -3211,7 +3212,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
   "isUserScopeAllowedForSystemExport": false
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 94",
@@ -3277,7 +3278,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     ]
   },
   "isUserScopeAllowedForSystemExport": true
-} 1`] = `[UnauthorizedError: Invalid patient scopes in token.]`;
+} 1`] = `[UnauthorizedError: access_token does not have permission for requested operation]`;
 
 exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
   "testName": "Combo Test Row 96",

@@ -1,9 +1,3 @@
-/*
- *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *  SPDX-License-Identifier: Apache-2.0
- *
- */
-
 import { makeLogger, makeEncryptLogger } from '@aws/fhir-works-on-aws-interface';
 
 const componentLogger = makeLogger({

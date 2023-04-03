@@ -1,7 +1,6 @@
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Alias, Key } from 'aws-cdk-lib/aws-kms';
 import { Construct } from 'constructs';
-import { RemovalPolicy } from 'aws-cdk-lib';
 
 export default class KMSResources {
     backupKMSKey: Key;
@@ -16,8 +15,6 @@ export default class KMSResources {
 
     snsKMSKey: Key;
 
-    securityLogKMSKey?: Key;
-
     s3Alias: Alias;
 
     dynamoDbAlias: Alias;
@@ -28,9 +25,7 @@ export default class KMSResources {
 
     snsAlias: Alias;
 
-    securityLogAlias?: Alias;
-
-    constructor(scope: Construct, region: string, stage: string, account: string, enableSecurityLogging: boolean) {
+    constructor(scope: Construct, region: string, stage: string, account: string) {
         this.backupKMSKey = new Key(scope, 'backupKMSKey', {
             description: 'Encryption key for daily',
             enableKeyRotation: true,
@@ -89,7 +84,7 @@ export default class KMSResources {
                         effect: Effect.ALLOW,
                         actions: ['kms:*'],
                         resources: ['*'],
-                        principals: [new AccountRootPrincipal(), new ServicePrincipal(`logs.${region}.amazonaws.com`)],
+                        principals: [new AccountRootPrincipal()],
                     }),
                 ],
             }),
@@ -129,29 +124,6 @@ export default class KMSResources {
             }),
         });
 
-        if (enableSecurityLogging) {
-            this.securityLogKMSKey = new Key(scope, 'securityLogKMSKey', {
-                enableKeyRotation: true,
-                description: 'KMS CMK for Security Logger Middleware',
-                policy: new PolicyDocument({
-                    statements: [
-                        new PolicyStatement({
-                            sid: 'Allow root principal to manager key',
-                            effect: Effect.ALLOW,
-                            actions: ['kms:*'],
-                            resources: ['*'],
-                            principals: [new AccountRootPrincipal()],
-                        }),
-                    ],
-                }),
-            });
-
-            this.securityLogKMSKey.applyRemovalPolicy(RemovalPolicy.RETAIN);
-            this.securityLogAlias = new Alias(scope, 'securityLogAlias', {
-                aliasName: `alias/securityLogKMSKey-${stage}`,
-                targetKey: this.securityLogKMSKey,
-            });
-        }
         this.snsKMSKey = new Key(scope, 'snsKMSKey', {
             enableKeyRotation: true,
             description: 'KMS CMK for SNS',

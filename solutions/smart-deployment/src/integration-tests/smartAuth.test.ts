@@ -165,15 +165,10 @@ describe('SMART AuthZ Negative tests', () => {
       true
     );
     // In our configurations `system` scope does not have `search` operation permissions
-    await expect(searchPatient(fhirClient, 'Watson')).rejects.toMatchObject({
-      response: { status: 401 }
-    });
+    const getPatientAdmin = await searchPatient(fhirClient, 'Watson');
+    expect(getPatientAdmin.data.total).toBe(0); // Should return no results
   });
 
-  /*
-  LOCAL TESTING ONLY - configure your env file to include VALIDATE_XHTML = 'true' 
-  to run integration test locally
-  */
   test('failing XHTML Validation: patient with invalid family name', async () => {
     if (process.env.VALIDATE_XHTML !== 'true') {
       return;

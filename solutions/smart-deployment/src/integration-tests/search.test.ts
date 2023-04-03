@@ -2,7 +2,6 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { getMedicationRequest, getTestCondition } from '@aws/fhir-works-on-aws-utilities';
 import { AxiosInstance } from 'axios';
 import {
   aFewMinutesAgoAsDate,
@@ -14,8 +13,7 @@ import {
   getResourcesFromBundleResponse,
   randomChainedParamBundle,
   randomString,
-  idsOfFhirResources,
-  expectSearchResultsToFulfillExpectations
+  idsOfFhirResources
 } from './utils';
 
 jest.setTimeout(600 * 1000);
@@ -34,11 +32,10 @@ describe('search', () => {
 
     const aFewMinutesAgo = aFewMinutesAgoAsDate();
 
-    const p = (params: Record<string, string>) => ({
+    const p = (params: any) => ({
       url: 'Patient',
       params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params }
     });
-
     const testsParams = [
       p({ 'address-city': testPatient.address[0].city }),
       p({ 'address-country': testPatient.address[0].country }),
@@ -73,11 +70,10 @@ describe('search', () => {
 
     const aFewMinutesAgo = aFewMinutesAgoAsDate();
 
-    const p = (params: Record<string, string>) => ({
+    const p = (params: any) => ({
       url: 'Patient',
       params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params }
     });
-
     const testsParams = [
       p({ 'organization.name': resources.Organization.name }),
       p({ 'general-practitioner:PractitionerRole.organization.name': resources.Organization.name }),
@@ -120,7 +116,7 @@ describe('search', () => {
   });
 
   test('search for invalid chained parameters', async () => {
-    const p = (params: Record<string, string>) => ({ url: 'Patient', params: { ...params } });
+    const p = (params: any) => ({ url: 'Patient', params: { ...params } });
     const testsParams = [
       // Invalid search parameter 'location' for resource type Organization
       p({ 'organization.location.name': 'Hawaii' }),
@@ -151,7 +147,7 @@ describe('search', () => {
 
     const aFewMinutesAgo = aFewMinutesAgoAsDate();
 
-    const p = (params: Record<string, string>, postQueryParams: any) => ({
+    const p = (params: any, postQueryParams: any) => ({
       url: 'Patient',
       params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params },
       postQueryParams
@@ -193,7 +189,7 @@ describe('search', () => {
     await waitForResourceToBeSearchable(client, testPatient);
 
     const aFewMinutesAgo = aFewMinutesAgoAsDate();
-    const p = (params: Record<string, string>) => ({
+    const p = (params: any) => ({
       url: 'Patient',
       params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params }
     });
@@ -370,220 +366,74 @@ describe('search', () => {
     }
   });
 
-  describe('token', () => {
-    test('simple token search', async () => {
-      const randomPatientData = randomPatient();
-      randomPatientData.identifier = [
-        {
-          system: 'http://fwoa-integ-tests.com',
-          value: 'someCode'
-        },
-        {
-          system: 'http://fwoa-mail.com',
-          value: 'somepatient@fwoa-mail.com'
-        }
-      ];
-      const testPatient: ReturnType<typeof randomPatient> = (await client.post('Patient', randomPatientData))
-        .data;
-
-      const randomPatientDataNoSystem = randomPatient();
-      randomPatientDataNoSystem.identifier = [
-        {
-          value: 'someCodeWithoutSystem'
-        }
-      ];
-      const testPatientNoSystem: ReturnType<typeof randomPatient> = (
-        await client.post('Patient', randomPatientDataNoSystem)
-      ).data;
-
-      // wait for the patient to be asynchronously written to ES
-      await waitForResourceToBeSearchable(client, testPatient);
-      await waitForResourceToBeSearchable(client, testPatientNoSystem);
-
-      const aFewMinutesAgo = aFewMinutesAgoAsDate();
-      const p = (params: Record<string, string | boolean>) => ({
-        url: 'Patient',
-        params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params }
-      });
-
-      const testsParamsThatMatch = [
-        p({ identifier: 'http://fwoa-integ-tests.com|someCode' }),
-        p({ identifier: 'someCode' }),
-        p({ identifier: 'http://fwoa-integ-tests.com|' }),
-        p({ identifier: 'somepatient@fwoa-mail.com' }),
-        p({ active: true })
-      ];
-      // eslint-disable-next-line no-restricted-syntax
-      for (const testParams of testsParamsThatMatch) {
-        // eslint-disable-next-line no-await-in-loop
-        await expectResourceToBePartOfSearchResults(client, testParams, testPatient);
+  test('tokens', async () => {
+    const randomPatientData = randomPatient();
+    randomPatientData.identifier = [
+      {
+        system: 'http://fwoa-integ-tests.com',
+        value: 'someCode'
+      },
+      {
+        system: 'http://fwoa-mail.com',
+        value: 'somepatient@fwoa-mail.com'
       }
-      await expectResourceToBePartOfSearchResults(
-        client,
-        p({ identifier: '|someCodeWithoutSystem' }),
-        testPatientNoSystem
-      );
+    ];
+    const testPatient: ReturnType<typeof randomPatient> = (await client.post('Patient', randomPatientData))
+      .data;
 
-      const testsParamsThatDoNotMatch = [
-        // only exact string matches should work
-        p({ identifier: 'someOtherPatient@fwoa-mail.com' }),
-        p({ identifier: 'somepatient' }),
-        p({ identifier: 'fwoa-mail.com' }),
-        p({ identifier: 'http' }),
-        p({ identifier: 'someOtherPatient@fwoa' }),
-        p({ active: false })
-      ];
-
-      // eslint-disable-next-line no-restricted-syntax
-      for (const testParams of testsParamsThatDoNotMatch) {
-        // eslint-disable-next-line no-await-in-loop
-        await expectResourceToNotBePartOfSearchResults(client, testParams, testPatient);
+    const randomPatientDataNoSystem = randomPatient();
+    randomPatientDataNoSystem.identifier = [
+      {
+        value: 'someCodeWithoutSystem'
       }
+    ];
+    const testPatientNoSystem: ReturnType<typeof randomPatient> = (
+      await client.post('Patient', randomPatientDataNoSystem)
+    ).data;
+
+    // wait for the patient to be asynchronously written to ES
+    await waitForResourceToBeSearchable(client, testPatient);
+    await waitForResourceToBeSearchable(client, testPatientNoSystem);
+
+    const aFewMinutesAgo = aFewMinutesAgoAsDate();
+    const p = (params: any) => ({
+      url: 'Patient',
+      params: { _lastUpdated: `ge${aFewMinutesAgo}`, ...params }
     });
 
-    test('tokens with exact match on CodeableConcept object', async () => {
-      const validCondition = getTestCondition();
+    const testsParamsThatMatch = [
+      p({ identifier: 'http://fwoa-integ-tests.com|someCode' }),
+      p({ identifier: 'someCode' }),
+      p({ identifier: 'http://fwoa-integ-tests.com|' }),
+      p({ identifier: 'somepatient@fwoa-mail.com' }),
+      p({ active: true })
+    ];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const testParams of testsParamsThatMatch) {
+      // eslint-disable-next-line no-await-in-loop
+      await expectResourceToBePartOfSearchResults(client, testParams, testPatient);
+    }
+    await expectResourceToBePartOfSearchResults(
+      client,
+      p({ identifier: '|someCodeWithoutSystem' }),
+      testPatientNoSystem
+    );
 
-      const codingWithDash: {
-        system: string;
-        code: string;
-        display: string;
-      } = { code: '123456-7890', display: 'code with dashes', system: 'http://snomed.info/sct' };
+    const testsParamsThatDoNotMatch = [
+      // only exact string matches should work
+      p({ identifier: 'someOtherPatient@fwoa-mail.com' }),
+      p({ identifier: 'somepatient' }),
+      p({ identifier: 'fwoa-mail.com' }),
+      p({ identifier: 'http' }),
+      p({ identifier: 'someOtherPatient@fwoa' }),
+      p({ active: false })
+    ];
 
-      const codingWithoutDash: typeof codingWithDash = {
-        code: '123456',
-        display: 'code without dashes',
-        system: 'http://snomed.info/sct'
-      };
-
-      const conditionWithDash = {
-        ...validCondition,
-        code: { coding: [codingWithDash], text: 'coding with dash' }
-      };
-      const conditionWithoutDash = {
-        ...validCondition,
-        code: { coding: [codingWithoutDash], text: 'coding without dash' }
-      };
-
-      const [response1, response2] = await Promise.all([
-        client.post('Condition', conditionWithDash),
-        client.post('Condition', conditionWithoutDash)
-      ]);
-
-      const createdConditionWithDash = response1.data;
-      const createdConditionWithoutDash = response2.data;
-
-      await Promise.all([
-        waitForResourceToBeSearchable(client, createdConditionWithDash),
-        waitForResourceToBeSearchable(client, createdConditionWithoutDash)
-      ]);
-
-      const aFewMinutesAgo = aFewMinutesAgoAsDate();
-
-      const searchWithDash = {
-        url: 'Condition',
-        params: { _lastUpdated: `ge${aFewMinutesAgo}`, code: codingWithDash.code }
-      };
-
-      // 1. exact match on code with "-", should contain only corresponding resource
-      await expectSearchResultsToFulfillExpectations(client, searchWithDash, [
-        expect.arrayContaining([
-          expect.objectContaining({
-            resource: createdConditionWithDash
-          })
-        ]),
-        expect.not.arrayContaining([
-          expect.objectContaining({
-            resource: createdConditionWithoutDash
-          })
-        ])
-      ]);
-
-      const searchWithoutDash = {
-        url: 'Condition',
-        params: { _lastUpdated: `ge${aFewMinutesAgo}`, code: codingWithoutDash.code }
-      };
-
-      // 2. similarly exact match on code without "-"
-      await expectSearchResultsToFulfillExpectations(client, searchWithoutDash, [
-        expect.arrayContaining([
-          expect.objectContaining({
-            resource: createdConditionWithoutDash
-          })
-        ]),
-        expect.not.arrayContaining([
-          expect.objectContaining({
-            resource: createdConditionWithDash
-          })
-        ])
-      ]);
-    });
-
-    test('tokens with exact match on top level code field', async () => {
-      const medicationRequest = getMedicationRequest();
-
-      const requestWithOrder = {
-        ...medicationRequest,
-        intent: 'order'
-      };
-      const requestWithOriginalOrder = {
-        ...medicationRequest,
-        intent: 'original-order'
-      };
-
-      const [response1, response2] = await Promise.all([
-        client.post('MedicationRequest', requestWithOrder),
-        client.post('MedicationRequest', requestWithOriginalOrder)
-      ]);
-
-      const createdMedicationRequestWithOrder = response1.data;
-      const createdMedicationRequestWithOriginalOrder = response2.data;
-
-      await Promise.all([
-        waitForResourceToBeSearchable(client, createdMedicationRequestWithOrder),
-        waitForResourceToBeSearchable(client, createdMedicationRequestWithOriginalOrder)
-      ]);
-
-      const aFewMinutesAgo = aFewMinutesAgoAsDate();
-
-      const searchOrder = {
-        url: 'MedicationRequest',
-        params: { _lastUpdated: `ge${aFewMinutesAgo}`, intent: 'order' }
-      };
-
-      // 1. exact match on intent order
-      await expectSearchResultsToFulfillExpectations(client, searchOrder, [
-        expect.arrayContaining([
-          expect.objectContaining({
-            resource: createdMedicationRequestWithOrder
-          })
-        ]),
-        expect.not.arrayContaining([
-          expect.objectContaining({
-            resource: createdMedicationRequestWithOriginalOrder
-          })
-        ])
-      ]);
-
-      const searchOriginalOrder = {
-        url: 'MedicationRequest',
-        params: { _lastUpdated: `ge${aFewMinutesAgo}`, intent: 'original-order' }
-      };
-
-      // 2. similarly exact match original-order
-      await expectSearchResultsToFulfillExpectations(client, searchOriginalOrder, [
-        expect.arrayContaining([
-          expect.objectContaining({
-            resource: createdMedicationRequestWithOriginalOrder
-          })
-        ]),
-        expect.not.arrayContaining([
-          expect.objectContaining({
-            resource: createdMedicationRequestWithOrder
-          })
-        ])
-      ]);
-    });
+    // eslint-disable-next-line no-restricted-syntax
+    for (const testParams of testsParamsThatDoNotMatch) {
+      // eslint-disable-next-line no-await-in-loop
+      await expectResourceToNotBePartOfSearchResults(client, testParams, testPatient);
+    }
   });
 
   test('quantity', async () => {
