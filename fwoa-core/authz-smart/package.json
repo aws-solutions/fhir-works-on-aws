@@ -18,12 +18,11 @@
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
-    "clean": "rm -rf build/* node_modules/* dist/* .serverless/* .nyc_output/* lib/*",
+    "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-fix": "eslint --fix . --ext .ts,.tsx",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../../.npmpackagejsonlintrc.json .",
-    "prepublish": "tsc",
     "release": "rush build && rush lint-fix && rush test",
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",

@@ -1,0 +1,98 @@
+name: Publish-and-merge-to-develop
+on:  
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  rush-publish:
+    if: github.event.pull_request.merged == true && vars.PUBLISH_TO_NPM == 'true'
+    runs-on: ubuntu-20.04
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      - name: Set git config
+        run: |
+          git config user.email ${{ vars.BOT_USER_EMAIL }}
+          git config user.name ${{ vars.BOT_USER_NAME }}
+      
+      - name: Rush Publish
+        run: |
+          PUBLISH_CMD="--add-commit-details --apply --npm-auth-token ${{ secrets.NPM_AUTH_TOKEN }} --ignore-git-hooks --include-all --set-access-level public --target-branch main --publish"
+          node common/scripts/install-run-rush.js publish $PUBLISH_CMD
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+          
+  merge-main-to-develop:
+    name: Merge main to develop
+    runs-on: ubuntu-20.04
+    needs: [rush-publish]
+    steps:    
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          fetch-depth: 0
+
+      # use merge commit instead of squash
+      - name: Temporarily disable branch protection on develop
+        uses: octokit/request-action@v2.x
+        with:
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: enable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Merge to develop
+        run: |
+          echo "Set the COMMIT_ID to merge to develop, to current workflow commit id"
+          COMMIT_ID=$GITHUB_SHA
+          git checkout develop
+          echo
+          echo "  Attempting to merge the 'main' branch ($COMMIT_ID)"
+          echo "  into the 'develop' branch ($(git log -1 --pretty=%H develop))"
+          echo
+          git merge $COMMIT_ID --ff-only --no-edit
+          git push origin develop
+
+      - name: disable merge commits
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to disable merge commit even if other steps fail
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Enable branch protection on develop
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
+        with:
+          route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}

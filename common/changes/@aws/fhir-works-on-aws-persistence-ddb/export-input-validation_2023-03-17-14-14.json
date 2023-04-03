@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
+      "comment": "Add back allowedResourceTypes in bulk export",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-persistence-ddb"
+}

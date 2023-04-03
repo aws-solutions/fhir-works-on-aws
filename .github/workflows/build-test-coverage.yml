@@ -1,0 +1,23 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Build, test, and test-coverage
+on: ['pull_request']
+
+jobs:
+  build-test-coverage:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      - name: Rush test
+        run: node common/scripts/install-run-rush.js test --verbose

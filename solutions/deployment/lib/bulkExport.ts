@@ -12,7 +12,8 @@ import {
     StarPrincipal,
 } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
-import { Bucket, BucketEncryption, BucketPolicy } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { NagSuppressions } from 'cdk-nag';
 import { Construct } from 'constructs';
 
 export default class BulkExportResources {
@@ -20,11 +21,7 @@ export default class BulkExportResources {
 
     glueScriptsBucket: Bucket;
 
-    glueScriptsBucketHttpsOnlyPolicy: BucketPolicy;
-
     bulkExportResultsBucket: Bucket;
-
-    bulkExportResultsBucketHttpsOnlyPolicy: BucketPolicy;
 
     glueJobRole: Role;
 
@@ -48,6 +45,7 @@ export default class BulkExportResources {
         logKMSKey: Key,
         stage: string,
         region: string,
+        partition: string,
         exportGlueWorkerType: CfnParameter,
         exportGlueNumberWorkers: CfnParameter,
         multiTenancyEnabled: boolean,
@@ -95,6 +93,11 @@ export default class BulkExportResources {
                             actions: ['kms:Decrypt'],
                             resources: [dynamoDbKMSKey.keyArn],
                         }),
+                        new PolicyStatement({
+                            effect: Effect.ALLOW,
+                            actions: ['logs:CreateLogStream', 'logs:CreateLogGroup', 'logs:PutLogEvents'],
+                            resources: [`arn:${partition}:logs:${region}:*:*`],
+                        }),
                     ],
                 }),
             },
@@ -105,17 +108,21 @@ export default class BulkExportResources {
             serverAccessLogsBucket: fhirLogsBucket,
             serverAccessLogsPrefix: 'GlueScriptsBucket',
             blockPublicAccess,
+            enforceSSL: true,
+            versioned: true,
         });
 
-        this.glueScriptsBucketHttpsOnlyPolicy = new BucketPolicy(scope, 'glueScriptsBucketHttpsOnlyPolicy', {
-            bucket: this.glueScriptsBucket,
-        });
-        this.glueScriptsBucketHttpsOnlyPolicy.document.addStatements(
-            new PolicyStatement({
-                ...AllowSSLRequestsOnlyStatement,
-                resources: [this.glueScriptsBucket.bucketArn, `${this.glueScriptsBucket.bucketArn}/*`],
-            }),
-        );
+        NagSuppressions.addResourceSuppressions(this.glueScriptsBucket, [
+            {
+                id: 'HIPAA.Security-S3DefaultEncryptionKMS',
+                reason: 'bucket is encrypted by S3 Managed enryption',
+            },
+        ]);
+
+        this.glueScriptsBucket.addToResourcePolicy(new PolicyStatement({
+            ...AllowSSLRequestsOnlyStatement,
+            resources: [this.glueScriptsBucket.bucketArn, `${this.glueScriptsBucket.bucketArn}/*`],
+        }));
 
         this.bulkExportResultsBucket = new Bucket(scope, 'bulkExportResultsBucket', {
             encryption: BucketEncryption.S3_MANAGED,
@@ -129,21 +136,20 @@ export default class BulkExportResources {
             ],
             serverAccessLogsPrefix: 'BulkExportResultsBucket',
             blockPublicAccess,
+            versioned: true,
+            enforceSSL: true,
         });
-
-        this.bulkExportResultsBucketHttpsOnlyPolicy = new BucketPolicy(
-            scope,
-            'bulkExportResultsBucketHttpsOnlyPolicy',
+        NagSuppressions.addResourceSuppressions(this.bulkExportResultsBucket, [
             {
-                bucket: this.bulkExportResultsBucket,
+                id: 'HIPAA.Security-S3DefaultEncryptionKMS',
+                reason: 'bucket is encrypted by S3 Managed enryption',
             },
-        );
-        this.bulkExportResultsBucketHttpsOnlyPolicy.document.addStatements(
-            new PolicyStatement({
-                ...AllowSSLRequestsOnlyStatement,
-                resources: [this.bulkExportResultsBucket.bucketArn, `${this.bulkExportResultsBucket.bucketArn}/*`],
-            }),
-        );
+        ]);
+
+        this.bulkExportResultsBucket.addToResourcePolicy(new PolicyStatement({
+            ...AllowSSLRequestsOnlyStatement,
+            resources: [this.bulkExportResultsBucket.bucketArn, `${this.bulkExportResultsBucket.bucketArn}/*`],
+        }));
 
         this.glueJobRole = new Role(scope, 'glueJobRole', {
             assumedBy: new ServicePrincipal('glue.amazonaws.com'),
@@ -286,6 +292,11 @@ export default class BulkExportResources {
                             actions: ['kms:Decrypt'],
                             resources: [dynamoDbKMSKey.keyArn],
                         }),
+                        new PolicyStatement({
+                            effect: Effect.ALLOW,
+                            actions: ['logs:CreateLogStream', 'logs:CreateLogGroup', 'logs:PutLogEvents'],
+                            resources: [`arn:${partition}:logs:${region}:*:*`],
+                        }),
                     ],
                 }),
             },
@@ -304,6 +315,11 @@ export default class BulkExportResources {
                             effect: Effect.ALLOW,
                             actions: ['s3:PutObject', 's3:DeleteObject'],
                             resources: [`${this.glueScriptsBucket.bucketArn}/*`],
+                        }),
+                        new PolicyStatement({
+                            effect: Effect.ALLOW,
+                            actions: ['logs:CreateLogStream', 'logs:CreateLogGroup', 'logs:PutLogEvents'],
+                            resources: [`arn:${partition}:logs:${region}:*:*`],
                         }),
                     ],
                 }),

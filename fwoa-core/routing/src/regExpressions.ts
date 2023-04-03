@@ -8,14 +8,16 @@ export const resourceTypeWithUuidRegExp = /\w+\/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
 
 export const utcTimeRegExp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?Z/;
 export const dateTimeWithTimeZoneRegExp =
-  /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])/;
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/;
 export const timeFromEpochInMsRegExp = /\d{13}/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-export const captureResourceIdRegExp = /^(\w{1,30})\/[-\w+]{1,100}$/;
+// Exp. /Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
+export const captureResourceIdRegExp = /^\/?\w{1,30}\/([-\w+]{1,100})$/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
-export const captureResourceTypeRegExp = /^(\w{1,30})\/[-\w+]{1,100}$/;
+// Exp. /Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a
+export const captureResourceTypeRegExp = /^\/?(\w{1,30})\/[-\w+]{1,100}$/;
 
 // Exp. Patient/de5b1d47-2780-4508-9273-4e0ec133ee3a/_history/1
 export const captureVersionIdRegExp = /\w+\/[-\w+]+\/_history\/(\w+)/;
@@ -32,7 +34,7 @@ export const captureFhirUserParts =
   /((?:http|https):\/\/[(A-Za-z0-9_\-\\.:%$)*/]+[Patient|Practitioner]\/)([A-Za-z0-9\-.]{1,100}(\/_history\/[A-Za-z0-9\-.]{1,64})?)+/;
 
 // ["/dev/Patient/00000000-0000-0000-0000-000000000000", "/dev/Patient/", "00000000-0000-0000-0000-000000000000"]
-export const capturePathParts = /^(\/\w{1,30}\/\w{1,30}\/)([-\w+]{1,100})$/;
+export const capturePathParts = /^(\/\w{1,30}\/\$?\w{1,30}\/)([-\w+]{1,100})$/;
 
 // ["Patient/00000000-0000-0000-0000-000000000000", "Patient/", "00000000-0000-0000-0000-000000000000"]
-export const capturePathParametersProxyParts = /^(\w{1,30}\/)([-\w+]{1,100})$/;
+export const capturePathParametersProxyParts = /^(\/?\$?\w{1,30}\/)([-\w+]{1,100})$/;

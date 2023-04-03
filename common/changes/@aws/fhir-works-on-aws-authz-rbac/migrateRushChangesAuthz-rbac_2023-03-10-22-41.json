@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-rbac",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-rbac"
+}
