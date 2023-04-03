@@ -2,10 +2,10 @@
   "name": "@aws/fhir-works-on-aws-deployment",
   "version": "6.0.0",
   "description": "FHIR Works on AWS deployment",
-  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws/fwoa-core/deployment",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
     "type": "git",
-    "url": "git://github.com/awslabs/fhir-works-on-aws-deployment.git"
+    "url": "https://github.com/aws-solutions/fhir-works-on-aws.git"
   },
   "license": "Apache-2.0",
   "author": {
