@@ -2,10 +2,10 @@
   "name": "@aws/eslint-config-fwoa-eslint-custom",
   "version": "0.0.1",
   "description": "Custom eslint rules",
-  "homepage": "https://github.com/aws-solutions/solution-spark-on-aws",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aws-solutions/solution-spark-on-aws.git"
+    "url": "https://github.com/aws-solutions/fhir-works-on-aws.git"
   },
   "license": "Apache-2.0",
   "author": {
