@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-search-es",
+      "comment": "update homepage and repository link",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-search-es"
+}
