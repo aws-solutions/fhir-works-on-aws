@@ -1,6 +1,19 @@
 # Change Log - @aws/fhir-works-on-aws-persistence-ddb
 
-This log was last generated on Tue, 14 Mar 2023 14:16:57 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Apr 2023 19:20:41 GMT and should not be manually modified.
+
+## 4.0.0
+
+Mon, 03 Apr 2023 19:20:41 GMT
+
+### Breaking changes
+
+- deprecated serverless
+
+### Patches
+
+- Validate length of dynamodb hash id for incoming request
+- sanitized error messages to exclude user input
 
 ## 3.12.0
 

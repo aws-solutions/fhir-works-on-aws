@@ -1,6 +1,23 @@
 # Change Log - @aws/fhir-works-on-aws-routing
 
-This log was last generated on Mon, 13 Mar 2023 18:52:21 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Apr 2023 19:20:41 GMT and should not be manually modified.
+
+## 7.0.0
+
+Mon, 03 Apr 2023 19:20:41 GMT
+
+### Breaking changes
+
+- deprecated serverless
+
+### Minor changes
+
+- Added security logging for all incoming requests.
+- Added validation check on since parameter in export handler
+
+### Patches
+
+- Updated resource type and resource id regex match
 
 ## 6.6.2
 
