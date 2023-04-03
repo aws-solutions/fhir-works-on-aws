@@ -120,7 +120,7 @@ Example:
 ACCESS_KEY=ABCD SECRET_KEY=XYZ ES_DOMAIN_ENDPOINT=https://search-fhir-service-dev-abcd.us-west-2.es.amazonaws.com node elasticsearch-operations.js us-west-2 addAlias
 
 If you do not know the value for ES_DOMAIN_ENDPOINT, you can follow the instruction here(https://github.com/awslabs/fhir-works-on-aws-deployment/blob/mainline/README.md#retrieving-user-variables)
-to find the value for ElasticSearchDomainEndpoint in the output
+to retrieve serverless info, and find the value for ElasticSearchDomainEndpoint in the output
  */
 const addAlias = async () => {
   // Get all indices

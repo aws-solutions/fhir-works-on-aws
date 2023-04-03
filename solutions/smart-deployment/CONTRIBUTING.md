@@ -16,7 +16,7 @@ Code for FHIR Works on AWS is written in TypeScript. This requires your IDE to b
 
 ### AWS Cloud deployment
 
-In order to re-build and re-deploy services to AWS after changes were made, you can run rush commands (like `rushx deploy`) directly from this deployment package. If you need more help please check in [AWS service deployment](./INSTALL.md#aws-service-deployment).
+In order to re-build and re-deploy services to AWS after changes were made, you can run serverless commands (like [severless deploy](https://www.serverless.com/framework/docs/providers/aws/cli-reference/deploy/)) directly from this deployment package or rerun the `install.sh` or `win-install.ps1` script. If you need more help please check in [AWS service deployment](./INSTALL.md#aws-service-deployment).
 
 ### Local deployment
 

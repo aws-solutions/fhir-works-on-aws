@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *  SPDX-License-Identifier: Apache-2.0
+ *  SPDX-License-Identifier: Apache-" ".0
  *
  */
 
@@ -285,22 +285,28 @@ export const setLoggerMiddleware = async (
         }
       }
     };
-
-    loggerDesign = preprocessFieldsToEncrypted(
-      [
-        'who.userIdentity.sub',
-        'who.userIdentity.fhirUser',
-        'what.apiGateway.event.queryStringParameters',
-        'what.requestContext.path',
-        'what.apiGateway.event.pathParameters.proxy',
-        'where.requestContext.identity.sourceIp',
-        'responseOther.userIdentity.launch-response-patient'
-      ],
-      loggerDesign
-    );
-    const encryptedField = 'logMetadata.payLoadToEncrypt';
-    const logger = getEncryptLogger({ encryptedField });
-    await logger.error(loggerDesign);
+    let encryptedField: string;
+    let logger: any;
+    if (process.env.ENABLE_LOGGING_MIDDLEWARE_ENCRYPTION === 'true') {
+      loggerDesign = preprocessFieldsToEncrypted(
+        [
+          'who.userIdentity.sub',
+          'who.userIdentity.fhirUser',
+          'what.apiGateway.event.queryStringParameters',
+          'what.requestContext.path',
+          'what.apiGateway.event.pathParameters.proxy',
+          'where.requestContext.identity.sourceIp',
+          'responseOther.userIdentity.launch-response-patient'
+        ],
+        loggerDesign
+      );
+      encryptedField = 'logMetadata.payLoadToEncrypt';
+      logger = getEncryptLogger({ encryptedField });
+      await logger.error(loggerDesign);
+    } else {
+      logger = getComponentLogger();
+      logger.error(JSON.stringify(loggerDesign, null, ' '));
+    }
 
     next();
   } catch (e) {

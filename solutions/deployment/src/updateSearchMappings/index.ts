@@ -4,8 +4,8 @@
  *
  */
 
-import { getSearchMappings, SearchMappingsManager } from '@aws/fhir-works-on-aws-search-es';
 import axios from 'axios';
+import { getSearchMappings, SearchMappingsManager } from 'fhir-works-on-aws-search-es';
 import { fhirVersion } from '../config';
 
 const sendCfnResponse = async (event: any, status: 'SUCCESS' | 'FAILED', error?: Error) => {

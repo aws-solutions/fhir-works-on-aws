@@ -139,7 +139,7 @@ export class DynamoDbDataService implements Persistence, BulkDataAccess {
   ) {
     const regex = new RegExp('^[a-zA-Z0-9-.]{1,64}$');
     if (!regex.test(resourceId)) {
-      throw new InvalidResourceError('Resource creation failed, id is not valid');
+      throw new InvalidResourceError(`Resource creation failed, id ${resourceId} is not valid`);
     }
 
     const vid = 1;

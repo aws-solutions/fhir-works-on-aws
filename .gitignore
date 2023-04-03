@@ -47,7 +47,7 @@ jspm_packages/
 *.tgz
 
 # dotenv environment variables file
-.env*
+.env
 
 # next.js build output
 .next
@@ -64,6 +64,7 @@ common/autoinstallers/*/.npmrc
 # Heft
 .heft
 
+/.serverless
 /.vscode
 !/.gitignore
 /build
@@ -75,23 +76,10 @@ dist
 coverage
 
 # Implementation guides
-/solutions/**/implementationGuides
-/solutions/**/compiledImplementationGuides/*
-!/solutions/**/compiledImplementationGuides/gitkeep
-/solutions/**/.webpack/
-fwoa-utilities/javaHapiValidatorLambda/*.class
-fwoa-utilities/javaHapiValidatorLambda/target
-fwoa-utilities/javaHapiValidatorLambda/bin/
-fwoa-utilities/javaHapiValidatorLambda/.settings/
-fwoa-utilities/javaHapiValidatorLambda/.project
-fwoa-utilities/javaHapiValidatorLambda/.classpath
-
-# Package Files
-fwoa-utilities/javaHapiValidatorLambda/*.jar
-fwoa-utilities/javaHapiValidatorLambda/*.war
-fwoa-utilities/javaHapiValidatorLambda/*.ear
-
-fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
+/solutions/smart-on-fhir/implementationGuides
+/solutions/smart-on-fhir/compiledImplementationGuides/*
+!/solutions/smart-on-fhir/compiledImplementationGuides/gitkeep
+/solutions/smart-on-fhir/.webpack/
 
 # CDK
 **/cdk.out
@@ -100,6 +88,10 @@ fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
 ##############################
 ## local Development
 ##############################
+serverless-output.yml
+serverless-output.yaml
+serverless_config.json
+
 **/lib/**/*.js
 **/lib/**/*.map
 **/lib/**/*d.ts

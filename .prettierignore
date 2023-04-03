@@ -67,6 +67,7 @@ common/autoinstallers/*/.npmrc
 # Heft
 .heft
 
+/.serverless
 /.vscode
 !/.gitignore
 /build
@@ -82,3 +83,9 @@ lib
 **/temp*
 
 coverage
+##############################
+## local Development
+##############################
+serverless-output.yml
+serverless-output.yaml
+serverless_config.json

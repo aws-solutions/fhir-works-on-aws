@@ -64,10 +64,6 @@ export interface FhirWorksStackProps extends StackProps {
   patientPickerEndpoint: string;
   fhirVersion: string;
   validateXHTML: boolean;
-  igMemoryLimit: number;
-  igMemorySize: number;
-  igStorageSize: number;
-  enableSecurityLogging: boolean;
 }
 
 export default class FhirWorksStack extends Stack {
@@ -106,7 +102,7 @@ export default class FhirWorksStack extends Stack {
     const PATIENT_COMPARTMENT_V4 = 'patientCompartmentSearchParams.4.0.1.json';
 
     // Create KMS Resources
-    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account, props!.enableSecurityLogging);
+    const kmsResources = new KMSResources(this, props!.region, props!.stage, this.account);
 
     // Define ElasticSearch resources here:
     const elasticSearchResources = new ElasticSearchResources(
@@ -155,12 +151,7 @@ export default class FhirWorksStack extends Stack {
       this.javaHapiValidator = new JavaHapiValidator(this, 'javaHapiValidator', {
         region: props!.region,
         fhirVersion: props!.fhirVersion,
-        stage: props!.stage,
-        fhirLogsBucket,
-        s3KMSKey: kmsResources.s3KMSKey,
-        igMemoryLimit: props!.igMemoryLimit,
-        igMemorySize: props!.igMemorySize,
-        igStorageSize: props!.igStorageSize,
+        stage: props!.stage
       });
     }
 
@@ -359,11 +350,7 @@ export default class FhirWorksStack extends Stack {
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,
-      VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false',
-      LOGGING_MIDDLEWARE_KMS_KEY: kmsResources.securityLogKMSKey
-      ? kmsResources.securityLogKMSKey.keyArn
-      : 'ENCRYPTION_TURNED_OFF',
-      ENABLE_SECURITY_LOGGING: `${props!.enableSecurityLogging}`,
+      VALIDATE_XHTML: props?.validateXHTML ? 'true' : 'false'
     };
 
     const defaultLambdaBundlingOptions = {
@@ -734,7 +721,7 @@ export default class FhirWorksStack extends Stack {
     new CustomResource(this, 'uploadGlueScriptsCustomResource', {
       serviceToken: uploadGlueScriptsLambdaFunction.functionArn,
       properties: {
-        RandomValue: Math.random() // to force redeployment
+        RandomValue: this.artifactId
       }
     });
 
@@ -799,7 +786,7 @@ export default class FhirWorksStack extends Stack {
     const fhirServerLambda = new NodejsFunction(this, 'fhirServer', {
       timeout: Duration.seconds(40),
       memorySize: 512,
-      reservedConcurrentExecutions: isDev ? 100 : 200,
+      reservedConcurrentExecutions: isDev ? 10 : 200,
       description: 'FHIR API Server',
       entry: path.join(__dirname, '../index.ts'),
       handler: 'handler',
@@ -860,8 +847,7 @@ export default class FhirWorksStack extends Stack {
                 resources: [
                   kmsResources.s3KMSKey.keyArn,
                   kmsResources.dynamoDbKMSKey.keyArn,
-                  kmsResources.elasticSearchKMSKey.keyArn,
-                  kmsResources.securityLogKMSKey?.keyArn as string,
+                  kmsResources.elasticSearchKMSKey.keyArn
                 ]
               }),
               new PolicyStatement({

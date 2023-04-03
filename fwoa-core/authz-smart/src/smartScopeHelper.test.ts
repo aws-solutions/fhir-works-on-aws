@@ -10,8 +10,7 @@ import {
   filterOutUnusableScope,
   getScopes,
   getValidOperationsForScopeTypeAndAccessType,
-  rejectInvalidScopeCombination,
-  validateTokenScopes
+  rejectInvalidScopeCombination
 } from './smartScopeHelper';
 
 const emptyScopeRule = (): ScopeRule => ({
@@ -110,6 +109,29 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
     ).toEqual(false);
   });
 
+  test('scope is sufficient for group export with "system" scopeType, not "user" of "patient" scopeType', () => {
+    const clonedScopeRule = emptyScopeRule();
+    clonedScopeRule[scopeType].read = ['read'];
+    const bulkDataAuth: BulkDataAuth = { operation: 'initiate-export', exportType: 'group' };
+
+    // Only scopeType of system has bulkDataAccess
+    expect(
+      isScopeSufficient(`${scopeType}/*.read`, clonedScopeRule, 'read', false, undefined, bulkDataAuth)
+    ).toEqual(scopeType === 'system');
+
+    // Group export result is filtered on allowed resourceType, scope not having resourceType "*" should be passed
+    expect(
+      isScopeSufficient(
+        `${scopeType}/Observation.read`,
+        clonedScopeRule,
+        'read',
+        false,
+        undefined,
+        bulkDataAuth
+      )
+    ).toEqual(scopeType === 'system');
+  });
+
   test('scope is sufficient to do a search-system', () => {
     const clonedScopeRule = emptyScopeRule();
     clonedScopeRule[scopeType].read = ['search-system'];
@@ -187,7 +209,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
       ).toEqual(false);
     });
 
-    test('scope is sufficient for `group` initiate-export with "system" scopeType, not "user" or "patient" scopeType', () => {
+    test('scope is sufficient for `group` initiate-export with "system" scopeType, not "user" of "patient" scopeType', () => {
       const clonedScopeRule = emptyScopeRule();
       clonedScopeRule[scopeType].read = ['read'];
       const bulkDataAuth: BulkDataAuth = { operation: 'initiate-export', exportType: 'group' };
@@ -197,7 +219,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
         isScopeSufficient(`${scopeType}/*.read`, clonedScopeRule, 'read', false, undefined, bulkDataAuth)
       ).toEqual(scopeType === 'system');
 
-      // Group export should fail when resourceType is not "*"
+      // Group export result is filtered on allowed resourceType, scope not having resourceType "*" should be passed
       expect(
         isScopeSufficient(
           `${scopeType}/Observation.read`,
@@ -207,7 +229,7 @@ describe.each(isScopeSufficientCases)('ScopeType: %s: isScopeSufficient', (scope
           undefined,
           bulkDataAuth
         )
-      ).toEqual(false);
+      ).toEqual(scopeType === 'system');
     });
     describe.each(exportTypes)('export type: %s', (exportType: ExportType) => {
       describe.each(exportOperations)(
@@ -594,39 +616,5 @@ describe('rejectInvalidScopeCombination', () => {
     expect(
       rejectInvalidScopeCombination(['system/Organization.read', 'system/Patient.read'])
     ).toBeUndefined();
-  });
-});
-
-describe('validateTokenScopes', () => {
-  test('happy case', () => {
-    //BUILD
-    const scopes = ['user/*.read', 'user/Patient.read', 'patient/*.*'];
-    //OPERATE & CHECK
-    expect(validateTokenScopes(scopes, 'launchPatient', 'fhirUser')).toBeUndefined();
-  });
-  describe('invaild cases', () => {
-    //BUILD
-    const arrayScopesCases: [string[], string | undefined, string | undefined, string][] = [
-      [
-        ['user/*.read', 'user/Patient.read', 'patient/*.*'],
-        'launchPatient',
-        undefined,
-        'Invalid user scopes in token.'
-      ],
-      [
-        ['user/*.read', 'user/Patient.read', 'patient/*.*'],
-        undefined,
-        'fhirUser',
-        'Invalid patient scopes in token.'
-      ]
-    ];
-    test.each(arrayScopesCases)(
-      'given scopes: %p, patient context: %p, and fhir context: %p error should be: %p',
-      (scopes, patientContextClaim, fhirUserClaim, errorMessage) => {
-        expect(() => {
-          validateTokenScopes(scopes, patientContextClaim, fhirUserClaim);
-        }).toThrow(errorMessage);
-      }
-    );
   });
 });

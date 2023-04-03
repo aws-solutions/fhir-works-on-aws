@@ -40,15 +40,13 @@ git clone https://github.com/awslabs/fhir-works-on-aws-deployment.git
 - [Windows](./INSTALL.md#windows-installation)
 - [Docker](./INSTALL.md#docker-installation)
 
-3. Refer to these [instructions](../../DEVELOPMENT.md) for making code changes.
+3. Refer to these [instructions](./DEVELOPMENT.md) for making code changes.
 
-If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](../../fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md) documentation first.
+If you intend to use FHIR Implementation Guides read the [Using Implementation Guides](./USING_IMPLEMENTATION_GUIDES.md) documentation first.
 
-If you intend to do a multi-tenant deployment read the [Using Multi-Tenancy](../documentation/USING_MULTI_TENANCY.md) documentation first.
+If you intend to do a multi-tenant deployment read the [Using Multi-Tenancy](./USING_MULTI_TENANCY.md) documentation first.
 
-If you intend to use FHIR Subscriptions read the [Using Subscriptions](../documentation/USING_SUBSCRIPTIONS.md) documentation first.
-
-Refer to [SMART deployment README](../smart-deplyment/README.md) for best practices.
+If you intend to use FHIR Subscriptions read the [Using Subscriptions](./USING_SUBSCRIPTIONS.md) documentation first.
 
 ## Architecture
 
@@ -76,7 +74,15 @@ This project is licensed under the Apache-2.0 license.
 
 ### Retrieving user variables
 
-After installation, all user-specific variables (such as `USER_POOL_APP_CLIENT_ID`) can be found in the `Info_Output.log` file.
+After installation, all user-specific variables (such as `USER_POOL_APP_CLIENT_ID`) can be found in the `Info_Output.log` file. You can also retrieve these values by running the following command:
+
+```
+serverless info --verbose --region <REGION> --stage <STAGE>.
+```
+
+**Note**: The default stage is `dev` and region is `us-west-2`.
+
+If you are receiving `Error: EACCES: permission denied` when running a command, try re-running it using `sudo`.
 
 ### Accessing the FHIR API
 
@@ -179,53 +185,35 @@ curl -H "Accept: application/json" -H "Authorization: Bearer <COGNITO_AUTH_TOKEN
 curl -v -T "<LOCATION_OF_FILE_TO_UPLOAD>" "<PRESIGNED_PUT_URL>"
 ```
 
-### Additional Features
+### Testing bulk data export
 
-FWoA provides the following additional features on top of the standard offering. Most of these features are turned off by default, and can be turned on through CDK context.
+Bulk Export allows you to export all of your data from DDB to S3. We currently support the [System Level](https://hl7.org/fhir/uv/bulkdata/export/index.html#endpoint---system-level-export) export. For more information about bulk export, refer to the FHIR [Implementation Guide](https://hl7.org/fhir/uv/bulkdata/export/index.html).
 
-| Name                                                                                                 | CDK context key(s)                                        | Description                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Multi-tenancy](../documentation/USING_MULTI_TENANCY.md)                                             | enableMultiTenancy                                        | Multi-tenancy allows a single `fhir-works-on-aws` stack to serve as multiple FHIR servers for different tenants.                                                                     |
-| [Subscriptions](../documentation/USING_SUBSCRIPTIONS.md)                                             | enableSubscriptions                                       | FHIR Works on AWS implements Subscriptions v4.0.1: https://www.hl7.org/fhir/R4/subscription.html                                                                                     |
-| [Bulk Data Export](../documentation/USING_BULK_DATA_EXPORT.md)                                       | Always enabled                                            | Bulk Export allows you to export data from DDB to S3.                                                                                                                                |
-| [Secure Logging](../documentation/SECURE_LOGGING.md)                                                 | enableSecurityLogging logLevel                            | Secure logging includes metadata such as who, what, when, where, how, and other associated request and response data.                                                                |
-| [Implementation Guides](../../fwoa-utilities/javaHapiValidatorLambda/USING_IMPLEMENTATION_GUIDES.md) | useHapiValidator igMemoryLimit igMemorySize igStorageSize | An [Implementation Guide (IG)] ( https://www.hl7.org/fhir/implementationguide.html) is a set of rules that describe how FHIR resources should be used to solve a particular problem. |
-| Enable OpenSearch Hard Delete                                                                        | enableESHardDelete                                        | FWoA uses soft delete for resource deletion by default. Set enableESHardDelete to true to enable hard delete in OpenSearch cluster.                                                  |
-| [Dynamodb Daily Backup](../../../INSTALL.md#dynamodb-table-backups)                                  | enableBackup                                              | Daily DynamoDB Table back-ups can be optionally deployed via an additional fhir-server-backups stack.                                                                                |
+To test this feature on FHIR Works on AWS, make API requests using the [Fhir.postman_collection.json](./postman/Fhir.postman_collection.json) file by following these steps:
 
-Additional customization information can be found in document [CUSTOMIZE.md](../documentation/CUSTOMIZE.md).
+1. In the FHIR Examples collection, under the **Export** folder, use `GET System Export` request to initiate an export request.
+2. In the response, check the Content-Location header field for a URL. The URL should be in the `<base-url>/$export/<jobId>` format.
+3. To get the status of the export job, in the **Export** folder, use the GET System Job Status request. Enter the `jobId` value from step 2 in that request.
+4. Check the response that is returned from `GET System Job Status`. If the job is in progress, the response header will have the field `x-progress: in-progress`. Keep polling that URL every 10 seconds until the job is complete. Once the job is complete, you'll get a JSON body with presigned S3 URLs of your exported data. You can download the exported data using those URLs.
+   Example:
 
-### Run Integration Test
-
-1. Integration test requires at least 100 patient resources created before running, or it will fail. The best way to do this is posting a bundle of 25 patient resources 4 times.
-2. Create 3 Cognito users, two practitioners and one auditor. You can create users with script [provision-user.py](./scripts/provision-user.py).
-
-- The script requires 3 inputs, userPoolId, userPoolAppClientId and region. These value can be found in the output of the FWoA CloudFormation stack you deployed.
-- The script can be executed with `python3 scripts/provision-user.py <userPoolId> <userPoolAppClientId> <region>`
-- The three test users will use the same password. Update the password in `provision-user.py` script with your preferred password and save the change.
-- To create the first practitioner user, change the username in `provision-user.py` script to `practitionerTest`. Save the change, then run the script.
-- To create the auditor user, change the username to `auditorTest` and group to `auditor`. Save the change, then run the script.
-- To create the second practitioner user, change the username to `otherPractitionerTest`, change the tenant to `tenant2`, revert group back to `practitioner`. Save the change, then run the script.
-
-3. Now all data and users are ready, we need to set up environment variables for integration tests to run.
-   Create a `.env` file in folder deployment, copy the following content in and update the value based on your environment.
-
-```
-# These are variables we just created in step 2
-COGNITO_USERNAME_PRACTITIONER=practitionerTest
-COGNITO_USERNAME_AUDITOR=auditorTest
-COGNITO_USERNAME_PRACTITIONER_ANOTHER_TENANT=otherPractitionerTest
-COGNITO_PASSWORD=<DUMMY_VALUE>
-# These are variables you set in [cdk.json](./cdk.json)
-MULTI_TENANCY_ENABLED=<true_or_false>
-API_AWS_REGION=<us-west-2>
-# These are variables you can find in AWS Console in CloudFormation output and API Gateway
-API_URL=
-API_KEY=
-COGNITO_CLIENT_ID=
+```sh
+{
+    "transactionTime": "2021-03-29T16:49:00.819Z",
+    "request": "https://xyz.execute-api.us-west-2.amazonaws.com/$export?_outputFormat=ndjson&_since=1800-01-01T00%3A00%3A00.000Z&_type=Patient",
+    "requiresAccessToken": false,
+    "output":
+    [
+        {
+            "type": "Patient",
+            "url": "https://fhir-service-dev-bulkexportresultsbucket-.com/abc"
+        }
+    ],
+    "error": []
+}
 ```
 
-4. Once all the environment variables are set, you can run integration test with commands `rushx int-test`
+**Note**: To cancel an export job, use the `Cancel Export Job` request in the "Export" folder located in the Postman collections.
 
 ## Troubleshooting FHIR Works on AWS
 
