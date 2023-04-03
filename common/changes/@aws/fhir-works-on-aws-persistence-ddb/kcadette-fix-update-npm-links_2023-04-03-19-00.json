@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-persistence-ddb",
-      "comment": "deprecated serverless",
-      "type": "major"
+      "comment": "update homepage and repository link",
+      "type": "patch"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-persistence-ddb"

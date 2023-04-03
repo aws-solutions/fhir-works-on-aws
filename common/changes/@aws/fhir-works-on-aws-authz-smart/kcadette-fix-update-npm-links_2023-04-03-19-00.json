@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-authz-smart",
-      "comment": "whitespace changes",
-      "type": "none"
+      "comment": "update homepage and repository link",
+      "type": "patch"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-authz-smart"
