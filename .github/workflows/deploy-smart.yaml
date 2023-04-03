@@ -27,19 +27,8 @@ jobs:
         run: |
           cd ./fwoa-utilities/javaHapiValidatorLambda
           mvn --batch-mode --update-snapshots --no-transfer-progress clean install
-  pre-deployment-check:
-    needs: build-validate
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: 'Block Concurrent Deployments'
-        uses: softprops/turnstyle@v1
-        with:
-          poll-interval-seconds: 10
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    needs: pre-deployment-check
+    needs: build-validate
     name: Deploy to Dev - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
     environment: FWoA Integ Test Env
     runs-on: ubuntu-20.04
