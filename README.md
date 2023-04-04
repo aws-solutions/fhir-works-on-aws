@@ -1,4 +1,8 @@
 # FHIR Works on AWS
+
+## Maintenance Notice
+FHIR Works on AWS has been moved to maintenance mode. While in maintenance, we will not add any new features to this solution. All security issues should be reported directly to AWS Security at [aws-security@amazon.com](mailto:security@amazon.com). If you are new to this solution, we advise you to explore using [HealthLake](https://aws.amazon.com/healthlake), which is our managed service for building FHIR based transactional and analytics applications. You can get started by contacting your AWS Account team. If you are an existing customer of FHIR Works on AWS, and have additional questions or need immediate help, please reach out to [fwoa-migration-support@amazon.com](mailto:fwoa-migration-support@amazon.com) or contact your AWS Account team.
+
 The FHIR Works on AWS solution helps software engineers at independent software vendors,
 system integrators, and healthcare information technology teams to enhance their own products.
 Using this solution, they can transfer medical records to both mobile devices and web portals in
