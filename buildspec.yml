@@ -2,7 +2,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16 #The Solutions pipeline version do not support 14, v14 will be manually set
+      nodejs: 18 #The Solutions pipeline version do not support 14, v14 will be manually set
     commands:
       - echo "nothing to do in install"
   pre_build:
