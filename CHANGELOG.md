@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0] - (2022-04-07)
+
 <!-- GENERATED Changelog SUMMARY START -->
 
 ## Changelog for Packages in This project
