@@ -53,7 +53,7 @@ export const patientId = `Patient/${id}`;
 export const practitionerId = `Practitioner/${id}`;
 export const patientIdentity = `${apiUrl}/${patientId}`;
 export const practitionerIdentity = `${apiUrl}/${practitionerId}`;
-export const sub = 'test@test.com';
+export const sub = 'test@example.com';
 
 export const patientContext: any = {
   ext: { launch_response_patient: patientIdentity }

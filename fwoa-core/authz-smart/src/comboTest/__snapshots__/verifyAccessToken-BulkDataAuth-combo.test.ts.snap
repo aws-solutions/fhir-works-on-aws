@@ -21,7 +21,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -59,7 +59,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [],
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id"
   },
@@ -87,7 +87,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -122,7 +122,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -154,7 +154,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -189,7 +189,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read",
@@ -221,7 +221,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read",
@@ -257,7 +257,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read"
@@ -288,7 +288,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -323,7 +323,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -355,7 +355,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [],
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id",
     "ext": {
@@ -386,7 +386,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -421,7 +421,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -456,7 +456,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -488,7 +488,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -523,7 +523,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -555,7 +555,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -590,7 +590,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -622,7 +622,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -657,7 +657,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -689,7 +689,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "system/Patient.read",
       "system/*.read"
@@ -720,7 +720,7 @@ Object {
     "system/Patient.read",
     "system/*.read",
   ],
-  "sub": "test@test.com",
+  "sub": "test@example.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
     "system/*.read",
@@ -750,7 +750,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -783,7 +783,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -818,7 +818,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -850,7 +850,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -886,7 +886,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "system/*.read"
@@ -917,7 +917,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/*.read"
     ],
@@ -950,7 +950,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -984,7 +984,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -1019,7 +1019,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "system/Patient.read",
@@ -1051,7 +1051,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -1087,7 +1087,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read"
@@ -1118,7 +1118,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read",
@@ -1153,7 +1153,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -1185,7 +1185,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1223,7 +1223,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [],
     "fhirUser": "https://fhir.server.com/dev/Patient/id"
   },
@@ -1251,7 +1251,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -1285,7 +1285,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1316,7 +1316,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read"
@@ -1349,7 +1349,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -1381,7 +1381,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "system/Patient.read",
@@ -1415,7 +1415,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -1446,7 +1446,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -1482,7 +1482,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read"
     ]
@@ -1511,7 +1511,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read",
@@ -1545,7 +1545,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "system/Patient.read",
@@ -1576,7 +1576,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1611,7 +1611,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "system/Patient.read"
@@ -1641,7 +1641,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -1675,7 +1675,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -1706,7 +1706,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [],
     "ext": {
       "launch_response_patient": "https://fhir.server.com/dev/Patient/id"
@@ -1736,7 +1736,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1770,7 +1770,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/*.read",
       "system/Patient.read",
@@ -1804,7 +1804,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1835,7 +1835,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "system/*.read"
     ],
@@ -1863,7 +1863,7 @@ Object {
   "scp": Array [
     "system/*.read",
   ],
-  "sub": "test@test.com",
+  "sub": "test@example.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
     "system/*.read",
@@ -1893,7 +1893,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -1929,7 +1929,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -1960,7 +1960,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -1991,7 +1991,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2027,7 +2027,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "system/Patient.read",
@@ -2059,7 +2059,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2094,7 +2094,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "system/*.read"
     ]
@@ -2114,7 +2114,7 @@ Object {
   "scp": Array [
     "system/*.read",
   ],
-  "sub": "test@test.com",
+  "sub": "test@example.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
     "system/*.read",
@@ -2144,7 +2144,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [],
     "fhirUser": "https://fhir.server.com/dev/Practitioner/id",
     "ext": {
@@ -2175,7 +2175,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2211,7 +2211,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -2246,7 +2246,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -2280,7 +2280,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2315,7 +2315,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -2348,7 +2348,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -2381,7 +2381,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "system/Patient.read"
@@ -2411,7 +2411,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read"
@@ -2445,7 +2445,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -2478,7 +2478,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read"
@@ -2512,7 +2512,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -2547,7 +2547,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -2581,7 +2581,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2618,7 +2618,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "system/Patient.read"
@@ -2648,7 +2648,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -2683,7 +2683,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read"
@@ -2717,7 +2717,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read"
     ],
@@ -2747,7 +2747,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -2779,7 +2779,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "system/*.read"
     ],
@@ -2807,7 +2807,7 @@ Object {
   "scp": Array [
     "system/*.read",
   ],
-  "sub": "test@test.com",
+  "sub": "test@example.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
     "system/*.read",
@@ -2837,7 +2837,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -2872,7 +2872,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2903,7 +2903,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -2935,7 +2935,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read",
@@ -2969,7 +2969,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/*.read",
@@ -3004,7 +3004,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/*.read",
       "user/Patient.read"
@@ -3035,7 +3035,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "system/Patient.read"
@@ -3069,7 +3069,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -3103,7 +3103,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/*.read",
@@ -3135,7 +3135,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read"
@@ -3166,7 +3166,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -3203,7 +3203,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read"
@@ -3234,7 +3234,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "user/Patient.read",
       "user/*.read",
@@ -3270,7 +3270,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read"
@@ -3300,7 +3300,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "system/Patient.read",
       "system/*.read"
@@ -3329,7 +3329,7 @@ Object {
     "system/Patient.read",
     "system/*.read",
   ],
-  "sub": "test@test.com",
+  "sub": "test@example.com",
   "uid": "00u85ozwjjWRd17PB5d5",
   "usableScopes": Array [
     "system/*.read",
@@ -3359,7 +3359,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",
@@ -3395,7 +3395,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -3427,7 +3427,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "user/Patient.read",
@@ -3464,7 +3464,7 @@ exports[`verifyAccessToken-BulkDataAuth-combo CASE: {
     "exp": 2668546607,
     "cid": "0oa8muazKSyk9gP5y5d5",
     "uid": "00u85ozwjjWRd17PB5d5",
-    "sub": "test@test.com",
+    "sub": "test@example.com",
     "scp": [
       "patient/Patient.read",
       "patient/*.read",

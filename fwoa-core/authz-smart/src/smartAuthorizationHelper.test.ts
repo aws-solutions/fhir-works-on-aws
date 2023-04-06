@@ -349,7 +349,7 @@ function getDefaultPayload(iat: number, exp: number, aud: string | string[], iss
     cid: '0oa8muazKSyk9gP5y5d5',
     uid: '00u85ozwjjWRd17PB5d5',
     scp: ['fhirUser', 'openid', 'profile', 'launch/encounter', 'patient/Patient.read'],
-    sub: 'test@test.com',
+    sub: 'example@example.com',
     fhirUser: 'Practitioner/1234'
   };
 }

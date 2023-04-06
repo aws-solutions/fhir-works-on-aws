@@ -23,7 +23,7 @@ response = client.admin_create_user(
     UserAttributes=[
         {
             'Name': 'email',
-            'Value': 'dummy@email.com'
+            'Value': 'ExampleAWSAccountNo1@email.com'
         },
         {
             'Name': 'email_verified',
@@ -38,7 +38,7 @@ response = client.admin_create_user(
     ValidationData=[
         {
             'Name': 'email',
-            'Value': 'dummy@email.com'
+            'Value': 'ExampleAWSAccountNo1@email.com'
         }
     ],
     TemporaryPassword='Master123!',
