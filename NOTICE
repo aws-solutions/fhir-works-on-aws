@@ -1,1 +1,111 @@
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+**********************
+THIRD PARTY COMPONENTS
+**********************
+This software includes third party software subject to the following copyrights:
+
+@elastic/elasticsearch under the Apache License 2.0
+@types/aws-lambda under the MIT License
+@types/flat under the MIT License
+accepts under the MIT License
+ajv under the MIT License
+array-flatten under the MIT License
+aws-elasticsearch-connector  under the MIT License
+@aws/fhir-works-on-aws-interface  under the Apache License 2.0
+@aws/fhir-works-on-aws-persistence-ddb under the Apache License 2.0
+@aws/fhir-works-on-aws-authz-rbac under the Apache License 2.0
+@aws/fhir-works-on-aws-routing under the Apache License 2.0
+@aws/fhir-works-on-aws-search-es under the Apache License 2.0
+aws-sdk under the Apache License 2.0
+base64-js under the MIT License
+body-parser under the MIT License
+buffer under the MIT License
+bytes under the MIT License
+content-disposition under the MIT License
+content-type under the MIT License
+cookie under the MIT License
+cookie-signature under the MIT License
+debug under the MIT License
+decompress-response under the MIT License
+depd under the MIT License
+destroy under the MIT License
+ecdsa-sig-formatter under the Apache License 2.0
+ee-first under the MIT License
+encodeurl under the MIT License
+end-of-stream under the MIT License
+errorhandler under the MIT License
+escape-html under the MIT License
+etag under the MIT License
+events under the MIT License
+express under the MIT License
+fast-deep-equal under the MIT License
+fast-json-stable-stringify under the MIT License
+finalhandler under the MIT License
+flat under the MIT License
+forwarded under the MIT License
+fresh under the MIT License
+from2 under the MIT License
+http-errors under the MIT License
+into-stream under the MIT License
+is-buffer under the MIT License
+isarray under the MIT License
+json-schema-traverse under the MIT License
+jsonwebtoken under the MIT License
+media-typer under the MIT License
+merge-descriptors under the MIT License
+methods under the MIT License
+mime under the MIT License
+mime-db under the MIT License
+mime-types under the MIT License
+mimic-response under the MIT License
+ms under the MIT License
+negotiator under the MIT License
+on-finished under the MIT License
+p-is-promise under the MIT License 
+parseurl under the MIT License 
+path-to-regexp under the MIT License 
+proxy-addr under the MIT License 
+pump under the MIT License 
+punycode under the MIT License 
+range-parser under the MIT License 
+raw-body under the MIT License 
+safe-buffer under the MIT License
+safer-buffer under the MIT License
+send under the MIT License
+serve-static under the MIT License
+serverless-http under the MIT License
+statuses under the MIT License
+toidentifier under the MIT License
+type-is under the MIT License
+unpipe under the MIT License
+utils-merge under the MIT License
+uuid under the MIT License
+vary under the MIT License
+xmlbuilder under the MIT License
+@tootallnate/once under the MIT License
+@types/body-parser under the MIT License
+@types/connect under the MIT License
+@types/express under the MIT License
+@types/express-jwt under the MIT License
+@types/express-serve-static-core under the MIT License
+@types/express-unless under the MIT License
+@types/mime under the MIT License
+@types/node under the MIT License
+@types/qs under the MIT License
+@types/range-parser under the MIT License
+@types/serve-static under the MIT License
+agent-base under the MIT License
+http-proxy-agent under the MIT License
+https-proxy-agent under the MIT License
+jwks-rsa under the MIT License
+lru-memoizer under the MIT License
+proxy-from-env under the MIT License
+@aws/fhir-works-on-aws-rbac under the Apache License 2.0
+url under the MIT License
+util-deprecate under the MIT License
+commander under the MIT License
+discontinuous-range under the MIT License
+commitzen under the Apache License 2.0
+commitlint under the Apache License 2.0
+rush-prettier under the Apache License 2.0
