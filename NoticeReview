@@ -6,7 +6,7 @@ core-util-is under Copyright Node.js contributors(https://github.com/aws-solutio
 
 iconv-lite Copyright (c) 2011 Alexander Shtuchkin(https://github.com/aws-solutions/fhir-works-on-aws/blob/main/fwoa-core/authz-rbac/THIRD-PARTY#L2503)
 
-ipaddr.js Copyright (C) 2011-2017 whitequark <whitequark@whitequark.org> (https://github.com/aws-solutions/fhir-works-on-aws/blob/main/fwoa-core/authz-rbac/THIRD-PARTY#L2584)
+ipaddr.js Copyright (C) 2011-2017 whitequark (https://github.com/aws-solutions/fhir-works-on-aws/blob/main/fwoa-core/authz-rbac/THIRD-PARTY#L2584)
 
 jwa Copyright (c) 2013 Brian J. Brennan (https://github.com/aws-solutions/fhir-works-on-aws/blob/main/fwoa-core/authz-rbac/THIRD-PARTY#L2716)
 
