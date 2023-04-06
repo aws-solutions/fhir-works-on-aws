@@ -7,10 +7,6 @@ name: Unit Tests, Deploy, Integration Test
 on:
   workflow_call:
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
 jobs:
   build-validate:
     name: Build and validate
@@ -45,6 +41,10 @@ jobs:
             region: us-west-1
           - enableMultiTenancy: true
             region: us-west-2
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,6 +52,13 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 1.8
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
 
       - name: Base Action
         uses: ./.github/actions/baseAction
@@ -108,6 +115,9 @@ jobs:
             serviceUrlSecretName: MULTITENANCY_SERVICE_URL
             cognitoClientIdSecretName: MULTITENANCY_COGNITO_CLIENT_ID
             apiKeySecretName: MULTITENANCY_API_KEY
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v3
         with:
@@ -116,6 +126,12 @@ jobs:
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
       - name: Install dependency
         run: |
           gem install bundler
@@ -156,9 +172,19 @@ jobs:
             subscriptionsNotificationsTableSecretName: MULTITENANCY_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
             subscriptionsEndpointSecretName: MULTITENANCY_SUBSCRIPTIONS_ENDPOINT
             subscriptionsApiKeySecretName: MULTITENANCY_SUBSCRIPTIONS_API_KEY
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
 
       - name: Base Action
         uses: ./.github/actions/baseAction
