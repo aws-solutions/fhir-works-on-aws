@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-routing",
+      "comment": "update dummy emails according to aws style guide ",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-routing"
+}
