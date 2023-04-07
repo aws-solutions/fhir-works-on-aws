@@ -4,13 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [6.0.0] - 2023-04-07
 
-<!-- GENERATED Changelog SUMMARY START -->
-
-## Changelog for Packages in This project
+### Changelog for Packages in This project
 
 Please click corresponded links for more details for changelog of each package.
-
-<!-- the table below was generated using the ./repo-scripts/repo-toolbox script -->
 
 | Folder                                                      | Package                                   | CHANGELOG                                              |
 | ----------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------ |
@@ -22,5 +18,3 @@ Please click corresponded links for more details for changelog of each package.
 | [fwoa-core/search-es](./fwoa-core/search-es/)               | [@aws/fhir-works-on-aws-search-es]        | [Changelog](./fwoa-core/search-es/CHANGELOG.md)        |
 | [solutions/deployment](./solutions/deployment/)             | [@aws/fhir-works-on-aws-deployment]       | [Changelog](./solutions/deployment/CHANGELOG.md)       |
 | [solutions/smart-deployment](./solutions/smart-deployment/) | [@aws/fhir-works-on-aws-smart-deployment] | [Changelog](./solutions/smart-deployment/CHANGELOG.md) |
-
-<!-- GENERATED PROJECT SUMMARY END -->
