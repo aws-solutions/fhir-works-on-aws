@@ -11,7 +11,7 @@
   "author": {
     "name": "Amazon Web Services",
     "email": "fhir-works-on-aws-dev@amazon.com",
-    "url": "https://aws.amazon.com/"
+    "url": "https://aws.amazon.com/solutions"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

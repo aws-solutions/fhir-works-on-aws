@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "author": {
     "name": "Amazon Web Services",
-    "url": "http://aws.amazon.com"
+    "url": "https://aws.amazon.com/solutions"
   },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
