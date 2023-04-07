@@ -87,7 +87,7 @@ const externalPractitionerIdentity = `${apiUrl}/test/${practitionerId}`;
 const patientFhirResource = getFhirUser(patientIdentity);
 const practitionerFhirResource = getFhirUser(practitionerIdentity);
 const externalPractitionerFhirResource = getFhirUser(externalPractitionerIdentity);
-const sub = 'test@test.com';
+const sub = 'example@example.com';
 
 const patientContext: any = {
   ext: { launch_response_patient: patientIdentity }

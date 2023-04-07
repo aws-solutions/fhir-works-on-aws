@@ -380,7 +380,7 @@ describe('search', () => {
         },
         {
           system: 'http://fwoa-mail.com',
-          value: 'somepatient@fwoa-mail.com'
+          value: 'somepatient@example.com'
         }
       ];
       const testPatient: ReturnType<typeof randomPatient> = (await client.post('Patient', randomPatientData))
@@ -410,7 +410,7 @@ describe('search', () => {
         p({ identifier: 'http://fwoa-integ-tests.com|someCode' }),
         p({ identifier: 'someCode' }),
         p({ identifier: 'http://fwoa-integ-tests.com|' }),
-        p({ identifier: 'somepatient@fwoa-mail.com' }),
+        p({ identifier: 'somepatient@example.com' }),
         p({ active: true })
       ];
       // eslint-disable-next-line no-restricted-syntax
@@ -426,7 +426,7 @@ describe('search', () => {
 
       const testsParamsThatDoNotMatch = [
         // only exact string matches should work
-        p({ identifier: 'someOtherPatient@fwoa-mail.com' }),
+        p({ identifier: 'someOtherPatient@example.com' }),
         p({ identifier: 'somepatient' }),
         p({ identifier: 'fwoa-mail.com' }),
         p({ identifier: 'http' }),
