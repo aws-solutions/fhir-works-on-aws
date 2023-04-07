@@ -54,7 +54,7 @@ const getEvent = ({
       messageAttributes: {},
       md5OfBody: '123456789012',
       eventSource: 'aws:sqs',
-      eventSourceARN: 'arn:aws:sqs:us-east-2:123456789012:fhir-service-dev-RestHookQueue',
+      eventSourceARN: 'arn:aws:sqs:us-east-2:555555555555:fhir-service-dev-RestHookQueue',
       awsRegion: 'us-east-2'
     }
   ]
