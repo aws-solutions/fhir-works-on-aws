@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-interface",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-interface"
+}
