@@ -93,7 +93,6 @@ lodash under the MIT License
 lodash.clonedeep under the MIT License
 lodash.get under the MIT License
 lodash.includes under the MIT License
-lodash.includes under the MIT License
 lodash.isboolean under the MIT License
 lodash.isinteger under the MIT License
 lodash.isnumber under the MIT License
@@ -111,6 +110,7 @@ mime-types under the MIT License
 mimic-response under the MIT License
 moo under the BSD-3-Clause license
 ms under the MIT License
+nearley under the MIT License
 negotiator under the MIT License
 on-finished under the MIT License
 once under The ISC License
@@ -126,6 +126,7 @@ punycode under the MIT License
 qs under the BSD-3-Clause license
 querystring under the MIT License
 railroad-diagrams under the MIT License
+randexp under the MIT License
 range-parser under the MIT License
 raw-body under the MIT License
 readable-stream under the Node.js License

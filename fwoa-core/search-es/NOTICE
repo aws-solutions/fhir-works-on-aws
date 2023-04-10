@@ -1,2 +1,47 @@
 fhir-works-on-aws-search-es
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+**********************
+THIRD PARTY COMPONENTS
+**********************
+This software includes third party software subject to the following copyrights:
+
+@aws/fhir-works-on-aws-interfaceundertheApacheLicense2.0
+@elastic/elasticsearchundertheApacheLicense2.0
+aws-elasticsearch-connectorundertheMITLicense
+aws-sdkundertheApacheLicense2.0
+aws4undertheMITLicense
+base64-jsundertheMITLicense
+bufferundertheMITLicense
+commanderundertheMITLicense
+date-fnsundertheMITLicense
+debugundertheMITLicense
+decompress-responseundertheMITLicense
+discontinuous-rangeundertheMITLicense
+end-of-streamundertheMITLicense
+eventsundertheMITLicense
+ieee754undertheBSD-3-Clauselicense
+isarrayundertheMITLicense
+jmespathundertheApacheLicense2.0
+lodash.getundertheMITLicense
+lodashundertheMITLicense
+mimic-responseundertheMITLicense
+mooundertheBSD-3-Clauselicense
+msundertheMITLicense
+nearleyundertheMITLicense
+onceunderTheISCLicense
+pumpundertheMITLicense
+punycodeundertheMITLicense
+querystringundertheMITLicense
+railroad-diagramsundertheMITLicense
+randexpundertheMITLicense
+retundertheMITLicense
+saxunderTheISCLicense
+secure-json-parseundertheBSD-3-Clauselicense
+semverunderTheISCLicense
+urlundertheMITLicense
+uuidundertheMITLicense
+wrappyunderTheISCLicense
+xml2jsundertheMITLicense
+xmlbuilderundertheMITLicense
