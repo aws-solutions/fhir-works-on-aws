@@ -7,41 +7,41 @@ THIRD PARTY COMPONENTS
 **********************
 This software includes third party software subject to the following copyrights:
 
-@aws/fhir-works-on-aws-interfaceundertheApacheLicense2.0
-@elastic/elasticsearchundertheApacheLicense2.0
-aws-elasticsearch-connectorundertheMITLicense
-aws-sdkundertheApacheLicense2.0
-aws4undertheMITLicense
-base64-jsundertheMITLicense
-bufferundertheMITLicense
-commanderundertheMITLicense
-date-fnsundertheMITLicense
-debugundertheMITLicense
-decompress-responseundertheMITLicense
-discontinuous-rangeundertheMITLicense
-end-of-streamundertheMITLicense
-eventsundertheMITLicense
-ieee754undertheBSD-3-Clauselicense
-isarrayundertheMITLicense
-jmespathundertheApacheLicense2.0
-lodash.getundertheMITLicense
-lodashundertheMITLicense
-mimic-responseundertheMITLicense
-mooundertheBSD-3-Clauselicense
-msundertheMITLicense
-nearleyundertheMITLicense
-onceunderTheISCLicense
-pumpundertheMITLicense
-punycodeundertheMITLicense
-querystringundertheMITLicense
-railroad-diagramsundertheMITLicense
-randexpundertheMITLicense
-retundertheMITLicense
-saxunderTheISCLicense
-secure-json-parseundertheBSD-3-Clauselicense
-semverunderTheISCLicense
-urlundertheMITLicense
-uuidundertheMITLicense
-wrappyunderTheISCLicense
-xml2jsundertheMITLicense
-xmlbuilderundertheMITLicense
+@aws/fhir-works-on-aws-interface under the Apache License 2.0
+@elastic/elastic search under the Apache License 2.0
+aws-elasticsearch-connector under the MIT License
+aws-sdk under the Apache License 2.0
+aws4 under the MIT License
+base64-js under the MIT License
+buffer under the MIT License
+commander under the MIT License
+date-fns under the MIT License
+debug under the MIT License
+decompress-response under the MIT License
+discontinuous-range under the MIT License
+end-of-stream under the MIT License
+events under the MIT License
+ieee754 under the BSD-3-Clause license
+isarray under the MIT License
+jmespath under the Apache License 2.0
+lodash.get under the MIT License
+lodash under the MIT License
+mimic-response under the MIT License
+moo under the BSD-3-Clause license
+ms under the MIT License
+nearley under the MIT License
+once under The ISC License
+pump under the MIT License
+punycode under the MIT License
+querystring under the MIT License
+railroad-diagrams under the MIT License
+randexp under the MIT License
+ret under the MIT License
+sax under The ISC License
+secure-json-parse under the BSD-3-Clause license
+semver under The ISC License
+url under the MIT License
+uuid under the MIT License
+wrappy under The ISC License
+xml2js under the MIT License
+xmlbuilder under the MIT License
