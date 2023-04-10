@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-authz-rbac",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "FHIR Works on AWS role base access control",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {

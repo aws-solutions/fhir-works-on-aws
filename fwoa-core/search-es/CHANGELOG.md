@@ -1,6 +1,15 @@
 # Change Log - @aws/fhir-works-on-aws-search-es
 
-This log was last generated on Mon, 03 Apr 2023 19:20:41 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Apr 2023 15:50:12 GMT and should not be manually modified.
+
+## 4.0.1
+
+Mon, 10 Apr 2023 15:50:12 GMT
+
+### Patches
+
+- update dummy emails according to aws style guide
+- update homepage and repository link
 
 ## 4.0.0
 

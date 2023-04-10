@@ -2,6 +2,21 @@
   "name": "@aws/fhir-works-on-aws-interface",
   "entries": [
     {
+      "version": "13.0.1",
+      "tag": "@aws/fhir-works-on-aws-interface_v13.0.1",
+      "date": "Mon, 10 Apr 2023 15:50:12 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "update dummy emails according to aws style guide "
+          },
+          {
+            "comment": "update homepage and repository link"
+          }
+        ]
+      }
+    },
+    {
       "version": "13.0.0",
       "tag": "@aws/fhir-works-on-aws-interface_v13.0.0",
       "date": "Mon, 03 Apr 2023 19:20:41 GMT",
