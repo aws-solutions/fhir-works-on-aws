@@ -1,2 +1,119 @@
 fhir-works-on-aws-interface
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+**********************
+THIRD PARTY COMPONENTS
+**********************
+This software includes third party software subject to the following copyrights:
+
+@aws/fhir-works-on-aws-interface under the Apache License 2.0
+@aws/fhir-works-on-aws-persistence-ddb under the Apache License 2.0
+@aws/fhir-works-on-aws-rbac under the Apache Licens 2.0
+@aws/fhir-works-on-aws-routing under the Apache License 2.0
+@aws/fhir-works-on-aws-search-es under the Apache License 2.0
+@elastic/elastic search under the Apache License 2.0
+@types/aws-lambda under the MIT License
+@types/flat under the MIT License
+accepts under the MIT License
+ajv under the MIT License
+array-flatten under the MIT License
+aws-elasticsearch-connector under the MIT License
+aws-sdk under the Apache License 2.0
+aws4 under the MIT License
+base64-js under the MIT License
+body-parser under the MIT License
+buffer under the MIT License
+bytes under the MIT License
+content-disposition under the MIT License
+content-type under the MIT License
+cookie-signature under the MIT License
+cookie under the MIT License
+core-util-is under the MIT License
+debug under the MIT License
+decompress-response under the MIT License
+depd under the MIT License
+destroy under the MIT License
+ecdsa-sig-formatter under the Apache License 2.0
+ee-first under the MIT License
+encodeurl under the MIT License
+end-of-stream under the MIT License
+errorhandler under the MIT License
+escape-html under the MIT License
+etag under the MIT License
+events under the MIT License
+express under the MIT License
+fast-deep-equal under the MIT License
+fast-json-stable-stringify under the MIT License
+finalhandler under the MIT License
+flat under the MIT License
+forwarded under the MIT License
+fresh under the MIT License
+from2 under the MIT License
+http-errors under the MIT License
+iconv-lite under the MIT License
+ieee754 under the BSD-3-Clause license
+inherits under The ISC License
+into-stream under the MIT License
+ipaddr.js under the MIT License
+is-buffer under the MIT License
+isarray under the MIT License
+jmespath under the Apache License 2.0
+json-schema-traverse under the MIT License
+jsonwebtoken under the MIT License
+jwa under the MIT License
+jws under the MIT License
+lodash.get under the MIT License
+lodash.includes under the MIT License
+lodash.isboolean under the MIT License
+lodash.isinteger under the MIT License
+lodash.isnumber under the MIT License
+lodash.isplain object under the MIT License
+lodash.isstring under the MIT License
+lodash.once under the MIT License
+lodash under the MIT License
+media-typer under the MIT License
+merge-descriptors under the MIT License
+methods under the MIT License
+mime-db under the MIT License
+mime-types under the MIT License
+mime under the MIT License
+mimic-response under the MIT License
+ms under the MIT License
+negotiator under the MIT License
+on-finished under the MIT License
+once under The ISC License
+p-is-promise under the MIT License
+parseurl under the MIT License
+path-to-regexp under the MIT License
+process-nextick-args under the MIT License
+proxy-addr under the MIT License
+pump under the MIT License
+punycode under the MIT License
+qs under the BSD-3-Clause license
+query string under the MIT License
+range-parser under the MIT License
+raw-body under the MIT License
+readable-stream under the Node.js License
+safe-buffer under the MIT License
+safer-buffer under the MIT License
+sax under The ISC License
+semver under The ISC License
+send under the MIT License
+serve-static under the MIT License
+serverless-http under the MIT License
+setprototypeof under The ISC License
+statuses under the MIT License
+string_decoder under the Node.js License
+toidentifier under the MIT License
+type-is under the MIT License
+unpipe under the MIT License
+uri-js under the BSD-2-Clause License
+url under the MIT License
+util-deprecate under the MIT License
+utils-merge under the MIT License
+uuid under the MIT License
+vary under the MIT License
+wrappy under The ISC License
+xml2js under the MIT License
+xmlbuilder under the MIT License

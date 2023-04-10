@@ -11,7 +11,8 @@ lib
 fwoa-utilities/javaHapiValidatorLambda/src/test/resources/
 
 #Third party file
-THIRD-PARTY$
+THIRD_PARTY_LICENSES$
+
 
 # NOTICE files
 .*/NOTICE
