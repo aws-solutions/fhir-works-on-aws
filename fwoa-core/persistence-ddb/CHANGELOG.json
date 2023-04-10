@@ -2,6 +2,26 @@
   "name": "@aws/fhir-works-on-aws-persistence-ddb",
   "entries": [
     {
+      "version": "4.0.1",
+      "tag": "@aws/fhir-works-on-aws-persistence-ddb_v4.0.1",
+      "date": "Mon, 10 Apr 2023 15:50:12 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "update aws account numebrs according to aws style guide"
+          },
+          {
+            "comment": "update homepage and repository link"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@aws/fhir-works-on-aws-interface\" to `13.0.1`"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.0.0",
       "tag": "@aws/fhir-works-on-aws-persistence-ddb_v4.0.0",
       "date": "Mon, 03 Apr 2023 19:20:41 GMT",
