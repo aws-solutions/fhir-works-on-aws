@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-routing",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "FHIR Works on AWS routing implementation",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
