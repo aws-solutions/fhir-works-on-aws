@@ -4,7 +4,7 @@ import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import * as path from 'path';
-import { Bucket, BucketAccessControl, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
 import { Key } from 'aws-cdk-lib/aws-kms';
 
 export interface JavaHapiValidatorProps extends StackProps {
@@ -40,6 +40,7 @@ export default class JavaHapiValidator extends Stack {
             enforceSSL: true,
             versioned: true,
             encryptionKey: props.s3KMSKey,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER
         });
         const igDeployment = new BucketDeployment(scope, `IGDeployment-${props.stage}`, {
             sources: [Source.asset(path.resolve(__dirname, '../implementationGuides'))],

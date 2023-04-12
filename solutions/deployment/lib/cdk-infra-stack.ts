@@ -34,7 +34,7 @@ import {
 import { Alias } from 'aws-cdk-lib/aws-kms';
 import { Runtime, StartingPosition, Tracing } from 'aws-cdk-lib/aws-lambda';
 import { DynamoEventSource, SqsEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
-import { Bucket, BucketAccessControl, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
@@ -133,6 +133,7 @@ export default class FhirWorksStack extends Stack {
       },
       versioned: true,
       enforceSSL: true,
+      objectOwnership: ObjectOwnership.OBJECT_WRITER
     });
     NagSuppressions.addResourceSuppressions(fhirLogsBucket, [
       {
@@ -266,7 +267,8 @@ export default class FhirWorksStack extends Stack {
         blockPublicPolicy: true,
         ignorePublicAcls: true,
         restrictPublicBuckets: true
-      }
+      },
+      objectOwnership: ObjectOwnership.OBJECT_WRITER
     });
 
     fhirBinaryBucket.addToResourcePolicy(
