@@ -34,7 +34,7 @@ import {
 import { Alias } from 'aws-cdk-lib/aws-kms';
 import { Runtime, StartingPosition, Tracing } from 'aws-cdk-lib/aws-lambda';
 import { DynamoEventSource, SqsEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
-import { Bucket, BucketAccessControl, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
@@ -133,6 +133,7 @@ export default class FhirWorksStack extends Stack {
       },
       versioned: true,
       enforceSSL: true,
+      objectOwnership: ObjectOwnership.OBJECT_WRITER
     });
     NagSuppressions.addResourceSuppressions(fhirLogsBucket, [
       {
@@ -266,7 +267,8 @@ export default class FhirWorksStack extends Stack {
         blockPublicPolicy: true,
         ignorePublicAcls: true,
         restrictPublicBuckets: true
-      }
+      },
+      objectOwnership: ObjectOwnership.OBJECT_WRITER
     });
 
     fhirBinaryBucket.addToResourcePolicy(
@@ -355,7 +357,7 @@ export default class FhirWorksStack extends Stack {
         }.amazoncognito.com/oauth2`,
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
-      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.0.0',
+      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.0.1',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,

@@ -53,7 +53,7 @@ exports[`createLoggerMiddleware test encryption happy case 1`] = `
             "who": Object {
               "userIdentity": Object {
                 "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
-                "sub": "example@amazon.com",
+                "sub": "example@example.com",
               },
             },
           },
@@ -191,7 +191,7 @@ exports[`createLoggerMiddleware test encryption test null value in a field for e
             "who": Object {
               "userIdentity": Object {
                 "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
-                "sub": "example@amazon.com",
+                "sub": "example@example.com",
               },
             },
           },
@@ -335,7 +335,7 @@ exports[`createLoggerMiddleware test encryption test reference launch context va
             "who": Object {
               "userIdentity": Object {
                 "fhirUser": "https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000",
-                "sub": "example@amazon.com",
+                "sub": "example@example.com",
               },
             },
           },

@@ -69,7 +69,7 @@ describe('createLoggerMiddleware', () => {
       const res = {
         locals: {
           userIdentity: {
-            sub: 'example@amazon.com',
+            sub: 'example@example.com',
             fhirUser:
               'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
             scopes: ['FakeScope1', 'FakeScope2', 'FakeScope3'],
@@ -129,7 +129,7 @@ describe('createLoggerMiddleware', () => {
       const res = {
         locals: {
           userIdentity: {
-            sub: 'example@amazon.com',
+            sub: 'example@example.com',
             fhirUser:
               'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
             scopes: ['FakeScope1', 'FakeScope2', 'FakeScope3'],
@@ -186,7 +186,7 @@ describe('createLoggerMiddleware', () => {
       const res = {
         locals: {
           userIdentity: {
-            sub: 'example@amazon.com',
+            sub: 'example@example.com',
             fhirUser:
               'https://example.execute-api.us-east-1.amazonaws.com/dev/Practitioner/00000000-0000-0000-0000-000000000000',
             scopes: ['FakeScope1', 'FakeScope2', 'FakeScope3'],

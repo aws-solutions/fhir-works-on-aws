@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-authz-smart",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "FHIR Works on AWS SMART on FHIR authorization",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
@@ -11,7 +11,7 @@
   "author": {
     "name": "Amazon Web Services",
     "email": "fhir-works-on-aws-dev@amazon.com",
-    "url": "https://aws.amazon.com/"
+    "url": "https://aws.amazon.com/solutions"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

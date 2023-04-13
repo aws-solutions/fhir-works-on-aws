@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@aws/fhir-works-on-aws-interface",
-      "comment": "update homepage and repository link",
-      "type": "patch"
+      "comment": "",
+      "type": "none"
     }
   ],
   "packageName": "@aws/fhir-works-on-aws-interface"

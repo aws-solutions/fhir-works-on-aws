@@ -1,11 +1,20 @@
 # Changelog
 
-This is a sample Changelog file for Solutions Pipeline to pass.
-
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.0.1] - 2023-04-02
+## [6.0.1] - 2023-04-10
 
-### ⚠ BREAKING CHANGES
+### Changelog for Packages in This project
 
-### Features
+Please click corresponded links for more details for changelog of each package.
+
+| Folder                                                      | Package                                   | CHANGELOG                                              |
+| ----------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------ |
+| [fwoa-core/authz-rbac](./fwoa-core/authz-rbac/)             | [@aws/fhir-works-on-aws-authz-rbac]       | [Changelog](./fwoa-core/authz-rbac/CHANGELOG.md)       |
+| [fwoa-core/authz-smart](./fwoa-core/authz-smart/)           | [@aws/fhir-works-on-aws-authz-smart]      | [Changelog](./fwoa-core/authz-smart/CHANGELOG.md)      |
+| [fwoa-core/interface](./fwoa-core/interface/)               | [@aws/fhir-works-on-aws-interface]        | [Changelog](./fwoa-core/interface/CHANGELOG.md)        |
+| [fwoa-core/persistence-ddb](./fwoa-core/persistence-ddb/)   | [@aws/fhir-works-on-aws-persistence-ddb]  | [Changelog](./fwoa-core/persistence-ddb/CHANGELOG.md)  |
+| [fwoa-core/routing](./fwoa-core/routing/)                   | [@aws/fhir-works-on-aws-routing]          | [Changelog](./fwoa-core/routing/CHANGELOG.md)          |
+| [fwoa-core/search-es](./fwoa-core/search-es/)               | [@aws/fhir-works-on-aws-search-es]        | [Changelog](./fwoa-core/search-es/CHANGELOG.md)        |
+| [solutions/deployment](./solutions/deployment/)             | [@aws/fhir-works-on-aws-deployment]       | [Changelog](./solutions/deployment/CHANGELOG.md)       |
+| [solutions/smart-deployment](./solutions/smart-deployment/) | [@aws/fhir-works-on-aws-smart-deployment] | [Changelog](./solutions/smart-deployment/CHANGELOG.md) |
