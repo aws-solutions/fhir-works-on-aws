@@ -12,7 +12,7 @@ const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
   const { COGNITO_USERNAME, COGNITO_PASSWORD } = process.env;
 
   if (COGNITO_USERNAME === undefined) {
-    throw new Error('COGNITO_USERNAMEenvironment variable is not defined');
+    throw new Error('COGNITO_USERNAME environment variable is not defined');
   }
   if (COGNITO_PASSWORD === undefined) {
     throw new Error('COGNITO_PASSWORD environment variable is not defined');
