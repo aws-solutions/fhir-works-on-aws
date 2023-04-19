@@ -3,9 +3,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import * as AWS from 'aws-sdk';
+import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
-import { decode } from 'jsonwebtoken';
 import { stringify } from 'qs';
 
 const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
@@ -27,10 +27,10 @@ const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
   };
 };
 
-export const getFhirClient = async () => {
+export const getFhirClient: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
-  const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID, MULTI_TENANCY_ENABLED } = process.env;
+  const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID } = process.env;
   if (API_URL === undefined) {
     throw new Error('API_URL environment variable is not defined');
   }
@@ -45,7 +45,7 @@ export const getFhirClient = async () => {
   }
 
   AWS.config.update({ region: API_AWS_REGION });
-  const Cognito = new AWS.CognitoIdentityServiceProvider();
+  const Cognito = new CognitoIdentityServiceProvider();
 
   const IdToken = (
     await Cognito.initiateAuth({
@@ -55,7 +55,7 @@ export const getFhirClient = async () => {
     }).promise()
   ).AuthenticationResult!.IdToken!;
 
-  let baseURL = API_URL;
+  const baseURL = API_URL;
 
   return axios.create({
     headers: {
@@ -72,7 +72,7 @@ async function getAuthToken(
   clientId: string,
   clientPw: string,
   oauthApiEndpoint: string
-) {
+): Promise<string> {
   const data = stringify({
     grant_type: 'password',
     username,
@@ -97,19 +97,16 @@ async function getAuthToken(
   return response.data.access_token;
 }
 
-export const getFhirClientSMART = async (): Promise<AxiosInstance> => {
+export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   // Check all environment variables are provided
   const {
     SMART_AUTH_USERNAME,
-    SMART_AUTH_ADMIN_USERNAME,
-    SMART_AUTH_ADMIN_ANOTHER_TENANT_USERNAME,
     SMART_AUTH_PASSWORD,
-    SMART_INTEGRATION_TEST_CLIENT_ID: SMART_CLIENT_ID,
-    SMART_INTEGRATION_TEST_CLIENT_PW: SMART_CLIENT_SECRET,
+    SMART_CLIENT_ID,
+    SMART_CLIENT_SECRET,
     SMART_OAUTH2_API_ENDPOINT,
     SMART_SERVICE_URL,
-    SMART_API_KEY,
-    MULTI_TENANCY_ENABLED
+    SMART_API_KEY
   } = process.env;
   if (SMART_AUTH_USERNAME === undefined) {
     throw new Error('SMART_AUTH_USERNAME environment variable is not defined');
@@ -135,7 +132,7 @@ export const getFhirClientSMART = async (): Promise<AxiosInstance> => {
 
   // SMART_AUTH_USERNAME should be for a System
 
-  let username = SMART_AUTH_USERNAME;
+  const username = SMART_AUTH_USERNAME;
 
   const accessToken = await getAuthToken(
     username,
@@ -145,7 +142,7 @@ export const getFhirClientSMART = async (): Promise<AxiosInstance> => {
     SMART_OAUTH2_API_ENDPOINT
   );
 
-  let baseURL = SMART_SERVICE_URL;
+  const baseURL = SMART_SERVICE_URL;
 
   return axios.create({
     headers: {

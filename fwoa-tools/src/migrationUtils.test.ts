@@ -8,10 +8,16 @@ describe('MigrationUtils', () => {
 
     // we are expecting that the cognito user is an auditor so that they cannot write to the system
     test('client should not be able to C/U/D', async () => {
-      let client = await getFhirClient();
-      await expect(client.post('Patient', {})).status.toEqual(401);
-      await expect(client.delete('Patient/id')).status.toEqual(401);
-      await expect(client.put('Patient/id', {})).status.toEqual(401);
+      const client = await getFhirClient();
+      await expect(client.post('Patient', {})).rejects.toMatchObject({
+        response: { status: 401 }
+      });
+      await expect(client.delete('Patient/id')).rejects.toMatchObject({
+        response: { status: 401 }
+      });
+      await expect(client.put('Patient/id', {})).rejects.toMatchObject({
+        response: { status: 401 }
+      });
     });
   });
 
@@ -22,10 +28,16 @@ describe('MigrationUtils', () => {
 
     // we are only using system/*.read scopes so we cannot write to the system
     test('client should not be able to C/U/D', async () => {
-      let client = await getFhirClientSMART();
-      await expect(client.post('Patient', {})).status.toEqual(401);
-      await expect(client.delete('Patient/id')).status.toEqual(401);
-      await expect(client.put('Patient/id', {})).status.toEqual(401);
+      const client = await getFhirClientSMART();
+      await expect(client.post('Patient', {})).rejects.toMatchObject({
+        response: { status: 401 }
+      });
+      await expect(client.delete('Patient/id')).rejects.toMatchObject({
+        response: { status: 401 }
+      });
+      await expect(client.put('Patient/id', {})).rejects.toMatchObject({
+        response: { status: 401 }
+      });
     });
   });
 });
