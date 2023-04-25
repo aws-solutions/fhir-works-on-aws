@@ -5,7 +5,6 @@ on:
 
 jobs:
   inferno-test:
-    needs: deploy
     name: Run Inferno Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
     runs-on: ubuntu-20.04
     strategy:
@@ -128,7 +127,6 @@ jobs:
         run: |
           cd ./solutions/smart-deployment
           node ../../common/scripts/install-run-rushx.js int-test
-
   slack-notification:
     needs: [inferno-test, custom-integration-tests]
     runs-on: ubuntu-20.04
