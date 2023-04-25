@@ -156,7 +156,7 @@
     },
     {
       "name": "dotenv",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "errorhandler",

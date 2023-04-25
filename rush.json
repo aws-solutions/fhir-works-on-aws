@@ -84,6 +84,12 @@
       "projectFolder": "fwoa-utilities",
       "reviewCategory": "tools",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@aws/fhir-works-on-aws-tools",
+      "projectFolder": "fwoa-tools",
+      "reviewCategory": "tools",
+      "shouldPublish": false
     }
   ]
 }
