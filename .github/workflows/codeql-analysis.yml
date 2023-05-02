@@ -16,7 +16,7 @@ on:
 jobs:
   CodeQL-Analyze:
     runs-on: ubuntu-latest
-
+    environment: FWoA Checks
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

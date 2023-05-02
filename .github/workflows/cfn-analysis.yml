@@ -13,6 +13,7 @@ on:
 jobs:
   cfn-analyze:
     runs-on: ubuntu-latest
+    environment: FWoA Checks
     steps:
       - name: Checkout
         uses: actions/checkout@v3

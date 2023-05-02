@@ -13,6 +13,7 @@ jobs:
   main-protection:
     name: Only create PR against develop branch, not main or stage branch
     runs-on: ubuntu-20.04
+    environment: FWoA Checks
     steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
