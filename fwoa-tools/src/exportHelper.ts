@@ -7,6 +7,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { AxiosInstance } from 'axios';
 
+const MAX_EXPORT_RUNTIME: number = 48 * 60 * 60 * 1000;
+
 export interface ExportStatusOutput {
   url: string;
   type: string;
@@ -18,16 +20,16 @@ export interface StartExportJobParam {
 
 export default class ExportHelper {
   // The max runtime of an export glue job is by default 48 hours
-  MAX_EXPORT_RUNTIME = 48 * 60 * 60 * 1000;
 
-  fhirUserAxios: AxiosInstance;
+  private fhirUserAxios: AxiosInstance;
 
-  constructor(fhirUserAxios: AxiosInstance) {
+  public constructor(fhirUserAxios: AxiosInstance) {
     this.fhirUserAxios = fhirUserAxios;
   }
 
-  async startExportJob(startExportJobParam: StartExportJobParam) {
+  public async startExportJob(startExportJobParam: StartExportJobParam): Promise<string> {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const params: any = {
         _outputFormat: 'ndjson'
       };
@@ -35,7 +37,7 @@ export default class ExportHelper {
         params._since = startExportJobParam.since;
       }
 
-      let url = '/$export';
+      const url = '/$export';
 
       const response = await this.fhirUserAxios.get(url, { params });
       const statusPollUrl = response.headers['content-location'];
@@ -47,9 +49,9 @@ export default class ExportHelper {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/typedef
-  async getExportStatus(statusPollUrl: string): Promise<any> {
-    const cutOffTime = new Date(new Date().getTime() + this.MAX_EXPORT_RUNTIME);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async getExportStatus(statusPollUrl: string): Promise<any> {
+    const cutOffTime = new Date(new Date().getTime() + MAX_EXPORT_RUNTIME);
     while (new Date().getTime() < cutOffTime.getTime()) {
       try {
         // eslint-disable-next-line no-await-in-loop
@@ -65,13 +67,11 @@ export default class ExportHelper {
       }
     }
     throw new Error(
-      `Expected export status did not occur during polling time frame of ${
-        this.MAX_EXPORT_RUNTIME / 1000
-      } seconds`
+      `Expected export status did not occur during polling time frame of ${MAX_EXPORT_RUNTIME / 1000} seconds`
     );
   }
 
-  async sleep(milliseconds: number) {
+  public async sleep(milliseconds: number): Promise<unknown> {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 }

@@ -3,28 +3,32 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { getFhirClient, getFhirClientSMART } from './migrationUtils';
+import { AWSError, S3 } from 'aws-sdk';
 import ExportHelper from './exportHelper';
-import { writeFileSync } from 'fs';
-import { S3 } from 'aws-sdk';
+import { getFhirClient, getFhirClientSMART } from './migrationUtils';
 
-const ISOStringRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)$/g;
-const MAX_ITEMS_PER_FOLDER = 10000;
+const MAX_ITEMS_PER_FOLDER: number = 10000;
 
 if (process.argv.length < 3) {
   throw new Error('Invalid arguments. Usage: ts-node migrationExport.ts <boolean> <opt: ISO timestamp>');
 }
 // collect optional arguments
-let smartClient = Boolean(process.argv[3]);
+const smartClient: boolean = Boolean(process.argv[3]);
 let since: string;
 if (process.argv.length >= 4) {
   since = process.argv[3];
-  if (!ISOStringRegex.test(since)) {
-    throw new Error('Provided `since` parameter is not in correct format');
+  try {
+    since = new Date(since).toISOString();
+  } catch (error) {
+    throw new Error('Provided `since` parameter is not in correct format (ISO 8601)');
   }
 }
 
-async function startExport() {
+async function startExport(): Promise<{
+  jobId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  exportResponse: any;
+}> {
   const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
   const exportHelper = new ExportHelper(fhirClient);
 
@@ -34,10 +38,10 @@ async function startExport() {
   // return the last element of the split array, which is the jobId portion of the url
   const jobId = exportJobUrl.split('/').pop();
 
-  return { jobId: jobId, exportResponse: response };
+  return { jobId: jobId!, exportResponse: response };
 }
 
-async function sortExportIntoFolders(bucket: string, prefix: string) {
+async function sortExportIntoFolders(bucket: string, prefix: string): Promise<void> {
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
   });
@@ -46,49 +50,46 @@ async function sortExportIntoFolders(bucket: string, prefix: string) {
   let numElementsInFolder = 0;
   let folderName = 0;
   while (isTruncated) {
-    let params: any = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const params: any = {};
     params.Bucket = bucket;
     if (prefix) params.Prefix = prefix;
     if (marker) params.Marker = marker;
-    try {
-      const response = await s3Client.listObjectsV2(params).promise();
-      response.Contents?.forEach((item) => {
-        // Sort into folders
-        s3Client.copyObject(
-          {
-            Bucket: bucket,
-            CopySource: item.Key!,
-            Key: `${prefix}/${folderName}/${item.Key}`
-          },
-          function (error, data) {
-            if (error) {
-              throw new Error('Error: resource failed to copy into folder, aborting...');
-            }
-            s3Client.deleteObject({
-              Bucket: bucket,
-              Key: item.Key!
-            });
+    const response = await s3Client.listObjectsV2(params).promise();
+    response.Contents?.forEach((item) => {
+      // Sort into folders
+      s3Client.copyObject(
+        {
+          Bucket: bucket,
+          CopySource: item.Key!,
+          Key: `${prefix}/${folderName}/${item.Key}`
+        },
+        function (error: AWSError, data: S3.CopyObjectOutput): void {
+          if (error) {
+            throw new Error('Error: resource failed to copy into folder, aborting...');
           }
-        );
-      });
-      numElementsInFolder += response.Contents?.length || 0;
-      if (numElementsInFolder >= MAX_ITEMS_PER_FOLDER) {
-        numElementsInFolder = 0;
-        folderName++;
-      }
+          s3Client.deleteObject({
+            Bucket: bucket,
+            Key: item.Key!
+          });
+        }
+      );
+    });
+    numElementsInFolder += response.Contents?.length || 0;
+    if (numElementsInFolder >= MAX_ITEMS_PER_FOLDER) {
+      numElementsInFolder = 0;
+      folderName++;
+    }
 
-      isTruncated = response.IsTruncated!;
-      if (isTruncated) {
-        marker = response.Contents?.slice(-1)[0].Key;
-      }
-    } catch (error) {
-      throw error;
+    isTruncated = response.IsTruncated!;
+    if (isTruncated) {
+      marker = response.Contents?.slice(-1)[0].Key;
     }
   }
 }
 
 startExport()
-  .then((response) => {
+  .then(async (response) => {
     console.log('successfully completed export.');
     if (response.exportResponse.output.length === 0) {
       return;
@@ -99,7 +100,7 @@ startExport()
     //                                              ^ split here first
     //           then here ^           ^ take last split
     const bucketName = url.split('.')[0].split('-').pop()!;
-    sortExportIntoFolders(bucketName, `${response.jobId}/`);
+    await sortExportIntoFolders(bucketName, `${response.jobId}/`);
   })
   .catch((error) => {
     console.error('Error:', error);
