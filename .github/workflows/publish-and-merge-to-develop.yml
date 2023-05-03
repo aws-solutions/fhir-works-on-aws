@@ -10,6 +10,7 @@ jobs:
   rush-publish:
     if: github.event.pull_request.merged == true && vars.PUBLISH_TO_NPM == 'true'
     runs-on: ubuntu-20.04
+    environment: FWoA Checks
     steps:
       - name: git checkout
         uses: actions/checkout@v3
@@ -36,6 +37,7 @@ jobs:
     name: Merge main to develop
     runs-on: ubuntu-20.04
     needs: [rush-publish]
+    environment: FWoA Checks
     steps:    
       - uses: actions/checkout@v3
         with:

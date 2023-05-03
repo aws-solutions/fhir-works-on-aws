@@ -8,6 +8,7 @@ on:
 jobs:
   run-rush-change-verify:
     runs-on: ubuntu-20.04
+    environment: FWoA Checks
     steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3

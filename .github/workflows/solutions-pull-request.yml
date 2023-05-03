@@ -8,6 +8,7 @@ jobs:
   pull-request-job:
     name: Viperlight Scan
     runs-on: ubuntu-latest
+    environment: FWoA Checks
     steps:
       - name: Checkout
         uses: actions/checkout@v3
