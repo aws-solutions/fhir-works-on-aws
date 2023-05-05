@@ -98,6 +98,8 @@ async function getAuthToken(
 }
 
 export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
+  dotenv.config({ path: '.env' });
+
   // Check all environment variables are provided
   const {
     SMART_AUTH_USERNAME,
@@ -115,10 +117,10 @@ export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promis
     throw new Error('SMART_AUTH_PASSWORD environment variable is not defined');
   }
   if (SMART_CLIENT_ID === undefined) {
-    throw new Error('SMART_INTEGRATION_TEST_CLIENT_ID environment variable is not defined');
+    throw new Error('SMART_CLIENT_ID environment variable is not defined');
   }
   if (SMART_CLIENT_SECRET === undefined) {
-    throw new Error('SMART_INTEGRATION_TEST_CLIENT_PW environment variable is not defined');
+    throw new Error('SMART_CLIENT_SECRET environment variable is not defined');
   }
   if (SMART_OAUTH2_API_ENDPOINT === undefined) {
     throw new Error('SMART_OAUTH2_API_ENDPOINT environment variable is not defined');

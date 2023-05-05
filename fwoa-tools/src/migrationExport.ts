@@ -3,17 +3,20 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { AWSError, S3 } from 'aws-sdk';
+import { S3 } from 'aws-sdk';
+import { AxiosInstance } from 'axios';
 import ExportHelper from './exportHelper';
 import { getFhirClient, getFhirClientSMART } from './migrationUtils';
 
-const MAX_ITEMS_PER_FOLDER: number = 10000;
+const MAX_CONCURRENT_REQUESTS: number = 100;
 
 if (process.argv.length < 3) {
-  throw new Error('Invalid arguments. Usage: ts-node migrationExport.ts <boolean> <opt: ISO timestamp>');
+  throw new Error(
+    'Invalid arguments. Usage: ts-node migrationExport.ts <smart-on-fhir: boolean> <since?: ISO timestamp>'
+  );
 }
 // collect optional arguments
-const smartClient: boolean = Boolean(process.argv[3]);
+const smartClient: boolean = Boolean(process.argv[2]);
 let since: string;
 if (process.argv.length >= 4) {
   since = process.argv[3];
@@ -24,14 +27,14 @@ if (process.argv.length >= 4) {
   }
 }
 
+const fhirClient: AxiosInstance = await (smartClient ? getFhirClientSMART() : getFhirClient());
+const exportHelper: ExportHelper = new ExportHelper(fhirClient);
+
 async function startExport(): Promise<{
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   exportResponse: any;
 }> {
-  const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
-  const exportHelper = new ExportHelper(fhirClient);
-
   const exportJobUrl: string = await exportHelper.startExportJob({ since });
   const response = await exportHelper.getExportStatus(exportJobUrl);
 
@@ -45,47 +48,10 @@ async function sortExportIntoFolders(bucket: string, prefix: string): Promise<vo
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
   });
-  let isTruncated = true;
-  let marker;
-  let numElementsInFolder = 0;
-  let folderName = 0;
-  while (isTruncated) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const params: any = {};
-    params.Bucket = bucket;
-    if (prefix) params.Prefix = prefix;
-    if (marker) params.Marker = marker;
-    const response = await s3Client.listObjectsV2(params).promise();
-    response.Contents?.forEach((item) => {
-      // Sort into folders
-      s3Client.copyObject(
-        {
-          Bucket: bucket,
-          CopySource: item.Key!,
-          Key: `${prefix}/${folderName}/${item.Key}`
-        },
-        function (error: AWSError, data: S3.CopyObjectOutput): void {
-          if (error) {
-            throw new Error('Error: resource failed to copy into folder, aborting...');
-          }
-          s3Client.deleteObject({
-            Bucket: bucket,
-            Key: item.Key!
-          });
-        }
-      );
-    });
-    numElementsInFolder += response.Contents?.length || 0;
-    if (numElementsInFolder >= MAX_ITEMS_PER_FOLDER) {
-      numElementsInFolder = 0;
-      folderName++;
-    }
 
-    isTruncated = response.IsTruncated!;
-    if (isTruncated) {
-      marker = response.Contents?.slice(-1)[0].Key;
-    }
-  }
+  // to copy the s3 files to a different bucket, you can replace the
+  // third parameter with a different bucket
+  await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS);
 }
 
 startExport()

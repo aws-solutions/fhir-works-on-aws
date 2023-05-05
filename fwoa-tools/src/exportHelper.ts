@@ -5,9 +5,12 @@
 
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-extraneous-dependencies */
+import { S3 } from 'aws-sdk';
 import { AxiosInstance } from 'axios';
 
 const MAX_EXPORT_RUNTIME: number = 48 * 60 * 60 * 1000;
+const MAX_ITEMS_PER_FOLDER: number = 10000;
+const POLLING_TIME: number = 5000;
 
 export interface ExportStatusOutput {
   url: string;
@@ -60,7 +63,7 @@ export default class ExportHelper {
           return response.data;
         }
         // eslint-disable-next-line no-await-in-loop
-        await this.sleep(5000);
+        await this.sleep(POLLING_TIME);
       } catch (e) {
         console.error('Failed to getExport status', e);
         throw e;
@@ -73,5 +76,67 @@ export default class ExportHelper {
 
   public async sleep(milliseconds: number): Promise<unknown> {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
+
+  public async copyAll(
+    s3Client: S3,
+    sourceBucket: string,
+    targetBucket: string = sourceBucket,
+    sourcePrefix: string,
+    concurrency: number = 100
+  ): Promise<void> {
+    let ContinuationToken;
+
+    const copyFile = async (sourceKey: string | undefined, targetKey: string): Promise<void> => {
+      if (!sourceKey) {
+        return;
+      }
+
+      await s3Client
+        .copyObject({
+          Bucket: targetBucket,
+          Key: targetKey,
+          CopySource: `${sourceBucket}/${sourceKey}`
+        })
+        .promise();
+
+      await s3Client
+        .deleteObject({
+          Bucket: sourceBucket,
+          Key: sourceKey
+        })
+        .promise();
+    };
+
+    let numItemsInFolder = 0;
+    let folderName = 0;
+    do {
+      const resources: S3.ListObjectsV2Output = await s3Client
+        .listObjectsV2({
+          Bucket: sourceBucket,
+          Prefix: sourcePrefix,
+          ContinuationToken
+        })
+        .promise();
+      const Contents: S3.ObjectList | undefined = resources.Contents;
+      const NextContinuationToken: string | undefined = resources.NextContinuationToken;
+      const sourceKeys = Contents?.map(({ Key }) => Key);
+
+      await Promise.all(
+        new Array(concurrency).fill(null).map(async () => {
+          while (sourceKeys?.length) {
+            const sourceKey = sourceKeys.pop();
+            const targetKey: string = sourceKey!.replace(sourcePrefix, `${sourcePrefix}${folderName}/`);
+            await copyFile(sourceKey, targetKey);
+          }
+        })
+      );
+      numItemsInFolder += Contents?.length || 0;
+      if (numItemsInFolder >= MAX_ITEMS_PER_FOLDER) {
+        numItemsInFolder = 0;
+        folderName += 1;
+      }
+      ContinuationToken = NextContinuationToken;
+    } while (ContinuationToken);
   }
 }
