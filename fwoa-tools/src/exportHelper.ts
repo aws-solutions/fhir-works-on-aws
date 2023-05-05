@@ -7,6 +7,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { S3 } from 'aws-sdk';
 import { AxiosInstance } from 'axios';
+import { getFhirClient, getFhirClientSMART } from './migrationUtils';
 
 const MAX_EXPORT_RUNTIME: number = 48 * 60 * 60 * 1000;
 const MAX_ITEMS_PER_FOLDER: number = 10000;
@@ -25,9 +26,11 @@ export default class ExportHelper {
   // The max runtime of an export glue job is by default 48 hours
 
   private fhirUserAxios: AxiosInstance;
+  private smartOnFhir: boolean;
 
-  public constructor(fhirUserAxios: AxiosInstance) {
+  public constructor(fhirUserAxios: AxiosInstance, smartOnFhir: boolean = false) {
     this.fhirUserAxios = fhirUserAxios;
+    this.smartOnFhir = smartOnFhir;
   }
 
   public async startExportJob(startExportJobParam: StartExportJobParam): Promise<string> {
@@ -65,6 +68,10 @@ export default class ExportHelper {
         // eslint-disable-next-line no-await-in-loop
         await this.sleep(POLLING_TIME);
       } catch (e) {
+        if (e.response.status === 401) {
+          this.fhirUserAxios = await (this.smartOnFhir ? getFhirClientSMART() : getFhirClient());
+          continue;
+        }
         console.error('Failed to getExport status', e);
         throw e;
       }

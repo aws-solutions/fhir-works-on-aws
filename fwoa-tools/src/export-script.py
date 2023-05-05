@@ -267,9 +267,11 @@ else:
     for item in response['Contents']:
         source_s3_file_path = item['Key']
         match = re.search(regex_pattern, source_s3_file_path)
+        if match is None:
+            continue
         # we need to convert the uuid into a unique int to be parsed by getExportStatus
         # this is done in Python just be using the int() caster
-        new_s3_file_name = match.group(1) + "-" + int(uuid.UUID(match.group(2))) + ".ndjson"
+        new_s3_file_name = match.group(1) + "-" + str(int(uuid.UUID(match.group(2)))) + ".ndjson"
         tenant_specific_path = '' if (tenantId is None) else tenantId + '/'
         new_s3_file_path = tenant_specific_path + job_id + '/' + new_s3_file_name
 
