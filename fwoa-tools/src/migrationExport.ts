@@ -27,14 +27,16 @@ if (process.argv.length >= 4) {
   }
 }
 
-const fhirClient: AxiosInstance = await (smartClient ? getFhirClientSMART() : getFhirClient());
-const exportHelper: ExportHelper = new ExportHelper(fhirClient);
+let fhirClient: AxiosInstance;
+let exportHelper: ExportHelper;
 
 async function startExport(): Promise<{
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   exportResponse: any;
 }> {
+  fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+  exportHelper = new ExportHelper(fhirClient);
   const exportJobUrl: string = await exportHelper.startExportJob({ since });
   const response = await exportHelper.getExportStatus(exportJobUrl);
 
