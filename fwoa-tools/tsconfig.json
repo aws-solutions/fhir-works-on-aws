@@ -12,7 +12,8 @@
     "declaration": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"]
 }
