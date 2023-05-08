@@ -15,7 +15,6 @@ jobs:
     needs: pnpm-audit-work
     runs-on: ubuntu-20.04
     if: failure()
-    environment: FWoA Checks
     steps:
       - name: Slack notification when pnpm-audit-work fails
         id: slack
