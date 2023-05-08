@@ -263,7 +263,7 @@ else:
         Prefix=job_id,
     )
 
-    regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})'
+    regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})$'
     for item in response['Contents']:
         source_s3_file_path = item['Key']
         match = re.search(regex_pattern, source_s3_file_path)
