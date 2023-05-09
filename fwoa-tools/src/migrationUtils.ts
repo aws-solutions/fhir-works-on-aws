@@ -8,6 +8,18 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
 import { stringify } from 'qs';
 
+export interface ExportOutput {
+  jobId: string;
+  folderNames: string[];
+  itemNames: Record<string, string[]>;
+}
+
+export async function sleep(milliseconds: number): Promise<unknown> {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+export const POLLING_TIME: number = 5000;
+
 const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
   const { COGNITO_USERNAME, COGNITO_PASSWORD } = process.env;
 

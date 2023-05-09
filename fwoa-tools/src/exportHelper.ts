@@ -7,11 +7,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { S3 } from 'aws-sdk';
 import { AxiosInstance } from 'axios';
-import { getFhirClient, getFhirClientSMART } from './migrationUtils';
+import { ExportOutput, POLLING_TIME, getFhirClient, getFhirClientSMART, sleep } from './migrationUtils';
 
 const MAX_EXPORT_RUNTIME: number = 48 * 60 * 60 * 1000;
 const MAX_ITEMS_PER_FOLDER: number = 10000;
-const POLLING_TIME: number = 5000;
 
 export interface ExportStatusOutput {
   url: string;
@@ -66,7 +65,7 @@ export default class ExportHelper {
           return response.data;
         }
         // eslint-disable-next-line no-await-in-loop
-        await this.sleep(POLLING_TIME);
+        await sleep(POLLING_TIME);
       } catch (e) {
         if (e.response.status === 401) {
           this.fhirUserAxios = await (this.smartOnFhir ? getFhirClientSMART() : getFhirClient());
@@ -81,18 +80,16 @@ export default class ExportHelper {
     );
   }
 
-  public async sleep(milliseconds: number): Promise<unknown> {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  }
-
   public async copyAll(
     s3Client: S3,
     sourceBucket: string,
     targetBucket: string = sourceBucket,
     sourcePrefix: string,
     concurrency: number = 100
-  ): Promise<void> {
+  ): Promise<ExportOutput> {
     let ContinuationToken;
+    const folderNames: string[] = [];
+    const itemNames: Record<string, string[]> = {};
 
     const copyFile = async (sourceKey: string | undefined, targetKey: string): Promise<void> => {
       if (!sourceKey) {
@@ -117,6 +114,7 @@ export default class ExportHelper {
 
     let numItemsInFolder = 0;
     let folderName = 0;
+    folderNames.push(folderName.toString());
     do {
       const resources: S3.ListObjectsV2Output = await s3Client
         .listObjectsV2({
@@ -135,6 +133,11 @@ export default class ExportHelper {
             const sourceKey = sourceKeys.pop();
             const targetKey: string = sourceKey!.replace(sourcePrefix, `${sourcePrefix}${folderName}/`);
             await copyFile(sourceKey, targetKey);
+            if (itemNames[`${folderName}`]) {
+              itemNames[`${folderName}`].push(targetKey);
+            } else {
+              itemNames[`${folderName}`] = [targetKey];
+            }
           }
         })
       );
@@ -142,8 +145,15 @@ export default class ExportHelper {
       if (numItemsInFolder >= MAX_ITEMS_PER_FOLDER) {
         numItemsInFolder = 0;
         folderName += 1;
+        folderNames.push();
       }
       ContinuationToken = NextContinuationToken;
     } while (ContinuationToken);
+
+    return {
+      jobId: '',
+      folderNames,
+      itemNames
+    };
   }
 }
