@@ -3,12 +3,13 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { writeFileSync } from 'fs';
 import { S3 } from 'aws-sdk';
 import { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
 import ExportHelper from './exportHelper';
-import { getFhirClient, getFhirClientSMART } from './migrationUtils';
+import { ExportOutput, getFhirClient, getFhirClientSMART } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const MAX_CONCURRENT_REQUESTS: number = 100;
@@ -39,6 +40,11 @@ const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 let since: string = argv.since;
+let output: ExportOutput = {
+  jobId: '',
+  folderNames: [],
+  itemNames: {}
+};
 
 if (since) {
   try {
@@ -63,18 +69,19 @@ async function startExport(): Promise<{
 
   // return the last element of the split array, which is the jobId portion of the url
   const jobId = exportJobUrl.split('/').pop();
+  output.jobId = jobId!;
 
   return { jobId: jobId!, exportResponse: response };
 }
 
-async function sortExportIntoFolders(bucket: string, prefix: string): Promise<void> {
+async function sortExportIntoFolders(bucket: string, prefix: string): Promise<ExportOutput> {
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
   });
 
   // to copy the s3 files to a different bucket, you can replace the
   // third parameter with a different bucket
-  await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS);
+  return await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS);
 }
 
 async function checkConfiguration(): Promise<void> {
@@ -84,16 +91,8 @@ async function checkConfiguration(): Promise<void> {
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
   });
-  s3Client
-    .listObjectsV2({ Bucket: bucketName! })
-    .promise()
-    .then((value) => {
-      console.log('Successfully authenticated S3 Client...');
-    })
-    .catch((error) => {
-      console.log(error);
-      console.log('Failed to authenticate to S3...');
-    });
+  await s3Client.listObjectsV2({ Bucket: bucketName! }).promise();
+  console.log('Sucessfully authenticated with S3');
 }
 
 if (!dryRun) {
@@ -103,7 +102,13 @@ if (!dryRun) {
       if (response.exportResponse.output.length === 0) {
         return;
       }
-      await sortExportIntoFolders(bucketName, `${response.jobId}/`);
+      const names = await sortExportIntoFolders(bucketName, `${response.jobId}/`);
+      output = {
+        jobId: output.jobId,
+        folderNames: names.folderNames,
+        itemNames: names.itemNames
+      };
+      writeFileSync('./migrationExport_Output.txt', JSON.stringify(output));
     })
     .catch((error) => {
       console.error('Error:', error);
