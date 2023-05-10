@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       source_branch: ${{ steps.create_branch.outputs.source_branch }}
-    environment: FWoA Checks
     steps:
       - uses: actions-cool/check-user-permission@v2
         with:
@@ -45,7 +44,6 @@ jobs:
     needs: create-release-branch
     outputs:
       pr_number: ${{ steps.open-pr.outputs.pr_number }}
-    environment: FWoA Checks
     steps:
     - name: Get current date
       id: date
@@ -71,7 +69,6 @@ jobs:
   merge-release-pr-to-main:
     runs-on: ubuntu-20.04
     needs: create-release-branch-pr-to-main
-    environment: FWoA Checks
     steps:
       - name: enable merge commits
         uses: octokit/request-action@v2.x

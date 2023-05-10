@@ -9,7 +9,6 @@ on: ['pull_request']
 jobs:
   build-test-coverage:
     runs-on: ubuntu-20.04
-    environment: FWoA Checks
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

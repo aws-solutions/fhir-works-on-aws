@@ -6,7 +6,6 @@ jobs:
   build-validate:
     name: Build and validate
     runs-on: ubuntu-20.04
-    environment: FWoA Checks
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -107,7 +106,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: FWoA Checks
     steps:
       - uses: actions/checkout@v3
         with:

@@ -12,7 +12,7 @@ import {
     StarPrincipal,
 } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
-import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { Bucket, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
 import { NagSuppressions } from 'cdk-nag';
 import { Construct } from 'constructs';
 
@@ -110,6 +110,7 @@ export default class BulkExportResources {
             blockPublicAccess,
             enforceSSL: true,
             versioned: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
         });
         NagSuppressions.addResourceSuppressions(this.glueScriptsBucket, [
             {
@@ -137,6 +138,7 @@ export default class BulkExportResources {
             serverAccessLogsPrefix: 'BulkExportResultsBucket',
             blockPublicAccess,
             enforceSSL: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
         });
         NagSuppressions.addResourceSuppressions(this.bulkExportResultsBucket, [
             {

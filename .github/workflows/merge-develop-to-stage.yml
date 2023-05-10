@@ -14,7 +14,6 @@ jobs:
     name: Pre deployment check
     runs-on: ubuntu-20.04
     timeout-minutes: 120
-    environment: FWoA Checks
     steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
@@ -41,7 +40,6 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [deploy-fhir, deploy-smart-fhir]
     if: ${{ (needs.deploy-fhir.result=='success') && (needs.deploy-smart-fhir.result=='success') }}
-    environment: FWoA Checks
     steps:    
       - uses: actions/checkout@v3
         with:
@@ -106,7 +104,6 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [deploy-fhir, deploy-smart-fhir]
     if: failure()
-    environment: FWoA Checks
     steps:
       - name: Slack notification when tests in deployment or smart-deployment failed
         id: slack

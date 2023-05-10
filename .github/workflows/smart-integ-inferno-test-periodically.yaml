@@ -22,7 +22,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: FWoA Checks
     steps:
       - uses: actions/checkout@v3
         with:
@@ -68,7 +67,7 @@ jobs:
   custom-integration-tests:
     needs: inferno-test
     name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
-    environment: FWoA Checks
+    environment: FWoA Integ Test Env
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -132,7 +131,6 @@ jobs:
     needs: [inferno-test, custom-integration-tests]
     runs-on: ubuntu-20.04
     if: failure()
-    environment: FWoA Checks
     steps:
       - name: Slack notification when inferno tests or integration tests failed
         id: slack
