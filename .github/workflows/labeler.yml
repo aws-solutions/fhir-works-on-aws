@@ -6,7 +6,6 @@ jobs:
   labeler:
     runs-on: ubuntu-latest
     name: Label the PR size
-    environment: FWoA Checks
     steps:
       - uses: codelytv/pr-size-labeler@v1
         with:

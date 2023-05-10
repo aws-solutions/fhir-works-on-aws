@@ -11,7 +11,6 @@ on:
 jobs:
   pnpm-audit:
     runs-on: ubuntu-20.04
-    environment: FWoA Checks
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

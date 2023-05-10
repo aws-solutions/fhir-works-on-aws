@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-    environment: FWoA Checks
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
