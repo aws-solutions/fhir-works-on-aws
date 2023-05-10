@@ -67,6 +67,7 @@ jobs:
   custom-integration-tests:
     needs: inferno-test
     name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    environment: FWoA Integ Test Env
     runs-on: ubuntu-20.04
     strategy:
       matrix:

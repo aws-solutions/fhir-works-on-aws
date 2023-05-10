@@ -36,7 +36,6 @@ jobs:
     name: Merge main to develop
     runs-on: ubuntu-20.04
     needs: [rush-publish]
-    environment: FWoA Checks
     steps:    
       - uses: actions/checkout@v3
         with:
