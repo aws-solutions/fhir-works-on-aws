@@ -60,7 +60,7 @@ async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<
   const files = await s3Client
     .listObjectsV2({
       Bucket: BINARY_BUCKET_NAME!,
-      Prefix: `${itemKey}_${versionId}`
+      Prefix: `${itemKey}_${versionId}.`
     })
     .promise();
   if (files.$response.error || !files.Contents || files.Contents.length === 0) {
