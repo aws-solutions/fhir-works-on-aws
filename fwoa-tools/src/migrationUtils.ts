@@ -197,5 +197,8 @@ export async function verifyResource(
   const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
   delete fwoaResponse.meta;
   delete healthLakeResource.meta;
+  if (resourceType === 'Binary') {
+    delete healthLakeResource.data;
+  }
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }

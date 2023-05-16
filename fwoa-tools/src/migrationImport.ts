@@ -90,55 +90,10 @@ async function startImport(folderNames: string[]): Promise<void> {
         if (jobStatus.ImportJobProperties.JobStatus === 'COMPLETED') {
           console.log(`successfully imported folder ${folderName}`);
           // use outputFile to check
-          const path = jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri.replace(
-            's3://',
-            ''
-          ).replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
-          const s3Client = new S3({
-            region: API_AWS_REGION!
-          });
-          const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
-          const healthLakeClient = axios.create();
-          const interceptor = aws4Interceptor({
-            region: API_AWS_REGION!,
-            service: 'healthlake'
-          });
-          healthLakeClient.interceptors.request.use(interceptor);
-          // eslint-disable-next-line security/detect-object-injection
-          for (let j = 0; j < outputFile.itemNames[folderName].length; j += 1) {
-            // eslint-disable-next-line security/detect-object-injection
-            const resourcePath = outputFile.itemNames[folderName][j].replace(
-              outputFile.jobId,
-              `${path}SUCCESS`
-            );
-            const resourceFile = await s3Client
-              .getObject({
-                Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-                Key: resourcePath
-              })
-              .promise();
-            if (resourceFile.$response.error) {
-              throw new Error(`Failed to read file ${resourceFile.$response.error}`);
-            }
-            const allResourceVersions: string[] = resourceFile.Body!.toString().split('\n');
-            let resource = JSON.parse(allResourceVersions[allResourceVersions.length - 1]); // latest version
-            // eslint-disable-next-line security/detect-object-injection
-            const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
-            resource = resource[responseKey!].jsonBlob;
-            if (resource.meta.tag.length >= 2) {
-              // This is a resource marked for deletion
-              // DELETE the resource from HealthLake
-              await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
-            } else {
-              // Retrieve resource from HealthLake and compare it to fwoa.
-              const resourceInHL = await healthLakeClient.get(
-                `${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`
-              );
-              if (!verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType)) {
-                throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
-              }
-            }
-          }
+          await verifyFolderImport(
+            folderName,
+            jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!
+          );
           break;
         } else if (
           jobStatus.ImportJobProperties.JobStatus === 'FAILED' ||
@@ -161,6 +116,52 @@ async function startImport(folderNames: string[]): Promise<void> {
           MAX_IMPORT_RUNTIME / 1000
         } seconds`
       );
+    }
+  }
+}
+
+async function verifyFolderImport(folderName: string, s3Uri: string): Promise<void> {
+  const path = s3Uri.replace('s3://', '').replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
+  const s3Client = new S3({
+    region: API_AWS_REGION!
+  });
+  const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+  const healthLakeClient = axios.create();
+  const interceptor = aws4Interceptor({
+    region: API_AWS_REGION!,
+    service: 'healthlake'
+  });
+  healthLakeClient.interceptors.request.use(interceptor);
+  // eslint-disable-next-line security/detect-object-injection
+  for (let j = 0; j < outputFile.itemNames[folderName].length; j += 1) {
+    // eslint-disable-next-line security/detect-object-injection
+    const resourcePath = outputFile.itemNames[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
+    const resourceFile = await s3Client
+      .getObject({
+        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Key: resourcePath
+      })
+      .promise();
+    if (resourceFile.$response.error) {
+      throw new Error(`Failed to read file ${resourceFile.$response.error}`);
+    }
+    const allResourceVersions: string[] = resourceFile.Body!.toString().split('\n');
+    let resource = JSON.parse(allResourceVersions[allResourceVersions.length - 1]); // latest version
+    // eslint-disable-next-line security/detect-object-injection
+    const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
+    resource = resource[responseKey!].jsonBlob;
+    if (resource.meta.tag.length >= 2) {
+      // This is a resource marked for deletion
+      // DELETE the resource from HealthLake
+      await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
+    } else {
+      // Retrieve resource from HealthLake and compare it to fwoa.
+      const resourceInHL = await healthLakeClient.get(
+        `${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`
+      );
+      if (!verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType)) {
+        throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
+      }
     }
   }
 }
