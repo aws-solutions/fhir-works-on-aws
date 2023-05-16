@@ -220,7 +220,14 @@ filtered_dates_resource_dyn_frame = Filter.apply(frame = filtered_dates_dyn_fram
                                     else x["documentStatus"] in valid_document_state_to_be_read_from and x["resourceType"] in type_list
                           )
 
+def add_resource_tags(record):
+    record["meta"]["tag"] = []
+    record["meta"]["tag"].append({"display": record["meta"]["lastUpdated"], "code": "originalLastUpdated"})
+    if record["documentStatus"] == "DELETED":
+        record["meta"]["tag"].append({"display": "DELETED", "code": "DELETED"})
+    return record
 
+filtered_dates_resource_dyn_frame = filtered_dates_resource_dyn_frame.map(add_resource_tags)
 # Drop fields that are not needed
 print('Dropping fields that are not needed')
 data_source_cleaned_dyn_frame = DropFields.apply(frame = filtered_dates_resource_dyn_frame, paths = ['documentStatus', 'lockEndTs', 'vid', '_references', '_tenantId', '_id', '_subscriptionStatus'])

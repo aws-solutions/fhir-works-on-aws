@@ -29,7 +29,8 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "axios": "^0.21.4"
+    "axios": "0.25.0",
+    "object-hash": "^3.0.0"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
@@ -43,11 +44,13 @@
     "@types/jsonwebtoken": "^8.5.4",
     "@types/lodash": "^4.14.182",
     "@types/node": "^14",
+    "@types/object-hash": "^3.0.2",
     "@types/qs": "^6.9.7",
     "@types/uuid": "^8.3.4",
     "@types/yargs": "^17.0.22",
     "aws-sdk": "^2.1000.0",
     "aws-sdk-mock": "^5.1.0",
+    "aws4-axios": "^2.4.9",
     "chance": "^1.1.7",
     "dotenv": "^16.0.3",
     "eslint": "^8.7.0",
