@@ -6,6 +6,7 @@ import * as AWS from 'aws-sdk';
 import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
+import objectHash from 'object-hash';
 import { stringify } from 'qs';
 
 export interface ExportOutput {
@@ -166,3 +167,38 @@ export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promis
     baseURL
   });
 };
+
+export async function getResource(
+  s3Client: AWS.S3,
+  itemKey: string,
+  bucketName: string
+): Promise<AWS.S3.GetObjectOutput> {
+  console.log(`getting ${itemKey}`);
+  const file = await s3Client
+    .getObject({
+      Bucket: bucketName,
+      Key: itemKey
+    })
+    .promise();
+  if (file.$response.error) {
+    throw new Error(`Failed to get object ${itemKey}`);
+  }
+  return file;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function verifyResource(
+  fhirClient: AxiosInstance,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  healthLakeResource: any,
+  resourceId: string,
+  resourceType: string
+): Promise<boolean> {
+  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
+  delete fwoaResponse.meta;
+  delete healthLakeResource.meta;
+  if (resourceType === 'Binary') {
+    delete healthLakeResource.data;
+  }
+  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
+}
