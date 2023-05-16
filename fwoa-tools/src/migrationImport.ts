@@ -150,8 +150,8 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
     // eslint-disable-next-line security/detect-object-injection
     const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
     resource = resource[responseKey!].jsonBlob;
-    if (resource.meta.tag.length >= 2) {
-      // This is a resource marked for deletion
+    // This is a resource marked for deletion
+    if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
       // DELETE the resource from HealthLake
       await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
     } else {
