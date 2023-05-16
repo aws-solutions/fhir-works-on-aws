@@ -122,11 +122,11 @@ async function startImport(folderNames: string[]): Promise<void> {
             }
             const allResourceVersions: string[] = resourceFile.Body!.toString().split('\n');
             let resource = JSON.parse(allResourceVersions[allResourceVersions.length - 1]); // latest version
-            console.log(resource);
             // eslint-disable-next-line security/detect-object-injection
             const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
             resource = resource[responseKey!].jsonBlob;
             if (resource.meta.tag.length >= 2) {
+              // This is a resource marked for deletion
               // DELETE the resource from HealthLake
               await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
             } else {

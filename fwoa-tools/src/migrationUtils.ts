@@ -189,6 +189,7 @@ export async function getResource(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function verifyResource(
   fhirClient: AxiosInstance,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   healthLakeResource: any,
   resourceId: string,
   resourceType: string
