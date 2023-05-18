@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
 import {
   ExportOutput,
+  MS_TO_HOURS,
   POLLING_TIME,
   getFhirClient,
   getFhirClientSMART,
@@ -74,7 +75,8 @@ async function startImport(folderNames: string[]): Promise<void> {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
     console.log(`Starting import for folder ${folderName}`);
-    logs.push(`${new Date().toISOString()}: Start Import for folder ${folderName}...`);
+    const startTime = new Date();
+    logs.push(`${startTime.toISOString()}: Start Import for folder ${folderName}...`);
 
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
@@ -104,8 +106,13 @@ async function startImport(folderNames: string[]): Promise<void> {
           })
           .promise();
         if (jobStatus.ImportJobProperties.JobStatus === 'COMPLETED') {
+          const finishTime = new Date();
           console.log(`successfully imported folder ${folderName}`);
-          logs.push(`${new Date().toISOString()}: Import Job for folder ${folderName} succeeded!`);
+          logs.push(
+            `${finishTime.toISOString()}: Import Job for folder ${folderName} succeeded! Elapsed Time: ${
+              Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
+            }`
+          );
 
           await verifyFolderImport(
             folderName,

@@ -104,10 +104,10 @@ async function retrieveBinaryIdsFromFolder(folderName: string): Promise<void> {
     let results: string = '';
     for (const binaryResourceString of binaryResources) {
       const binaryResource = JSON.parse(binaryResourceString);
-      logs.push(`${new Date().toISOString()}: Retreived Binary Resource from Export bucket.`);
+      logs.push(`${new Date().toISOString()}: Retrieved Binary Resource from Export bucket.`);
       const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId);
       logs.push(
-        `${new Date().toISOString()}: Retreived Binary Object from Binary bucket with vid ${
+        `${new Date().toISOString()}: Retrieved Binary Object from Binary bucket with vid ${
           binaryResource.meta.versionId
         }.`
       );

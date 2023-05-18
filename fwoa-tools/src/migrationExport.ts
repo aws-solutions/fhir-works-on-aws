@@ -9,7 +9,7 @@ import { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
 import ExportHelper from './exportHelper';
-import { ExportOutput, getFhirClient, getFhirClientSMART } from './migrationUtils';
+import { ExportOutput, MS_TO_HOURS, getFhirClient, getFhirClientSMART } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const MAX_CONCURRENT_REQUESTS: number = 100;
@@ -68,9 +68,15 @@ async function startExport(): Promise<{
   fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
   exportHelper = new ExportHelper(fhirClient, smartClient);
   const exportJobUrl: string = await exportHelper.startExportJob({ since });
-  logs.push(`${new Date().toISOString()}: Started Export`);
+  const startTime = new Date();
+  logs.push(`${startTime.toISOString()}: Started Export`);
   const response = await exportHelper.getExportStatus(exportJobUrl);
-  logs.push(`${new Date().toISOString()}: Completed Export`);
+  const finishTime = new Date();
+  logs.push(
+    `${new Date().toISOString()}: Completed Export. Elapsed Time - ${
+      Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
+    } hours`
+  );
 
   // return the last element of the split array, which is the jobId portion of the url
   const jobId = exportJobUrl.split('/').pop();
