@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { S3 } from 'aws-sdk';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as dotenv from 'dotenv';
@@ -7,6 +7,7 @@ import { ExportOutput } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const { EXPORT_BUCKET_NAME, BINARY_BUCKET_NAME, API_AWS_REGION } = process.env;
+const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -22,6 +23,7 @@ const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
 const exportBucketName: string | undefined = process.env.EXPORT_BUCKET_NAME;
 const binaryBucketName: string | undefined = process.env.BINARY_BUCKET_NAME;
+const logs: string[] = [];
 const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
 
 const s3Client: S3 = new S3({
@@ -93,21 +95,31 @@ async function uploadBinaryResource(itemKey: string, newData: string): Promise<G
 
 async function retrieveBinaryIdsFromFolder(folderName: string): Promise<void> {
   const itemKeys = getAllBinaryKeysInFolder(folderName);
+  logs.push(`${new Date().toISOString()}: Retrieved All Binary Keys from migration export output.`);
 
   for (const itemKey of itemKeys) {
+    logs.push(`${new Date().toISOString()}: Retrieving Binary Resource from ${itemKey}...`);
     const file = await getBinaryResource(itemKey);
     const binaryResources: string[] = file.Body!.toString().split('\n');
     let results: string = '';
     for (const binaryResourceString of binaryResources) {
       const binaryResource = JSON.parse(binaryResourceString);
+      logs.push(`${new Date().toISOString()}: Retreived Binary Resource from Export bucket.`);
       const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId);
+      logs.push(
+        `${new Date().toISOString()}: Retreived Binary Object from Binary bucket with vid ${
+          binaryResource.meta.versionId
+        }.`
+      );
       // Step 4, Convert to Binary string
       // Step 5, append to downloaded file
       binaryResource.data = binaryObject.Body?.toString('base64');
       results += JSON.stringify(binaryResource) + '\n';
+      logs.push(`${new Date().toISOString()}: Binary data appended to resource.`);
     }
     results = results.trimEnd();
     await uploadBinaryResource(itemKey, results);
+    logs.push(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!`);
   }
 }
 
@@ -130,9 +142,12 @@ if (!dryRun) {
   startBinaryConversion()
     .then(() => {
       console.log('successfully converted all binary resources!');
+      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
     })
     .catch((error) => {
       console.log('Failed to process binary resources', error);
+      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
     });
 } else {
   checkConfiguration()

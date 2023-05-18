@@ -13,10 +13,13 @@ import { ExportOutput, getFhirClient, getFhirClientSMART } from './migrationUtil
 
 dotenv.config({ path: '.env' });
 const MAX_CONCURRENT_REQUESTS: number = 100;
+const EXPORT_OUTPUT_LOG_FILE_PREFIX: string = 'export_output_';
 const bucketName: string | undefined = process.env.EXPORT_BUCKET_NAME;
 if (!bucketName) {
   throw new Error('EXPORT_BUCKET_NAME environment variable is not defined');
 }
+
+const logs: string[] = [];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -65,10 +68,13 @@ async function startExport(): Promise<{
   fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
   exportHelper = new ExportHelper(fhirClient, smartClient);
   const exportJobUrl: string = await exportHelper.startExportJob({ since });
+  logs.push(`${new Date().toISOString()}: Started Export`);
   const response = await exportHelper.getExportStatus(exportJobUrl);
+  logs.push(`${new Date().toISOString()}: Completed Export`);
 
   // return the last element of the split array, which is the jobId portion of the url
   const jobId = exportJobUrl.split('/').pop();
+  logs.push(`${new Date().toISOString()}: Export JobId - ${jobId}`);
   output.jobId = jobId!;
 
   return { jobId: jobId!, exportResponse: response };
@@ -81,7 +87,7 @@ async function sortExportIntoFolders(bucket: string, prefix: string): Promise<Ex
 
   // to copy the s3 files to a different bucket, you can replace the
   // third parameter with a different bucket
-  return await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS);
+  return await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS, logs);
 }
 
 async function checkConfiguration(): Promise<void> {
@@ -108,10 +114,14 @@ if (!dryRun) {
         folderNames: names.folderNames,
         itemNames: names.itemNames
       };
+      logs.push(`${new Date().toISOString()}: Finished sorting export objects into folders.`);
+      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
       writeFileSync('./migrationExport_Output.txt', JSON.stringify(output));
     })
     .catch((error) => {
       console.error('Error:', error);
+      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
     });
 } else {
   // check permissions and setup instead

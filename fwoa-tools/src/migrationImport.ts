@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { HealthLake, S3 } from 'aws-sdk';
 import { StartFHIRImportJobRequest } from 'aws-sdk/clients/healthlake';
 import { aws4Interceptor } from 'aws4-axios';
@@ -29,6 +29,11 @@ const {
 } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
+const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
+const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
+
+const successfullyCompletedFolders: string[] = [];
+const logs: string[] = [];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -57,10 +62,20 @@ const healthLake: HealthLake = new HealthLake({
 });
 
 async function startImport(folderNames: string[]): Promise<void> {
-  for (let i: number = 0; i < folderNames.length; i += 1) {
+  let i: number = 0;
+  // To see if we have completed folders to skip importing
+  if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
+    const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
+    if (folders.length > 0) {
+      i = parseInt(folders[folders.length - 1]);
+    }
+  }
+  for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
     console.log(`Starting import for folder ${folderName}`);
+    logs.push(`${new Date().toISOString()}: Start Import for folder ${folderName}...`);
+
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
         S3Uri: `${EXPORT_BUCKET_URI}/${jobId}/${folderName}`
@@ -78,6 +93,7 @@ async function startImport(folderNames: string[]): Promise<void> {
     };
     const importJob = await healthLake.startFHIRImportJob(params).promise();
     console.log(`successfully started import job, checking status at ${importJob.JobId}`);
+    logs.push(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}`);
     const cutOffTime = new Date(new Date().getTime() + MAX_IMPORT_RUNTIME);
     while (new Date().getTime() < cutOffTime.getTime()) {
       try {
@@ -89,11 +105,14 @@ async function startImport(folderNames: string[]): Promise<void> {
           .promise();
         if (jobStatus.ImportJobProperties.JobStatus === 'COMPLETED') {
           console.log(`successfully imported folder ${folderName}`);
-          // use outputFile to check
+          logs.push(`${new Date().toISOString()}: Import Job for folder ${folderName} succeeded!`);
+
           await verifyFolderImport(
             folderName,
             jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!
           );
+          logs.push(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!`);
+          successfullyCompletedFolders.push(folderName);
           break;
         } else if (
           jobStatus.ImportJobProperties.JobStatus === 'FAILED' ||
@@ -136,6 +155,7 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
   for (let j = 0; j < outputFile.itemNames[folderName].length; j += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const resourcePath = outputFile.itemNames[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
+    logs.push(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
     const resourceFile = await s3Client
       .getObject({
         Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
@@ -153,11 +173,15 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
     // This is a resource marked for deletion
     if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
       // DELETE the resource from HealthLake
+      logs.push(`${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...`);
       await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
     } else {
       // Retrieve resource from HealthLake and compare it to fwoa.
       const resourceInHL = await healthLakeClient.get(
         `${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`
+      );
+      logs.push(
+        `${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
       );
       if (!verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType)) {
         throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
@@ -190,9 +214,15 @@ if (!dryRun) {
   startImport(outputFile.folderNames)
     .then(() => {
       console.log('successfully completed import jobs!');
+      logs.push(`${new Date().toISOString()}: Successfully completed all Import Jobs!`);
+      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
     })
     .catch((error) => {
       console.log('import failed!', error);
+      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // only create a state file in case something went wrong
+      writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     });
 } else {
   checkConfiguration()
