@@ -85,7 +85,8 @@ export default class ExportHelper {
     sourceBucket: string,
     targetBucket: string = sourceBucket,
     sourcePrefix: string,
-    concurrency: number = 100
+    concurrency: number = 100,
+    logs: string[]
   ): Promise<ExportOutput> {
     let ContinuationToken;
     const folderNames: string[] = [];
@@ -123,6 +124,7 @@ export default class ExportHelper {
           ContinuationToken
         })
         .promise();
+      logs.push(`${new Date().toISOString()}: Listing objects from S3...`);
       const Contents: S3.ObjectList | undefined = resources.Contents;
       const NextContinuationToken: string | undefined = resources.NextContinuationToken;
       const sourceKeys = Contents?.map(({ Key }) => Key);
@@ -132,6 +134,7 @@ export default class ExportHelper {
           while (sourceKeys?.length) {
             const sourceKey = sourceKeys.pop();
             const targetKey: string = sourceKey!.replace(sourcePrefix, `${sourcePrefix}${folderName}/`);
+            logs.push(`${new Date().toISOString()}: Copying ${sourceKey} to ${targetKey}...`);
             await copyFile(sourceKey, targetKey);
             if (itemNames[`${folderName}`]) {
               itemNames[`${folderName}`].push(targetKey);
@@ -143,6 +146,7 @@ export default class ExportHelper {
       );
       numItemsInFolder += Contents?.length || 0;
       if (numItemsInFolder >= MAX_ITEMS_PER_FOLDER) {
+        logs.push(`${new Date().toISOString()}: Max number of items in folder ${folderName} reached.`);
         numItemsInFolder = 0;
         folderName += 1;
         folderNames.push();
