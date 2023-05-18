@@ -115,13 +115,15 @@ if (!dryRun) {
         itemNames: names.itemNames
       };
       logs.push(`${new Date().toISOString()}: Finished sorting export objects into folders.`);
-      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
       writeFileSync('./migrationExport_Output.txt', JSON.stringify(output));
     })
     .catch((error) => {
       console.error('Error:', error);
       logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
     });
 } else {
   // check permissions and setup instead

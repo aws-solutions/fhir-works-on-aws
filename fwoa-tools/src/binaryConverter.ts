@@ -142,12 +142,14 @@ if (!dryRun) {
   startBinaryConversion()
     .then(() => {
       console.log('successfully converted all binary resources!');
-      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
     })
     .catch((error) => {
       console.log('Failed to process binary resources', error);
       logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
     });
 } else {
   checkConfiguration()

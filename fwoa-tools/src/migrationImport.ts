@@ -215,12 +215,14 @@ if (!dryRun) {
     .then(() => {
       console.log('successfully completed import jobs!');
       logs.push(`${new Date().toISOString()}: Successfully completed all Import Jobs!`);
-      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
     })
     .catch((error) => {
       console.log('import failed!', error);
       logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.txt`, logs.join('\n'));
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
       // only create a state file in case something went wrong
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     });
