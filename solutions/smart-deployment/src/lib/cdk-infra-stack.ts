@@ -37,7 +37,7 @@ import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from '
 import { Construct } from 'constructs';
 import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
-import { LogGroup } from 'aws-cdk-lib/aws-logs';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import path from 'path';
 import { NagSuppressions } from 'cdk-nag';
@@ -297,7 +297,8 @@ export default class FhirWorksStack extends Stack {
 
     const apiGatewayLogGroup = new LogGroup(this, 'apiGatewayLogGroup', {
       encryptionKey: kmsResources.logKMSKey,
-      logGroupName: `/aws/api-gateway/fhir-service-${props!.stage}`
+      logGroupName: `/aws/api-gateway/fhir-service-${props!.stage}`,
+      retention: RetentionDays.TEN_YEARS
     });
 
     const apiGatewayRestApi = new RestApi(this, 'apiGatewayRestApi', {
