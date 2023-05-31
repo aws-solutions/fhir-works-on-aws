@@ -264,7 +264,7 @@ else:
     # Rename exported files into ndjson files
     print('Renaming files')
     client = boto3.client('s3')
-
+    
     def iterate_bucket_items(bucket, prefix):
         """
         Generator that iterates over all objects in a given s3 bucket

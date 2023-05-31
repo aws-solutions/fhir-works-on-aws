@@ -153,7 +153,6 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
   }
 
   // SMART_AUTH_USERNAME should be for a System
-
   const username = requestAdditionalScopes ? process.env.SMART_AUTH_ADMIN_USERNAME : SMART_AUTH_USERNAME;
   if (!username) {
     throw new Error('SMART_AUTH_ADMIN_USERNAME environment variable is not defined');
