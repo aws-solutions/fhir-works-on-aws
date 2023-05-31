@@ -10,8 +10,8 @@ import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from 
 
 dotenv.config({ path: '.env' });
 
-// eslint-disable-next-line security/detect-child-process
 const executeCommand = async (command: string): Promise<unknown> =>
+  // eslint-disable-next-line security/detect-child-process
   await new Promise((resolve) => exec(command, resolve));
 
 describe('migration: end to end test', () => {
