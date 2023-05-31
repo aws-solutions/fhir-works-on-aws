@@ -265,13 +265,27 @@ else:
     print('Renaming files')
     client = boto3.client('s3')
 
-    response = client.list_objects(
-        Bucket=bucket_name,
-        Prefix=job_id,
-    )
+    def iterate_bucket_items(bucket, prefix):
+        """
+        Generator that iterates over all objects in a given s3 bucket
+
+        See http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.list_objects_v2 
+        for return data format
+        :param bucket: name of s3 bucket
+        :return: dict of metadata for an object
+        """
+
+        paginator = client.get_paginator('list_objects_v2')
+        parameters = { 'Bucket': bucket, 'Prefix': prefix }
+        page_iterator = paginator.paginate(**parameters)
+
+        for page in page_iterator:
+            if page['KeyCount'] > 0:
+                for item in page['Contents']:
+                    yield item
 
     regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})$'
-    for item in response['Contents']:
+    for item in iterate_bucket_items(bucket_name, job_id):
         source_s3_file_path = item['Key']
         match = re.search(regex_pattern, source_s3_file_path)
         if match is None:

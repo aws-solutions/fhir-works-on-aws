@@ -1,3 +1,7 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { HealthLake, S3 } from 'aws-sdk';
 import { StartFHIRImportJobRequest } from 'aws-sdk/clients/healthlake';
