@@ -115,6 +115,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "aws4-axios",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "axios",
       "allowedCategories": ["production", "tools"]
     },
@@ -156,7 +160,7 @@
     },
     {
       "name": "dotenv",
-      "allowedCategories": ["production"]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "errorhandler",
@@ -309,6 +313,10 @@
     {
       "name": "npm-package-json-lint-config-default",
       "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "object-hash",
+      "allowedCategories": ["tools"]
     },
     {
       "name": "p-settle",
