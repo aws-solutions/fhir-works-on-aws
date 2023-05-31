@@ -37,7 +37,7 @@ import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from '
 import { Construct } from 'constructs';
 import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
-import { LogGroup } from 'aws-cdk-lib/aws-logs';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import path from 'path';
 import { NagSuppressions } from 'cdk-nag';
@@ -297,7 +297,8 @@ export default class FhirWorksStack extends Stack {
 
     const apiGatewayLogGroup = new LogGroup(this, 'apiGatewayLogGroup', {
       encryptionKey: kmsResources.logKMSKey,
-      logGroupName: `/aws/api-gateway/fhir-service-${props!.stage}`
+      logGroupName: `/aws/api-gateway/fhir-service-${props!.stage}`,
+      retention: RetentionDays.TEN_YEARS
     });
 
     const apiGatewayRestApi = new RestApi(this, 'apiGatewayRestApi', {
@@ -357,7 +358,7 @@ export default class FhirWorksStack extends Stack {
       PATIENT_PICKER_ENDPOINT: props!.patientPickerEndpoint,
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
-      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.0.1-smart',
+      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.0.2-smart',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.2] (2022-05-11)
+
+### Fixes
+
+- update objectOwnership on S3 buckets
+
 ## [6.0.1] (2022-04-10)
 
 ### Fixes

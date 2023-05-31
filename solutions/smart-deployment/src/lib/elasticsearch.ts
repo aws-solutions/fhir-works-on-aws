@@ -17,7 +17,7 @@ import {
     FederatedPrincipal,
     ArnPrincipal,
 } from 'aws-cdk-lib/aws-iam';
-import { LogGroup, ResourcePolicy } from 'aws-cdk-lib/aws-logs';
+import { LogGroup, ResourcePolicy, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { NagSuppressions } from 'cdk-nag';
@@ -249,6 +249,7 @@ export default class ElasticSearchResources {
         this.searchLogs = new LogGroup(scope, 'searchLogs', {
             logGroupName: `${stackName}-search-logs`,
             encryptionKey: elasticSearchKMSKey,
+            retention: RetentionDays.TEN_YEARS
         });
 
         this.searchLogsResourcePolicy = new ResourcePolicy(scope, 'searchLogsResourcePolicy', {
