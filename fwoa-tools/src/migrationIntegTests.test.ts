@@ -2,16 +2,17 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import axios, { AxiosInstance } from 'axios';
-import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from './migrationUtils';
-import * as dotenv from 'dotenv';
-import ExportHelper from './exportHelper';
-import createBundle from './createPatientPractitionerEncounterBundle.json';
 import { exec } from 'child_process';
+import axios, { AxiosInstance } from 'axios';
+import * as dotenv from 'dotenv';
+import createBundle from './createPatientPractitionerEncounterBundle.json';
+import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 
-const executeCommand = async (command: string) => await new Promise((resolve) => exec(command, resolve));
+// eslint-disable-next-line security/detect-child-process
+const executeCommand = async (command: string): Promise<unknown> =>
+  await new Promise((resolve) => exec(command, resolve));
 
 describe('migration: end to end test', () => {
   let fhirClient: AxiosInstance;

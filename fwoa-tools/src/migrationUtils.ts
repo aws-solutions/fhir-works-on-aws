@@ -212,9 +212,9 @@ export async function verifyResource(
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
 
-export const binaryResource = {
+export const binaryResource: { resourceType: string; contentType: string } = {
   resourceType: 'Binary',
   contentType: 'image/jpeg'
 };
 
-export const binaryObject = 'exampleBinaryStreamData';
+export const binaryObject: string = 'exampleBinaryStreamData';
