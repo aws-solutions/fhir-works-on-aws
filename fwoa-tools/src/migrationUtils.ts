@@ -22,26 +22,29 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
 
-const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
-  const { COGNITO_USERNAME, COGNITO_PASSWORD } = process.env;
+const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: string; USERNAME: string } = (
+  requestAdditionalScopes?: boolean
+) => {
+  const { COGNITO_USERNAME, COGNITO_ADMIN_USERNAME, COGNITO_PASSWORD } = process.env;
 
-  if (COGNITO_USERNAME === undefined) {
+  const password = COGNITO_PASSWORD;
+  const username = requestAdditionalScopes ? COGNITO_ADMIN_USERNAME : COGNITO_USERNAME;
+  if (username === undefined) {
     throw new Error('COGNITO_USERNAME environment variable is not defined');
   }
   if (COGNITO_PASSWORD === undefined) {
     throw new Error('COGNITO_PASSWORD environment variable is not defined');
   }
 
-  const password = COGNITO_PASSWORD;
-  const username = COGNITO_USERNAME;
-
   return {
-    USERNAME: username,
-    PASSWORD: password
+    USERNAME: username!,
+    PASSWORD: password!
   };
 };
 
-export const getFhirClient: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
+export const getFhirClient: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
+  requestAdditionalScopes
+): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID } = process.env;
@@ -65,7 +68,7 @@ export const getFhirClient: () => Promise<AxiosInstance> = async (): Promise<Axi
     await Cognito.initiateAuth({
       ClientId: COGNITO_CLIENT_ID,
       AuthFlow: 'USER_PASSWORD_AUTH',
-      AuthParameters: getAuthParameters()
+      AuthParameters: getAuthParameters(requestAdditionalScopes)
     }).promise()
   ).AuthenticationResult!.IdToken!;
 
@@ -85,13 +88,14 @@ async function getAuthToken(
   password: string,
   clientId: string,
   clientPw: string,
-  oauthApiEndpoint: string
+  oauthApiEndpoint: string,
+  requestAdditionalScopes?: boolean
 ): Promise<string> {
   const data = stringify({
     grant_type: 'password',
     username,
     password,
-    scope: 'system/*.read' // hard-code system/*.read to scope system to only exports
+    scope: requestAdditionalScopes ? 'fhirUser user/*.*' : 'system/*.read' // hard-code system/*.read to scope system to only exports
   });
 
   const authToken = `Basic ${Buffer.from(`${clientId}:${clientPw}`).toString('base64')}`;
@@ -111,7 +115,9 @@ async function getAuthToken(
   return response.data.access_token;
 }
 
-export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
+export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
+  requestAdditionalScopes
+): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   // Check all environment variables are provided
@@ -147,15 +153,17 @@ export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promis
   }
 
   // SMART_AUTH_USERNAME should be for a System
-
-  const username = SMART_AUTH_USERNAME;
-
+  const username = requestAdditionalScopes ? process.env.SMART_AUTH_ADMIN_USERNAME : SMART_AUTH_USERNAME;
+  if (!username) {
+    throw new Error('SMART_AUTH_ADMIN_USERNAME environment variable is not defined');
+  }
   const accessToken = await getAuthToken(
     username,
     SMART_AUTH_PASSWORD,
     SMART_CLIENT_ID,
     SMART_CLIENT_SECRET,
-    SMART_OAUTH2_API_ENDPOINT
+    SMART_OAUTH2_API_ENDPOINT,
+    requestAdditionalScopes
   );
 
   const baseURL = SMART_SERVICE_URL;
@@ -203,3 +211,10 @@ export async function verifyResource(
   }
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
+
+export const binaryResource: { resourceType: string; contentType: string } = {
+  resourceType: 'Binary',
+  contentType: 'image/jpeg'
+};
+
+export const binaryObject: string = 'exampleBinaryStreamData';
