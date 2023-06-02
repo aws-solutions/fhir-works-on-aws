@@ -152,18 +152,20 @@ async function startImport(folderNames: string[]): Promise<void> {
 
 async function verifyFolderImport(folderName: string, s3Uri: string): Promise<void> {
   const path = s3Uri.replace('s3://', '').replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
-  const s3Client = new S3({
-    region: API_AWS_REGION!
-  });
-  const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
-  const healthLakeClient = axios.create();
   const interceptor = aws4Interceptor({
     region: API_AWS_REGION!,
     service: 'healthlake'
   });
-  healthLakeClient.interceptors.request.use(interceptor);
+
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.itemNames[folderName].length; j += 1) {
+    const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+    const s3Client = new S3({
+      region: API_AWS_REGION!
+    });
+    const healthLakeClient = axios.create();
+    healthLakeClient.interceptors.request.use(interceptor);
+
     // eslint-disable-next-line security/detect-object-injection
     const resourcePath = outputFile.itemNames[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
     logs.push(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
@@ -194,7 +196,7 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
       logs.push(
         `${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
       );
-      if (!verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType)) {
+      if (!(await verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType))) {
         throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
       }
     }
