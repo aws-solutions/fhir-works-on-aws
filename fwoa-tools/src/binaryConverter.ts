@@ -109,6 +109,10 @@ async function retrieveBinaryIdsFromFolder(folderName: string): Promise<void> {
     for (const binaryResourceString of binaryResources) {
       const binaryResource = JSON.parse(binaryResourceString);
       logs.push(`${new Date().toISOString()}: Retrieved Binary Resource from Export bucket.`);
+      if (binaryResource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+        logs.push(`${new Date().toISOString()}: Encountered DELETED Binary resource, skipping ${itemKey}...`);
+        continue;
+      }
       const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId);
       logs.push(
         `${new Date().toISOString()}: Retrieved Binary Object from Binary bucket with vid ${
