@@ -114,7 +114,11 @@ if (!dryRun) {
       if (response.exportResponse.output.length === 0) {
         return;
       }
-      const names = await sortExportIntoFolders(bucketName, `${response.jobId}/`);
+      let tenantSuffix = '';
+      if (process.env.MIGRATION_TENANT_ID) {
+        tenantSuffix = `${process.env.MIGRATION_TENANT_ID}/`;
+      }
+      const names = await sortExportIntoFolders(bucketName, `${tenantSuffix}${response.jobId}/`);
       output = {
         jobId: output.jobId,
         folderNames: names.folderNames,
