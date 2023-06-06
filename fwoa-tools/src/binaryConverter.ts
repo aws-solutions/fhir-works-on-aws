@@ -63,10 +63,14 @@ async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
 
 // Step 3, Retrieve Binary objects from S3 Binary Bucket
 async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<GetObjectOutput> {
+  let tenantPrefix = '';
+  if (process.env.MIGRATION_TENANT_ID) {
+    tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+  }
   const files = await s3Client
     .listObjectsV2({
       Bucket: BINARY_BUCKET_NAME!,
-      Prefix: `${itemKey}_${versionId}.`
+      Prefix: `${tenantPrefix}${itemKey}_${versionId}.`
     })
     .promise();
   if (files.$response.error || !files.Contents || files.Contents.length === 0) {
