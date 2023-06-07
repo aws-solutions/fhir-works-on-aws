@@ -1054,7 +1054,6 @@ packages:
       '@aws-sdk/util-user-agent-browser': 3.267.0
       '@aws-sdk/util-user-agent-node': 3.267.0
       '@aws-sdk/util-utf8': 3.254.0
-      fast-xml-parser: 4.0.11
       tslib: 2.5.0
     transitivePeerDependencies:
       - aws-crt
@@ -1185,7 +1184,6 @@ packages:
       '@aws-sdk/util-user-agent-browser': 3.267.0
       '@aws-sdk/util-user-agent-node': 3.267.0
       '@aws-sdk/util-utf8': 3.254.0
-      fast-xml-parser: 4.0.11
       tslib: 2.5.0
     transitivePeerDependencies:
       - aws-crt
@@ -8071,15 +8069,6 @@ packages:
         integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
       }
     dev: true
-
-  /fast-xml-parser/4.0.11:
-    resolution:
-      {
-        integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==
-      }
-    hasBin: true
-    dependencies:
-      strnum: 1.0.5
 
   /fastq/1.15.0:
     resolution:
