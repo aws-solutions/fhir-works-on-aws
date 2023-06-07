@@ -208,6 +208,7 @@ export async function verifyResource(
   delete healthLakeResource.meta;
   if (resourceType === 'Binary') {
     delete healthLakeResource.data;
+    delete fwoaResponse.presignedGetUrl;
   }
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
