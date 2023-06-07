@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-search-es",
+      "comment": "update @aws-sdk/client-sns version",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-search-es"
+}
