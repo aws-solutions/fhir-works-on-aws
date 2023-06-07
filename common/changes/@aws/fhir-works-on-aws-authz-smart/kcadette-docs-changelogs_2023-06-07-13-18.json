@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "comment": " Migration tool to export FHIR resources from FHIR Works on AWS to Amazon HealthLake",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-smart"
+}
