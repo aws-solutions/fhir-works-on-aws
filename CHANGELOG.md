@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [6.1.0] - 2023-05-11
+## [6.1.0] - 2023-06-07
 Migration tool to export FHIR resources from FHIR Works on AWS to Amazon HealthLake
 ### Changelog for Packages in This project
 
