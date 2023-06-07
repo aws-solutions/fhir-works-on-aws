@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
+  fast-xml-parser: ^4.2.4
   jsonwebtoken@<=8.5.1: '>=9.0.0'
   jsonwebtoken@<9.0.0: '>=9.0.0'
   xml2js@<0.5.0: '>=0.5.0'
@@ -1054,7 +1055,7 @@ packages:
       '@aws-sdk/util-user-agent-browser': 3.267.0
       '@aws-sdk/util-user-agent-node': 3.267.0
       '@aws-sdk/util-utf8': 3.254.0
-      fast-xml-parser: 4.0.11
+      fast-xml-parser: 4.2.4
       tslib: 2.5.0
     transitivePeerDependencies:
       - aws-crt
@@ -1185,7 +1186,7 @@ packages:
       '@aws-sdk/util-user-agent-browser': 3.267.0
       '@aws-sdk/util-user-agent-node': 3.267.0
       '@aws-sdk/util-utf8': 3.254.0
-      fast-xml-parser: 4.0.11
+      fast-xml-parser: 4.2.4
       tslib: 2.5.0
     transitivePeerDependencies:
       - aws-crt
@@ -8072,10 +8073,10 @@ packages:
       }
     dev: true
 
-  /fast-xml-parser/4.0.11:
+  /fast-xml-parser/4.2.4:
     resolution:
       {
-        integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==
+        integrity: sha512-fbfMDvgBNIdDJLdLOwacjFAPYt67tr31H9ZhWSm45CDAxvd0I6WTlSOUo7K2P/K5sA5JgMKG64PI3DMcaFdWpQ==
       }
     hasBin: true
     dependencies:
