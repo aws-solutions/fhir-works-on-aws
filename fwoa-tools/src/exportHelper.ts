@@ -149,7 +149,7 @@ export default class ExportHelper {
         logs.push(`${new Date().toISOString()}: Max number of items in folder ${folderName} reached.`);
         numItemsInFolder = 0;
         folderName += 1;
-        folderNames.push();
+        folderNames.push(`${folderName}`);
       }
       ContinuationToken = NextContinuationToken;
     } while (ContinuationToken);

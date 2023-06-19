@@ -51,12 +51,17 @@ function parseCmdOptions(): any {
     .describe('dryRun', 'Check operations and authentication status')
     .boolean('dryRun')
     .default('dryRun', false)
-    .alias('d', 'dryRun').argv;
+    .alias('d', 'dryRun')
+    .describe('skip-verification', 'skip verifying resources')
+    .boolean('skip-verification')
+    .default('skip-verification', false)
+    .alias('v', 'skip-verification').argv;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
+const skipVerification: boolean = argv['skip-verification'];
 
 // get the job id from the export output file
 const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
@@ -117,7 +122,9 @@ async function startImport(folderNames: string[]): Promise<void> {
               Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
             }`
           );
-
+          if (skipVerification) {
+            break;
+          }
           await verifyFolderImport(
             folderName,
             jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!

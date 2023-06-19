@@ -227,7 +227,12 @@ def add_resource_tags(record):
         record["meta"]["tag"].append({"display": "DELETED", "code": "DELETED"})
     return record
 
+def additional_transformations(record):
+    # Add additional customizations as needed here
+    return record
+
 filtered_dates_resource_dyn_frame = filtered_dates_resource_dyn_frame.map(add_resource_tags)
+filtered_dates_resource_dyn_frame = filtered_dates_resource_dyn_frame.map(additional_transformations)
 # Drop fields that are not needed
 print('Dropping fields that are not needed')
 data_source_cleaned_dyn_frame = DropFields.apply(frame = filtered_dates_resource_dyn_frame, paths = ['documentStatus', 'lockEndTs', 'vid', '_references', '_tenantId', '_id', '_subscriptionStatus'])
