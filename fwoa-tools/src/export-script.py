@@ -13,6 +13,7 @@ import boto3
 import re
 import json
 import uuid
+import threading
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
@@ -263,6 +264,7 @@ else:
 
     # Rename exported files into ndjson files
     print('Renaming files')
+    table_export_start_time = datetime.now()
     client = boto3.client('s3')
     
     def iterate_bucket_items(bucket, prefix):
@@ -284,31 +286,35 @@ else:
                 for item in page['Contents']:
                     yield item
 
-    regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})$'
+#    regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})$'
+    regex_pattern = '\/partitionKeyDup=(\w+)\/run-\d{13}-part-r-(\d{5})$'
+    number_of_threads = 6
+    list_of_file_names = []
+
+    for thread_counter in range(number_of_threads):
+        list_of_file_names.append([])
+
+    count = 0
     for item in iterate_bucket_items(bucket_name, job_id):
-        source_s3_file_path = item['Key']
-        match = re.search(regex_pattern, source_s3_file_path)
+        file_name = item['Key']
+        match = re.search(regex_pattern, file_name)
         if match is None:
             continue
-        # we need to convert the uuid into a unique int to be parsed by getExportStatus
-        # this is done in Python just be using the int() caster
-        new_s3_file_name = match.group(1) + "-" + str(int(uuid.UUID(match.group(2)))) + ".ndjson"
-        tenant_specific_path = '' if (tenantId is None) else tenantId + '/'
-        new_s3_file_path = tenant_specific_path + job_id + '/' + new_s3_file_name
+        else:
+            list_of_file_names[count % number_of_threads].append(file_name)
+        count = count + 1
 
-        copy_source = {
-            'Bucket': bucket_name,
-            'Key': source_s3_file_path
-        }
+    threads = [];
+    # Start executing threads
+    for thread_counter in range(number_of_threads):
+        thread = threading.Thread(target=rename_files, args=(list_of_file_names[thread_counter % number_of_threads],))
+        thread.start()
+        threads.append(thread)
 
-        extra_args = {
-            'ContentType':'application/fhir+ndjson',
-            'Metadata': {
-                'job-owner-id': job_owner_id
-            },
-            'MetadataDirective':'REPLACE'
-        }
+    # Wait till threads finish executing
+    for thread_counter in range(number_of_threads):
+        threads[thread_counter % number_of_threads].join()
 
-        client.copy(copy_source, bucket_name, new_s3_file_path, ExtraArgs=extra_args)
-        client.delete_object(Bucket=bucket_name, Key=source_s3_file_path)
+    table_export_finish_time = datetime.now()
+    print('Elapsed time for renaming files with ' + str(number_of_threads) + ' threads = ', table_export_finish_time - table_export_start_time)
     print('Export job finished')
