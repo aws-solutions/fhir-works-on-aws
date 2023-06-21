@@ -285,6 +285,27 @@ else:
             if page['KeyCount'] > 0:
                 for item in page['Contents']:
                     yield item
+    def rename_files(s3_file_names):
+        for s3_file_name in s3_file_names:
+            match = re.search(regex_pattern, s3_file_name)
+            new_s3_file_name = match.group(1) + "/" + match.group(1) + "-" + str(int(match.group(2))) + ".ndjson"
+            tenant_specific_path = '' if (tenantId is None) else tenantId + '/'
+            new_s3_file_path = tenant_specific_path + job_id + '/' + new_s3_file_name
+
+            copy_source = {
+                'Bucket': bucket_name,
+                'Key': s3_file_name
+            }
+
+            extra_args = {
+                'ContentType':'application/fhir+ndjson',
+                'Metadata': {
+                    'job-owner-id': job_owner_id
+                },
+                'MetadataDirective':'REPLACE'
+            }
+            client.copy(copy_source, bucket_name, new_s3_file_path, ExtraArgs=extra_args)
+            client.delete_object(Bucket=bucket_name, Key=s3_file_name)
 
 #    regex_pattern = '\/partitionKeyDup=(\w+)(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})\/run-\d{13}-part-r-(\d{5})$'
     regex_pattern = '\/partitionKeyDup=(\w+)\/run-\d{13}-part-r-(\d{5})$'
