@@ -100,7 +100,7 @@ else:
 table_export_finish_time = datetime.now()
 print('Finished Table Export Time =',
       table_export_finish_time.strftime("%H:%M:%S"))
-print('Elapsed time = ', table_export_finish_time - table_export_start_time)
+print('Table export duration = ', table_export_finish_time - table_export_start_time)
 
 
 def dynamo_obj_to_python_obj(dynamo_obj: dict) -> dict:
@@ -111,10 +111,9 @@ def dynamo_obj_to_python_obj(dynamo_obj: dict) -> dict:
     }
 
 
-def transform(rec):
+def transform_dyn_frame_from_dynamo_obj_to_python_obj(rec):
     # Convert the record to a dictionary
     item = rec.Item
-    # print(item)
     # convert to serialized json
     json_str = json.dumps(item)
     # convert to python dictionary object
@@ -126,9 +125,9 @@ def transform(rec):
 
 transform_start_time = datetime.now()
 original_data_source_dyn_frame = original_data_source_dyn_frame.map(
-    f=transform)
+    f=transform_dyn_frame_from_dynamo_obj_to_python_obj)
 transform_finish_time = datetime.now()
-print('Elapsed time = ', transform_finish_time - transform_start_time)
+print('Transform Dynamo Obj to Python Obj duration = ', transform_finish_time - transform_start_time)
 
 print('Start filtering by tenantId')
 
@@ -140,7 +139,7 @@ def remove_composite_id(resource):
 
 
 # Filter by tenantId
-table_export_start_time = datetime.now()
+tenant_id_filter_start_time = datetime.now()
 if (tenantId is None):
     filtered_tenant_id_frame = original_data_source_dyn_frame
 else:
@@ -151,16 +150,16 @@ else:
     filtered_tenant_id_frame = filtered_tenant_id_frame_with_composite_id.map(
         f=remove_composite_id)
 
-table_export_finish_time = datetime.now()
+tenant_id_filter_finish_time = datetime.now()
 print('Elapsed time for tenantId Filtering = ',
-      table_export_finish_time - table_export_start_time)
+      tenant_id_filter_finish_time - tenant_id_filter_start_time)
 print('start filtering by group_id')
 
 datetime_transaction_time = datetime.strptime(
     transaction_time, "%Y-%m-%dT%H:%M:%S.%fZ")
 
 print('Start filtering by transactionTime and Since')
-table_export_start_time = datetime.now()
+time_filter_start_time = datetime.now()
 # Filter by transactionTime and Since
 datetime_since = datetime.strptime(since, "%Y-%m-%dT%H:%M:%S.%fZ")
 filtered_dates_dyn_frame = filtered_tenant_id_frame.filter(
@@ -170,12 +169,12 @@ filtered_dates_dyn_frame = filtered_tenant_id_frame.filter(
                       "%Y-%m-%dT%H:%M:%S.%fZ") <= datetime_transaction_time
 )
 
-table_export_finish_time = datetime.now()
+time_filter_finish_time = datetime.now()
 print('Elapsed time for transactionTime and Since filtering = ',
-      table_export_finish_time - table_export_start_time)
+      time_filter_finish_time - time_filter_start_time)
 
 print('Start filtering by documentStatus and resourceType')
-table_export_start_time = datetime.now()
+type_filter_start_time = datetime.now()
 # Filter by resource listed in Type and with correct STATUS
 type_list = None if type == None else set(type.split(','))
 valid_document_state_to_be_read_from = {
@@ -190,9 +189,9 @@ filtered_dates_resource_dyn_frame = filtered_dates_dyn_frame.filter(
     else x["documentStatus"] in valid_document_state_to_be_read_from and x["resourceType"] in type_list
 )
 
-table_export_finish_time = datetime.now()
+type_filter_finish_time = datetime.now()
 print('Elapsed time for documentStatus and resourceType filtering = ',
-      table_export_finish_time - table_export_start_time)
+      type_filter_finish_time - type_filter_start_time)
 
 
 def add_resource_tags(record):
@@ -208,26 +207,26 @@ def additional_transformations(record):
     # Add additional customizations as needed here
     return record
 
-table_export_start_time = datetime.now()
+additional_mapping_start_time = datetime.now()
 
 filtered_dates_resource_dyn_frame = filtered_dates_resource_dyn_frame.map(
     add_resource_tags)
 filtered_dates_resource_dyn_frame = filtered_dates_resource_dyn_frame.map(
     additional_transformations)
 
-table_export_finish_time = datetime.now()
+additional_mapping_finish_time = datetime.now()
 print('Elapsed time for adding resource tags = ',
-      table_export_finish_time - table_export_start_time)
+      additional_mapping_finish_time - additional_mapping_start_time)
 
 # Drop fields that are not needed
 print('Dropping fields that are not needed')
-table_export_start_time = datetime.now()
+drop_fields_start_time = datetime.now()
 data_source_cleaned_dyn_frame = filtered_dates_resource_dyn_frame.drop_fields(
     paths=['documentStatus', 'lockEndTs', 'vid', '_references', '_tenantId', '_id', '_subscriptionStatus'])
 
-table_export_finish_time = datetime.now()
+drop_fields_finish_time = datetime.now()
 print('Elapsed time for dropping fields = ',
-      table_export_finish_time - table_export_start_time)
+      drop_fields_finish_time - drop_fields_start_time)
 
 
 def add_dup_resource_type(record):
@@ -236,20 +235,20 @@ def add_dup_resource_type(record):
 
 
 # Create duplicated column so we can use it in partitionKey later
-table_export_start_time = datetime.now()
+partition_column_add_start_time = datetime.now()
 data_source_cleaned_dyn_frame = data_source_cleaned_dyn_frame.map(
     add_dup_resource_type)
-table_export_finish_time = datetime.now()
+partition_column_add_finish_time = datetime.now()
 print('Elapsed time for adding partitionkey column = ',
-      table_export_finish_time - table_export_start_time)
+      partition_column_add_finish_time - partition_column_add_start_time)
 
 # Sort the data frame by versionId
-table_export_start_time = datetime.now()
+vid_sorting_start_time = datetime.now()
 data_source_cleaned_dyn_frame = DynamicFrame.fromDF(data_source_cleaned_dyn_frame.toDF(
 ).sortWithinPartitions("meta.versionId"), glueContext, "data_source_cleaned_dyn_frame")
-table_export_finish_time = datetime.now()
+vid_sorting_finish_time = datetime.now()
 print('Elapsed time for Sorting = ',
-      table_export_finish_time - table_export_start_time)
+      vid_sorting_finish_time - vid_sorting_start_time)
 
 if data_source_cleaned_dyn_frame.count() == 0:
     print('No resources within requested parameters to export')
@@ -272,7 +271,6 @@ else:
 
     # Rename exported files into ndjson files
     print('Renaming files')
-    table_export_start_time = datetime.now()
     client = boto3.client('s3')
 
     def iterate_bucket_items(bucket, prefix):
@@ -335,13 +333,14 @@ else:
             if resource_type_name not in resulting_file_names:
                 resulting_file_names[resource_type_name] = []
             resulting_file_names[resource_type_name].append(new_s3_file_path)
-            
+
             list_of_file_names[count % number_of_threads].append({
                 "file_name": file_name,
                 "renamed_file_name": new_s3_file_path
             })
         count = count + 1
 
+    rename_file_start_time = datetime.now()
     threads = []
     # Start executing threads
     for thread_counter in range(number_of_threads):
@@ -362,7 +361,7 @@ else:
     tenant_prefix = "" if tenantId is None else f"{tenantId}/"
     client.put_object(Body=migration_output_file_data, Bucket=bucket_name, Key=f"{tenant_prefix}{job_id}/migration_output.json")
 
-    table_export_finish_time = datetime.now()
+    rename_file_finish_time = datetime.now()
     print('Elapsed time for renaming files with ' + str(number_of_threads) +
-          ' threads = ', table_export_finish_time - table_export_start_time)
+          ' threads = ', rename_file_finish_time - rename_file_start_time)
     print('Export job finished')
