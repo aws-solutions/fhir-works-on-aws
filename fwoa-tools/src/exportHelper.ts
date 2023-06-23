@@ -75,11 +75,11 @@ export async function startExportJob(startExportJobParam: StartExportJobParam): 
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getExportStatus(
   jobName: string,
   logStream: WriteStream,
   jobRunId: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> {
   const cutOffTime = new Date(new Date().getTime() + MAX_EXPORT_RUNTIME);
   const glue = new Glue({
