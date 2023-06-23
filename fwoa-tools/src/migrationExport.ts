@@ -94,7 +94,7 @@ async function startExport(): Promise<{
   const startTime = new Date();
   logs.write(`${startTime.toISOString()}: Started Export\n`);
   console.log(`Checking Status with ${glueJobResponse.jobId} and run id ${glueJobResponse.jobRunId}`);
-  const response = await getExportStatus(glueJobName!, glueJobResponse.jobId, glueJobResponse.jobRunId);
+  const response = await getExportStatus(glueJobName!, logs, glueJobResponse.jobRunId);
   const finishTime = new Date();
   logs.write(
     `${new Date().toISOString()}: Completed Export. Elapsed Time - ${

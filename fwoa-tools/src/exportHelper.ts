@@ -5,7 +5,7 @@
 
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-extraneous-dependencies */
-import { writeFileSync } from 'fs';
+import { WriteStream, writeFileSync } from 'fs';
 import { S3, Glue } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { EXPORT_STATE_FILE_NAME, ExportOutput, POLLING_TIME, sleep } from './migrationUtils';
@@ -76,7 +76,11 @@ export async function startExportJob(startExportJobParam: StartExportJobParam): 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getExportStatus(jobName: string, jobId: string, jobRunId: string): Promise<any> {
+export async function getExportStatus(
+  jobName: string,
+  logStream: WriteStream,
+  jobRunId: string
+): Promise<any> {
   const cutOffTime = new Date(new Date().getTime() + MAX_EXPORT_RUNTIME);
   const glue = new Glue({
     region: process.env.API_AWS_REGION
@@ -94,6 +98,7 @@ export async function getExportStatus(jobName: string, jobId: string, jobRunId: 
       if (state === 'SUCCEEDED') {
         return state;
       } else if (state === 'RUNNING' || state === 'WAITING') {
+        logStream.write(`${new Date().toISOString()}: Glue Job State is still ${state}...`);
         // eslint-disable-next-line no-await-in-loop
         await sleep(POLLING_TIME);
       } else {
