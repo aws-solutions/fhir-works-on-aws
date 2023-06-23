@@ -3,23 +3,34 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { writeFileSync } from 'fs';
+import { WriteStream, createWriteStream, writeFileSync } from 'fs';
 import { S3 } from 'aws-sdk';
-import { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
-import ExportHelper from './exportHelper';
-import { ExportOutput, MS_TO_HOURS, getFhirClient, getFhirClientSMART } from './migrationUtils';
+import { GlueJobResponse, getExportStateFile, getExportStatus, startExportJob } from './exportHelper';
+import {
+  EXPORT_STATE_FILE_NAME,
+  ExportOutput,
+  MS_TO_HOURS,
+  getFhirClient,
+  getFhirClientSMART
+} from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const MAX_CONCURRENT_REQUESTS: number = 100;
 const EXPORT_OUTPUT_LOG_FILE_PREFIX: string = 'export_output_';
 const bucketName: string | undefined = process.env.EXPORT_BUCKET_NAME;
 if (!bucketName) {
   throw new Error('EXPORT_BUCKET_NAME environment variable is not defined');
 }
+const glueJobName: string | undefined = process.env.GLUE_JOB_NAME;
+if (!glueJobName) {
+  throw new Error('GLUE_JOB_NAME env variable is not defined');
+}
 
-const logs: string[] = [];
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const logs: WriteStream = createWriteStream(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
+  flags: 'a'
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -33,6 +44,13 @@ function parseCmdOptions(): any {
     .boolean('dryRun')
     .default('dryRun', false)
     .alias('d', 'dryRun')
+    .describe('snapshotExists', 'Export from a previous snapshot in S3')
+    .boolean('snapshotExists')
+    .default('snapshotExists', false)
+    .alias('e', 'snapshotExists')
+    .describe('snapshotLocation', 'Previous Export location S3 URI')
+    .default('snapshotLocation', null)
+    .alias('l', 'snapshotLocation')
     .describe('since', 'Optional: timestamp from which to start export')
     .alias('t', 'since')
     .default('since', null).argv;
@@ -43,10 +61,12 @@ const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 let since: string = argv.since;
+const snapshotExists: boolean = argv.snapshotExists;
+const snapshotLocation: string = argv.snapshotLocation;
+
 let output: ExportOutput = {
   jobId: '',
-  folderNames: [],
-  itemNames: {}
+  file_names: {}
 };
 
 if (since) {
@@ -57,47 +77,50 @@ if (since) {
   }
 }
 
-let fhirClient: AxiosInstance;
-let exportHelper: ExportHelper;
-
 async function startExport(): Promise<{
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   exportResponse: any;
 }> {
-  fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
-  exportHelper = new ExportHelper(fhirClient, smartClient);
-  const exportJobUrl: string = await exportHelper.startExportJob({ since });
+  const params = {
+    since,
+    glueJobName: glueJobName!,
+    apiUrl: smartClient ? process.env.SMART_SERVICE_URL! : process.env.API_URL!,
+    tenantId: process.env.MIGRATION_TENANT_ID || undefined,
+    snapshotExists,
+    snapshotLocation
+  };
+  const glueJobResponse: GlueJobResponse = await startExportJob(params);
   const startTime = new Date();
-  logs.push(`${startTime.toISOString()}: Started Export`);
-  const response = await exportHelper.getExportStatus(exportJobUrl);
+  logs.write(`${startTime.toISOString()}: Started Export\n`);
+  console.log(`Checking Status with ${glueJobResponse.jobId} and run id ${glueJobResponse.jobRunId}`);
+  const response = await getExportStatus(glueJobName!, glueJobResponse.jobId, glueJobResponse.jobRunId);
   const finishTime = new Date();
-  logs.push(
+  logs.write(
     `${new Date().toISOString()}: Completed Export. Elapsed Time - ${
       Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
-    } hours`
+    } hours\n`
   );
 
   // return the last element of the split array, which is the jobId portion of the url
-  const jobId = exportJobUrl.split('/').pop();
-  logs.push(`${new Date().toISOString()}: Export JobId - ${jobId}`);
-  output.jobId = jobId!;
+  logs.write(`${new Date().toISOString()}: Export JobId - ${glueJobResponse.jobId}\n`);
+  output.jobId = glueJobResponse.jobId!;
 
-  return { jobId: jobId!, exportResponse: response };
+  return { jobId: glueJobResponse.jobId!, exportResponse: response };
 }
 
-async function sortExportIntoFolders(bucket: string, prefix: string): Promise<ExportOutput> {
+async function generateStateFile(bucket: string, prefix: string): Promise<ExportOutput> {
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
   });
 
   // to copy the s3 files to a different bucket, you can replace the
   // third parameter with a different bucket
-  return await exportHelper.copyAll(s3Client, bucket, bucket, prefix, MAX_CONCURRENT_REQUESTS, logs);
+  return await getExportStateFile(s3Client, bucket, prefix);
 }
 
 async function checkConfiguration(): Promise<void> {
-  fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+  await (smartClient ? getFhirClientSMART() : getFhirClient());
   console.log('Successfully authenticated to FHIR Server...');
 
   const s3Client = new S3({
@@ -111,29 +134,25 @@ if (!dryRun) {
   startExport()
     .then(async (response) => {
       console.log('successfully completed export.');
-      if (response.exportResponse.output.length === 0) {
-        return;
-      }
+
       let tenantPrefix = '';
       if (process.env.MIGRATION_TENANT_ID) {
         tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
       }
-      const names = await sortExportIntoFolders(bucketName, `${tenantPrefix}${response.jobId}/`);
+      const names = await generateStateFile(bucketName, `${tenantPrefix}${response.jobId}/`);
       output = {
         jobId: output.jobId,
-        folderNames: names.folderNames,
-        itemNames: names.itemNames
+        file_names: names.file_names
       };
-      logs.push(`${new Date().toISOString()}: Finished sorting export objects into folders.`);
+      logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
+      logs.end();
       // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
-      writeFileSync('./migrationExport_Output.txt', JSON.stringify(output));
+      writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
     })
     .catch((error) => {
       console.error('Error:', error);
-      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
+      logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+      logs.end();
     });
 } else {
   // check permissions and setup instead

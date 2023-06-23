@@ -44,7 +44,7 @@ if (!EXPORT_BUCKET_NAME) {
 // Step 1, Retrieve all Binary Files from Export Output
 function getAllBinaryKeysInFolder(folderName: string): string[] {
   // eslint-disable-next-line security/detect-object-injection
-  return outputFile.itemNames[folderName].filter((x) => x.includes('Binary'));
+  return outputFile.file_names[folderName].filter((x) => x.includes('Binary'));
 }
 // Step 2, download files from S3 to get Ids
 async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
@@ -143,7 +143,7 @@ async function checkConfiguration(): Promise<void> {
 }
 
 async function startBinaryConversion(): Promise<void> {
-  for (const folderName of outputFile.folderNames) {
+  for (const folderName of Object.keys(outputFile.file_names)) {
     console.log(`Starting Binary Conversion for folder ${folderName}`);
     await retrieveBinaryIdsFromFolder(folderName);
     console.log(`Finished Binary Conversion for folder ${folderName}`);

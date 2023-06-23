@@ -5,12 +5,14 @@
 
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-extraneous-dependencies */
-import { S3 } from 'aws-sdk';
-import { AxiosInstance } from 'axios';
-import { ExportOutput, POLLING_TIME, getFhirClient, getFhirClientSMART, sleep } from './migrationUtils';
+import { writeFileSync } from 'fs';
+import { S3, Glue } from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid';
+import { EXPORT_STATE_FILE_NAME, ExportOutput, POLLING_TIME, sleep } from './migrationUtils';
 
 const MAX_EXPORT_RUNTIME: number = 48 * 60 * 60 * 1000;
-const MAX_ITEMS_PER_FOLDER: number = 10000;
+const EXPORT_TYPES: string =
+  'Account,ActivityDefinition,AdverseEvent,AllergyIntolerance,Appointment,AppointmentResponse,AuditEvent,Basic,Binary,BiologicallyDerivedProduct,BodyStructure,Bundle,CapabilityStatement,CarePlan,CareTeam,CatalogEntry,ChargeItem,ChargeItemDefinition,Claim,ClaimResponse,ClinicalImpression,CodeSystem,Communication,CommunicationRequest,CompartmentDefinition,Composition,ConceptMap,Condition,Consent,Contract,Coverage,CoverageEligibilityRequest,CoverageEligibilityResponse,DetectedIssue,Device,DeviceDefinition,DeviceMetric,DeviceRequest,DeviceUseStatement,DiagnosticReport,DocumentManifest,DocumentReference,EffectEvidenceSynthesis,Encounter,Endpoint,EnrollmentRequest,EnrollmentResponse,EpisodeOfCare,EventDefinition,Evidence,EvidenceVariable,ExampleScenario,ExplanationOfBenefit,FamilyMemberHistory,Flag,Goal,GraphDefinition,Group,GuidanceResponse,HealthcareService,ImagingStudy,Immunization,ImmunizationEvaluation,ImmunizationRecommendation,ImplementationGuide,InsurancePlan,Invoice,Library,Linkage,List,Location,Measure,MeasureReport,Media,Medication,MedicationAdministration,MedicationDispense,MedicationKnowledge,MedicationRequest,MedicationStatement,MedicinalProduct,MedicinalProductAuthorization,MedicinalProductContraindication,MedicinalProductIndication,MedicinalProductIngredient,MedicinalProductInteraction,MedicinalProductManufactured,MedicinalProductPackaged,MedicinalProductPharmaceutical,MedicinalProductUndesirableEffect,MessageDefinition,MessageHeader,MolecularSequence,NamingSystem,NutritionOrder,Observation,ObservationDefinition,OperationDefinition,OperationOutcome,Organization,OrganizationAffiliation,Parameters,Patient,PaymentNotice,PaymentReconciliation,Person,PlanDefinition,Practitioner,PractitionerRole,Procedure,Provenance,Questionnaire,QuestionnaireResponse,RelatedPerson,RequestGroup,ResearchDefinition,ResearchElementDefinition,ResearchStudy,ResearchSubject,RiskAssessment,RiskEvidenceSynthesis,Schedule,SearchParameter,ServiceRequest,Slot,Specimen,SpecimenDefinition,StructureDefinition,StructureMap,Subscription,Substance,SubstanceNucleicAcid,SubstancePolymer,SubstanceProtein,SubstanceReferenceInformation,SubstanceSourceMaterial,SubstanceSpecification,SupplyDelivery,SupplyRequest,Task,TerminologyCapabilities,TestReport,TestScript,ValueSet,VerificationResult,VisionPrescription';
 
 export interface ExportStatusOutput {
   url: string;
@@ -18,146 +20,111 @@ export interface ExportStatusOutput {
 }
 
 export interface StartExportJobParam {
+  glueJobName: string;
+  apiUrl: string;
+  snapshotExists: boolean;
+  snapshotLocation: string;
+  tenantId?: string;
   since?: string;
 }
 
-export default class ExportHelper {
-  // The max runtime of an export glue job is by default 48 hours
+export interface GlueJobResponse {
+  jobId: string;
+  jobRunId: string;
+}
 
-  private fhirUserAxios: AxiosInstance;
-  private smartOnFhir: boolean;
-
-  public constructor(fhirUserAxios: AxiosInstance, smartOnFhir: boolean = false) {
-    this.fhirUserAxios = fhirUserAxios;
-    this.smartOnFhir = smartOnFhir;
+export async function startExportJob(startExportJobParam: StartExportJobParam): Promise<GlueJobResponse> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const params: any = {
+      _outputFormat: 'ndjson'
+    };
+    if (startExportJobParam.since) {
+      params._since = startExportJobParam.since;
+    }
+    const glue = new Glue({
+      region: process.env.API_AWS_REGION
+    });
+    const jobId = uuidv4();
+    const startJobRunResponse = await glue
+      .startJobRun({
+        JobName: startExportJobParam.glueJobName,
+        Arguments: {
+          '--jobId': jobId,
+          '--jobOwnerId': 'FWoAMigrationClient',
+          '--exportType': 'system',
+          '--transactionTime': new Date().toISOString(),
+          '--since': startExportJobParam.since || '1800-01-01T00:00:00.000Z',
+          '--type': EXPORT_TYPES,
+          '--outputFormat': 'ndjson',
+          '--tenantId': startExportJobParam.tenantId!,
+          '--serverUrl': startExportJobParam.apiUrl,
+          '--snapshotExists': startExportJobParam.snapshotExists.toString().toLowerCase(),
+          '--snapshotLocation': startExportJobParam.snapshotLocation
+        }
+      })
+      .promise();
+    const jobRunId = startJobRunResponse.JobRunId!;
+    return {
+      jobId,
+      jobRunId
+    };
+  } catch (e) {
+    console.error('Failed to start export job', e);
+    throw e;
   }
+}
 
-  public async startExportJob(startExportJobParam: StartExportJobParam): Promise<string> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getExportStatus(jobName: string, jobId: string, jobRunId: string): Promise<any> {
+  const cutOffTime = new Date(new Date().getTime() + MAX_EXPORT_RUNTIME);
+  const glue = new Glue({
+    region: process.env.API_AWS_REGION
+  });
+  while (new Date().getTime() < cutOffTime.getTime()) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const params: any = {
-        _outputFormat: 'ndjson'
-      };
-      if (startExportJobParam.since) {
-        params._since = startExportJobParam.since;
+      // eslint-disable-next-line no-await-in-loop
+      const jobRun = await glue
+        .getJobRun({
+          JobName: jobName,
+          RunId: jobRunId
+        })
+        .promise();
+      const state = jobRun.JobRun!.JobRunState!;
+      if (state === 'SUCCEEDED') {
+        return state;
+      } else if (state === 'RUNNING' || state === 'WAITING') {
+        // eslint-disable-next-line no-await-in-loop
+        await sleep(POLLING_TIME);
+      } else {
+        throw new Error(`Job has error state: ${state}`);
       }
-
-      const url = '/$export';
-
-      const response = await this.fhirUserAxios.get(url, { params });
-      const statusPollUrl = response.headers['content-location'];
-      console.log('Beginning export, check status with: ', statusPollUrl);
-      return statusPollUrl;
     } catch (e) {
-      console.error('Failed to start export job', e);
+      console.error('Failed to getExport status', e);
       throw e;
     }
   }
+  throw new Error(
+    `Expected export status did not occur during polling time frame of ${MAX_EXPORT_RUNTIME / 1000} seconds`
+  );
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async getExportStatus(statusPollUrl: string): Promise<any> {
-    const cutOffTime = new Date(new Date().getTime() + MAX_EXPORT_RUNTIME);
-    while (new Date().getTime() < cutOffTime.getTime()) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        const response = await this.fhirUserAxios.get(statusPollUrl);
-        if (response.status === 200) {
-          return response.data;
-        }
-        // eslint-disable-next-line no-await-in-loop
-        await sleep(POLLING_TIME);
-      } catch (e) {
-        if (e.response.status === 401) {
-          this.fhirUserAxios = await (this.smartOnFhir ? getFhirClientSMART() : getFhirClient());
-          continue;
-        }
-        console.error('Failed to getExport status', e);
-        throw e;
-      }
-    }
-    throw new Error(
-      `Expected export status did not occur during polling time frame of ${MAX_EXPORT_RUNTIME / 1000} seconds`
-    );
-  }
-
-  public async copyAll(
-    s3Client: S3,
-    sourceBucket: string,
-    targetBucket: string = sourceBucket,
-    sourcePrefix: string,
-    concurrency: number = 100,
-    logs: string[]
-  ): Promise<ExportOutput> {
-    let ContinuationToken;
-    const folderNames: string[] = [];
-    const itemNames: Record<string, string[]> = {};
-
-    const copyFile = async (sourceKey: string | undefined, targetKey: string): Promise<void> => {
-      if (!sourceKey) {
-        return;
-      }
-
-      await s3Client
-        .copyObject({
-          Bucket: targetBucket,
-          Key: targetKey,
-          CopySource: `${sourceBucket}/${sourceKey}`
-        })
-        .promise();
-
-      await s3Client
-        .deleteObject({
-          Bucket: sourceBucket,
-          Key: sourceKey
-        })
-        .promise();
-    };
-
-    let numItemsInFolder = 0;
-    let folderName = 0;
-    folderNames.push(folderName.toString());
-    do {
-      const resources: S3.ListObjectsV2Output = await s3Client
-        .listObjectsV2({
-          Bucket: sourceBucket,
-          Prefix: sourcePrefix,
-          ContinuationToken
-        })
-        .promise();
-      logs.push(`${new Date().toISOString()}: Listing objects from S3...`);
-      const Contents: S3.ObjectList | undefined = resources.Contents;
-      const NextContinuationToken: string | undefined = resources.NextContinuationToken;
-      const sourceKeys = Contents?.map(({ Key }) => Key);
-
-      await Promise.all(
-        new Array(concurrency).fill(null).map(async () => {
-          while (sourceKeys?.length) {
-            const sourceKey = sourceKeys.pop();
-            const targetKey: string = sourceKey!.replace(sourcePrefix, `${sourcePrefix}${folderName}/`);
-            logs.push(`${new Date().toISOString()}: Copying ${sourceKey} to ${targetKey}...`);
-            await copyFile(sourceKey, targetKey);
-            if (itemNames[`${folderName}`]) {
-              itemNames[`${folderName}`].push(targetKey);
-            } else {
-              itemNames[`${folderName}`] = [targetKey];
-            }
-          }
-        })
-      );
-      numItemsInFolder += Contents?.length || 0;
-      if (numItemsInFolder >= MAX_ITEMS_PER_FOLDER) {
-        logs.push(`${new Date().toISOString()}: Max number of items in folder ${folderName} reached.`);
-        numItemsInFolder = 0;
-        folderName += 1;
-        folderNames.push();
-      }
-      ContinuationToken = NextContinuationToken;
-    } while (ContinuationToken);
-
-    return {
-      jobId: '',
-      folderNames,
-      itemNames
-    };
-  }
+export async function getExportStateFile(
+  s3Client: S3,
+  bucketName: string,
+  sourcePrefix: string
+): Promise<ExportOutput> {
+  const stateFileRepsonse = await s3Client
+    .getObject({
+      Bucket: bucketName,
+      Key: `${sourcePrefix}migration_output.json`
+    })
+    .promise();
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, stateFileRepsonse.Body!.toString());
+  const stateFileBody = JSON.parse(stateFileRepsonse.Body!.toString());
+  return {
+    jobId: stateFileBody.jobId,
+    file_names: stateFileBody.file_names
+  };
 }
