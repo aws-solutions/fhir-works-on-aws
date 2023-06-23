@@ -159,7 +159,6 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
 
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
-    const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
     const s3Client = new S3({
       region: API_AWS_REGION!
     });
@@ -188,17 +187,6 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
       // DELETE the resource from HealthLake
       logs.push(`${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...`);
       await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
-    } else {
-      // Retrieve resource from HealthLake and compare it to fwoa.
-      const resourceInHL = await healthLakeClient.get(
-        `${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`
-      );
-      logs.push(
-        `${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
-      );
-      if (!(await verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType))) {
-        throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
-      }
     }
   }
 }
