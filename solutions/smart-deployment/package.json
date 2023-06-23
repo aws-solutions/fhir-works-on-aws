@@ -78,7 +78,7 @@
     "@aws/fhir-works-on-aws-search-es": "workspace:*",
     "@aws/fhir-works-on-aws-utilities": "workspace:*",
     "@types/aws-lambda": "^8.10.92",
-    "aws-cdk-lib": "^2.61.0",
+    "aws-cdk-lib": "^2.80.0",
     "aws-embedded-metrics": "^2.0.4",
     "aws-sdk": "^2.1000.0",
     "axios": "0.25.0",

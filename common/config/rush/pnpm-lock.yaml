@@ -600,7 +600,7 @@ importers:
       '@types/jest': ^26.0.19
       '@types/lodash': ^4.14.182
       '@types/node': ^14
-      aws-cdk-lib: ^2.61.0
+      aws-cdk-lib: ^2.80.0
       aws-sdk: ^2.1000.0
       aws-sdk-mock: ^5.1.0
       chance: ^1.1.7
@@ -617,8 +617,8 @@ importers:
       ts-jest: ^26.4.4
       typescript: ^4.9.4
     dependencies:
-      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m
-      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      '@aws-cdk/aws-servicecatalogappregistry-alpha': 2.61.0-alpha.0_tuuuh4smupkbvmy3f7acg7xpq4
+      aws-cdk-lib: 2.85.0_constructs@10.1.244
       constructs: 10.1.244
     devDependencies:
       '@aws/eslint-config-fwoa-eslint-custom': link:../core/eslint-custom
@@ -675,7 +675,7 @@ importers:
       '@types/uuid': ^8.3.4
       '@types/yargs': ^17.0.22
       aws-cdk: 2.61.0
-      aws-cdk-lib: ^2.61.0
+      aws-cdk-lib: ^2.80.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: 0.25.0
@@ -720,11 +720,11 @@ importers:
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
       '@aws/fhir-works-on-aws-utilities': link:../../fwoa-utilities
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      aws-cdk-lib: 2.85.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.25.0
-      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
+      cdk-nag: 2.21.86_tuuuh4smupkbvmy3f7acg7xpq4
       constructs: 10.1.244
       fs-extra: 10.1.0
       inquirer: 5.2.0
@@ -807,7 +807,7 @@ importers:
       '@types/uuid': ^8.3.4
       '@types/yargs': ^17.0.22
       aws-cdk: 2.61.0
-      aws-cdk-lib: ^2.61.0
+      aws-cdk-lib: ^2.80.0
       aws-embedded-metrics: ^2.0.4
       aws-sdk: ^2.1000.0
       axios: 0.25.0
@@ -850,11 +850,11 @@ importers:
       '@aws/fhir-works-on-aws-search-es': link:../../fwoa-core/search-es
       '@aws/fhir-works-on-aws-utilities': link:../../fwoa-utilities
       '@types/aws-lambda': 8.10.109
-      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      aws-cdk-lib: 2.85.0_constructs@10.1.244
       aws-embedded-metrics: 2.0.6
       aws-sdk: 2.1303.0
       axios: 0.25.0
-      cdk-nag: 2.21.86_nfqzj33ydgldzoghshyt46jh2m
+      cdk-nag: 2.21.86_tuuuh4smupkbvmy3f7acg7xpq4
       constructs: 10.1.244
       escape-string-regexp: 4.0.0
       fs-extra: 10.1.0
@@ -918,10 +918,10 @@ packages:
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
 
-  /@aws-cdk/asset-awscli-v1/2.2.68:
+  /@aws-cdk/asset-awscli-v1/2.2.198:
     resolution:
       {
-        integrity: sha512-/rx5dTFSSyKtYa1VOFuqt+hjQv5AnEc3x0OAmaHRhHWIepgUQ3aPHCyln/izgnwR4Y4albsptxoerM4lGEoaUg==
+        integrity: sha512-RfOMXFMyZ5Ca8ytB3/vs6srFH5HVV4M2JS9Wsb/uXPEpSblEmuf31iGVfN6Q+xRoNPm8icsquCRQ79JBqH4yjA==
       }
     dev: false
 
@@ -932,14 +932,14 @@ packages:
       }
     dev: false
 
-  /@aws-cdk/asset-node-proxy-agent-v5/2.0.57:
+  /@aws-cdk/asset-node-proxy-agent-v5/2.0.165:
     resolution:
       {
-        integrity: sha512-oLxJ9VQdSP2L8EALzChmWdzgq5wc4UidJfWYTCfuiZox6r0vW5ftYIffVgE/+iA0WxRstJUQz/nmpOeGfNbQDQ==
+        integrity: sha512-bsyLQD/vqXQcc9RDmlM1XqiFNO/yewgVFXmkMcQkndJbmE/jgYkzewwYGrBlfL725hGLQipXq19+jwWwdsXQqg==
       }
     dev: false
 
-  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.61.0-alpha.0_nfqzj33ydgldzoghshyt46jh2m:
+  /@aws-cdk/aws-servicecatalogappregistry-alpha/2.61.0-alpha.0_tuuuh4smupkbvmy3f7acg7xpq4:
     resolution:
       {
         integrity: sha512-hbigorGAW0jUc5KhwebD5/gmBztWPuSzV84qsrambSC1RAlDDUFQ9N+jEgyqV6U6D/OsDp/XnbGKjtTh6OIZ1Q==
@@ -949,7 +949,7 @@ packages:
       aws-cdk-lib: ^2.61.0
       constructs: ^10.0.0
     dependencies:
-      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      aws-cdk-lib: 2.85.0_constructs@10.1.244
       constructs: 10.1.244
     dev: false
 
@@ -2224,13 +2224,6 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
-
-  /@balena/dockerignore/1.0.2:
-    resolution:
-      {
-        integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==
-      }
-    dev: false
 
   /@bcoe/v8-coverage/0.2.3:
     resolution:
@@ -5029,14 +5022,6 @@ packages:
       }
     dev: true
 
-  /at-least-node/1.0.0:
-    resolution:
-      {
-        integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
-      }
-    engines: { node: '>= 4.0.0' }
-    dev: false
-
   /atob/2.1.2:
     resolution:
       {
@@ -5060,28 +5045,19 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
-  /aws-cdk-lib/2.64.0_constructs@10.1.244:
+  /aws-cdk-lib/2.85.0_constructs@10.1.244:
     resolution:
       {
-        integrity: sha512-IrgL7thb6TeOyHgyR/qKWTdA9FBb9lv7Z9QPDzCNJlkKI+0ANjYHy3RYV8Gd+1+kc6l8DG9Z1elij40YCr/Ptg==
+        integrity: sha512-u+ypK8XEMRH3tGRMSmcbPYxLet7xBdGIztUkMcPtlNJGhS/vxqh12yYkem3g3zzmHwdX8OPLSnlZ2sIuiIqp/g==
       }
     engines: { node: '>= 14.15.0' }
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
-      '@aws-cdk/asset-awscli-v1': 2.2.68
+      '@aws-cdk/asset-awscli-v1': 2.2.198
       '@aws-cdk/asset-kubectl-v20': 2.1.1
-      '@aws-cdk/asset-node-proxy-agent-v5': 2.0.57
-      '@balena/dockerignore': 1.0.2
-      case: 1.6.3
+      '@aws-cdk/asset-node-proxy-agent-v5': 2.0.165
       constructs: 10.1.244
-      fs-extra: 9.1.0
-      ignore: 5.2.4
-      jsonschema: 1.4.1
-      minimatch: 3.1.2
-      punycode: 2.3.0
-      semver: 7.3.8
-      yaml: 2.2.2
     dev: false
     bundledDependencies:
       - '@balena/dockerignore'
@@ -5092,6 +5068,7 @@ packages:
       - minimatch
       - punycode
       - semver
+      - table
       - yaml
 
   /aws-cdk/2.61.0:
@@ -5679,15 +5656,7 @@ packages:
       rsvp: 4.8.5
     dev: true
 
-  /case/1.6.3:
-    resolution:
-      {
-        integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
-      }
-    engines: { node: '>= 0.8.0' }
-    dev: false
-
-  /cdk-nag/2.21.86_nfqzj33ydgldzoghshyt46jh2m:
+  /cdk-nag/2.21.86_tuuuh4smupkbvmy3f7acg7xpq4:
     resolution:
       {
         integrity: sha512-FX1PZBtWYDn8VbrnVVyiOvJSmbr5It4CS2Xr0yNi9ReE9qcJFTe3gzJn4CH0Kx2pm9DOrIDXjX1rrz5JZ2oKyw==
@@ -5696,7 +5665,7 @@ packages:
       aws-cdk-lib: ^2.45.0
       constructs: ^10.0.5
     dependencies:
-      aws-cdk-lib: 2.64.0_constructs@10.1.244
+      aws-cdk-lib: 2.85.0_constructs@10.1.244
       constructs: 10.1.244
     dev: false
 
@@ -8403,19 +8372,6 @@ packages:
       jsonfile: 4.0.0
       universalify: 0.1.2
     dev: true
-
-  /fs-extra/9.1.0:
-    resolution:
-      {
-        integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-      }
-    engines: { node: '>=10' }
-    dependencies:
-      at-least-node: 1.0.0
-      graceful-fs: 4.2.10
-      jsonfile: 6.1.0
-      universalify: 2.0.0
-    dev: false
 
   /fs.realpath/1.0.0:
     resolution:
@@ -11462,13 +11418,6 @@ packages:
       }
     engines: { node: '>=10.0' }
     dev: true
-
-  /jsonschema/1.4.1:
-    resolution:
-      {
-        integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
-      }
-    dev: false
 
   /jsonwebtoken/9.0.0:
     resolution:
@@ -15911,6 +15860,7 @@ packages:
         integrity: sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==
       }
     engines: { node: '>= 14' }
+    dev: true
 
   /yargs-parser/13.1.2:
     resolution:
