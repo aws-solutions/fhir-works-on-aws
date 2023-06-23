@@ -158,7 +158,7 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
   });
 
   // eslint-disable-next-line security/detect-object-injection
-  for (let j = 0; j < outputFile.itemNames[folderName].length; j += 1) {
+  for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
     const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
     const s3Client = new S3({
       region: API_AWS_REGION!
@@ -167,7 +167,7 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
     healthLakeClient.interceptors.request.use(interceptor);
 
     // eslint-disable-next-line security/detect-object-injection
-    const resourcePath = outputFile.itemNames[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
+    const resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
     logs.push(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
     const resourceFile = await s3Client
       .getObject({
@@ -224,7 +224,7 @@ async function checkConfiguration(): Promise<void> {
 }
 
 if (!dryRun) {
-  startImport(outputFile.folderNames)
+  startImport(Object.keys(outputFile.file_names))
     .then(() => {
       console.log('successfully completed import jobs!');
       logs.push(`${new Date().toISOString()}: Successfully completed all Import Jobs!`);
