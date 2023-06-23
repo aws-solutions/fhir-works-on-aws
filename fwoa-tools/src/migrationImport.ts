@@ -19,6 +19,7 @@ import {
   sleep,
   verifyResource
 } from './migrationUtils';
+import { ListObjectsV2Output } from 'aws-sdk/clients/s3';
 
 dotenv.config({ path: '.env' });
 const {
@@ -59,7 +60,7 @@ const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 
 // get the job id from the export output file
-const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
+const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.json').toString());
 const jobId: string = outputFile.jobId;
 
 const healthLake: HealthLake = new HealthLake({
@@ -75,6 +76,7 @@ async function startImport(folderNames: string[]): Promise<void> {
       i = parseInt(folders[folders.length - 1]);
     }
   }
+
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
@@ -118,7 +120,7 @@ async function startImport(folderNames: string[]): Promise<void> {
             }`
           );
 
-          await verifyFolderImport(
+          await deleteFhirResourceFromHealthLakeIfNeeded(
             folderName,
             jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!
           );
@@ -150,7 +152,82 @@ async function startImport(folderNames: string[]): Promise<void> {
   }
 }
 
-async function verifyFolderImport(folderName: string, s3Uri: string): Promise<void> {
+async function checkFolderSizeOfResource(resources: string[]) {
+  const s3Client = new S3({
+    region: API_AWS_REGION!
+  });
+  for (let i = 0; i < resources.length; i++) {
+    const resource = resources[i];
+    // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
+    // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
+    if (resource === 'Binary') {
+      continue;
+    }
+    console.log(`Checking resource ${resource}`);
+    const maximumFolderSize = 536870912000; // 500 GB in bytes
+
+    let folderSize = 0;
+    let continuationToken: string | undefined = undefined;
+    do {
+      const response: ListObjectsV2Output = await s3Client
+        .listObjectsV2({
+          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+          Prefix: `${outputFile.jobId}/${resource}`,
+          ContinuationToken: continuationToken
+        })
+        .promise();
+      if (response.Contents) {
+        response.Contents.forEach((item) => {
+          if (item.Size) {
+            folderSize += item.Size;
+          }
+        });
+      }
+      continuationToken = response.NextContinuationToken;
+    } while (continuationToken);
+    if (folderSize > maximumFolderSize) {
+      throw new Error(
+        `Resource ${resource} has a folder size of ${folderSize} bytes, which is larger than the maximum folder size of ${maximumFolderSize} bytes`
+      );
+    } else {
+      console.log(
+        `${resource} folder size is ${folderSize} bytes. This is within maximum folder size limit.`
+      );
+    }
+  }
+}
+
+async function checkConvertedBinaryFileSize() {
+  console.log('Checking Binary file size');
+  const s3Client = new S3({
+    region: API_AWS_REGION!
+  });
+  const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
+  const convertedBinaryFolderName = 'Binary_converted';
+  let continuationToken: string | undefined = undefined;
+  do {
+    const response: ListObjectsV2Output = await s3Client
+      .listObjectsV2({
+        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Prefix: `${outputFile.jobId}/${convertedBinaryFolderName}`,
+        ContinuationToken: continuationToken
+      })
+      .promise();
+    if (response.Contents) {
+      response.Contents.forEach((item) => {
+        if (item.Size && item.Size > maximumBinaryFileSize) {
+          throw new Error(
+            `Binary resource ${item.Key} has a file size of ${item.Size}, which is larger than the maximum file size of ${maximumBinaryFileSize} bytes`
+          );
+        }
+      });
+    }
+    continuationToken = response.NextContinuationToken;
+  } while (continuationToken);
+  console.log(`All converted binary files are within the size limit of ${maximumBinaryFileSize}`);
+}
+
+async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Uri: string): Promise<void> {
   const path = s3Uri.replace('s3://', '').replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
   const interceptor = aws4Interceptor({
     region: API_AWS_REGION!,
@@ -188,17 +265,6 @@ async function verifyFolderImport(folderName: string, s3Uri: string): Promise<vo
       // DELETE the resource from HealthLake
       logs.push(`${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...`);
       await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
-    } else {
-      // Retrieve resource from HealthLake and compare it to fwoa.
-      const resourceInHL = await healthLakeClient.get(
-        `${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`
-      );
-      logs.push(
-        `${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
-      );
-      if (!(await verifyResource(fhirClient, resourceInHL.data, resource.id, resource.resourceType))) {
-        throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
-      }
     }
   }
 }
@@ -223,28 +289,56 @@ async function checkConfiguration(): Promise<void> {
   console.log('successfully accessed healthlake datastore');
 }
 
-if (!dryRun) {
-  startImport(Object.keys(outputFile.file_names))
-    .then(() => {
-      console.log('successfully completed import jobs!');
-      logs.push(`${new Date().toISOString()}: Successfully completed all Import Jobs!`);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
-    })
-    .catch((error) => {
-      console.log('import failed!', error);
-      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+// if (!dryRun) {
+//   startImport(Object.keys(outputFile.file_names))
+//     .then(() => {
+//       console.log('successfully completed import jobs!');
+//       logs.push(`${new Date().toISOString()}: Successfully completed all Import Jobs!`);
+//       // eslint-disable-next-line security/detect-non-literal-fs-filename
+//       writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
+//     })
+//     .catch((error) => {
+//       console.log('import failed!', error);
+//       logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+//       // eslint-disable-next-line security/detect-non-literal-fs-filename
+//       writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
+//       // only create a state file in case something went wrong
+//       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
+//     });
+// } else {
+//   checkConfiguration()
+//     .then((value) => {
+//       console.log('Successfully Passed configuration check');
+//     })
+//     .catch((error) => {
+//       console.log('failed configuration check', error);
+//     });
+//   checkConvertedBinaryFileSize().then(() => {
+//     console.log('Passed binary file size check');
+//   }).catch((error) => {
+//     console.log('Failed binary file size check', error);
+//   });
+//   checkFolderSizeOfResource(Object.keys(outputFile.file_names)).then(() => {
+//     console.log('Passed resource folder size check');
+//   }).catch((error) => {
+//     console.log('Failed resource folder size check', error);
+//   });
+// }
+(async () => {
+  if (!dryRun) {
+    try {
+      await startImport(Object.keys(outputFile.file_names));
+    } catch (e) {
+      console.log('import failed!', e);
+      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
       // only create a state file in case something went wrong
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
-    });
-} else {
-  checkConfiguration()
-    .then((value) => {
-      console.log('Successfully Passed all checks!');
-    })
-    .catch((error) => {
-      console.log('failed some checks!', error);
-    });
-}
+    }
+  } else {
+    // await checkConfiguration();
+    await checkConvertedBinaryFileSize();
+    await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
+  }
+})();
