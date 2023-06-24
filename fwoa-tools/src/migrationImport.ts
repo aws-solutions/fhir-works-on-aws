@@ -10,15 +10,7 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
-import {
-  ExportOutput,
-  MS_TO_HOURS,
-  POLLING_TIME,
-  getFhirClient,
-  getFhirClientSMART,
-  sleep,
-  verifyResource
-} from './migrationUtils';
+import { ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const {
@@ -55,7 +47,6 @@ function parseCmdOptions(): any {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argv: any = parseCmdOptions();
-const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 
 // get the job id from the export output file

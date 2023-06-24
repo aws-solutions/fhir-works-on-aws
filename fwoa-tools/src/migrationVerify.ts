@@ -3,12 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { readFileSync, writeFileSync } from 'fs';
+import { HealthLake, S3 } from 'aws-sdk';
+import { aws4Interceptor } from 'aws4-axios';
+import axios from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
 import { ExportOutput, getFhirClient, getFhirClientSMART, verifyResource } from './migrationUtils';
-import aws4Interceptor from 'aws4-axios';
-import { HealthLake, S3 } from 'aws-sdk';
-import axios from 'axios';
 
 dotenv.config({ path: '.env' });
 const { DATASTORE_ID, DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
@@ -33,7 +33,6 @@ const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 const logs: string[] = [];
-type FileNames = Record<string, string[]>;
 
 async function verifyFolderImport(): Promise<void> {
   const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
@@ -57,6 +56,7 @@ async function verifyFolderImport(): Promise<void> {
     let i: number = 0;
     for (i; i < resourcePaths.length; i += 1) {
       // resource path includes jobId, tenantId, resourceType, and S3 object id
+      // eslint-disable-next-line security/detect-object-injection
       const resourcePath = resourcePaths[i];
       logs.push(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
       const resourceFile = await s3Client
@@ -72,7 +72,8 @@ async function verifyFolderImport(): Promise<void> {
       // Each resource file can contain a number of resource objects
       const allResources: string[] = resourceFile.Body!.toString().split('\n');
       let j: number = 0;
-      for (j; j < allResources.length; i += 1) {
+      for (j; j < allResources.length; j += 1) {
+        // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
         const id = resource.id;
         const resourceInHL = await healthLakeClient.get(`${DATASTORE_ENDPOINT}/${resourceType}/${id}`);
@@ -115,7 +116,7 @@ if (!dryRun) {
       writeFileSync(`${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
     })
     .catch((error) => {
-      console.log('import failed!', error);
+      console.log('verification failed!', error);
       logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(`${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
