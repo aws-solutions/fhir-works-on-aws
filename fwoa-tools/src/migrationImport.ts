@@ -282,7 +282,7 @@ async function checkConfiguration(): Promise<void> {
 }
 // eslint-disable-next-line
 (async () => {
-  // await checkConfiguration();
+  await checkConfiguration();
   await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
