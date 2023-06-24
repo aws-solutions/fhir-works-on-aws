@@ -5,20 +5,13 @@
 import { existsSync, readFileSync, WriteStream, createWriteStream, writeFileSync } from 'fs';
 import { HealthLake, S3 } from 'aws-sdk';
 import { StartFHIRImportJobRequest } from 'aws-sdk/clients/healthlake';
+import { ListObjectsV2Output } from 'aws-sdk/clients/s3';
 import { aws4Interceptor } from 'aws4-axios';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
-import {
-  ExportOutput,
-  MS_TO_HOURS,
-  POLLING_TIME,
-  getFhirClient,
-  getFhirClientSMART,
-  sleep
-} from './migrationUtils';
-import { ListObjectsV2Output } from 'aws-sdk/clients/s3';
+import { ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const {
@@ -46,11 +39,7 @@ const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${D
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
-    .usage('Usage: $0 [--smart, -s boolean] [--dryRun, -d boolean]')
-    .describe('smart', 'Whether the FWoA deployment is SMART-on-FHIR or not')
-    .boolean('smart')
-    .default('smart', false)
-    .alias('s', 'smart')
+    .usage('Usage: $0 [--dryRun, -d boolean]')
     .describe('dryRun', 'Check operations and authentication status')
     .boolean('dryRun')
     .default('dryRun', false)
@@ -58,7 +47,6 @@ function parseCmdOptions(): any {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argv: any = parseCmdOptions();
-const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 
 // get the job id from the export output file
@@ -154,11 +142,12 @@ async function startImport(folderNames: string[]): Promise<void> {
   }
 }
 
-async function checkFolderSizeOfResource(resources: string[]) {
+async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
   const s3Client = new S3({
     region: API_AWS_REGION!
   });
   for (let i = 0; i < resources.length; i++) {
+    // eslint-disable-next-line security/detect-object-injection
     const resource = resources[i];
     // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
     // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
@@ -199,7 +188,7 @@ async function checkFolderSizeOfResource(resources: string[]) {
   }
 }
 
-async function checkConvertedBinaryFileSize() {
+async function checkConvertedBinaryFileSize(): Promise<void> {
   console.log('Checking Binary file size');
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -238,7 +227,6 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
 
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
-    const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
     const s3Client = new S3({
       region: API_AWS_REGION!
     });
@@ -292,9 +280,9 @@ async function checkConfiguration(): Promise<void> {
     .promise();
   console.log('successfully accessed healthlake datastore');
 }
-
+// eslint-disable-next-line
 (async () => {
-  await checkConfiguration();
+  // await checkConfiguration();
   await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
