@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, WriteStream, createWriteStream } from 'fs';
 import { HealthLake, S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
 import axios from 'axios';
@@ -15,6 +15,12 @@ const { DATASTORE_ID, DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKE
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
+const logs: WriteStream = createWriteStream(
+  `${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+  {
+    flags: 'a'
+  }
+);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
@@ -32,8 +38,6 @@ function parseCmdOptions(): any {
 const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
-const logs: string[] = [];
-
 async function verifyFolderImport(): Promise<void> {
   const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
   const fileNames = outputFile.file_names;
@@ -58,7 +62,7 @@ async function verifyFolderImport(): Promise<void> {
       // resource path includes jobId, tenantId, resourceType, and S3 object id
       // eslint-disable-next-line security/detect-object-injection
       const resourcePath = resourcePaths[i];
-      logs.push(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
+      logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
       const resourceFile = await s3Client
         .getObject({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
@@ -77,8 +81,8 @@ async function verifyFolderImport(): Promise<void> {
         const resource = JSON.parse(allResources[j]);
         const id = resource.id;
         const resourceInHL = await healthLakeClient.get(`${DATASTORE_ENDPOINT}/${resourceType}/${id}`);
-        logs.push(
-          `${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
+        logs.write(
+          `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
         );
         if (!(await verifyResource(fhirClient, resourceInHL.data, id, resourceType))) {
           throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
@@ -104,22 +108,23 @@ async function checkConfiguration(): Promise<void> {
       DatastoreId: DATASTORE_ID!
     })
     .promise();
-  console.log('successfully accessed healthlake datastore');
+  console.log('Successfully accessed healthlake datastore');
+
+  await (smartClient ? getFhirClientSMART() : getFhirClient());
+  console.log('Successfully accessed FHIR Server');
 }
 
 if (!dryRun) {
   verifyFolderImport()
     .then(() => {
       console.log('successfully completed verifying Import Jobs!');
-      logs.push(`${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
+      logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
+      logs.end();
     })
     .catch((error) => {
       console.log('verification failed!', error);
-      logs.push(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`, logs.join('\n'));
+      logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+      logs.end();
     });
 } else {
   checkConfiguration()
