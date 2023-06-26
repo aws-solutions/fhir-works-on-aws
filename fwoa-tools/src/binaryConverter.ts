@@ -169,13 +169,12 @@ async function startBinaryConversion(): Promise<void> {
     try {
       await startBinaryConversion();
       console.log('successfully converted all binary resources!');
-      logs.end();
     } catch (error) {
       console.log('Failed to process binary resources', error);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      logs.end();
     }
   }
+  logs.end();
 })().catch((error) => {
   console.log('some checks failed!', error);
   logs.end();

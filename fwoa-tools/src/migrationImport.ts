@@ -297,12 +297,12 @@ async function checkConfiguration(): Promise<void> {
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
-      logs.end();
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       // only create a state file in case something went wrong
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
+  logs.end();
 })().catch((e) => {
   console.log('Checks failed', e);
   logs.end();
