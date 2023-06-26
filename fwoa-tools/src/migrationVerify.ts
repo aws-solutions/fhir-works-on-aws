@@ -86,8 +86,7 @@ async function verifyFolderImport(): Promise<void> {
 
       // Each resource file can contain a number of resource objects
       const allResources: string[] = resourceFile.Body!.toString().split('\n');
-      let j: number = 0;
-      for (j; j < allResources.length; j += 1) {
+      for (let j = 0; j < allResources.length; j += 1) {
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
         const id = resource.id;
