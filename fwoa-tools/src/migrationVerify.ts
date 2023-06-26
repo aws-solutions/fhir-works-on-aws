@@ -8,7 +8,13 @@ import { aws4Interceptor } from 'aws4-axios';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
-import { ExportOutput, getFhirClient, getFhirClientSMART, verifyResource } from './migrationUtils';
+import {
+  ExportOutput,
+  getFhirClient,
+  getFhirClientSMART,
+  verifyResource,
+  EXPORT_STATE_FILE_NAME
+} from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const { DATASTORE_ID, DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
@@ -40,7 +46,8 @@ const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 async function verifyFolderImport(): Promise<void> {
-  const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
   const fileNames = outputFile.file_names;
 
   for (let k = 0; k < Object.keys(fileNames).length; k++) {
