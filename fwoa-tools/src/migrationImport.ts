@@ -11,7 +11,7 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
-import { ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
+import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const {
@@ -50,7 +50,8 @@ const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
 
 // get the job id from the export output file
-const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.json').toString());
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
 const jobId: string = outputFile.jobId;
 
 const healthLake: HealthLake = new HealthLake({
@@ -301,6 +302,7 @@ async function checkConfiguration(): Promise<void> {
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
+  logs.end();
 })().catch((e) => {
   console.log('Checks failed', e);
   logs.end();
