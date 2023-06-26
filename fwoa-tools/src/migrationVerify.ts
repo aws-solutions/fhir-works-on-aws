@@ -43,7 +43,11 @@ async function verifyFolderImport(): Promise<void> {
   const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
   const fileNames = outputFile.file_names;
 
-  Object.entries(fileNames).forEach(async ([resourceType, resourcePaths]) => {
+  for (let k = 0; k < Object.keys(fileNames).length; k++) {
+    // eslint-disable-next-line security/detect-object-injection
+    const resourceType = Object.keys(fileNames)[k];
+    // eslint-disable-next-line security/detect-object-injection
+    const resourcePaths = fileNames[resourceType];
     console.log(`Starting import for resource ${resourceType}`);
     const interceptor = aws4Interceptor({
       region: API_AWS_REGION!,
@@ -58,8 +62,7 @@ async function verifyFolderImport(): Promise<void> {
     healthLakeClient.interceptors.request.use(interceptor);
 
     // Retrieve resource from HealthLake and compare it to fwoa.
-    let i: number = 0;
-    for (i; i < resourcePaths.length; i += 1) {
+    for (let i = 0; i < resourcePaths.length; i += 1) {
       // resource path includes jobId, tenantId, resourceType, and S3 object id
       // eslint-disable-next-line security/detect-object-injection
       const resourcePath = resourcePaths[i];
@@ -90,7 +93,8 @@ async function verifyFolderImport(): Promise<void> {
         }
       }
     }
-  });
+    logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
+  }
 }
 
 async function checkConfiguration(): Promise<void> {
@@ -113,26 +117,24 @@ async function checkConfiguration(): Promise<void> {
 
   await (smartClient ? getFhirClientSMART() : getFhirClient());
   console.log('Successfully accessed FHIR Server');
+
+  console.log('Successfully Passed all checks!');
 }
 
-if (!dryRun) {
-  verifyFolderImport()
-    .then(() => {
+// eslint-disable-next-line no-unused-expressions
+(async () => {
+  await checkConfiguration();
+  if (!dryRun) {
+    try {
+      await verifyFolderImport();
       console.log('successfully completed verifying Import Jobs!');
-      logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
-      logs.end();
-    })
-    .catch((error) => {
+    } catch (error) {
       console.log('verification failed!', error);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      logs.end();
-    });
-} else {
-  checkConfiguration()
-    .then((value) => {
-      console.log('Successfully Passed all checks!');
-    })
-    .catch((error) => {
-      console.log('failed some checks!', error);
-    });
-}
+    }
+  }
+  logs.end();
+})().catch((error) => {
+  console.log('failed some checks!', error);
+  logs.end();
+});
