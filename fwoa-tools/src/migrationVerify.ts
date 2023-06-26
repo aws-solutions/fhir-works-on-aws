@@ -15,6 +15,7 @@ const { DATASTORE_ID, DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKE
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
+// eslint-disable-next-line security/detect-non-literal-fs-filename
 const logs: WriteStream = createWriteStream(
   `${IMPORT_VERIFICATION_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
   {
