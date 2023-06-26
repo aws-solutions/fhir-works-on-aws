@@ -143,6 +143,7 @@ async function startImport(folderNames: string[]): Promise<void> {
 }
 
 async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
+  logs.write(`${new Date().toISOString()}: Start checkFolderSizeOfResource \n`);
   const s3Client = new S3({
     region: API_AWS_REGION!
   });
@@ -185,10 +186,12 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
         `${resource} folder size is ${folderSize} bytes. This is within maximum folder size limit.`
       );
     }
+    logs.write(`${new Date().toISOString()}: Finish checkFolderSizeOfResource \n`);
   }
 }
 
 async function checkConvertedBinaryFileSize(): Promise<void> {
+  logs.write(`${new Date().toISOString()}: Start checkConvertedBinaryFileSize \n`);
   console.log('Checking Binary file size');
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -216,6 +219,7 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
     continuationToken = response.NextContinuationToken;
   } while (continuationToken);
   console.log(`All converted binary files are within the size limit of ${maximumBinaryFileSize}`);
+  logs.write(`${new Date().toISOString()}: Finish checkConvertedBinaryFileSize \n`);
 }
 
 async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Uri: string): Promise<void> {
@@ -262,6 +266,7 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
 }
 
 async function checkConfiguration(): Promise<void> {
+  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
   if (!EXPORT_BUCKET_URI) throw new Error('EXPORT_BUCKET_URI environment variable is not defined');
   if (!DATASTORE_ID) throw new Error('DATASTORE_ID environment variable is not defined');
   if (!DATASTORE_ENDPOINT) throw new Error('DATASTORE_ENDPOINT environment variable is not defined');
@@ -279,8 +284,8 @@ async function checkConfiguration(): Promise<void> {
     })
     .promise();
   console.log('successfully accessed healthlake datastore');
+  logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
-// eslint-disable-next-line
 (async () => {
   await checkConfiguration();
   await checkConvertedBinaryFileSize();
@@ -292,9 +297,11 @@ async function checkConfiguration(): Promise<void> {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
       // eslint-disable-next-line security/detect-non-literal-fs-filename
-      logs.end();
       // only create a state file in case something went wrong
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
-})();
+})().catch((e) => {
+  console.log('Checks failed', e);
+  logs.end();
+});
