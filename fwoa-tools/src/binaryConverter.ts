@@ -7,7 +7,7 @@ import { S3 } from 'aws-sdk';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
-import { ExportOutput } from './migrationUtils';
+import { EXPORT_STATE_FILE_NAME, ExportOutput } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const { EXPORT_BUCKET_NAME, BINARY_BUCKET_NAME, API_AWS_REGION } = process.env;
@@ -33,7 +33,8 @@ const logs: WriteStream = createWriteStream(
   `${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
   { flags: 'a' }
 );
-const outputFile: ExportOutput = JSON.parse(readFileSync('migrationExport_Output.txt').toString());
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
 let tenantPrefix: string = '';
 if (process.env.MIGRATION_TENANT_ID) {
   tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
@@ -50,7 +51,6 @@ if (!EXPORT_BUCKET_NAME) {
   throw new Error('EXPORT_BUCKET_NAME environment variable not specified');
 }
 
-// Step 2, download files from S3 to get Ids
 async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
   console.log(`getting ${itemKey}`);
   const file = await s3Client
@@ -65,7 +65,6 @@ async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
   return file;
 }
 
-// Step 3, Retrieve Binary objects from S3 Binary Bucket
 async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<GetObjectOutput> {
   const files = await s3Client
     .listObjectsV2({
@@ -101,13 +100,14 @@ async function uploadBinaryResource(itemKey: string, newData: string): Promise<G
     .promise();
 }
 
-async function retrieveBinaryIdsFromFolder(): Promise<void> {
+async function convertBinaryResource(): Promise<void> {
   // Step 1, Get all Binary Resource Paths
   const itemKeys = outputFile.file_names.Binary;
   logs.write(`${new Date().toISOString()}: Retrieved All Binary Keys from migration export output.\n`);
   let binaryResourceNum = 0;
   for (const itemKey of itemKeys) {
     logs.write(`${new Date().toISOString()}: Retrieving Binary Resource from ${itemKey}...\n`);
+    // Step 2, download files from S3 to get Ids
     const file = await getBinaryResource(itemKey);
     const binaryResources: string[] = file.Body!.toString().split('\n');
     let results: string = '';
@@ -120,6 +120,7 @@ async function retrieveBinaryIdsFromFolder(): Promise<void> {
         );
         continue;
       }
+      // Step 3, Retrieve Binary objects from S3 Binary Bucket
       const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId);
       logs.write(
         `${new Date().toISOString()}: Retrieved Binary Object from Binary bucket with vid ${
@@ -127,11 +128,13 @@ async function retrieveBinaryIdsFromFolder(): Promise<void> {
         }.\n`
       );
       // Step 4, Convert to Binary string
-      // Step 5, append to downloaded file
       binaryResource.data = binaryObject.Body?.toString('base64');
+      // Step 5, append to downloaded file
       results += JSON.stringify(binaryResource) + '\n';
       logs.write(`${new Date().toISOString()}: Binary data appended to resource.\n`);
       // upload to separate folder to avoid import limit
+      // Binary resources are generally large in size, and this conversion may push the file
+      // to over the 5GB import limit, hence separate files for each resource
       const newKey = `${tenantPrefix}${outputFile.jobId}/Binary_converted_${binaryResourceNum}/Binary-${binaryResourceNum}.ndjson`;
       await uploadBinaryResource(newKey, results);
       logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
@@ -155,28 +158,25 @@ async function startBinaryConversion(): Promise<void> {
   }
   console.log(`Starting Binary Resource Conversion...`);
   logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
-  await retrieveBinaryIdsFromFolder();
+  await convertBinaryResource();
   logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
 }
 
-if (!dryRun) {
-  startBinaryConversion()
-    .then(() => {
+(async () => {
+  await checkConfiguration();
+  console.log('successfully authenticated to all services');
+  if (!dryRun) {
+    try {
+      await startBinaryConversion();
       console.log('successfully converted all binary resources!');
       logs.end();
-    })
-    .catch((error) => {
+    } catch (error) {
       console.log('Failed to process binary resources', error);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
       logs.end();
-    });
-} else {
-  checkConfiguration()
-    .then(() => {
-      console.log('successfully authenticated to all services');
-    })
-    .catch((error) => {
-      console.log('some checks failed!', error);
-    });
-}
+    }
+  }
+})().catch((error) => {
+  console.log('some checks failed!', error);
+  logs.end();
+});
