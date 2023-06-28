@@ -295,8 +295,8 @@ async function checkConfiguration(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 (async () => {
-  // await checkConfiguration();
-  // await checkConvertedBinaryFileSize();
+  await checkConfiguration();
+  await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
     try {
