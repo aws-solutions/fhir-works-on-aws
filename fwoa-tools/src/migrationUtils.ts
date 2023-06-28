@@ -2,10 +2,13 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import { WriteStream } from 'fs';
 import * as AWS from 'aws-sdk';
+import { HealthLake, S3 } from 'aws-sdk';
 import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
+import { isEmpty } from 'lodash';
 import objectHash from 'object-hash';
 import { stringify } from 'qs';
 
@@ -193,6 +196,60 @@ export async function getResource(
     throw new Error(`Failed to get object ${itemKey}`);
   }
   return file;
+}
+
+function checkEnvVars(envVarsToCheck: string[]): void {
+  //eslint-disable-next-line security/detect-object-injection
+  const undefinedEnvVars = envVarsToCheck.filter((varName) => isEmpty(process.env[varName]));
+  if (undefinedEnvVars.length > 0) {
+    throw new Error(`Environment variables ${undefinedEnvVars.join(', ')} not defined.`);
+  }
+}
+
+export type FhirServerType = 'Smart' | 'Cognito';
+// This function checks the configuration required for every scripts
+// This ensures any configuration issue is discovered from the start and dealt with
+export async function checkConfiguration(logs: WriteStream, fhirServerType?: FhirServerType): Promise<void> {
+  dotenv.config({ path: '.env' });
+  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
+
+  const envVarsToCheck = [
+    // Export script variables
+    'EXPORT_BUCKET_NAME',
+    'BINARY_BUCKET_NAME',
+    'API_AWS_REGION',
+    'GLUE_JOB_NAME',
+    // Import script variables
+    'DATASTORE_ID',
+    'DATASTORE_ENDPOINT',
+    'DATA_ACCESS_ROLE_ARN',
+    'IMPORT_KMS_KEY_ARN',
+    'IMPORT_OUTPUT_S3_BUCKET_NAME',
+    'HEALTHLAKE_CLIENT_TOKEN',
+    'EXPORT_BUCKET_URI',
+    'IMPORT_OUTPUT_S3_URI'
+  ];
+  checkEnvVars(envVarsToCheck);
+  logs.write('Export and Import environment variables verified.');
+
+  const s3Client = new S3({
+    region: process.env.API_AWS_REGION
+  });
+  await s3Client.listObjectsV2({ Bucket: process.env.EXPORT_BUCKET_NAME! }).promise();
+  await s3Client.listObjectsV2({ Bucket: process.env.BINARY_BUCKET_NAME! }).promise();
+  await s3Client.listObjectsV2({ Bucket: process.env.IMPORT_OUTPUT_S3_BUCKET_NAME! }).promise();
+  logs.write('S3 buckets access verified.');
+
+  if (fhirServerType === 'Smart') await getFhirClientSMART();
+  if (fhirServerType === 'Cognito') await getFhirClient();
+
+  const healthLake: HealthLake = new HealthLake({
+    region: process.env.API_AWS_REGION
+  });
+  await healthLake.describeFHIRDatastore({ DatastoreId: process.env.DATASTORE_ID! }).promise();
+  logs.write('Healthlake access verified.');
+
+  logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

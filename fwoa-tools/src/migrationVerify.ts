@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { readFileSync, WriteStream, createWriteStream } from 'fs';
-import { HealthLake, S3 } from 'aws-sdk';
+import { S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
@@ -13,11 +13,12 @@ import {
   getFhirClient,
   getFhirClientSMART,
   verifyResource,
+  checkConfiguration,
   EXPORT_STATE_FILE_NAME
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { DATASTORE_ID, DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
+const { DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
@@ -103,33 +104,9 @@ async function verifyFolderImport(): Promise<void> {
   }
 }
 
-async function checkConfiguration(): Promise<void> {
-  if (!DATASTORE_ID) throw new Error('DATASTORE_ID environment variable is not defined');
-  if (!DATASTORE_ENDPOINT) throw new Error('DATASTORE_ENDPOINT environment variable is not defined');
-  if (!API_AWS_REGION) throw new Error('API_AWS_REGION environment variable is not defined');
-  if (!IMPORT_OUTPUT_S3_BUCKET_NAME)
-    throw new Error('IMPORT_OUTPUT_S3_BUCKET_NAME environment variable is not defined');
-
-  const healthLake: HealthLake = new HealthLake({
-    region: API_AWS_REGION
-  });
-
-  await healthLake
-    .describeFHIRDatastore({
-      DatastoreId: DATASTORE_ID!
-    })
-    .promise();
-  console.log('Successfully accessed healthlake datastore');
-
-  await (smartClient ? getFhirClientSMART() : getFhirClient());
-  console.log('Successfully accessed FHIR Server');
-
-  console.log('Successfully Passed all checks!');
-}
-
 // eslint-disable-next-line no-unused-expressions
 (async () => {
-  await checkConfiguration();
+  await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   if (!dryRun) {
     try {
       await verifyFolderImport();

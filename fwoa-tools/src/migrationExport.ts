@@ -8,13 +8,7 @@ import { S3 } from 'aws-sdk';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
 import { GlueJobResponse, getExportStateFile, getExportStatus, startExportJob } from './exportHelper';
-import {
-  EXPORT_STATE_FILE_NAME,
-  ExportOutput,
-  MS_TO_HOURS,
-  getFhirClient,
-  getFhirClientSMART
-} from './migrationUtils';
+import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, checkConfiguration } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const EXPORT_OUTPUT_LOG_FILE_PREFIX: string = 'export_output_';
@@ -119,21 +113,13 @@ async function generateStateFile(bucket: string, prefix: string): Promise<Export
   return await getExportStateFile(s3Client, bucket, prefix);
 }
 
-async function checkConfiguration(): Promise<void> {
-  await (smartClient ? getFhirClientSMART() : getFhirClient());
-  console.log('Successfully authenticated to FHIR Server...');
-
-  const s3Client = new S3({
-    region: process.env.API_AWS_REGION
-  });
-  await s3Client.listObjectsV2({ Bucket: bucketName! }).promise();
-  console.log('Sucessfully authenticated with S3');
-}
-
-if (!dryRun) {
-  startExport()
-    .then(async (response) => {
-      console.log('successfully completed export.');
+(async () => {
+  await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
+  logs.write('Verification complete');
+  if (!dryRun) {
+    try {
+      const response = await startExport();
+      logs.write('Export completed. Start sorting objects.');
 
       let tenantPrefix = '';
       if (process.env.MIGRATION_TENANT_ID) {
@@ -144,24 +130,17 @@ if (!dryRun) {
         jobId: output.jobId,
         file_names: names.file_names
       };
-      logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
-      logs.end();
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+      logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
+    } catch (error) {
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-      logs.end();
-    });
-} else {
-  // check permissions and setup instead
-  checkConfiguration()
-    .then((value) => {
-      console.log('All Checks successful!');
-    })
-    .catch((error) => {
-      console.log('Some checks failed...');
-      console.error(error);
-    });
-}
+    }
+  }
+})()
+  .catch((error) => {
+    logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+  })
+  .finally(() => {
+    logs.end();
+  });

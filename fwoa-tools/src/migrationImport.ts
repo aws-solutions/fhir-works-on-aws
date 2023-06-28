@@ -11,7 +11,14 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
-import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
+import {
+  EXPORT_STATE_FILE_NAME,
+  ExportOutput,
+  MS_TO_HOURS,
+  POLLING_TIME,
+  sleep,
+  checkConfiguration
+} from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const {
@@ -266,29 +273,8 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
   }
 }
 
-async function checkConfiguration(): Promise<void> {
-  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
-  if (!EXPORT_BUCKET_URI) throw new Error('EXPORT_BUCKET_URI environment variable is not defined');
-  if (!DATASTORE_ID) throw new Error('DATASTORE_ID environment variable is not defined');
-  if (!DATASTORE_ENDPOINT) throw new Error('DATASTORE_ENDPOINT environment variable is not defined');
-  if (!API_AWS_REGION) throw new Error('API_AWS_REGION environment variable is not defined');
-  if (!DATA_ACCESS_ROLE_ARN) throw new Error('DATA_ACCESS_ROLE_ARN environment variable is not defined');
-  if (!HEALTHLAKE_CLIENT_TOKEN)
-    throw new Error('HEALTHLAKE_CLIENT_TOKEN environment variable is not defined');
-  if (!IMPORT_OUTPUT_S3_URI) throw new Error('IMPORT_OUTPUT_S3_URI environment variable is not defined');
-  if (!IMPORT_OUTPUT_S3_BUCKET_NAME)
-    throw new Error('IMPORT_OUTPUT_S3_BUCKET_NAME environment variable is not defined');
-  if (!IMPORT_KMS_KEY_ARN) throw new Error('IMPORT_KMS_KEY_ARN environment variable is not defined');
-  await healthLake
-    .describeFHIRDatastore({
-      DatastoreId: DATASTORE_ID!
-    })
-    .promise();
-  console.log('successfully accessed healthlake datastore');
-  logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
-}
 (async () => {
-  await checkConfiguration();
+  await checkConfiguration(logs);
   await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
