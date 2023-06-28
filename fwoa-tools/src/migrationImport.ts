@@ -85,10 +85,13 @@ async function startImport(folderNames: string[]): Promise<void> {
     console.log(`Starting import for folder ${folderName}`);
     const startTime = new Date();
     logs.write(`${startTime.toISOString()}: Start Import for folder ${folderName}...\n`);
-
+    let tenantPrefix = '';
+    if (process.env.MIGRATION_TENANT_ID) {
+      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+    }
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
-        S3Uri: `${EXPORT_BUCKET_URI}/${jobId}/${folderName}`
+        S3Uri: `${EXPORT_BUCKET_URI}/${tenantPrefix}${jobId}/${folderName}`
       },
       // Job Names must be less than 64 characters in length
       JobName: `FWoAFolderMigration-${folderName}`.substring(0, 64),
