@@ -78,6 +78,10 @@ async function startImport(folderNames: string[]): Promise<void> {
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
+    // We don't import Binary-v... folders since they are unconverted Binary resources
+    if (folderName.startsWith('Binary-v')) {
+      continue;
+    }
     console.log(`Starting import for folder ${folderName}`);
     const startTime = new Date();
     logs.write(`${startTime.toISOString()}: Start Import for folder ${folderName}...\n`);
@@ -86,7 +90,8 @@ async function startImport(folderNames: string[]): Promise<void> {
       InputDataConfig: {
         S3Uri: `${EXPORT_BUCKET_URI}/${jobId}/${folderName}`
       },
-      JobName: `FWoAFolderMigration-${folderName}`,
+      // Job Names must be less than 64 characters in length
+      JobName: `FWoAFolderMigration-${folderName}`.substring(0, 64),
       DatastoreId: DATASTORE_ID!,
       DataAccessRoleArn: DATA_ACCESS_ROLE_ARN!,
       JobOutputDataConfig: {
@@ -279,7 +284,13 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
     try {
-      await startImport(Object.keys(outputFile.file_names));
+      const sortedKeys = Object.keys(outputFile.file_names).sort((a: string, b: string) => {
+        return a.localeCompare(b, undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        });
+      });
+      await startImport(sortedKeys);
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
