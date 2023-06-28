@@ -175,7 +175,6 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
           ContinuationToken: continuationToken
         })
         .promise();
-      console.log('response', response);
       if (response.Contents) {
         response.Contents.forEach((item) => {
           if (item.Size) {
@@ -295,7 +294,7 @@ async function checkConfiguration(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 (async () => {
-  await checkConfiguration();
+  // await checkConfiguration();
   await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
