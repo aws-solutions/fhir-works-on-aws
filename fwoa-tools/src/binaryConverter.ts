@@ -2,7 +2,7 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-import { WriteStream, createWriteStream, readFileSync } from 'fs';
+import { WriteStream, createWriteStream, readFileSync, writeFileSync } from 'fs';
 import { S3 } from 'aws-sdk';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as dotenv from 'dotenv';
@@ -102,9 +102,19 @@ async function uploadBinaryResource(itemKey: string, newData: string): Promise<G
 
 async function convertBinaryResource(): Promise<void> {
   // Step 1, Get all Binary Resource Paths
-  const itemKeys = outputFile.file_names.Binary;
+  let itemKeys: string[] = [];
+  // eslint-disable-next-line security/detect-object-injection
+  for (const key of Object.keys(outputFile.file_names)) {
+    if (key.startsWith('Binary')) {
+      // eslint-disable-next-line security/detect-object-injection
+      itemKeys = itemKeys.concat(outputFile.file_names[key]);
+    }
+  }
+  if (itemKeys.length === 0) {
+    logs.write(`${new Date().toISOString()}: No Binary resources found to convert...\n`);
+    return;
+  }
   logs.write(`${new Date().toISOString()}: Retrieved All Binary Keys from migration export output.\n`);
-  let binaryResourceNum = 0;
   for (const itemKey of itemKeys) {
     logs.write(`${new Date().toISOString()}: Retrieving Binary Resource from ${itemKey}...\n`);
     // Step 2, download files from S3 to get Ids
@@ -135,10 +145,17 @@ async function convertBinaryResource(): Promise<void> {
       // upload to separate folder to avoid import limit
       // Binary resources are generally large in size, and this conversion may push the file
       // to over the 5GB import limit, hence separate files for each resource
-      const newKey = `${tenantPrefix}${outputFile.jobId}/Binary_converted_${binaryResourceNum}/Binary-${binaryResourceNum}.ndjson`;
+      const folderName = `Binary_converted_${binaryResource.id}`;
+      const itemName = `Binary-${binaryResource.meta.versionId}.ndjson`;
+      const newKey = `${tenantPrefix}${outputFile.jobId}/${folderName}/${itemName}`;
+      // eslint-disable-next-line security/detect-object-injection
+      if (!outputFile.file_names[folderName])
+        // eslint-disable-next-line security/detect-object-injection
+        outputFile.file_names[folderName] = [];
+      // eslint-disable-next-line security/detect-object-injection
+      outputFile.file_names[folderName].push(newKey);
       await uploadBinaryResource(newKey, results);
       logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
-      binaryResourceNum += 1;
     }
     results = results.trimEnd();
   }
@@ -152,13 +169,11 @@ async function checkConfiguration(): Promise<void> {
 }
 
 async function startBinaryConversion(): Promise<void> {
-  if (!outputFile.file_names.Binary) {
-    logs.write(`${new Date().toISOString()}: No Binary resources found to convert! Exiting...\n`);
-    return;
-  }
   console.log(`Starting Binary Resource Conversion...`);
   logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
   await convertBinaryResource();
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  writeFileSync(`${EXPORT_STATE_FILE_NAME}`, JSON.stringify(outputFile));
   logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
 }
 

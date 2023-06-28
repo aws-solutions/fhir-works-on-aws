@@ -53,6 +53,11 @@ async function verifyFolderImport(): Promise<void> {
   for (let k = 0; k < Object.keys(fileNames).length; k++) {
     // eslint-disable-next-line security/detect-object-injection
     const resourceType = Object.keys(fileNames)[k];
+    // skip verifying of Binary resources as
+    // older versions may not share the same representation
+    if (resourceType.startsWith('Binary')) {
+      continue;
+    }
     // eslint-disable-next-line security/detect-object-injection
     const resourcePaths = fileNames[resourceType];
     console.log(`Starting import for resource ${resourceType}`);
@@ -90,11 +95,13 @@ async function verifyFolderImport(): Promise<void> {
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
         const id = resource.id;
-        const resourceInHL = await healthLakeClient.get(`${DATASTORE_ENDPOINT}/${resourceType}/${id}`);
-        logs.write(
-          `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} from datastore, comparing to FWoA...`
+        const resourceInHL = await healthLakeClient.get(
+          `${DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
         );
-        if (!(await verifyResource(fhirClient, resourceInHL.data, id, resourceType))) {
+        logs.write(
+          `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} line ${j} from datastore, comparing to FWoA...`
+        );
+        if (!(await verifyResource(fhirClient, resourceInHL.data, id, resource.resourceType))) {
           throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
         }
       }
