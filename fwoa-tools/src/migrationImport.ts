@@ -167,11 +167,14 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
+    const prefix = MIGRATION_TENANT_ID
+      ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${resource}`
+      : `${outputFile.jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${MIGRATION_TENANT_ID!}/${outputFile.jobId}/${resource}`,
+          Prefix: prefix,
           ContinuationToken: continuationToken
         })
         .promise();
@@ -206,11 +209,14 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
+  const prefix = MIGRATION_TENANT_ID
+    ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`
+    : `${outputFile.jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
         Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-        Prefix: `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`,
+        Prefix: prefix,
         ContinuationToken: continuationToken
       })
       .promise();
@@ -294,7 +300,7 @@ async function checkConfiguration(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 (async () => {
-  // await checkConfiguration();
+  await checkConfiguration();
   await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
