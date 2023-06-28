@@ -285,7 +285,7 @@ else:
                     yield item
 
     resulting_file_names = {}
-    regex_pattern = '\/partitionKeyDup=(\w+-v\d+)\/run-\d{13}-part-r-(\d{5})'
+    regex_pattern = '\/partitionKeyDup=(\w+-v\d+)\/run-\d{13}-part-r-(\d{5})$'
 
     def rename_files(s3_file_names):
         for s3_file_name in s3_file_names:
