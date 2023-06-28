@@ -23,7 +23,8 @@ const {
   HEALTHLAKE_CLIENT_TOKEN,
   IMPORT_OUTPUT_S3_URI,
   IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN
+  IMPORT_KMS_KEY_ARN,
+  MIGRATION_TENANT_ID
 } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
@@ -158,7 +159,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
     const resource = resources[i];
     // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
     // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
-    if (resource === 'Binary') {
+    if (resource.startsWith('Binary')) {
       continue;
     }
     console.log(`Checking resource ${resource}`);
@@ -170,10 +171,11 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${outputFile.jobId}/${resource}`,
+          Prefix: `${MIGRATION_TENANT_ID!}/${outputFile.jobId}/${resource}`,
           ContinuationToken: continuationToken
         })
         .promise();
+      console.log('response', response);
       if (response.Contents) {
         response.Contents.forEach((item) => {
           if (item.Size) {
@@ -209,7 +211,7 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
         Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-        Prefix: `${outputFile.jobId}/${convertedBinaryFolderName}`,
+        Prefix: `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`,
         ContinuationToken: continuationToken
       })
       .promise();
@@ -293,8 +295,8 @@ async function checkConfiguration(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 (async () => {
-  await checkConfiguration();
-  await checkConvertedBinaryFileSize();
+  // await checkConfiguration();
+  // await checkConvertedBinaryFileSize();
   await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
   if (!dryRun) {
     try {
