@@ -22,6 +22,7 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 
 export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
+export const HEALTHLAKE_BUNDLE_LIMIT: number = 160;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
 
 const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
@@ -225,3 +226,28 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
 
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
+
+export const binaryResource: { resourceType: string; contentType: string } = {
+  resourceType: 'Binary',
+  contentType: 'image/jpeg'
+};
+
+export const binaryObject: string = 'exampleBinaryStreamData';
+
+export interface BundleEntry {
+  request: { method: string; url: string };
+}
+
+export interface Bundle {
+  resourceType: string;
+  type: string;
+  entry: BundleEntry[];
+}
+
+export const getEmptyFHIRBundle = (): Bundle => {
+  return {
+    resourceType: 'Bundle',
+    type: 'batch',
+    entry: []
+  };
+};

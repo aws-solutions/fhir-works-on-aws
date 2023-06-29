@@ -18,7 +18,7 @@ import {
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
+const { DATASTORE_ENDPOINT, API_AWS_REGION, EXPORT_BUCKET_NAME } = process.env;
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
@@ -99,7 +99,7 @@ async function verifyFolderImport(): Promise<void> {
       logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
       const resourceFile = await s3Client
         .getObject({
-          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+          Bucket: EXPORT_BUCKET_NAME!,
           Key: resourcePath
         })
         .promise();
@@ -108,10 +108,14 @@ async function verifyFolderImport(): Promise<void> {
       }
 
       // Each resource file can contain a number of resource objects
-      const allResources: string[] = resourceFile.Body!.toString().split('\n');
+      const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
       for (let j = 0; j < allResources.length; j += 1) {
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
+        // Skip any resources marked for deletion, we don't need to verify these.
+        if (!resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+          continue;
+        }
         const id = resource.id;
         const resourceInHL = await healthLakeClient.get(
           `${DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
