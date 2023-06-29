@@ -6,10 +6,9 @@ import { WriteStream } from 'fs';
 import * as AWS from 'aws-sdk';
 import { HealthLake, S3 } from 'aws-sdk';
 import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
 import { isEmpty } from 'lodash';
-import objectHash from 'object-hash';
 import { stringify } from 'qs';
 
 export interface ExportOutput {
@@ -251,29 +250,6 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
   logs.write('Healthlake access verified.');
 
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
-}
-
-export function verifyBundle(
-  healthLakeResources: AxiosResponse,
-  fhirWorksResources: AxiosResponse,
-  count: number
-): void {
-  for (let i = 0; i < count; i++) {
-    // eslint-disable-next-line security/detect-object-injection
-    const hlResource = healthLakeResources.data.entry[i].resource;
-    // eslint-disable-next-line security/detect-object-injection
-    const fwoaResource = fhirWorksResources.data.entry[i].resource;
-    delete fwoaResource.meta;
-    delete hlResource.meta;
-    if (hlResource.resourceType === 'Binary') {
-      delete hlResource.data;
-      delete fwoaResource.presignedGetUrl;
-    }
-
-    if (objectHash(fwoaResource) !== objectHash(hlResource)) {
-      throw new Error(`Error: FWoA resource does not match AHL Resource! Bundle Entry num ${i}`);
-    }
-  }
 }
 
 export const binaryResource: { resourceType: string; contentType: string } = {

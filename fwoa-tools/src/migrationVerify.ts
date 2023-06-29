@@ -5,20 +5,20 @@
 import { readFileSync, WriteStream, createWriteStream } from 'fs';
 import { S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
 import {
   ExportOutput,
   getFhirClient,
   getFhirClientSMART,
-  verifyBundle,
   checkConfiguration,
   EXPORT_STATE_FILE_NAME,
   Bundle,
   getEmptyFHIRBundle,
   HEALTHLAKE_BUNDLE_LIMIT
 } from './migrationUtils';
+import objectHash from 'object-hash';
 
 dotenv.config({ path: '.env' });
 const { DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
@@ -101,7 +101,7 @@ async function verifyFolderImport(): Promise<void> {
         }
       }
     }
-    if (comparisonQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
+    if (comparisonQueue.length > 0) {
       await compareResources(comparisonQueue);
     }
     logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
@@ -149,6 +149,29 @@ async function compareResources(comparisonQueue: string[]): Promise<void> {
   }
 
   verifyBundle(resourcesFromAHL, resourcesFromFWoA, resourcesFromAHL.data.entry.length);
+}
+
+function verifyBundle(
+  healthLakeResources: AxiosResponse,
+  fhirWorksResources: AxiosResponse,
+  count: number
+): void {
+  for (let i = 0; i < count; i++) {
+    // eslint-disable-next-line security/detect-object-injection
+    const hlResource = healthLakeResources.data.entry[i].resource;
+    // eslint-disable-next-line security/detect-object-injection
+    const fwoaResource = fhirWorksResources.data.entry[i].resource;
+    delete fwoaResource.meta;
+    delete hlResource.meta;
+    if (hlResource.resourceType === 'Binary') {
+      delete hlResource.data;
+      delete fwoaResource.presignedGetUrl;
+    }
+
+    if (objectHash(fwoaResource) !== objectHash(hlResource)) {
+      throw new Error(`Error: FWoA resource does not match AHL Resource! Bundle Entry num ${i}`);
+    }
+  }
 }
 
 // eslint-disable-next-line no-unused-expressions
