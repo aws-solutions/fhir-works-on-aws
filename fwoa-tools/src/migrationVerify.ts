@@ -12,9 +12,12 @@ import {
   ExportOutput,
   getFhirClient,
   getFhirClientSMART,
-  verifyResource,
+  verifyBundle,
   checkConfiguration,
-  EXPORT_STATE_FILE_NAME
+  EXPORT_STATE_FILE_NAME,
+  Bundle,
+  getEmptyFHIRBundle,
+  HEALTHLAKE_BUNDLE_LIMIT
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
@@ -61,25 +64,18 @@ async function verifyFolderImport(): Promise<void> {
     }
     // eslint-disable-next-line security/detect-object-injection
     const resourcePaths = fileNames[resourceType];
-    console.log(`Starting import for resource ${resourceType}`);
-    const interceptor = aws4Interceptor({
-      region: API_AWS_REGION!,
-      service: 'healthlake'
-    });
-
-    const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+    console.log(`Starting verification for resource ${resourceType}`);
     const s3Client = new S3({
       region: API_AWS_REGION!
     });
-    const healthLakeClient = axios.create();
-    healthLakeClient.interceptors.request.use(interceptor);
 
+    let comparisonQueue: string[] = [];
     // Retrieve resource from HealthLake and compare it to fwoa.
     for (let i = 0; i < resourcePaths.length; i += 1) {
       // resource path includes jobId, tenantId, resourceType, and S3 object id
       // eslint-disable-next-line security/detect-object-injection
       const resourcePath = resourcePaths[i];
-      logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
+      logs.write(`\n${new Date().toISOString()}: Verifying resources from ${resourcePath}...`);
       const resourceFile = await s3Client
         .getObject({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
@@ -91,24 +87,68 @@ async function verifyFolderImport(): Promise<void> {
       }
 
       // Each resource file can contain a number of resource objects
-      const allResources: string[] = resourceFile.Body!.toString().split('\n');
+      const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
       for (let j = 0; j < allResources.length; j += 1) {
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
-        const id = resource.id;
-        const resourceInHL = await healthLakeClient.get(
-          `${DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
-        );
+        comparisonQueue.push(`${resource.resourceType}/${resource.id}`);
         logs.write(
-          `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} line ${j} from datastore, comparing to FWoA...`
+          `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} line ${j} from datastore, queuing for comparison...`
         );
-        if (!(await verifyResource(fhirClient, resourceInHL.data, id, resource.resourceType))) {
-          throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
+        if (comparisonQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
+          await compareResources(comparisonQueue);
+          comparisonQueue = [];
         }
       }
     }
+    if (comparisonQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
+      await compareResources(comparisonQueue);
+    }
     logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);
   }
+}
+
+async function compareResources(comparisonQueue: string[]): Promise<void> {
+  const interceptor = aws4Interceptor({
+    region: API_AWS_REGION!,
+    service: 'healthlake'
+  });
+
+  const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+  const healthLakeClient = axios.create();
+  healthLakeClient.interceptors.request.use(interceptor);
+
+  const bundle: Bundle = getEmptyFHIRBundle();
+
+  for (const resourcePath of comparisonQueue) {
+    bundle.entry.push({
+      request: {
+        method: 'GET',
+        url: resourcePath
+      }
+    });
+  }
+
+  logs.write(`\n${new Date().toISOString()}: Starting Bundle Verification`);
+
+  const resourcesFromAHL = await healthLakeClient.post(`${DATASTORE_ENDPOINT}`, bundle);
+  if (resourcesFromAHL.status !== 200) {
+    throw new Error('Failed to retrieve resources from AHL!');
+  }
+
+  const resourcesFromFWoA = await fhirClient.post(
+    '/', // POST FWoA bundle to root
+    bundle
+  );
+  if (resourcesFromFWoA.status !== 200) {
+    throw new Error('Failed to retrieve resources from FWoA');
+  }
+
+  if (resourcesFromAHL.data.entry.length !== resourcesFromFWoA.data.entry.length) {
+    throw new Error('Size of Bundle Responses do not match');
+  }
+
+  verifyBundle(resourcesFromAHL, resourcesFromFWoA, resourcesFromAHL.data.entry.length);
 }
 
 // eslint-disable-next-line no-unused-expressions

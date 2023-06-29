@@ -6,12 +6,11 @@ import { WriteStream } from 'fs';
 import * as AWS from 'aws-sdk';
 import { HealthLake, S3 } from 'aws-sdk';
 import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as dotenv from 'dotenv';
 import { isEmpty } from 'lodash';
 import objectHash from 'object-hash';
 import { stringify } from 'qs';
-import { string } from 'yargs';
 
 export interface ExportOutput {
   jobId: string;
@@ -24,7 +23,7 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 
 export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
-export const HEALTHLAKE_BUNDLE_LIMIT = 160;
+export const HEALTHLAKE_BUNDLE_LIMIT: number = 160;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
 
 const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: string; USERNAME: string } = (
@@ -254,22 +253,27 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function verifyResource(
-  fhirClient: AxiosInstance,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  healthLakeResource: any,
-  resourceId: string,
-  resourceType: string
-): Promise<boolean> {
-  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
-  delete fwoaResponse.meta;
-  delete healthLakeResource.meta;
-  if (resourceType === 'Binary') {
-    delete healthLakeResource.data;
-    delete fwoaResponse.presignedGetUrl;
+export function verifyBundle(
+  healthLakeResources: AxiosResponse,
+  fhirWorksResources: AxiosResponse,
+  count: number
+): void {
+  for (let i = 0; i < count; i++) {
+    // eslint-disable-next-line security/detect-object-injection
+    const hlResource = healthLakeResources.data.entry[i].resource;
+    // eslint-disable-next-line security/detect-object-injection
+    const fwoaResource = fhirWorksResources.data.entry[i].resource;
+    delete fwoaResource.meta;
+    delete hlResource.meta;
+    if (hlResource.resourceType === 'Binary') {
+      delete hlResource.data;
+      delete fwoaResource.presignedGetUrl;
+    }
+
+    if (objectHash(fwoaResource) !== objectHash(hlResource)) {
+      throw new Error(`Error: FWoA resource does not match AHL Resource! Bundle Entry num ${i}`);
+    }
   }
-  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
 
 export const binaryResource: { resourceType: string; contentType: string } = {
@@ -288,3 +292,11 @@ export interface Bundle {
   type: string;
   entry: BundleEntry[];
 }
+
+export const getEmptyFHIRBundle = (): Bundle => {
+  return {
+    resourceType: 'Bundle',
+    type: 'batch',
+    entry: []
+  };
+};

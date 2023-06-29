@@ -19,7 +19,8 @@ import {
   sleep,
   checkConfiguration,
   HEALTHLAKE_BUNDLE_LIMIT,
-  Bundle
+  Bundle,
+  getEmptyFHIRBundle
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
@@ -256,14 +257,15 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Pro
     if (resourceFile.$response.error) {
       throw new Error(`Failed to read file ${resourceFile.$response.error}`);
     }
-    const allResources: string[] = resourceFile.Body!.toString().split('\n');
+    const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
     for (let i = 0; i < allResources.length; i++) {
-      let resource = JSON.parse(allResources[i]);
+      // eslint-disable-next-line security/detect-object-injection
+      const resource = JSON.parse(allResources[i]);
       // This is a resource marked for deletion
       if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
         // DELETE the resource from HealthLake
         logs.write(
-          `${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...\n`
+          `${new Date().toISOString()}: Resource at ${resourcePath} line ${i} is marked for DELETION\n`
         );
         deleteQueue.push(`/${resource.resourceType}/${resource.id}`);
         if (deleteQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
@@ -286,11 +288,7 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   });
   const healthLakeClient = axios.create();
   healthLakeClient.interceptors.request.use(interceptor);
-  let bundle: Bundle = {
-    resourceType: 'Bundle',
-    type: 'batch',
-    entry: []
-  };
+  const bundle: Bundle = getEmptyFHIRBundle();
 
   for (const path of deletePaths) {
     bundle.entry.push({
@@ -301,14 +299,14 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
     });
   }
 
-  logs.write(`Sending Bundle For Deletion: ${JSON.stringify(bundle)}`);
+  logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
 
   const healthLakeBundleDeleteResponse = await healthLakeClient.post(
     `${DATASTORE_ENDPOINT}`,
     JSON.stringify(bundle)
   );
   if (healthLakeBundleDeleteResponse.status !== 200) {
-    throw new Error('Failed to Delete Resources in bundle');
+    throw new Error(`Failed to Delete Resources in bundle: ${healthLakeBundleDeleteResponse.data}`);
   }
 }
 
