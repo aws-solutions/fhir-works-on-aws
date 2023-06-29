@@ -30,7 +30,8 @@ const {
   HEALTHLAKE_CLIENT_TOKEN,
   IMPORT_OUTPUT_S3_URI,
   IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN
+  IMPORT_KMS_KEY_ARN,
+  MIGRATION_TENANT_ID
 } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
@@ -86,8 +87,8 @@ async function startImport(folderNames: string[]): Promise<void> {
     const startTime = new Date();
     logs.write(`${startTime.toISOString()}: Start Import for folder ${folderName}...\n`);
     let tenantPrefix = '';
-    if (process.env.MIGRATION_TENANT_ID) {
-      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+    if (MIGRATION_TENANT_ID) {
+      tenantPrefix = `${MIGRATION_TENANT_ID}/`;
     }
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
@@ -168,7 +169,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
     const resource = resources[i];
     // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
     // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
-    if (resource === 'Binary') {
+    if (resource.startsWith('Binary')) {
       continue;
     }
     console.log(`Checking resource ${resource}`);
@@ -176,15 +177,14 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
-    let tenantPrefix = '';
-    if (process.env.MIGRATION_TENANT_ID) {
-      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
-    }
+    const prefix = MIGRATION_TENANT_ID
+      ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${resource}`
+      : `${outputFile.jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${tenantPrefix}${outputFile.jobId}/${resource}`,
+          Prefix: prefix,
           ContinuationToken: continuationToken
         })
         .promise();
@@ -219,11 +219,14 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
+  const prefix = MIGRATION_TENANT_ID
+    ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`
+    : `${outputFile.jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
         Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-        Prefix: `${outputFile.jobId}/${convertedBinaryFolderName}`,
+        Prefix: prefix,
         ContinuationToken: continuationToken
       })
       .promise();
@@ -259,7 +262,7 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
 
     // eslint-disable-next-line security/detect-object-injection
     let resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
-    if (process.env.MIGRATION_TENANT_ID) {
+    if (MIGRATION_TENANT_ID) {
       const resourcePathParts = resourcePath.split('/');
       resourcePath = resourcePathParts.slice(1).join('/');
     }
