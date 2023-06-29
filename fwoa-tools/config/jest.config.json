@@ -10,5 +10,6 @@
     }
   },
   "coveragePathIgnorePatterns": ["<rootDir>/src/index.ts"],
+  "testPathIgnorePatterns": ["/node_modules/", "/integration-tests/"],
   "coverageReporters": ["json-summary", "json", "lcov", "text"]
 }

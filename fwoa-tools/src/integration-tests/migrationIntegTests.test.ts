@@ -5,8 +5,8 @@
 import { exec } from 'child_process';
 import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
-import createBundle from './createPatientPractitionerEncounterBundle.json';
-import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from './migrationUtils';
+import createBundle from '../createPatientPractitionerEncounterBundle.json';
+import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from '../migrationUtils';
 
 dotenv.config({ path: '.env' });
 
