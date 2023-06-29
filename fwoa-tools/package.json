@@ -19,6 +19,7 @@
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
+    "int-test": "jest --testPathPattern=src/integration-tests/*",
     "lint-fix": "eslint . --fix",
     "local": "node .",
     "pkg-json-lint": "npmPkgJsonLint -c ../.npmpackagejsonlintrc.json .",
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "axios": "0.25.0",
+    "lodash": "^4.17.21",
     "object-hash": "^3.0.0"
   },
   "devDependencies": {
