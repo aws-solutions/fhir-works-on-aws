@@ -11,6 +11,7 @@ import * as dotenv from 'dotenv';
 import { isEmpty } from 'lodash';
 import objectHash from 'object-hash';
 import { stringify } from 'qs';
+import { string } from 'yargs';
 
 export interface ExportOutput {
   jobId: string;
@@ -23,6 +24,7 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 
 export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
+export const HEALTHLAKE_BUNDLE_LIMIT = 160;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
 
 const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: string; USERNAME: string } = (
@@ -276,3 +278,13 @@ export const binaryResource: { resourceType: string; contentType: string } = {
 };
 
 export const binaryObject: string = 'exampleBinaryStreamData';
+
+export interface BundleEntry {
+  request: { method: string; url: string };
+}
+
+export interface Bundle {
+  resourceType: string;
+  type: string;
+  entry: BundleEntry[];
+}
