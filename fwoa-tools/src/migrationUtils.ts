@@ -9,7 +9,6 @@ import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityservi
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
 import { isEmpty } from 'lodash';
-import objectHash from 'object-hash';
 import { stringify } from 'qs';
 
 export interface ExportOutput {
@@ -25,13 +24,11 @@ export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
 
-const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: string; USERNAME: string } = (
-  requestAdditionalScopes?: boolean
-) => {
-  const { COGNITO_USERNAME, COGNITO_ADMIN_USERNAME, COGNITO_PASSWORD } = process.env;
+const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
+  const { COGNITO_USERNAME, COGNITO_PASSWORD } = process.env;
 
   const password = COGNITO_PASSWORD;
-  const username = requestAdditionalScopes ? COGNITO_ADMIN_USERNAME : COGNITO_USERNAME;
+  const username = COGNITO_USERNAME;
   if (username === undefined) {
     throw new Error('COGNITO_USERNAME environment variable is not defined');
   }
@@ -45,9 +42,7 @@ const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: stri
   };
 };
 
-export const getFhirClient: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
-  requestAdditionalScopes
-): Promise<AxiosInstance> => {
+export const getFhirClient: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID } = process.env;
@@ -71,7 +66,7 @@ export const getFhirClient: (requestAdditionalScopes?: boolean) => Promise<Axios
     await Cognito.initiateAuth({
       ClientId: COGNITO_CLIENT_ID,
       AuthFlow: 'USER_PASSWORD_AUTH',
-      AuthParameters: getAuthParameters(requestAdditionalScopes)
+      AuthParameters: getAuthParameters()
     }).promise()
   ).AuthenticationResult!.IdToken!;
 
@@ -118,9 +113,7 @@ async function getAuthToken(
   return response.data.access_token;
 }
 
-export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
-  requestAdditionalScopes
-): Promise<AxiosInstance> => {
+export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   // Check all environment variables are provided
@@ -156,7 +149,7 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
   }
 
   // SMART_AUTH_USERNAME should be for a System
-  const username = requestAdditionalScopes ? process.env.SMART_AUTH_ADMIN_USERNAME : SMART_AUTH_USERNAME;
+  const username = process.env.SMART_AUTH_USERNAME;
   if (!username) {
     throw new Error('SMART_AUTH_ADMIN_USERNAME environment variable is not defined');
   }
@@ -165,8 +158,7 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
     SMART_AUTH_PASSWORD,
     SMART_CLIENT_ID,
     SMART_CLIENT_SECRET,
-    SMART_OAUTH2_API_ENDPOINT,
-    requestAdditionalScopes
+    SMART_OAUTH2_API_ENDPOINT
   );
 
   const baseURL = SMART_SERVICE_URL;
@@ -179,24 +171,6 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
     baseURL
   });
 };
-
-export async function getResource(
-  s3Client: AWS.S3,
-  itemKey: string,
-  bucketName: string
-): Promise<AWS.S3.GetObjectOutput> {
-  console.log(`getting ${itemKey}`);
-  const file = await s3Client
-    .getObject({
-      Bucket: bucketName,
-      Key: itemKey
-    })
-    .promise();
-  if (file.$response.error) {
-    throw new Error(`Failed to get object ${itemKey}`);
-  }
-  return file;
-}
 
 function checkEnvVars(envVarsToCheck: string[]): void {
   //eslint-disable-next-line security/detect-object-injection
@@ -251,28 +225,3 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
 
   logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function verifyResource(
-  fhirClient: AxiosInstance,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  healthLakeResource: any,
-  resourceId: string,
-  resourceType: string
-): Promise<boolean> {
-  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
-  delete fwoaResponse.meta;
-  delete healthLakeResource.meta;
-  if (resourceType === 'Binary') {
-    delete healthLakeResource.data;
-    delete fwoaResponse.presignedGetUrl;
-  }
-  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
-}
-
-export const binaryResource: { resourceType: string; contentType: string } = {
-  resourceType: 'Binary',
-  contentType: 'image/jpeg'
-};
-
-export const binaryObject: string = 'exampleBinaryStreamData';
