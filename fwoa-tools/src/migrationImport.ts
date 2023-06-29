@@ -176,11 +176,15 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
+    let tenantPrefix = '';
+    if (process.env.MIGRATION_TENANT_ID) {
+      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+    }
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${outputFile.jobId}/${resource}`,
+          Prefix: `${tenantPrefix}${outputFile.jobId}/${resource}`,
           ContinuationToken: continuationToken
         })
         .promise();
@@ -254,7 +258,11 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Ur
     healthLakeClient.interceptors.request.use(interceptor);
 
     // eslint-disable-next-line security/detect-object-injection
-    const resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
+    let resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
+    if (process.env.MIGRATION_TENANT_ID) {
+      const resourcePathParts = resourcePath.split('/');
+      resourcePath = resourcePathParts.slice(1).join('/');
+    }
     logs.write(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...\n`);
     const resourceFile = await s3Client
       .getObject({
