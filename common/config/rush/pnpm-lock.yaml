@@ -535,6 +535,7 @@ importers:
       jest-each: ^26.6.2
       jest-mock-extended: ^1.0.8
       jsonwebtoken: ^9.0.0
+      lodash: ^4.17.21
       npm-package-json-lint: ^6.3.0
       npm-package-json-lint-config-default: ^5.0.0
       object-hash: ^3.0.0
@@ -549,6 +550,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       axios: 0.25.0
+      lodash: 4.17.21
       object-hash: 3.0.0
     devDependencies:
       '@aws/eslint-config-fwoa-eslint-custom': link:../core/eslint-custom

@@ -5,11 +5,17 @@
 import { exec } from 'child_process';
 import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
-import createBundle from './createPatientPractitionerEncounterBundle.json';
-import { binaryObject, binaryResource, getFhirClient, getFhirClientSMART } from './migrationUtils';
+import createBundle from '../createPatientPractitionerEncounterBundle.json';
+import { getFhirClient, getFhirClientSMART } from '../migrationUtils';
 
 dotenv.config({ path: '.env' });
 
+const binaryResource: { resourceType: string; contentType: string } = {
+  resourceType: 'Binary',
+  contentType: 'image/jpeg'
+};
+
+const binaryObject: string = 'exampleBinaryStreamData';
 const executeCommand = async (command: string): Promise<unknown> =>
   // eslint-disable-next-line security/detect-child-process
   await new Promise((resolve) => exec(command, resolve));
@@ -18,7 +24,7 @@ describe('migration: end to end test', () => {
   let fhirClient: AxiosInstance;
 
   test('SMART: end to end test', async () => {
-    fhirClient = await getFhirClientSMART(true);
+    fhirClient = await getFhirClientSMART();
     const startTime = new Date();
     const postResponse = await fhirClient.post('/', createBundle);
     const binaryResponse = await fhirClient.post('/Binary', binaryResource);
@@ -36,7 +42,7 @@ describe('migration: end to end test', () => {
   });
 
   test('non-SMART: end to end test', async () => {
-    fhirClient = await getFhirClient(true);
+    fhirClient = await getFhirClient();
     const startTime = new Date();
     const postResponse = await fhirClient.post('/', createBundle);
     const binaryResponse = await fhirClient.post('/Binary', binaryResource);
