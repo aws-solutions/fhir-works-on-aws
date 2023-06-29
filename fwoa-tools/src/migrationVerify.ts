@@ -50,22 +50,6 @@ const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
 
-async function verifyResource(
-  fhirClient: AxiosInstance,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  healthLakeResource: any,
-  resourceId: string,
-  resourceType: string
-): Promise<boolean> {
-  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
-  delete fwoaResponse.meta;
-  delete healthLakeResource.meta;
-  if (resourceType === 'Binary') {
-    delete healthLakeResource.data;
-    delete fwoaResponse.presignedGetUrl;
-  }
-  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
-}
 async function verifyFolderImport(): Promise<void> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
