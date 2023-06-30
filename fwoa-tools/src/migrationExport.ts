@@ -108,7 +108,6 @@ export async function runScript(smartClient: boolean, dryRun: boolean, since: st
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   logs.write('Verification complete');
   if (!dryRun) {
-    try {
       const response = await startExport(since, smartClient, snapshotExists, snapshotLocation);
       logs.write('Export completed. Start sorting objects.');
 
@@ -124,9 +123,6 @@ export async function runScript(smartClient: boolean, dryRun: boolean, since: st
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
       logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
-    } catch (error) {
-      logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-    }
   }
 }
 
@@ -136,18 +132,18 @@ export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean, 
   const argv: any = parseCmdOptions();
   const smartClient: boolean = argv.smart;
   const dryRun: boolean = argv.dryRun;
-  let since: string = argv.since;
+  const since: string = argv.since;
   const snapshotExists: boolean = argv.snapshotExists;
   const snapshotLocation: string = argv.snapshotLocation;
   return {smartClient, dryRun, since, snapshotExists, snapshotLocation}
 }
 
+/* istanbul ignore next */
 (async () => {
   // Don't runScript when code is being imported for unit tests
   if (!process.argv.includes('test')) {
     const {smartClient, dryRun, since, snapshotExists, snapshotLocation} = buildRunScriptParams();
     await runScript(smartClient, dryRun, since, snapshotExists, snapshotLocation);
-    console.log('logs.end 1');
     logs.end();
   }
 })()

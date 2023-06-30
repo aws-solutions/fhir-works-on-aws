@@ -58,22 +58,26 @@ describe('migrationExport', () => {
         expect(snapshotLocation).toBeNull();
         expect(since).toBeNull();
     })
-
-    test('runScript', async() => {
-        await expect(runScript(false, false, '1800-01-01T00:00:00.000Z', false, "" )).resolves.not.toThrowError();
-    })
-    test('runScript - tenantId', async() => {
-        process.env.MIGRATION_TENANT_ID = "tenant1";
-        await expect(runScript(false, false, '1800-01-01T00:00:00.000Z', false, "" )).resolves.not.toThrowError();
-    })
-    test('runScript - invalidSinceDate', async() => {
+    describe('runScript', () => {
+        test('smartClient - false', async() => {
+            await expect(runScript(false, false, '1800-01-01T00:00:00.000Z', false, "" )).resolves.not.toThrowError();
+        })
+        test('smartClient - true', async() => {
+            await expect(runScript(true, false, '1800-01-01T00:00:00.000Z', false, "" )).resolves.not.toThrowError();
+        })
+        test('runScript - tenantId', async() => {
+            process.env.MIGRATION_TENANT_ID = "tenant1";
+            await expect(runScript(false, false, '1800-01-01T00:00:00.000Z', false, "" )).resolves.not.toThrowError();
+        })
+        test('runScript - invalidSinceDate', async() => {
             process.argv = [
                 '/usr/local/bin/ts-node',
                 'migrationExport.ts',
                 '-t',
                 'abc'
             ];
-        await expect(runScript(false, false, 'incorrectSinceDate', false, "" ))
-            .rejects.toThrowError('Provided since timestamp not in correct format (ISO 8601)');
+            await expect(runScript(false, false, 'incorrectSinceDate', false, "" ))
+                .rejects.toThrowError('Provided since timestamp not in correct format (ISO 8601)');
+        })
     })
 })
