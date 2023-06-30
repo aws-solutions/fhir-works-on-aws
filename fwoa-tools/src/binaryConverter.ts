@@ -51,7 +51,7 @@ if (!EXPORT_BUCKET_NAME) {
   throw new Error('EXPORT_BUCKET_NAME environment variable not specified');
 }
 
-async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
+export async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
   console.log(`getting ${itemKey}`);
   const file = await s3Client
     .getObject({
@@ -65,7 +65,7 @@ async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
   return file;
 }
 
-async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<GetObjectOutput> {
+export async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<GetObjectOutput> {
   const files = await s3Client
     .listObjectsV2({
       Bucket: BINARY_BUCKET_NAME!,
@@ -90,7 +90,7 @@ async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<
 }
 
 // Step 6, reupload to S3 Export bucket
-async function uploadBinaryResource(itemKey: string, newData: string): Promise<GetObjectOutput> {
+export async function uploadBinaryResource(itemKey: string, newData: string): Promise<GetObjectOutput> {
   return await s3Client
     .upload({
       Bucket: EXPORT_BUCKET_NAME!,
@@ -100,7 +100,7 @@ async function uploadBinaryResource(itemKey: string, newData: string): Promise<G
     .promise();
 }
 
-async function convertBinaryResource(): Promise<void> {
+export async function convertBinaryResource(): Promise<void> {
   // Step 1, Get all Binary Resource Paths
   let itemKeys: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
