@@ -23,14 +23,14 @@ describe('migrationExport', () => {
                 '-s',
                 '-d',
                 '-t',
-                '1688144202'
+                '1800-01-01T00:00:00.000Z'
             ];
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const argv: any = parseCmdOptions();
             expect(argv.dryRun).toEqual(true);
             expect(argv.smart).toEqual(true);
-            expect(argv.since).toEqual(1688144202);
+            expect(argv.since).toEqual("1800-01-01T00:00:00.000Z");
         });
         test('smart, dryrun, and since not enabled', () => {
             process.argv = [
