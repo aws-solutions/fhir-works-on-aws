@@ -2,12 +2,10 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
-// jest.mock('axios');
 import { createWriteStream, WriteStream } from 'fs';
 import AWS from 'aws-sdk';
 import { InitiateAuthRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import * as AWSMock from 'aws-sdk-mock';
-// import axios from 'axios';
 import { checkConfiguration, getFhirClient, getFhirClientSMART } from './migrationUtils';
 
 const env = process.env;
