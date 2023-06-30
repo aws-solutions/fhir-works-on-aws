@@ -5,20 +5,20 @@
 import { readFileSync, WriteStream, createWriteStream } from 'fs';
 import { S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
+import objectHash from 'object-hash';
 import yargs from 'yargs';
 import {
   ExportOutput,
   getFhirClient,
   getFhirClientSMART,
-  verifyResource,
   checkConfiguration,
   EXPORT_STATE_FILE_NAME
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { DATASTORE_ENDPOINT, API_AWS_REGION, IMPORT_OUTPUT_S3_BUCKET_NAME } = process.env;
+const { DATASTORE_ENDPOINT, API_AWS_REGION, EXPORT_BUCKET_NAME } = process.env;
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
@@ -46,6 +46,23 @@ function parseCmdOptions(): any {
 const argv: any = parseCmdOptions();
 const smartClient: boolean = argv.smart;
 const dryRun: boolean = argv.dryRun;
+
+async function verifyResource(
+  fhirClient: AxiosInstance,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  healthLakeResource: any,
+  resourceId: string,
+  resourceType: string
+): Promise<boolean> {
+  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
+  delete fwoaResponse.meta;
+  delete healthLakeResource.meta;
+  if (resourceType === 'Binary') {
+    delete healthLakeResource.data;
+    delete fwoaResponse.presignedGetUrl;
+  }
+  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
+}
 async function verifyFolderImport(): Promise<void> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
@@ -82,7 +99,7 @@ async function verifyFolderImport(): Promise<void> {
       logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
       const resourceFile = await s3Client
         .getObject({
-          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+          Bucket: EXPORT_BUCKET_NAME!,
           Key: resourcePath
         })
         .promise();
@@ -91,10 +108,14 @@ async function verifyFolderImport(): Promise<void> {
       }
 
       // Each resource file can contain a number of resource objects
-      const allResources: string[] = resourceFile.Body!.toString().split('\n');
+      const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
       for (let j = 0; j < allResources.length; j += 1) {
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
+        // Skip any resources marked for deletion, we don't need to verify these.
+        if (!resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+          continue;
+        }
         const id = resource.id;
         const resourceInHL = await healthLakeClient.get(
           `${DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
