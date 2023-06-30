@@ -4,8 +4,7 @@
  */
 import { WriteStream } from 'fs';
 import * as AWS from 'aws-sdk';
-import { HealthLake, S3 } from 'aws-sdk';
-import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import { HealthLake, S3, CognitoIdentityServiceProvider } from 'aws-sdk';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
 import { isEmpty } from 'lodash';
@@ -185,7 +184,7 @@ export type FhirServerType = 'Smart' | 'Cognito';
 // This ensures any configuration issue is discovered from the start and dealt with
 export async function checkConfiguration(logs: WriteStream, fhirServerType?: FhirServerType): Promise<void> {
   dotenv.config({ path: '.env' });
-  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
+  // logs.write(`${new Date().toISOString()}: Checking configuration\n`);
 
   const envVarsToCheck = [
     // Export script variables
@@ -204,7 +203,7 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
     'IMPORT_OUTPUT_S3_URI'
   ];
   checkEnvVars(envVarsToCheck);
-  logs.write('Export and Import environment variables verified.');
+  // logs.write('Export and Import environment variables verified.');
 
   const s3Client = new S3({
     region: process.env.API_AWS_REGION
@@ -212,6 +211,7 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
   await s3Client.listObjectsV2({ Bucket: process.env.EXPORT_BUCKET_NAME! }).promise();
   await s3Client.listObjectsV2({ Bucket: process.env.BINARY_BUCKET_NAME! }).promise();
   await s3Client.listObjectsV2({ Bucket: process.env.IMPORT_OUTPUT_S3_BUCKET_NAME! }).promise();
+
   logs.write('S3 buckets access verified.');
 
   if (fhirServerType === 'Smart') await getFhirClientSMART();
