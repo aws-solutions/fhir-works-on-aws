@@ -17,7 +17,10 @@ import {
   MS_TO_HOURS,
   POLLING_TIME,
   sleep,
-  checkConfiguration
+  checkConfiguration,
+  HEALTHLAKE_BUNDLE_LIMIT,
+  Bundle,
+  getEmptyFHIRBundle
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
@@ -30,7 +33,9 @@ const {
   HEALTHLAKE_CLIENT_TOKEN,
   IMPORT_OUTPUT_S3_URI,
   IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN
+  IMPORT_KMS_KEY_ARN,
+  EXPORT_BUCKET_NAME,
+  MIGRATION_TENANT_ID
 } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
@@ -70,9 +75,7 @@ async function startImport(folderNames: string[]): Promise<void> {
   // To see if we have completed folders to skip importing
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
     const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
-    if (folders.length > 0) {
-      i = parseInt(folders[folders.length - 1]);
-    }
+    i = folders.length;
   }
 
   for (i; i < folderNames.length; i += 1) {
@@ -105,6 +108,7 @@ async function startImport(folderNames: string[]): Promise<void> {
       },
       ClientToken: HEALTHLAKE_CLIENT_TOKEN || uuidv4()
     };
+    await sleep(POLLING_TIME * 20);
     const importJob = await healthLake.startFHIRImportJob(params).promise();
     console.log(`successfully started import job, checking status at ${importJob.JobId}`);
     logs.write(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}\n`);
@@ -126,10 +130,8 @@ async function startImport(folderNames: string[]): Promise<void> {
             }\n`
           );
 
-          await deleteFhirResourceFromHealthLakeIfNeeded(
-            folderName,
-            jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!
-          );
+          await sleep(POLLING_TIME);
+          await deleteFhirResourceFromHealthLakeIfNeeded(folderName);
           logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
           successfullyCompletedFolders.push(folderName);
           break;
@@ -168,7 +170,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
     const resource = resources[i];
     // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
     // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
-    if (resource === 'Binary') {
+    if (resource.startsWith('Binary')) {
       continue;
     }
     console.log(`Checking resource ${resource}`);
@@ -176,11 +178,14 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
+    const prefix = MIGRATION_TENANT_ID
+      ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${resource}`
+      : `${outputFile.jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
           Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${outputFile.jobId}/${resource}`,
+          Prefix: prefix,
           ContinuationToken: continuationToken
         })
         .promise();
@@ -215,11 +220,14 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
+  const prefix = MIGRATION_TENANT_ID
+    ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`
+    : `${outputFile.jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
         Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-        Prefix: `${outputFile.jobId}/${convertedBinaryFolderName}`,
+        Prefix: prefix,
         ContinuationToken: continuationToken
       })
       .promise();
@@ -238,46 +246,76 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finish checkConvertedBinaryFileSize \n`);
 }
 
-async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Uri: string): Promise<void> {
-  const path = s3Uri.replace('s3://', '').replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
-  const interceptor = aws4Interceptor({
-    region: API_AWS_REGION!,
-    service: 'healthlake'
-  });
-
+async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Promise<void> {
+  let deleteQueue: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
     const s3Client = new S3({
       region: API_AWS_REGION!
     });
-    const healthLakeClient = axios.create();
-    healthLakeClient.interceptors.request.use(interceptor);
 
     // eslint-disable-next-line security/detect-object-injection
-    const resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
-    logs.write(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...\n`);
+    const resourcePath = outputFile.file_names[folderName][j];
+    logs.write(`${new Date().toISOString()}: Checking resources from ${resourcePath}...\n`);
     const resourceFile = await s3Client
       .getObject({
-        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Bucket: EXPORT_BUCKET_NAME!,
         Key: resourcePath
       })
       .promise();
     if (resourceFile.$response.error) {
       throw new Error(`Failed to read file ${resourceFile.$response.error}`);
     }
-    const allResourceVersions: string[] = resourceFile.Body!.toString().split('\n');
-    let resource = JSON.parse(allResourceVersions[allResourceVersions.length - 1]); // latest version
-    // eslint-disable-next-line security/detect-object-injection
-    const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
-    resource = resource[responseKey!].jsonBlob;
-    // This is a resource marked for deletion
-    if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
-      // DELETE the resource from HealthLake
-      logs.write(
-        `${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...\n`
-      );
-      await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
+    const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
+    for (let i = 0; i < allResources.length; i++) {
+      // eslint-disable-next-line security/detect-object-injection
+      const resource = JSON.parse(allResources[i]);
+      // This is a resource marked for deletion
+      if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+        // DELETE the resource from HealthLake
+        logs.write(
+          `${new Date().toISOString()}: Resource at ${resourcePath} line ${i} is marked for DELETION\n`
+        );
+        deleteQueue.push(`/${resource.resourceType}/${resource.id}`);
+        if (deleteQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
+          // eslint-disable-next-line no-await-in-loop
+          await deleteResourcesInBundle(deleteQueue);
+          deleteQueue = [];
+        }
+      }
     }
+  }
+  if (deleteQueue.length !== 0) {
+    await deleteResourcesInBundle(deleteQueue);
+  }
+}
+
+async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
+  const interceptor = aws4Interceptor({
+    region: API_AWS_REGION!,
+    service: 'healthlake'
+  });
+  const healthLakeClient = axios.create();
+  healthLakeClient.interceptors.request.use(interceptor);
+  const bundle: Bundle = getEmptyFHIRBundle();
+
+  for (const path of deletePaths) {
+    bundle.entry.push({
+      request: {
+        method: 'DELETE',
+        url: path
+      }
+    });
+  }
+
+  logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
+
+  const healthLakeBundleDeleteResponse = await healthLakeClient.post(
+    `${DATASTORE_ENDPOINT}`,
+    JSON.stringify(bundle)
+  );
+  if (healthLakeBundleDeleteResponse.status !== 200) {
+    throw new Error(`Failed to Delete Resources in bundle: ${healthLakeBundleDeleteResponse.data}`);
   }
 }
 
