@@ -185,7 +185,7 @@ export type FhirServerType = 'Smart' | 'Cognito';
 // This ensures any configuration issue is discovered from the start and dealt with
 export async function checkConfiguration(logs: WriteStream, fhirServerType?: FhirServerType): Promise<void> {
   dotenv.config({ path: '.env' });
-  // logs.write(`${new Date().toISOString()}: Checking configuration\n`);
+  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
 
   const envVarsToCheck = [
     // Export script variables
@@ -204,7 +204,7 @@ export async function checkConfiguration(logs: WriteStream, fhirServerType?: Fhi
     'IMPORT_OUTPUT_S3_URI'
   ];
   checkEnvVars(envVarsToCheck);
-  // logs.write('Export and Import environment variables verified.');
+  logs.write('Export and Import environment variables verified.');
 
   const s3Client = new S3({
     region: process.env.API_AWS_REGION

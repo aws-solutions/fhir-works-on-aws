@@ -107,10 +107,6 @@ describe('MigrationUtils', () => {
         'SMART_API_KEY environment variable is not defined'
       );
     });
-
-    // test('client should not be able to C/U/D', async () => {
-    //
-    // });
   });
 
   describe('checkConfiguration', () => {
@@ -151,19 +147,9 @@ describe('MigrationUtils', () => {
       });
       /* eslint-enable @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any */
 
-      AWSMock.mock(
-        'S3',
-        'listObjectsV2',
-        //eslint-disable-next-line @typescript-eslint/ban-types
-        s3MockFunction
-      );
+      AWSMock.mock('S3', 'listObjectsV2', s3MockFunction);
 
-      AWSMock.mock(
-        'HealthLake',
-        'describeFHIRDatastore',
-        //eslint-disable-next-line @typescript-eslint/ban-types
-        healthlakeMockFunction
-      );
+      AWSMock.mock('HealthLake', 'describeFHIRDatastore', healthlakeMockFunction);
       await checkConfiguration(logs);
       expect(s3MockFunction).toHaveBeenCalledTimes(3);
       expect(healthlakeMockFunction).toHaveBeenCalledTimes(1);
