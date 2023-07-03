@@ -528,7 +528,7 @@ importers:
       aws-sdk: ^2.1000.0
       aws-sdk-mock: ^5.1.0
       aws4-axios: ^2.4.9
-      axios: 0.25.0
+      axios: 0.26.0
       chance: ^1.1.7
       dotenv: ^16.0.3
       eslint: ^8.7.0
@@ -550,7 +550,7 @@ importers:
       uuid: ^8.3.2
       yargs: ^16.2.0
     dependencies:
-      axios: 0.25.0
+      axios: 0.26.0
       lodash: 4.17.21
       object-hash: 3.0.0
     devDependencies:
@@ -571,7 +571,7 @@ importers:
       '@types/yargs': 17.0.22
       aws-sdk: 2.1303.0
       aws-sdk-mock: 5.8.0
-      aws4-axios: 2.4.9_axios@0.25.0
+      aws4-axios: 2.4.9_axios@0.26.0
       chance: 1.1.9
       dotenv: 16.0.3
       eslint: 8.33.0
@@ -4190,7 +4190,7 @@ packages:
       aws-xray-sdk-postgres: 3.4.1_aws-xray-sdk-core@3.4.1
     dev: false
 
-  /aws4-axios/2.4.9_axios@0.25.0:
+  /aws4-axios/2.4.9_axios@0.26.0:
     resolution: {integrity: sha512-egAUTk8oLdsb5OGa+BI30PBa4lZh3tOO0q2YL99Gq8lyY8s08bt81jF8ekOuY+ZP98bfB5wHJhKStVhvRRjT7Q==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -4199,7 +4199,7 @@ packages:
       '@aws-sdk/client-sts': 3.267.0
       '@types/aws4': 1.11.2
       aws4: 1.12.0
-      axios: 0.25.0
+      axios: 0.26.0
     transitivePeerDependencies:
       - aws-crt
     dev: true
@@ -4227,6 +4227,13 @@ packages:
 
   /axios/0.25.0:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
+    dependencies:
+      follow-redirects: 1.15.2_debug@4.3.4
+    transitivePeerDependencies:
+      - debug
+
+  /axios/0.26.0:
+    resolution: {integrity: sha512-lKoGLMYtHvFrPVt3r+RBMp9nh34N0M8zEfCWqdWZx6phynIEhQqAdydpyBAAG211zlhX9Rgu08cOamy6XjE5Og==}
     dependencies:
       follow-redirects: 1.15.2_debug@4.3.4
     transitivePeerDependencies:

@@ -38,10 +38,11 @@
     "testRegex": ".test.ts",
     "transform": {
       "\\.(ts)$": "ts-jest"
-    }
+    },
+    "testEnvironment": "node"
   },
   "dependencies": {
-    "axios": "0.25.0",
+    "axios": "0.26.0",
     "lodash": "^4.17.21",
     "object-hash": "^3.0.0"
   },

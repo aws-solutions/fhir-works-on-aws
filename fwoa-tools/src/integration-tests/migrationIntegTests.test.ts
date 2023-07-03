@@ -7,8 +7,8 @@ import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import createBundle from '../createPatientPractitionerEncounterBundle.json';
 import { getFhirClient, getFhirClientSMART } from '../migrationUtils';
-
-dotenv.config({ path: '.env' });
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, './.env') });
 
 const binaryResource: { resourceType: string; contentType: string } = {
   resourceType: 'Binary',

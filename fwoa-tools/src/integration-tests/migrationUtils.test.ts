@@ -3,11 +3,14 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { getFhirClient, getFhirClientSMART } from '../migrationUtils';
+import * as dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, './.env') });
 
 describe('MigrationUtils', () => {
   describe('getFhirClient', () => {
     test('client should be able to authenticate', async () => {
-      await expect(getFhirClient()).resolves.not.toThrowError();
+      await expect(getFhirClient()).resolves.toBeDefined();
     });
 
     // we are expecting that the cognito user is an auditor so that they cannot write to the system

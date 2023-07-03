@@ -3,7 +3,7 @@
   "rushVersion": "5.83.1",
   "pnpmVersion": "7.13.0",
   "nodeSupportedVersionRange": ">=16.13.0 <17.0.0 || >=18.14.0 <19.0.0",
-  "ensureConsistentVersions": true,
+  "ensureConsistentVersions": false,
   "projectFolderMaxDepth": 3,
   "approvedPackagesPolicy": {
     "reviewCategories": ["production", "tools", "prototypes"],
