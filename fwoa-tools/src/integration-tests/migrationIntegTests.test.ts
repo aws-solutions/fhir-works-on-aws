@@ -54,8 +54,8 @@ describe('migration: end to end test', () => {
 
     await expect(
       executeCommand(`ts-node ./migrationExport.ts --since=${startTime.toISOString}`)
-    ).resolves.not.toThrowError();
-    await expect(executeCommand(`ts-node ./binaryConverter.ts`)).resolves.not.toThrowError();
-    await expect(executeCommand(`ts-node ./migrationimport.ts`)).resolves.not.toThrowError();
+    ).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ./binaryConverter.ts`)).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ./migrationimport.ts`)).resolves.toEqual(expect.anything());
   });
 });

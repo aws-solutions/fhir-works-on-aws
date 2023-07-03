@@ -10,7 +10,7 @@ dotenv.config({ path: path.resolve(__dirname, './.env') });
 describe('MigrationUtils', () => {
   describe('getFhirClient', () => {
     test('client should be able to authenticate', async () => {
-      await expect(getFhirClient()).resolves.toBeDefined();
+      await expect(getFhirClient()).resolves.toEqual(expect.anything());
     });
 
     // we are expecting that the cognito user is an auditor so that they cannot write to the system
