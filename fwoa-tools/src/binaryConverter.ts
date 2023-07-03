@@ -10,7 +10,6 @@ import yargs from 'yargs';
 import { EXPORT_STATE_FILE_NAME, ExportOutput } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { EXPORT_BUCKET_NAME, BINARY_BUCKET_NAME, API_AWS_REGION } = process.env;
 const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,37 +24,12 @@ function parseCmdOptions(): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
-const exportBucketName: string | undefined = process.env.EXPORT_BUCKET_NAME;
-const binaryBucketName: string | undefined = process.env.BINARY_BUCKET_NAME;
 
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(
-  `${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
-  { flags: 'a' }
-);
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
-let tenantPrefix: string = '';
-if (process.env.MIGRATION_TENANT_ID) {
-  tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
-}
-
-const s3Client: S3 = new S3({
-  region: API_AWS_REGION
-});
-
-if (!BINARY_BUCKET_NAME) {
-  throw new Error('BINARY_BUCKET_NAME environment variable not specified');
-}
-if (!EXPORT_BUCKET_NAME) {
-  throw new Error('EXPORT_BUCKET_NAME environment variable not specified');
-}
-
-export async function getBinaryResource(itemKey: string): Promise<GetObjectOutput> {
+export async function getBinaryResource(itemKey: string, s3Client: S3): Promise<GetObjectOutput> {
   console.log(`getting ${itemKey}`);
   const file = await s3Client
     .getObject({
-      Bucket: EXPORT_BUCKET_NAME!,
+      Bucket: process.env.EXPORT_BUCKET_NAME!,
       Key: itemKey
     })
     .promise();
@@ -65,10 +39,18 @@ export async function getBinaryResource(itemKey: string): Promise<GetObjectOutpu
   return file;
 }
 
-export async function getBinaryObject(itemKey: string, versionId: number = 1): Promise<GetObjectOutput> {
+export async function getBinaryObject(
+  itemKey: string,
+  versionId: number = 1,
+  s3Client: S3
+): Promise<GetObjectOutput> {
+  let tenantPrefix = '';
+  if (process.env.MIGRATION_TENANT_ID) {
+    tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+  }
   const files = await s3Client
     .listObjectsV2({
-      Bucket: BINARY_BUCKET_NAME!,
+      Bucket: process.env.BINARY_BUCKET_NAME!,
       Prefix: `${tenantPrefix}${itemKey}_${versionId}.`
     })
     .promise();
@@ -79,7 +61,7 @@ export async function getBinaryObject(itemKey: string, versionId: number = 1): P
   // we need to do a list object first because we don't know the suffix (.png/.jpg, etc.)
   const file = await s3Client
     .getObject({
-      Bucket: BINARY_BUCKET_NAME!,
+      Bucket: process.env.BINARY_BUCKET_NAME!,
       Key: files.Contents![0].Key!
     })
     .promise();
@@ -90,17 +72,21 @@ export async function getBinaryObject(itemKey: string, versionId: number = 1): P
 }
 
 // Step 6, reupload to S3 Export bucket
-export async function uploadBinaryResource(itemKey: string, newData: string): Promise<GetObjectOutput> {
+export async function uploadBinaryResource(
+  itemKey: string,
+  newData: string,
+  s3Client: S3
+): Promise<GetObjectOutput> {
   return await s3Client
     .upload({
-      Bucket: EXPORT_BUCKET_NAME!,
+      Bucket: process.env.EXPORT_BUCKET_NAME!,
       Key: itemKey,
       Body: newData
     })
     .promise();
 }
 
-export async function convertBinaryResource(): Promise<void> {
+export async function convertBinaryResource(logs: WriteStream, outputFile: ExportOutput): Promise<void> {
   // Step 1, Get all Binary Resource Paths
   let itemKeys: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
@@ -115,10 +101,17 @@ export async function convertBinaryResource(): Promise<void> {
     return;
   }
   logs.write(`${new Date().toISOString()}: Retrieved All Binary Keys from migration export output.\n`);
+  let tenantPrefix = '';
+  if (process.env.MIGRATION_TENANT_ID) {
+    tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+  }
   for (const itemKey of itemKeys) {
     logs.write(`${new Date().toISOString()}: Retrieving Binary Resource from ${itemKey}...\n`);
     // Step 2, download files from S3 to get Ids
-    const file = await getBinaryResource(itemKey);
+    const s3Client: S3 = new S3({
+      region: process.env.API_AWS_REGION
+    });
+    const file = await getBinaryResource(itemKey, s3Client);
     const binaryResources: string[] = file.Body!.toString().split('\n');
     let results: string = '';
     for (const binaryResourceString of binaryResources) {
@@ -131,7 +124,7 @@ export async function convertBinaryResource(): Promise<void> {
         continue;
       }
       // Step 3, Retrieve Binary objects from S3 Binary Bucket
-      const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId);
+      const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId, s3Client);
       logs.write(
         `${new Date().toISOString()}: Retrieved Binary Object from Binary bucket with vid ${
           binaryResource.meta.versionId
@@ -154,7 +147,7 @@ export async function convertBinaryResource(): Promise<void> {
         outputFile.file_names[folderName] = [];
       // eslint-disable-next-line security/detect-object-injection
       outputFile.file_names[folderName].push(newKey);
-      await uploadBinaryResource(newKey, results);
+      await uploadBinaryResource(newKey, results, s3Client);
       logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
     }
     results = results.trimEnd();
@@ -162,35 +155,50 @@ export async function convertBinaryResource(): Promise<void> {
 }
 
 async function checkConfiguration(): Promise<void> {
-  await s3Client.listObjectsV2({ Bucket: exportBucketName! }).promise();
+  const s3Client: S3 = new S3({
+    region: process.env.API_AWS_REGION
+  });
+  await s3Client.listObjectsV2({ Bucket: process.env.EXPORT_BUCKET_NAME! }).promise();
   console.log('Sucessfully authenticated with S3 Export Bucket...');
-  await s3Client.listObjectsV2({ Bucket: binaryBucketName! }).promise();
+  await s3Client.listObjectsV2({ Bucket: process.env.BINARY_BUCKET_NAME! }).promise();
   console.log('Sucessfully authenticated with S3 Binary Bucket...');
 }
 
-async function startBinaryConversion(): Promise<void> {
+async function startBinaryConversion(logs: WriteStream, outputFile: ExportOutput): Promise<void> {
   console.log(`Starting Binary Resource Conversion...`);
   logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
-  await convertBinaryResource();
+  await convertBinaryResource(logs, outputFile);
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   writeFileSync(`${EXPORT_STATE_FILE_NAME}`, JSON.stringify(outputFile));
   logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
 }
 
 (async () => {
-  await checkConfiguration();
-  console.log('successfully authenticated to all services');
-  if (!dryRun) {
-    try {
-      await startBinaryConversion();
-      console.log('successfully converted all binary resources!');
-    } catch (error) {
-      console.log('Failed to process binary resources', error);
-      logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-    }
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const logs = createWriteStream(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
+    flags: 'a'
+  });
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const outputFile = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+
+  if (!process.env.BINARY_BUCKET_NAME) {
+    throw new Error('BINARY_BUCKET_NAME environment variable not specified');
   }
-  logs.end();
-})().catch((error) => {
-  console.log('some checks failed!', error);
-  logs.end();
+  if (!process.env.EXPORT_BUCKET_NAME) {
+    throw new Error('EXPORT_BUCKET_NAME environment variable not specified');
+  }
+  try {
+    await checkConfiguration();
+    console.log('successfully authenticated to all services');
+    if (!dryRun) {
+      await startBinaryConversion(logs, outputFile);
+      console.log('successfully converted all binary resources!');
+    }
+  } catch (error) {
+    console.log('Failed to process binary resources', error);
+    logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+    logs?.end();
+  }
+})().catch((e) => {
+  console.error(e);
 });
