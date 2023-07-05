@@ -7,13 +7,13 @@ import { S3 } from 'aws-sdk';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as dotenv from 'dotenv';
 import yargs from 'yargs';
-import { EXPORT_STATE_FILE_NAME, ExportOutput } from './migrationUtils';
+import { EXPORT_STATE_FILE_NAME, ExportOutput, checkConfiguration } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
 const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseCmdOptions(): any {
+export function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
     .usage('Usage: $0 [--dryRun, -d boolean]')
     .describe('dryRun', 'Check operations and authentication status')
@@ -154,16 +154,6 @@ export async function convertBinaryResource(logs: WriteStream, outputFile: Expor
   }
 }
 
-async function checkConfiguration(): Promise<void> {
-  const s3Client: S3 = new S3({
-    region: process.env.API_AWS_REGION
-  });
-  await s3Client.listObjectsV2({ Bucket: process.env.EXPORT_BUCKET_NAME! }).promise();
-  console.log('Sucessfully authenticated with S3 Export Bucket...');
-  await s3Client.listObjectsV2({ Bucket: process.env.BINARY_BUCKET_NAME! }).promise();
-  console.log('Sucessfully authenticated with S3 Binary Bucket...');
-}
-
 async function startBinaryConversion(logs: WriteStream, outputFile: ExportOutput): Promise<void> {
   console.log(`Starting Binary Resource Conversion...`);
   logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
@@ -181,14 +171,8 @@ async function startBinaryConversion(logs: WriteStream, outputFile: ExportOutput
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const outputFile = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
 
-  if (!process.env.BINARY_BUCKET_NAME) {
-    throw new Error('BINARY_BUCKET_NAME environment variable not specified');
-  }
-  if (!process.env.EXPORT_BUCKET_NAME) {
-    throw new Error('EXPORT_BUCKET_NAME environment variable not specified');
-  }
   try {
-    await checkConfiguration();
+    await checkConfiguration(logs);
     console.log('successfully authenticated to all services');
     if (!dryRun) {
       await startBinaryConversion(logs, outputFile);

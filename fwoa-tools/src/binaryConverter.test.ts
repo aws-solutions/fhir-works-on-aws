@@ -11,6 +11,7 @@ import {
   convertBinaryResource,
   getBinaryObject,
   getBinaryResource,
+  parseCmdOptions,
   uploadBinaryResource
 } from './binaryConverter';
 import { ExportOutput } from './migrationUtils';
@@ -22,19 +23,45 @@ let fakeFile: ExportOutput = {
 };
 
 describe('binaryConverter', () => {
-  beforeAll(() => {
+  afterEach(() => {
+    AWSMock.restore();
+  });
+
+  beforeEach(() => {
+    jest.resetModules();
     process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
     process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
   });
 
-  afterEach(() => {
-    AWSMock.restore();
+  describe('parseCmdOptions', () => {
+    beforeEach(() => {
+      process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
+      process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
+    });
+
+    test('dryrun enabled', () => {
+      process.argv = ['/usr/local/bin/ts-node', 'binaryConverter.ts', '-d'];
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const argv: any = parseCmdOptions();
+      expect(argv.dryRun).toEqual(true);
+    });
+    test('dryrun not enabled', () => {
+      process.argv = ['/usr/local/bin/ts-node', 'binaryConverter.ts'];
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const argv: any = parseCmdOptions();
+      expect(argv.dryRun).toEqual(false);
+    });
   });
 
   describe('convertBinaryResource', () => {
     let logs: fs.WriteStream;
     beforeAll(() => {
       logs = fs.createWriteStream('binary_unit_test.log');
+    });
+
+    beforeEach(() => {
       process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
       process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
     });
@@ -93,7 +120,7 @@ describe('binaryConverter', () => {
           callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
         }
       );
-      await convertBinaryResource(logs, fakeFile);
+      await expect(convertBinaryResource(logs, fakeFile)).resolves.not.toThrowError();
     });
 
     test('multi-tenancy = true', async () => {
@@ -147,6 +174,11 @@ describe('binaryConverter', () => {
   describe('getBinaryObject', () => {
     afterEach(() => {
       AWSMock.restore();
+    });
+
+    beforeEach(() => {
+      process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
+      process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
     });
 
     test('multi-tenancy = false', async () => {

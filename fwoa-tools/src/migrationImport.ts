@@ -27,7 +27,6 @@ dotenv.config({ path: '.env' });
 const {
   EXPORT_BUCKET_URI,
   DATASTORE_ID,
-  DATASTORE_ENDPOINT,
   API_AWS_REGION,
   DATA_ACCESS_ROLE_ARN,
   HEALTHLAKE_CLIENT_TOKEN,
@@ -311,7 +310,7 @@ export async function deleteResourcesInBundle(deletePaths: string[], logs: Write
   logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
 
   const healthLakeBundleDeleteResponse = await healthLakeClient.post(
-    `${DATASTORE_ENDPOINT}`,
+    `${process.env.DATASTORE_ENDPOINT}`,
     JSON.stringify(bundle)
   );
   if (healthLakeBundleDeleteResponse.status !== 200) {
