@@ -17,7 +17,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
-    "build-test": "heft test --clean && rushx pkg-json-lint",
+    "build-test": "UNIT_TEST=true heft test --clean && rushx pkg-json-lint",
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
     "int-test": "jest --testPathPattern=src/integration-tests/*",
     "jest": "jest",
@@ -27,7 +27,7 @@
     "prettier": "prettier --config '../.prettierrc.js' 'src/**/*.ts' --write",
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",
-    "test": "heft test --clean --no-build && rushx pkg-json-lint",
+    "test": "UNIT_TEST=true heft test --clean --no-build && rushx pkg-json-lint",
     "watch": "tsc -w"
   },
   "jest": {
