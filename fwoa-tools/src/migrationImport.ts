@@ -32,21 +32,13 @@ const {
   DATA_ACCESS_ROLE_ARN,
   HEALTHLAKE_CLIENT_TOKEN,
   IMPORT_OUTPUT_S3_URI,
-  IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN,
-  EXPORT_BUCKET_NAME,
-  MIGRATION_TENANT_ID
+  IMPORT_KMS_KEY_ARN
 } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
-
 const successfullyCompletedFolders: string[] = [];
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-  flags: 'a'
-});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -61,22 +53,22 @@ function parseCmdOptions(): any {
 const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
 
-// get the job id from the export output file
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
-const jobId: string = outputFile.jobId;
-
-const healthLake: HealthLake = new HealthLake({
-  region: API_AWS_REGION
-});
-
-async function startImport(folderNames: string[]): Promise<void> {
+export async function startImport(
+  folderNames: string[],
+  logs: WriteStream,
+  jobId: string,
+  outputFile: ExportOutput
+): Promise<void> {
   let i: number = 0;
   // To see if we have completed folders to skip importing
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
     const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
     i = folders.length;
   }
+
+  const healthLake: HealthLake = new HealthLake({
+    region: API_AWS_REGION
+  });
 
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
@@ -131,7 +123,7 @@ async function startImport(folderNames: string[]): Promise<void> {
           );
 
           await sleep(POLLING_TIME);
-          await deleteFhirResourceFromHealthLakeIfNeeded(folderName);
+          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, logs, outputFile);
           logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
           successfullyCompletedFolders.push(folderName);
           break;
@@ -160,7 +152,11 @@ async function startImport(folderNames: string[]): Promise<void> {
   }
 }
 
-async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
+export async function checkFolderSizeOfResource(
+  resources: string[],
+  logs: WriteStream,
+  jobId: string
+): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkFolderSizeOfResource \n`);
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -178,13 +174,13 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
-    const prefix = MIGRATION_TENANT_ID
-      ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${resource}`
-      : `${outputFile.jobId}/${resource}`;
+    const prefix = process.env.MIGRATION_TENANT_ID
+      ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${resource}`
+      : `${jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
-          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+          Bucket: process.env.EXPORT_BUCKET_NAME!,
           Prefix: prefix,
           ContinuationToken: continuationToken
         })
@@ -211,7 +207,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
   }
 }
 
-async function checkConvertedBinaryFileSize(): Promise<void> {
+export async function checkConvertedBinaryFileSize(logs: WriteStream, jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkConvertedBinaryFileSize \n`);
   console.log('Checking Binary file size');
   const s3Client = new S3({
@@ -220,13 +216,13 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
-  const prefix = MIGRATION_TENANT_ID
-    ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`
-    : `${outputFile.jobId}/${convertedBinaryFolderName}`;
+  const prefix = process.env.MIGRATION_TENANT_ID
+    ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${convertedBinaryFolderName}`
+    : `${jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
-        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
         Prefix: prefix,
         ContinuationToken: continuationToken
       })
@@ -246,7 +242,11 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finish checkConvertedBinaryFileSize \n`);
 }
 
-async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Promise<void> {
+export async function deleteFhirResourceFromHealthLakeIfNeeded(
+  folderName: string,
+  logs: WriteStream,
+  outputFile: ExportOutput
+): Promise<void> {
   let deleteQueue: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
@@ -259,7 +259,7 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Pro
     logs.write(`${new Date().toISOString()}: Checking resources from ${resourcePath}...\n`);
     const resourceFile = await s3Client
       .getObject({
-        Bucket: EXPORT_BUCKET_NAME!,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
         Key: resourcePath
       })
       .promise();
@@ -279,18 +279,18 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Pro
         deleteQueue.push(`/${resource.resourceType}/${resource.id}`);
         if (deleteQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
           // eslint-disable-next-line no-await-in-loop
-          await deleteResourcesInBundle(deleteQueue);
+          await deleteResourcesInBundle(deleteQueue, logs);
           deleteQueue = [];
         }
       }
     }
   }
   if (deleteQueue.length !== 0) {
-    await deleteResourcesInBundle(deleteQueue);
+    await deleteResourcesInBundle(deleteQueue, logs);
   }
 }
 
-async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
+export async function deleteResourcesInBundle(deletePaths: string[], logs: WriteStream): Promise<void> {
   const interceptor = aws4Interceptor({
     region: API_AWS_REGION!,
     service: 'healthlake'
@@ -320,9 +320,22 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
 }
 
 (async () => {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const logs: WriteStream = createWriteStream(
+    `${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+    {
+      flags: 'a'
+    }
+  );
+
+  // get the job id from the export output file
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+  const jobId: string = outputFile.jobId;
+
   await checkConfiguration(logs);
-  await checkConvertedBinaryFileSize();
-  await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
+  await checkConvertedBinaryFileSize(logs, jobId);
+  await checkFolderSizeOfResource(Object.keys(outputFile.file_names), logs, jobId);
   if (!dryRun) {
     try {
       const sortedKeys = Object.keys(outputFile.file_names).sort((a: string, b: string) => {
@@ -331,7 +344,7 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
           sensitivity: 'base'
         });
       });
-      await startImport(sortedKeys);
+      await startImport(sortedKeys, logs, jobId, outputFile);
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
@@ -343,5 +356,4 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   logs.end();
 })().catch((e) => {
   console.log('Checks failed', e);
-  logs.end();
 });

@@ -51,12 +51,96 @@ describe('binaryConverter', () => {
         file_names: { Binary: ['Binary/Binary-0.ndjson'] }
       };
     });
+
     test('multi-tenancy = false', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const binaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj',
+        meta: {
+          tag: [],
+          versionId: 1
+        }
+      };
+      AWSMock.mock(
+        'S3',
+        'listObjectsV2',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: ListObjectsV2Request, callback: Function) => {
+          callback(null, {
+            Contents: [{ Key: 'testBinaryObj_1.png' }],
+            $response: {}
+          });
+        }
+      );
+
+      AWSMock.mock(
+        'S3',
+        'getObject',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: GetObjectRequest, callback: Function) => {
+          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
+        }
+      );
+      AWSMock.mock(
+        'S3',
+        'upload',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: PutObjectRequest, callback: Function) => {
+          // check that we are uploading the right binary resource
+          expect(params.Key).toBe('binaryUnitTests/Binary_converted_testBinaryObj/Binary-1.ndjson');
+          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
+        }
+      );
       await convertBinaryResource(logs, fakeFile);
-      expect(fakeFile).toMatchObject({
-        jobId: 'binaryUnitTests',
-        file_names: { Binary: ['testBinaryObj_1.png'], Binary_converted_0: ['Binary_0.ndjson'] }
-      });
+    });
+
+    test('multi-tenancy = true', async () => {
+      process.env.MIGRATION_TENANT_ID = 'unitTestTenant';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const binaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj',
+        meta: {
+          tag: [],
+          versionId: 1
+        }
+      };
+      AWSMock.mock(
+        'S3',
+        'listObjectsV2',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: ListObjectsV2Request, callback: Function) => {
+          callback(null, {
+            Contents: [{ Key: 'testBinaryObj_1.png' }],
+            $response: {}
+          });
+        }
+      );
+
+      AWSMock.mock(
+        'S3',
+        'getObject',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: GetObjectRequest, callback: Function) => {
+          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
+        }
+      );
+      AWSMock.mock(
+        'S3',
+        'upload',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: PutObjectRequest, callback: Function) => {
+          // check that we are uploading the right binary resource
+          expect(params.Key).toBe(
+            'unitTestTenant/binaryUnitTests/Binary_converted_testBinaryObj/Binary-1.ndjson'
+          );
+          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
+        }
+      );
+      await convertBinaryResource(logs, fakeFile);
     });
   });
 
@@ -66,6 +150,7 @@ describe('binaryConverter', () => {
     });
 
     test('multi-tenancy = false', async () => {
+      delete process.env.MIGRATION_TENANT_ID;
       AWSMock.mock(
         'S3',
         'listObjectsV2',
