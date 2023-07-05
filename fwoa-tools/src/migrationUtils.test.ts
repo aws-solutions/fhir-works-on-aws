@@ -133,7 +133,7 @@ describe('MigrationUtils', () => {
       process.env.HEALTHLAKE_CLIENT_TOKEN = 'fake-client-id';
       process.env.EXPORT_BUCKET_URI = 'fake-export-uri';
       process.env.IMPORT_OUTPUT_S3_URI = 'fake-import-uri';
-      const logs: WriteStream = createWriteStream(`unit-test.log`, {
+      const logs: WriteStream = createWriteStream(`util-unit-test-${Date.now().toString()}.log`, {
         flags: 'a'
       });
 
@@ -151,6 +151,7 @@ describe('MigrationUtils', () => {
       await checkConfiguration(logs);
       expect(s3MockFunction).toHaveBeenCalledTimes(3);
       expect(healthlakeMockFunction).toHaveBeenCalledTimes(1);
+      logs.end();
     });
   });
 });
