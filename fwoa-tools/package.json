@@ -27,7 +27,18 @@
     "sort-package-json": "sort-package-json package.json",
     "standard-version": "standard-version --skip.tag=true",
     "test": "heft test --clean --no-build && rushx pkg-json-lint",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "jest": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testRegex": ".test.ts",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
   },
   "dependencies": {
     "axios": "0.25.0",
