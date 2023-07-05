@@ -11,15 +11,11 @@ import { GlueJobResponse, getExportStateFile, getExportStatus, startExportJob } 
 import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, checkConfiguration } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
+const {
+  GLUE_JOB_NAME,
+  EXPORT_BUCKET_NAME
+} = process.env;
 const EXPORT_OUTPUT_LOG_FILE_PREFIX: string = 'export_output_';
-const bucketName: string | undefined = process.env.EXPORT_BUCKET_NAME;
-if (!bucketName) {
-  throw new Error('EXPORT_BUCKET_NAME environment variable is not defined');
-}
-const glueJobName: string | undefined = process.env.GLUE_JOB_NAME;
-if (!glueJobName) {
-  throw new Error('GLUE_JOB_NAME env variable is not defined');
-}
 
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 const logs: WriteStream = createWriteStream(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
@@ -27,7 +23,7 @@ const logs: WriteStream = createWriteStream(`${EXPORT_OUTPUT_LOG_FILE_PREFIX}${D
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseCmdOptions(): any {
+export function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
     .usage('Usage: $0 [--smart, -s boolean] [--dryRun, -d boolean] [--since, -t timestamp ]')
     .describe('smart', 'Whether the FWoA deployment is SMART-on-FHIR or not')
@@ -49,36 +45,23 @@ function parseCmdOptions(): any {
     .alias('t', 'since')
     .default('since', null).argv;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const argv: any = parseCmdOptions();
 
-const smartClient: boolean = argv.smart;
-const dryRun: boolean = argv.dryRun;
-let since: string = argv.since;
-const snapshotExists: boolean = argv.snapshotExists;
-const snapshotLocation: string = argv.snapshotLocation;
+
 
 let output: ExportOutput = {
   jobId: '',
   file_names: {}
 };
 
-if (since) {
-  try {
-    since = new Date(since).toISOString();
-  } catch (e) {
-    throw new Error('Provided since timestamp not in correct format (ISO 8601)');
-  }
-}
 
-async function startExport(): Promise<{
+export async function startExport(since: string, smartClient: boolean, snapshotExists: boolean, snapshotLocation: string): Promise<{
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   exportResponse: any;
 }> {
   const params = {
     since,
-    glueJobName: glueJobName!,
+    glueJobName: GLUE_JOB_NAME!,
     apiUrl: smartClient ? process.env.SMART_SERVICE_URL! : process.env.API_URL!,
     tenantId: process.env.MIGRATION_TENANT_ID || undefined,
     snapshotExists,
@@ -88,7 +71,7 @@ async function startExport(): Promise<{
   const startTime = new Date();
   logs.write(`${startTime.toISOString()}: Started Export\n`);
   console.log(`Checking Status with ${glueJobResponse.jobId} and run id ${glueJobResponse.jobRunId}`);
-  const response = await getExportStatus(glueJobName!, logs, glueJobResponse.jobRunId);
+  const response = await getExportStatus(GLUE_JOB_NAME!, logs, glueJobResponse.jobRunId);
   const finishTime = new Date();
   logs.write(
     `${new Date().toISOString()}: Completed Export. Elapsed Time - ${
@@ -112,20 +95,27 @@ async function generateStateFile(bucket: string, prefix: string): Promise<Export
   // third parameter with a different bucket
   return await getExportStateFile(s3Client, bucket, prefix);
 }
+export async function runScript(smartClient: boolean, dryRun: boolean, since: string, snapshotExists: boolean, snapshotLocation: string): Promise<void> {
 
-(async () => {
+  if (since) {
+    try {
+      since = new Date(since).toISOString();
+    } catch (e) {
+      throw new Error('Provided since timestamp not in correct format (ISO 8601)');
+    }
+  }
+
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   logs.write('Verification complete');
   if (!dryRun) {
-    try {
-      const response = await startExport();
+      const response = await startExport(since, smartClient, snapshotExists, snapshotLocation);
       logs.write('Export completed. Start sorting objects.');
 
       let tenantPrefix = '';
       if (process.env.MIGRATION_TENANT_ID) {
         tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
       }
-      const names = await generateStateFile(bucketName, `${tenantPrefix}${response.jobId}/`);
+      const names = await generateStateFile(EXPORT_BUCKET_NAME!, `${tenantPrefix}${response.jobId}/`);
       output = {
         jobId: output.jobId,
         file_names: names.file_names
@@ -133,14 +123,32 @@ async function generateStateFile(bucket: string, prefix: string): Promise<Export
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
       logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
-    } catch (error) {
-      logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-    }
+  }
+}
+
+export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean, since: string,
+  snapshotExists: boolean, snapshotLocation: string} {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const argv: any = parseCmdOptions();
+  const smartClient: boolean = argv.smart;
+  const dryRun: boolean = argv.dryRun;
+  const since: string = argv.since;
+  const snapshotExists: boolean = argv.snapshotExists;
+  const snapshotLocation: string = argv.snapshotLocation;
+  return {smartClient, dryRun, since, snapshotExists, snapshotLocation}
+}
+
+/* istanbul ignore next */
+(async () => {
+  // Don't runScript when code is being imported for unit tests
+  if (!process.argv.includes('test')) {
+    const {smartClient, dryRun, since, snapshotExists, snapshotLocation} = buildRunScriptParams();
+    await runScript(smartClient, dryRun, since, snapshotExists, snapshotLocation);
+    logs.end();
   }
 })()
   .catch((error) => {
+    console.log('Run failed', error);
     logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-  })
-  .finally(() => {
     logs.end();
-  });
+  })
