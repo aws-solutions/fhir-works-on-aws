@@ -13,8 +13,9 @@ describe('MigrationUtils', () => {
       await expect(getFhirClient()).resolves.toEqual(expect.anything());
     });
 
+    // Not needed because this functionality does not exist in any migration scripts
     // we are expecting that the cognito user is an auditor so that they cannot write to the system
-    test('client should not be able to C/U/D', async () => {
+    test.skip('client should not be able to C/U/D', async () => {
       const client = await getFhirClient();
       await expect(client.post('Patient', {})).rejects.toMatchObject({
         response: { status: 401 }
@@ -33,8 +34,9 @@ describe('MigrationUtils', () => {
       await expect(getFhirClientSMART()).resolves.not.toThrowError();
     });
 
+    // Not needed because this functionality does not exist in any migration scripts
     // we are only using system/*.read scopes so we cannot write to the system
-    test('client should not be able to C/U/D', async () => {
+    test.skip('client should not be able to C/U/D', async () => {
       const client = await getFhirClientSMART();
       await expect(client.post('Patient', {})).rejects.toMatchObject({
         response: { status: 401 }

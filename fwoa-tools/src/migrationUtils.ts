@@ -164,6 +164,9 @@ export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promis
 
   const baseURL = SMART_SERVICE_URL;
 
+  console.log('accessToken', accessToken);
+  console.log('smartApiKey', SMART_API_KEY);
+
   return axios.create({
     headers: {
       'x-api-key': SMART_API_KEY,

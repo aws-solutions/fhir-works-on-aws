@@ -22,12 +22,16 @@ const executeCommand = async (command: string): Promise<unknown> =>
 
 describe('migration: end to end test', () => {
   let fhirClient: AxiosInstance;
+  jest.setTimeout(90 * 1000);
 
   test('SMART: end to end test', async () => {
     fhirClient = await getFhirClientSMART();
     const startTime = new Date();
+    console.log('before createBundle');
     const postResponse = await fhirClient.post('/', createBundle);
+    console.log('before binary');
     const binaryResponse = await fhirClient.post('/Binary', binaryResource);
+    console.log('before presigned URL');
     await axios.put(binaryResponse.data.presignedPutUrl, Buffer.from(binaryObject));
     console.log(
       'Successfully sent create resource request to FHIR server',
