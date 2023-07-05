@@ -76,6 +76,8 @@ async function startImport(folderNames: string[]): Promise<void> {
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
     const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
     i = folders.length;
+    // append previous successful imports
+    successfullyCompletedFolders.push(...folders);
   }
 
   for (i; i < folderNames.length; i += 1) {
