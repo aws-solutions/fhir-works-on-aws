@@ -11,10 +11,7 @@ import { GlueJobResponse, getExportStateFile, getExportStatus, startExportJob } 
 import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, checkConfiguration } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const {
-  GLUE_JOB_NAME,
-  EXPORT_BUCKET_NAME
-} = process.env;
+const { GLUE_JOB_NAME, EXPORT_BUCKET_NAME } = process.env;
 const EXPORT_OUTPUT_LOG_FILE_PREFIX: string = 'export_output_';
 
 // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -46,15 +43,17 @@ export function parseCmdOptions(): any {
     .default('since', null).argv;
 }
 
-
-
 let output: ExportOutput = {
   jobId: '',
   file_names: {}
 };
 
-
-export async function startExport(since: string, smartClient: boolean, snapshotExists: boolean, snapshotLocation: string): Promise<{
+export async function startExport(
+  since: string,
+  smartClient: boolean,
+  snapshotExists: boolean,
+  snapshotLocation: string
+): Promise<{
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   exportResponse: any;
@@ -95,8 +94,13 @@ async function generateStateFile(bucket: string, prefix: string): Promise<Export
   // third parameter with a different bucket
   return await getExportStateFile(s3Client, bucket, prefix);
 }
-export async function runScript(smartClient: boolean, dryRun: boolean, since: string, snapshotExists: boolean, snapshotLocation: string): Promise<void> {
-
+export async function runScript(
+  smartClient: boolean,
+  dryRun: boolean,
+  since: string,
+  snapshotExists: boolean,
+  snapshotLocation: string
+): Promise<void> {
   if (since) {
     try {
       since = new Date(since).toISOString();
@@ -108,26 +112,31 @@ export async function runScript(smartClient: boolean, dryRun: boolean, since: st
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   logs.write('Verification complete');
   if (!dryRun) {
-      const response = await startExport(since, smartClient, snapshotExists, snapshotLocation);
-      logs.write('Export completed. Start sorting objects.');
+    const response = await startExport(since, smartClient, snapshotExists, snapshotLocation);
+    logs.write('Export completed. Start sorting objects.');
 
-      let tenantPrefix = '';
-      if (process.env.MIGRATION_TENANT_ID) {
-        tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
-      }
-      const names = await generateStateFile(EXPORT_BUCKET_NAME!, `${tenantPrefix}${response.jobId}/`);
-      output = {
-        jobId: output.jobId,
-        file_names: names.file_names
-      };
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
-      logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
+    let tenantPrefix = '';
+    if (process.env.MIGRATION_TENANT_ID) {
+      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+    }
+    const names = await generateStateFile(EXPORT_BUCKET_NAME!, `${tenantPrefix}${response.jobId}/`);
+    output = {
+      jobId: output.jobId,
+      file_names: names.file_names
+    };
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    writeFileSync(`./${EXPORT_STATE_FILE_NAME}`, JSON.stringify(output));
+    logs.write(`${new Date().toISOString()}: Finished sorting export objects into folders.\n`);
   }
 }
 
-export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean, since: string,
-  snapshotExists: boolean, snapshotLocation: string} {
+export function buildRunScriptParams(): {
+  smartClient: boolean;
+  dryRun: boolean;
+  since: string;
+  snapshotExists: boolean;
+  snapshotLocation: string;
+} {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const argv: any = parseCmdOptions();
   const smartClient: boolean = argv.smart;
@@ -135,20 +144,19 @@ export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean, 
   const since: string = argv.since;
   const snapshotExists: boolean = argv.snapshotExists;
   const snapshotLocation: string = argv.snapshotLocation;
-  return {smartClient, dryRun, since, snapshotExists, snapshotLocation}
+  return { smartClient, dryRun, since, snapshotExists, snapshotLocation };
 }
 
 /* istanbul ignore next */
 (async () => {
   // Don't runScript when code is being imported for unit tests
-  if (!process.argv.includes('test')) {
-    const {smartClient, dryRun, since, snapshotExists, snapshotLocation} = buildRunScriptParams();
+  if (!process.env.UNIT_TEST) {
+    const { smartClient, dryRun, since, snapshotExists, snapshotLocation } = buildRunScriptParams();
     await runScript(smartClient, dryRun, since, snapshotExists, snapshotLocation);
     logs.end();
   }
-})()
-  .catch((error) => {
-    console.log('Run failed', error);
-    logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-    logs.end();
-  })
+})().catch((error) => {
+  console.log('Run failed', error);
+  logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
+  logs.end();
+});

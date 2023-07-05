@@ -22,32 +22,41 @@ describe('MigrationUtils', () => {
     jest.resetModules();
     process.env = env;
   });
+
+  const FAKE_API_URL = 'https://fake-api-url.com/dev';
+  const FAKE_API_KEY = 'fake-api-key';
+  const FAKE_API_AWS_REGION = 'us-east-1';
+  const FAKE_COGNITO_CLIENT_ID = 'fakeCognitoClientId';
+  const FAKE_COGNITO_USERNAME = 'fake-cognito-user-name';
+  const FAKE_COGNITO_PASSWORD = 'fake-cognito-password';
+  const FAKE_ID_TOKEN = 'fake-id-token';
+
   describe('getFhirClient', () => {
     test('throws error when environment variable is missing', async () => {
       await expect(getFhirClient()).rejects.toThrowError('API_URL environment variable is not defined');
-      process.env.API_URL = 'https://fake-api-url.com/dev';
+      process.env.API_URL = FAKE_API_URL;
       await expect(getFhirClient()).rejects.toThrowError('API_KEY environment variable is not defined');
-      process.env.API_KEY = 'fake-api-key';
+      process.env.API_KEY = FAKE_API_KEY;
       await expect(getFhirClient()).rejects.toThrowError(
         'API_AWS_REGION environment variable is not defined'
       );
-      process.env.API_AWS_REGION = 'us-east-1';
+      process.env.API_AWS_REGION = FAKE_API_AWS_REGION;
       await expect(getFhirClient()).rejects.toThrowError(
         'COGNITO_CLIENT_ID environment variable is not defined'
       );
-      process.env.COGNITO_CLIENT_ID = 'fake-cognito-client-id';
+      process.env.COGNITO_CLIENT_ID = FAKE_COGNITO_CLIENT_ID;
       await expect(getFhirClient()).rejects.toThrowError(
         'COGNITO_USERNAME environment variable is not defined'
       );
     });
 
     test('should call Cognito with correct parameters', async () => {
-      process.env.API_URL = 'https://fake-api-url.com/dev';
-      process.env.API_KEY = 'fake-api-key';
-      process.env.API_AWS_REGION = 'us-east-1';
-      process.env.COGNITO_CLIENT_ID = 'fakeCognitoClientId';
-      process.env.COGNITO_USERNAME = 'fake-cognito-user-name';
-      process.env.COGNITO_PASSWORD = 'fake-cognito-password';
+      process.env.API_URL = FAKE_API_URL;
+      process.env.API_KEY = FAKE_API_KEY;
+      process.env.API_AWS_REGION = FAKE_API_AWS_REGION;
+      process.env.COGNITO_CLIENT_ID = FAKE_COGNITO_CLIENT_ID;
+      process.env.COGNITO_USERNAME = FAKE_COGNITO_USERNAME;
+      process.env.COGNITO_PASSWORD = FAKE_COGNITO_PASSWORD;
 
       AWSMock.mock(
         'CognitoIdentityServiceProvider',
@@ -58,19 +67,19 @@ describe('MigrationUtils', () => {
             Object {
               "AuthFlow": "USER_PASSWORD_AUTH",
               "AuthParameters": Object {
-                "PASSWORD": "fake-cognito-password",
-                "USERNAME": "fake-cognito-user-name",
+                "PASSWORD": "${FAKE_COGNITO_PASSWORD}",
+                "USERNAME": "${FAKE_COGNITO_USERNAME}",
               },
-              "ClientId": "fakeCognitoClientId",
+              "ClientId": "${FAKE_COGNITO_CLIENT_ID}",
             }
           `);
-          callback(null, { AuthenticationResult: { IdToken: 'take-id-token' } });
+          callback(null, { AuthenticationResult: { IdToken: FAKE_ID_TOKEN } });
         }
       );
       const fhirClient = await getFhirClient();
-      expect(fhirClient.defaults.baseURL).toEqual('https://fake-api-url.com/dev');
+      expect(fhirClient.defaults.baseURL).toEqual(FAKE_API_URL);
       expect(fhirClient.defaults.headers).toEqual(
-        expect.objectContaining({ Authorization: 'Bearer take-id-token' })
+        expect.objectContaining({ Authorization: `Bearer ${FAKE_ID_TOKEN}` })
       );
     });
   });
@@ -121,11 +130,13 @@ describe('MigrationUtils', () => {
     });
 
     test('should check s3 and healthlake ', async () => {
+      const FAKE_DATASTORE_ID = 'fake-ds-id';
+
       process.env.EXPORT_BUCKET_NAME = 'fake-export-bucket-name';
       process.env.BINARY_BUCKET_NAME = 'fake-binary-bucket-name';
       process.env.API_AWS_REGION = 'us-east-1';
       process.env.GLUE_JOB_NAME = 'fake-job-name';
-      process.env.DATASTORE_ID = 'fake-ds-id';
+      process.env.DATASTORE_ID = FAKE_DATASTORE_ID;
       process.env.DATASTORE_ENDPOINT = 'fake-endpoint';
       process.env.DATA_ACCESS_ROLE_ARN = 'fake-role-arn';
       process.env.IMPORT_KMS_KEY_ARN = 'fake-kms-arn';
@@ -133,14 +144,14 @@ describe('MigrationUtils', () => {
       process.env.HEALTHLAKE_CLIENT_TOKEN = 'fake-client-id';
       process.env.EXPORT_BUCKET_URI = 'fake-export-uri';
       process.env.IMPORT_OUTPUT_S3_URI = 'fake-import-uri';
-      const logs: WriteStream = createWriteStream(`util-unit-test-${Date.now().toString()}.log`, {
+      const logs: WriteStream = createWriteStream(`unit-test.log`, {
         flags: 'a'
       });
 
       /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any */
       const s3MockFunction = jest.fn((params: any, callback: Function) => callback(null, { test: 'result' }));
       const healthlakeMockFunction = jest.fn((params: any, callback: Function) => {
-        expect(params).toEqual({ DatastoreId: 'fake-ds-id' });
+        expect(params).toEqual({ DatastoreId: FAKE_DATASTORE_ID });
         callback(null, { test: 'result' });
       });
       /* eslint-enable @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any */
