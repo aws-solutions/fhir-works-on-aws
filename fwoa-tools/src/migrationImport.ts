@@ -39,6 +39,11 @@ const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
 const successfullyCompletedFolders: string[] = [];
 
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
+  flags: 'a'
+});
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
@@ -122,7 +127,7 @@ export async function startImport(
           );
 
           await sleep(POLLING_TIME);
-          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, logs, outputFile);
+          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, outputFile);
           logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
           successfullyCompletedFolders.push(folderName);
           break;
@@ -151,11 +156,7 @@ export async function startImport(
   }
 }
 
-export async function checkFolderSizeOfResource(
-  resources: string[],
-  logs: WriteStream,
-  jobId: string
-): Promise<void> {
+export async function checkFolderSizeOfResource(resources: string[], jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkFolderSizeOfResource \n`);
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -206,7 +207,7 @@ export async function checkFolderSizeOfResource(
   }
 }
 
-export async function checkConvertedBinaryFileSize(logs: WriteStream, jobId: string): Promise<void> {
+export async function checkConvertedBinaryFileSize(jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkConvertedBinaryFileSize \n`);
   console.log('Checking Binary file size');
   const s3Client = new S3({
@@ -243,7 +244,6 @@ export async function checkConvertedBinaryFileSize(logs: WriteStream, jobId: str
 
 export async function deleteFhirResourceFromHealthLakeIfNeeded(
   folderName: string,
-  logs: WriteStream,
   outputFile: ExportOutput
 ): Promise<void> {
   let deleteQueue: string[] = [];
@@ -278,18 +278,18 @@ export async function deleteFhirResourceFromHealthLakeIfNeeded(
         deleteQueue.push(`/${resource.resourceType}/${resource.id}`);
         if (deleteQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
           // eslint-disable-next-line no-await-in-loop
-          await deleteResourcesInBundle(deleteQueue, logs);
+          await deleteResourcesInBundle(deleteQueue);
           deleteQueue = [];
         }
       }
     }
   }
   if (deleteQueue.length !== 0) {
-    await deleteResourcesInBundle(deleteQueue, logs);
+    await deleteResourcesInBundle(deleteQueue);
   }
 }
 
-export async function deleteResourcesInBundle(deletePaths: string[], logs: WriteStream): Promise<void> {
+export async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   const interceptor = aws4Interceptor({
     region: API_AWS_REGION!,
     service: 'healthlake'
@@ -318,23 +318,15 @@ export async function deleteResourcesInBundle(deletePaths: string[], logs: Write
   }
 }
 
-(async () => {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
-  const logs: WriteStream = createWriteStream(
-    `${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
-    {
-      flags: 'a'
-    }
-  );
-
+async function runScript(): Promise<void> {
   // get the job id from the export output file
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
   const jobId: string = outputFile.jobId;
 
   await checkConfiguration(logs);
-  await checkConvertedBinaryFileSize(logs, jobId);
-  await checkFolderSizeOfResource(Object.keys(outputFile.file_names), logs, jobId);
+  await checkConvertedBinaryFileSize(jobId);
+  await checkFolderSizeOfResource(Object.keys(outputFile.file_names), jobId);
   if (!dryRun) {
     try {
       const sortedKeys = Object.keys(outputFile.file_names).sort((a: string, b: string) => {
@@ -352,7 +344,16 @@ export async function deleteResourcesInBundle(deletePaths: string[], logs: Write
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
-  logs.end();
+}
+
+/* istanbul ignore next */
+(async () => {
+  // don't runScript when importing code for unit tests
+  if (!process.argv.includes('test')) {
+    await runScript();
+    logs.end();
+  }
 })().catch((e) => {
   console.log('Checks failed', e);
+  logs.end();
 });

@@ -12,6 +12,14 @@ import { EXPORT_STATE_FILE_NAME, ExportOutput, checkConfiguration } from './migr
 dotenv.config({ path: '.env' });
 const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
 
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const logs: WriteStream = createWriteStream(
+  `${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+  {
+    flags: 'a'
+  }
+);
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
@@ -86,7 +94,7 @@ export async function uploadBinaryResource(
     .promise();
 }
 
-export async function convertBinaryResource(logs: WriteStream, outputFile: ExportOutput): Promise<void> {
+export async function convertBinaryResource(outputFile: ExportOutput): Promise<void> {
   // Step 1, Get all Binary Resource Paths
   let itemKeys: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
@@ -154,20 +162,16 @@ export async function convertBinaryResource(logs: WriteStream, outputFile: Expor
   }
 }
 
-async function startBinaryConversion(logs: WriteStream, outputFile: ExportOutput): Promise<void> {
+async function startBinaryConversion(outputFile: ExportOutput): Promise<void> {
   console.log(`Starting Binary Resource Conversion...`);
   logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
-  await convertBinaryResource(logs, outputFile);
+  await convertBinaryResource(outputFile);
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   writeFileSync(`${EXPORT_STATE_FILE_NAME}`, JSON.stringify(outputFile));
   logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
 }
 
-(async () => {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
-  const logs = createWriteStream(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-    flags: 'a'
-  });
+async function runScript(): Promise<void> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const outputFile = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
 
@@ -175,14 +179,23 @@ async function startBinaryConversion(logs: WriteStream, outputFile: ExportOutput
     await checkConfiguration(logs);
     console.log('successfully authenticated to all services');
     if (!dryRun) {
-      await startBinaryConversion(logs, outputFile);
+      await startBinaryConversion(outputFile);
       console.log('successfully converted all binary resources!');
     }
   } catch (error) {
     console.log('Failed to process binary resources', error);
     logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
-    logs?.end();
+  }
+}
+
+/* istanbul ignore next */
+(async () => {
+  // don't runScript when importing code for unit tests
+  if (!process.argv.includes('test')) {
+    await runScript();
+    logs.end();
   }
 })().catch((e) => {
   console.error(e);
+  logs.end();
 });

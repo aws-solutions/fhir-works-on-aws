@@ -3,7 +3,6 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as fs from 'fs';
 import AWS from 'aws-sdk';
 import { GetObjectRequest, ListObjectsV2Request } from 'aws-sdk/clients/s3';
 import * as AWSMock from 'aws-sdk-mock';
@@ -18,12 +17,11 @@ import {
 import { Bundle, ExportOutput, getEmptyFHIRBundle } from './migrationUtils';
 
 AWSMock.setSDKInstance(AWS);
+const env = process.env;
 
 describe('migrationImport', () => {
-  const logs = fs.createWriteStream('migrationImport_unit_test.log');
-
   afterAll(() => {
-    logs.end();
+    process.env = env;
   });
 
   describe('deleteFhirResourceFromHealthLakeIfNeeded', () => {
@@ -56,9 +54,7 @@ describe('migrationImport', () => {
           callback(null, { Body: fakeFileBody, $response: {} });
         }
       );
-      await expect(
-        deleteFhirResourceFromHealthLakeIfNeeded('Patient', logs, fakeFile)
-      ).resolves.not.toThrowError();
+      await expect(deleteFhirResourceFromHealthLakeIfNeeded('Patient', fakeFile)).resolves.not.toThrowError();
     });
 
     it('should delete resources if marked for deletion', async () => {
@@ -75,9 +71,7 @@ describe('migrationImport', () => {
         }
       );
       mock.onPost(/.*/g).reply(200, { data: 'successful delete' });
-      await expect(
-        deleteFhirResourceFromHealthLakeIfNeeded('Patient', logs, fakeFile)
-      ).resolves.not.toThrowError();
+      await expect(deleteFhirResourceFromHealthLakeIfNeeded('Patient', fakeFile)).resolves.not.toThrowError();
     });
   });
 
@@ -102,7 +96,7 @@ describe('migrationImport', () => {
         { request: { method: 'DELETE', url: 'test2' } }
       ];
       mock.onPost(/.*/g).reply(200, { data: 'successful delete' });
-      await expect(deleteResourcesInBundle(['test1', 'test2'], logs)).resolves.not.toThrowError();
+      await expect(deleteResourcesInBundle(['test1', 'test2'])).resolves.not.toThrowError();
       expect(mock.history.post[0].data).toEqual(JSON.stringify(mockBundle));
     });
   });
@@ -130,9 +124,7 @@ describe('migrationImport', () => {
           });
         }
       );
-      await expect(
-        checkFolderSizeOfResource(['Patient'], logs, 'testBinaryJobId')
-      ).resolves.not.toThrowError();
+      await expect(checkFolderSizeOfResource(['Patient'], 'testBinaryJobId')).resolves.not.toThrowError();
     });
 
     it('should not pass for folders greater than 500GB', async () => {
@@ -148,7 +140,7 @@ describe('migrationImport', () => {
           });
         }
       );
-      await expect(checkFolderSizeOfResource(['Patient'], logs, 'testImportJobId')).rejects.toThrowError();
+      await expect(checkFolderSizeOfResource(['Patient'], 'testImportJobId')).rejects.toThrowError();
     });
   });
 
@@ -175,7 +167,7 @@ describe('migrationImport', () => {
           });
         }
       );
-      await expect(checkConvertedBinaryFileSize(logs, 'testBinaryJobId')).resolves.not.toThrowError();
+      await expect(checkConvertedBinaryFileSize('testBinaryJobId')).resolves.not.toThrowError();
     });
 
     it('should not pass if Binary File size greater than 5GB', async () => {
@@ -191,7 +183,7 @@ describe('migrationImport', () => {
           });
         }
       );
-      await expect(checkConvertedBinaryFileSize(logs, 'testBinaryJobId')).rejects.toThrowError();
+      await expect(checkConvertedBinaryFileSize('testBinaryJobId')).rejects.toThrowError();
     });
   });
 });

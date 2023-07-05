@@ -3,7 +3,6 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as fs from 'fs';
 import AWS from 'aws-sdk';
 import { GetObjectRequest, ListObjectsV2Request, PutObjectRequest } from 'aws-sdk/clients/s3';
 import * as AWSMock from 'aws-sdk-mock';
@@ -21,24 +20,31 @@ let fakeFile: ExportOutput = {
   jobId: 'binaryUnitTests',
   file_names: { Binary: ['Binary/Binary-0.ndjson'] }
 };
+const env = process.env;
 
 describe('binaryConverter', () => {
   afterEach(() => {
     AWSMock.restore();
+    process.env = env;
   });
 
   beforeEach(() => {
     jest.resetModules();
     process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
     process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
+    process.env.API_AWS_REGION = 'us-east-1';
+    process.env.GLUE_JOB_NAME = 'fake-job-name';
+    process.env.DATASTORE_ID = 'fake-ds-id';
+    process.env.DATASTORE_ENDPOINT = 'fake-endpoint';
+    process.env.DATA_ACCESS_ROLE_ARN = 'fake-role-arn';
+    process.env.IMPORT_KMS_KEY_ARN = 'fake-kms-arn';
+    process.env.IMPORT_OUTPUT_S3_BUCKET_NAME = 'fake-import-output-bucket-name';
+    process.env.HEALTHLAKE_CLIENT_TOKEN = 'fake-client-id';
+    process.env.EXPORT_BUCKET_URI = 'fake-export-uri';
+    process.env.IMPORT_OUTPUT_S3_URI = 'fake-import-uri';
   });
 
   describe('parseCmdOptions', () => {
-    beforeEach(() => {
-      process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
-      process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
-    });
-
     test('dryrun enabled', () => {
       process.argv = ['/usr/local/bin/ts-node', 'binaryConverter.ts', '-d'];
 
@@ -56,18 +62,7 @@ describe('binaryConverter', () => {
   });
 
   describe('convertBinaryResource', () => {
-    let logs: fs.WriteStream;
-    beforeAll(() => {
-      logs = fs.createWriteStream('binary_unit_test.log');
-    });
-
-    beforeEach(() => {
-      process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
-      process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
-    });
-
     afterAll(() => {
-      logs.end();
       AWSMock.restore();
     });
 
@@ -120,7 +115,7 @@ describe('binaryConverter', () => {
           callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
         }
       );
-      await expect(convertBinaryResource(logs, fakeFile)).resolves.not.toThrowError();
+      await expect(convertBinaryResource(fakeFile)).resolves.not.toThrowError();
     });
 
     test('multi-tenancy = true', async () => {
@@ -167,18 +162,13 @@ describe('binaryConverter', () => {
           callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
         }
       );
-      await convertBinaryResource(logs, fakeFile);
+      await convertBinaryResource(fakeFile);
     });
   });
 
   describe('getBinaryObject', () => {
     afterEach(() => {
       AWSMock.restore();
-    });
-
-    beforeEach(() => {
-      process.env.BINARY_BUCKET_NAME = 'unit_test_binary_bucket_name';
-      process.env.EXPORT_BUCKET_NAME = 'unit_test_export_bucket_name';
     });
 
     test('multi-tenancy = false', async () => {

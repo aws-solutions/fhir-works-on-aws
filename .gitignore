@@ -104,3 +104,8 @@ fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
 **/lib/**/*.map
 **/lib/**/*d.ts
 **/lib/**/*.json
+
+# fwoa-tools
+**migrationExport_Output.json
+**.log
+**import_state.txt
