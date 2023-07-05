@@ -73,6 +73,7 @@ dist
 .idea
 
 coverage
+undefined
 
 # Implementation guides
 /solutions/**/implementationGuides
