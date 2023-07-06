@@ -24,6 +24,7 @@ import {logs} from "./migrationImport";
 import {parseCmdOptions, buildRunScriptParams, runScript, verifyResource} from "./migrationVerify";
 
 let mock: MockAdapter;
+const env = process.env;
 AWSMock.setSDKInstance(AWS);
 
 describe('migrationVerify', () => {
@@ -41,6 +42,7 @@ describe('migrationVerify', () => {
     afterEach(() => {
         mock.reset();
         AWSMock.restore();
+        process.env = env;
     })
     describe('parseCmdOptions', () => {
         test('smart and dryrun enabled', () => {
