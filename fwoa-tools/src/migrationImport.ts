@@ -24,29 +24,20 @@ import {
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const {
-  EXPORT_BUCKET_URI,
-  DATASTORE_ID,
-  DATASTORE_ENDPOINT,
-  API_AWS_REGION,
-  DATA_ACCESS_ROLE_ARN,
-  HEALTHLAKE_CLIENT_TOKEN,
-  IMPORT_OUTPUT_S3_URI,
-  IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN,
-  EXPORT_BUCKET_NAME,
-  MIGRATION_TENANT_ID
-} = process.env;
+const { API_AWS_REGION, HEALTHLAKE_CLIENT_TOKEN } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
-
 const successfullyCompletedFolders: string[] = [];
+
 // eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-  flags: 'a'
-});
+export const logs: WriteStream = createWriteStream(
+  `${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+  {
+    flags: 'a'
+  }
+);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -61,16 +52,11 @@ function parseCmdOptions(): any {
 const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
 
-// get the job id from the export output file
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
-const jobId: string = outputFile.jobId;
-
-const healthLake: HealthLake = new HealthLake({
-  region: API_AWS_REGION
-});
-
-async function startImport(folderNames: string[]): Promise<void> {
+export async function startImport(
+  folderNames: string[],
+  jobId: string,
+  outputFile: ExportOutput
+): Promise<void> {
   let i: number = 0;
   // To see if we have completed folders to skip importing
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
@@ -79,6 +65,10 @@ async function startImport(folderNames: string[]): Promise<void> {
     // append previous successful imports
     successfullyCompletedFolders.push(...folders);
   }
+
+  const healthLake: HealthLake = new HealthLake({
+    region: API_AWS_REGION
+  });
 
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
@@ -96,21 +86,20 @@ async function startImport(folderNames: string[]): Promise<void> {
     }
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
-        S3Uri: `${EXPORT_BUCKET_URI}/${tenantPrefix}${jobId}/${folderName}`
+        S3Uri: `s3://${process.env.EXPORT_BUCKET_NAME}/${tenantPrefix}${jobId}/${folderName}`
       },
       // Job Names must be less than 64 characters in length
       JobName: `FWoAFolderMigration-${folderName}`.substring(0, 64),
-      DatastoreId: DATASTORE_ID!,
-      DataAccessRoleArn: DATA_ACCESS_ROLE_ARN!,
+      DatastoreId: process.env.DATASTORE_ID!,
+      DataAccessRoleArn: process.env.DATA_ACCESS_ROLE_ARN!,
       JobOutputDataConfig: {
         S3Configuration: {
-          S3Uri: IMPORT_OUTPUT_S3_URI!,
-          KmsKeyId: IMPORT_KMS_KEY_ARN!
+          S3Uri: process.env.IMPORT_OUTPUT_S3_URI!,
+          KmsKeyId: process.env.IMPORT_KMS_KEY_ARN!
         }
       },
       ClientToken: HEALTHLAKE_CLIENT_TOKEN || uuidv4()
     };
-    await sleep(POLLING_TIME * 20);
     const importJob = await healthLake.startFHIRImportJob(params).promise();
     console.log(`successfully started import job, checking status at ${importJob.JobId}`);
     logs.write(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}\n`);
@@ -119,7 +108,7 @@ async function startImport(folderNames: string[]): Promise<void> {
       try {
         const jobStatus = await healthLake
           .describeFHIRImportJob({
-            DatastoreId: DATASTORE_ID!,
+            DatastoreId: process.env.DATASTORE_ID!,
             JobId: importJob.JobId
           })
           .promise();
@@ -133,7 +122,7 @@ async function startImport(folderNames: string[]): Promise<void> {
           );
 
           await sleep(POLLING_TIME);
-          await deleteFhirResourceFromHealthLakeIfNeeded(folderName);
+          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, outputFile);
           logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
           successfullyCompletedFolders.push(folderName);
           break;
@@ -162,7 +151,7 @@ async function startImport(folderNames: string[]): Promise<void> {
   }
 }
 
-async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
+export async function checkFolderSizeOfResource(resources: string[], jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkFolderSizeOfResource \n`);
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -180,13 +169,13 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
-    const prefix = MIGRATION_TENANT_ID
-      ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${resource}`
-      : `${outputFile.jobId}/${resource}`;
+    const prefix = process.env.MIGRATION_TENANT_ID
+      ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${resource}`
+      : `${jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
-          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+          Bucket: process.env.EXPORT_BUCKET_NAME!,
           Prefix: prefix,
           ContinuationToken: continuationToken
         })
@@ -213,7 +202,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
   }
 }
 
-async function checkConvertedBinaryFileSize(): Promise<void> {
+export async function checkConvertedBinaryFileSize(jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkConvertedBinaryFileSize \n`);
   console.log('Checking Binary file size');
   const s3Client = new S3({
@@ -222,13 +211,13 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
-  const prefix = MIGRATION_TENANT_ID
-    ? `${MIGRATION_TENANT_ID}/${outputFile.jobId}/${convertedBinaryFolderName}`
-    : `${outputFile.jobId}/${convertedBinaryFolderName}`;
+  const prefix = process.env.MIGRATION_TENANT_ID
+    ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${convertedBinaryFolderName}`
+    : `${jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
-        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
         Prefix: prefix,
         ContinuationToken: continuationToken
       })
@@ -248,7 +237,10 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finish checkConvertedBinaryFileSize \n`);
 }
 
-async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Promise<void> {
+export async function deleteFhirResourceFromHealthLakeIfNeeded(
+  folderName: string,
+  outputFile: ExportOutput
+): Promise<void> {
   let deleteQueue: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
@@ -261,7 +253,7 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Pro
     logs.write(`${new Date().toISOString()}: Checking resources from ${resourcePath}...\n`);
     const resourceFile = await s3Client
       .getObject({
-        Bucket: EXPORT_BUCKET_NAME!,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
         Key: resourcePath
       })
       .promise();
@@ -292,7 +284,7 @@ async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string): Pro
   }
 }
 
-async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
+export async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   const interceptor = aws4Interceptor({
     region: API_AWS_REGION!,
     service: 'healthlake'
@@ -313,7 +305,7 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
 
   const healthLakeBundleDeleteResponse = await healthLakeClient.post(
-    `${DATASTORE_ENDPOINT}`,
+    `${process.env.DATASTORE_ENDPOINT}`,
     JSON.stringify(bundle)
   );
   if (healthLakeBundleDeleteResponse.status !== 200) {
@@ -321,10 +313,15 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
   }
 }
 
-(async () => {
+async function runScript(): Promise<void> {
+  // get the job id from the export output file
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+  const jobId: string = outputFile.jobId;
+
   await checkConfiguration(logs);
-  await checkConvertedBinaryFileSize();
-  await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
+  await checkConvertedBinaryFileSize(jobId);
+  await checkFolderSizeOfResource(Object.keys(outputFile.file_names), jobId);
   if (!dryRun) {
     try {
       const sortedKeys = Object.keys(outputFile.file_names).sort((a: string, b: string) => {
@@ -333,7 +330,7 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
           sensitivity: 'base'
         });
       });
-      await startImport(sortedKeys);
+      await startImport(sortedKeys, jobId, outputFile);
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
@@ -342,7 +339,15 @@ async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
-  logs.end();
+}
+
+/* istanbul ignore next */
+(async () => {
+  // don't runScript when importing code for unit tests
+  if (!process.env.UNIT_TEST) {
+    await runScript();
+    logs.end();
+  }
 })().catch((e) => {
   console.log('Checks failed', e);
   logs.end();
