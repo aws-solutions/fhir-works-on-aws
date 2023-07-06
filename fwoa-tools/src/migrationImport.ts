@@ -56,6 +56,8 @@ export async function startImport(
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
     const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
     i = folders.length;
+    // append previous successful imports
+    successfullyCompletedFolders.push(...folders);
   }
 
   const healthLake: HealthLake = new HealthLake({
