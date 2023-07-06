@@ -2,9 +2,10 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import path from 'path';
+import * as dotenv from 'dotenv';
 import { getFhirClient, getFhirClientSMART } from '../migrationUtils';
-import * as dotenv from "dotenv";
-import path from "path";
+
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 
 describe('MigrationUtils', () => {
@@ -31,7 +32,7 @@ describe('MigrationUtils', () => {
 
   describe('getFhirClientSMART', () => {
     test('client should be able to authenticate', async () => {
-      await expect(getFhirClientSMART()).resolves.not.toThrowError();
+      await expect(getFhirClientSMART()).resolves.toEqual(expect.anything());
     });
 
     // Not needed because this functionality does not exist in any migration scripts

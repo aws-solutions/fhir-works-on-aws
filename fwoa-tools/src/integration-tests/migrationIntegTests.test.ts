@@ -3,11 +3,12 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { exec } from 'child_process';
+import path from 'path';
 import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import createBundle from '../createPatientPractitionerEncounterBundle.json';
 import { getFhirClient, getFhirClientSMART } from '../migrationUtils';
-import path from "path";
+
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 
 const binaryResource: { resourceType: string; contentType: string } = {
@@ -39,10 +40,10 @@ describe('migration: end to end test', () => {
     );
 
     await expect(
-      executeCommand(`ts-node ./migrationExport.ts -s --since=${startTime.toISOString}`)
-    ).resolves.not.toThrowError();
-    await expect(executeCommand(`ts-node ./binaryConverter.ts`)).resolves.not.toThrowError();
-    await expect(executeCommand(`ts-node ./migrationimport.ts -s`)).resolves.not.toThrowError();
+      executeCommand(`ts-node ../migrationExport.ts -s --since=${startTime.toISOString()}`)
+    ).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ../binaryConverter.ts`)).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ../migrationimport.ts -s`)).resolves.toEqual(expect.anything());
   });
 
   test('non-SMART: end to end test', async () => {
@@ -57,9 +58,9 @@ describe('migration: end to end test', () => {
     );
 
     await expect(
-      executeCommand(`ts-node ./migrationExport.ts --since=${startTime.toISOString}`)
+      executeCommand(`ts-node ../migrationExport.ts --since=${startTime.toISOString()}`)
     ).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ./binaryConverter.ts`)).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ./migrationimport.ts`)).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ../binaryConverter.ts`)).resolves.toEqual(expect.anything());
+    await expect(executeCommand(`ts-node ../migrationimport.ts`)).resolves.toEqual(expect.anything());
   });
 });
