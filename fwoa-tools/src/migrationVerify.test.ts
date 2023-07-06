@@ -21,7 +21,7 @@ import * as AWSMock from 'aws-sdk-mock';
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {logs} from "./migrationImport";
-import {parseCmdOptions, buildRunScriptParams, verifyFolderImport, runScript, verifyResource} from "./migrationVerify";
+import {parseCmdOptions, buildRunScriptParams, runScript, verifyResource} from "./migrationVerify";
 
 let mock: MockAdapter;
 AWSMock.setSDKInstance(AWS);
