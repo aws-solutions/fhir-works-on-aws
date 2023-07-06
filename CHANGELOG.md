@@ -4,8 +4,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [6.1.0] - 2023-06-07
 
-Migration tool to export FHIR resources from FHIR Works on AWS to Amazon HealthLake
-
 ### Changelog for Packages in This project
 
 Please click corresponded links for more details for changelog of each package.
