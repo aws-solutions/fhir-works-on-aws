@@ -1,6 +1,7 @@
 # Logs
 *.log
 npm-debug.log*
+migrationExport_Output.json
 
 # Runtime data
 *.pid
