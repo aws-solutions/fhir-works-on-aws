@@ -82,8 +82,6 @@ describe('migrationVerify', () => {
         process.env.EXPORT_BUCKET_NAME = 'fake-bucket-name'
         const fakeFileBody =
             '{"resourceType": "Patient", "id": "unit_test_patient", "meta": {"tag":[]}}\n{"resourceType": "Patient", "id": "unit_test_patient2", "meta": {"tag":[]}}';
-        // eslint-disable-next-line
-        // const s3MockFunction = jest.fn((params: any, callback: Function) => callback(null, { Body: fakeFileBody, $response: {} }));
         AWSMock.mock(
             'S3',
             'getObject',
