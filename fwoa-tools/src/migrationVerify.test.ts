@@ -6,17 +6,17 @@
 jest.mock('./migrationUtils', () => ({
     checkConfiguration: () => {},
     getFhirClientSMART: () => {
-        //eslint-disable-next-line
+        //eslint-disable-next-line @typescript-eslint/no-use-before-define
         return axios.create();
     },
     getFhirClient: () => {
-        //eslint-disable-next-line
+        //eslint-disable-next-line @typescript-eslint/no-use-before-define
         return axios.create();
     }
 }));
 
 import AWS from 'aws-sdk';
-import {GetObjectRequest} from "aws-sdk/clients/s3";
+import { GetObjectRequest } from "aws-sdk/clients/s3";
 import * as AWSMock from 'aws-sdk-mock';
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -25,6 +25,7 @@ import {parseCmdOptions, buildRunScriptParams, runScript, verifyResource} from "
 
 let mock: MockAdapter;
 const env = process.env;
+const argv = process.argv;
 AWSMock.setSDKInstance(AWS);
 
 describe('migrationVerify', () => {
@@ -43,6 +44,7 @@ describe('migrationVerify', () => {
         mock.reset();
         AWSMock.restore();
         process.env = env;
+        process.argv = argv;
     })
     describe('parseCmdOptions', () => {
         test('smart and dryrun enabled', () => {
@@ -82,8 +84,23 @@ describe('migrationVerify', () => {
 
     test('runScript', async() => {
         process.env.EXPORT_BUCKET_NAME = 'fake-bucket-name'
-        const fakeFileBody =
-            '{"resourceType": "Patient", "id": "unit_test_patient", "meta": {"tag":[]}}\n{"resourceType": "Patient", "id": "unit_test_patient2", "meta": {"tag":[]}}';
+        const fakeFileBody = JSON.stringify([
+            {
+                "resourceType": "Patient",
+                "id": "unit_test_patient",
+                "meta": {
+                    "tag": []
+                }
+            },
+            {
+                "resourceType": "Patient",
+                "id": "unit_test_patient2",
+                "meta": {
+                    "tag": []
+                }
+            }
+        ]);
+
         AWSMock.mock(
             'S3',
             'getObject',
