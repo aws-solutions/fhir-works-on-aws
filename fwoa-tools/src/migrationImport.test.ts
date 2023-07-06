@@ -230,10 +230,10 @@ describe('migrationImport', () => {
 
     it('should successfully import files', async () => {
       // mock start import job
-      // eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock(
         'HealthLake',
         'startFHIRImportJob',
+        // eslint-disable-next-line @typescript-eslint/ban-types
         (params: StartFHIRImportJobRequest, callback: Function) => {
           expect(params.InputDataConfig.S3Uri).toBe(
             `s3://unit_test_export_bucket_name/${fakeFile.jobId}/Patient`
@@ -245,10 +245,10 @@ describe('migrationImport', () => {
       );
 
       //mock describe import job
-      // eslint-disable-next-line @typescript-eslint/ban-types
       AWSMock.mock(
         'HealthLake',
         'describeFHIRImportJob',
+        // eslint-disable-next-line @typescript-eslint/ban-types
         (params: DescribeFHIRImportJobRequest, callback: Function) => {
           expect(params.JobId).toBe('unitTestImportJobId');
           callback(null, {
