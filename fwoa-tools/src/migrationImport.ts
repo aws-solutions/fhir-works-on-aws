@@ -31,7 +31,13 @@ const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
 const successfullyCompletedFolders: string[] = [];
 
-export let logs: WriteStream;
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+export const logs: WriteStream = createWriteStream(
+  `${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+  {
+    flags: 'a'
+  }
+);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -338,11 +344,7 @@ async function runScript(): Promise<void> {
 /* istanbul ignore next */
 (async () => {
   // don't runScript when importing code for unit tests
-  if (!process.argv.includes('test')) {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
-    logs = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-      flags: 'a'
-    });
+  if (!process.env.UNIT_TEST) {
     await runScript();
     logs.end();
   }
