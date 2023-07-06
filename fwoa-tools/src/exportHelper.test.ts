@@ -152,17 +152,17 @@ describe('MigrationUtils', () => {
       process.env.API_AWS_REGION = FAKE_API_AWS_REGION;
       const mockGetJobRunFunc = jest
         .fn()
-        //eslint-disable-next-line @typescript-eslint/ban-types
         .mockImplementationOnce(
+          //eslint-disable-next-line @typescript-eslint/ban-types
           (params: StartJobRunRequest, callback: Function) => {
             callback(null, { JobRun: { JobRunState: 'RUNNING' } });
           }
-          //eslint-disable-next-line @typescript-eslint/ban-types
         )
+        //eslint-disable-next-line @typescript-eslint/ban-types
         .mockImplementationOnce((params: StartJobRunRequest, callback: Function) => {
           callback(null, { JobRun: { JobRunState: 'WAITING' } });
-          //eslint-disable-next-line @typescript-eslint/ban-types
         })
+        //eslint-disable-next-line @typescript-eslint/ban-types
         .mockImplementationOnce((params: StartJobRunRequest, callback: Function) => {
           callback(null, { JobRun: { JobRunState: 'SUCCEEDED' } });
         });
