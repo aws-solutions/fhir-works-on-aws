@@ -12,13 +12,7 @@ import { EXPORT_STATE_FILE_NAME, ExportOutput, checkConfiguration } from './migr
 dotenv.config({ path: '.env' });
 const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
 
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(
-  `${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
-  {
-    flags: 'a'
-  }
-);
+export let logs: WriteStream;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseCmdOptions(): any {
@@ -192,6 +186,10 @@ async function runScript(): Promise<void> {
 (async () => {
   // don't runScript when importing code for unit tests
   if (!process.argv.includes('test')) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    logs = createWriteStream(`${CONVERSION_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
+      flags: 'a'
+    });
     await runScript();
     logs.end();
   }

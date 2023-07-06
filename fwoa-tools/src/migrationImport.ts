@@ -24,25 +24,14 @@ import {
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const {
-  EXPORT_BUCKET_URI,
-  DATASTORE_ID,
-  API_AWS_REGION,
-  DATA_ACCESS_ROLE_ARN,
-  HEALTHLAKE_CLIENT_TOKEN,
-  IMPORT_OUTPUT_S3_URI,
-  IMPORT_KMS_KEY_ARN
-} = process.env;
+const { API_AWS_REGION, HEALTHLAKE_CLIENT_TOKEN } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
 const successfullyCompletedFolders: string[] = [];
 
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-  flags: 'a'
-});
+export let logs: WriteStream;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -59,7 +48,6 @@ const dryRun: boolean = argv.dryRun;
 
 export async function startImport(
   folderNames: string[],
-  logs: WriteStream,
   jobId: string,
   outputFile: ExportOutput
 ): Promise<void> {
@@ -90,21 +78,20 @@ export async function startImport(
     }
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
-        S3Uri: `${EXPORT_BUCKET_URI}/${tenantPrefix}${jobId}/${folderName}`
+        S3Uri: `s3://${process.env.EXPORT_BUCKET_NAME}/${tenantPrefix}${jobId}/${folderName}`
       },
       // Job Names must be less than 64 characters in length
       JobName: `FWoAFolderMigration-${folderName}`.substring(0, 64),
-      DatastoreId: DATASTORE_ID!,
-      DataAccessRoleArn: DATA_ACCESS_ROLE_ARN!,
+      DatastoreId: process.env.DATASTORE_ID!,
+      DataAccessRoleArn: process.env.DATA_ACCESS_ROLE_ARN!,
       JobOutputDataConfig: {
         S3Configuration: {
-          S3Uri: IMPORT_OUTPUT_S3_URI!,
-          KmsKeyId: IMPORT_KMS_KEY_ARN!
+          S3Uri: process.env.IMPORT_OUTPUT_S3_URI!,
+          KmsKeyId: process.env.IMPORT_KMS_KEY_ARN!
         }
       },
       ClientToken: HEALTHLAKE_CLIENT_TOKEN || uuidv4()
     };
-    await sleep(POLLING_TIME * 20);
     const importJob = await healthLake.startFHIRImportJob(params).promise();
     console.log(`successfully started import job, checking status at ${importJob.JobId}`);
     logs.write(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}\n`);
@@ -113,7 +100,7 @@ export async function startImport(
       try {
         const jobStatus = await healthLake
           .describeFHIRImportJob({
-            DatastoreId: DATASTORE_ID!,
+            DatastoreId: process.env.DATASTORE_ID!,
             JobId: importJob.JobId
           })
           .promise();
@@ -335,7 +322,7 @@ async function runScript(): Promise<void> {
           sensitivity: 'base'
         });
       });
-      await startImport(sortedKeys, logs, jobId, outputFile);
+      await startImport(sortedKeys, jobId, outputFile);
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
@@ -350,6 +337,10 @@ async function runScript(): Promise<void> {
 (async () => {
   // don't runScript when importing code for unit tests
   if (!process.argv.includes('test')) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    logs = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
+      flags: 'a'
+    });
     await runScript();
     logs.end();
   }

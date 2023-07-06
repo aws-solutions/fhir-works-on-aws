@@ -11,7 +11,8 @@ import {
   getBinaryObject,
   getBinaryResource,
   parseCmdOptions,
-  uploadBinaryResource
+  uploadBinaryResource,
+  logs
 } from './binaryConverter';
 import { ExportOutput } from './migrationUtils';
 
@@ -23,6 +24,14 @@ let fakeFile: ExportOutput = {
 const env = process.env;
 
 describe('binaryConverter', () => {
+  beforeAll(() => {
+    jest.spyOn(logs, 'write').mockImplementation((log: string) => {
+      console.log(log);
+      return true;
+    });
+    jest.spyOn(logs, 'end').mockImplementation(jest.fn());
+  });
+
   afterEach(() => {
     AWSMock.restore();
     process.env = env;
