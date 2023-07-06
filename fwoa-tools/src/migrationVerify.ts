@@ -18,7 +18,7 @@ import {
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { DATASTORE_ENDPOINT, API_AWS_REGION, EXPORT_BUCKET_NAME } = process.env;
+const { DATASTORE_ENDPOINT, API_AWS_REGION } = process.env;
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
@@ -30,7 +30,7 @@ const logs: WriteStream = createWriteStream(
   }
 );
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseCmdOptions(): any {
+export function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
     .usage('Usage: $0 [--smart, -s boolean] [--dryRun, -d boolean]')
     .describe('smart', 'Whether the FWoA deployment is SMART-on-FHIR or not')
@@ -42,12 +42,8 @@ function parseCmdOptions(): any {
     .default('dryRun', false)
     .alias('d', 'dryRun').argv;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const argv: any = parseCmdOptions();
-const smartClient: boolean = argv.smart;
-const dryRun: boolean = argv.dryRun;
 
-async function verifyResource(
+export async function verifyResource(
   fhirClient: AxiosInstance,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   healthLakeResource: any,
@@ -63,9 +59,8 @@ async function verifyResource(
   }
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
-async function verifyFolderImport(): Promise<void> {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
-  const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+
+export async function verifyFolderImport(smartClient: boolean, outputFile: ExportOutput): Promise<void> {
   const fileNames = outputFile.file_names;
 
   for (let k = 0; k < Object.keys(fileNames).length; k++) {
@@ -99,7 +94,7 @@ async function verifyFolderImport(): Promise<void> {
       logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
       const resourceFile = await s3Client
         .getObject({
-          Bucket: EXPORT_BUCKET_NAME!,
+          Bucket: process.env.EXPORT_BUCKET_NAME!,
           Key: resourcePath
         })
         .promise();
@@ -132,19 +127,37 @@ async function verifyFolderImport(): Promise<void> {
   }
 }
 
-// eslint-disable-next-line no-unused-expressions
-(async () => {
+export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean} {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const argv: any = parseCmdOptions();
+  const smartClient: boolean = argv.smart;
+  const dryRun: boolean = argv.dryRun;
+  return {smartClient, dryRun};
+}
+
+export async function runScript(smartClient: boolean, dryRun: boolean, outputFile: ExportOutput): Promise<void> {
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   if (!dryRun) {
     try {
-      await verifyFolderImport();
+      await verifyFolderImport(smartClient, outputFile);
       console.log('successfully completed verifying Import Jobs!');
     } catch (error) {
       console.log('verification failed!', error);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
     }
   }
-  logs.end();
+}
+
+/* istanbul ignore next */
+(async () => {
+  // Don't runScript when code is being imported for unit tests
+  if (!process.env.UNIT_TEST) {
+    const {smartClient, dryRun} = buildRunScriptParams();
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+    await runScript(smartClient, dryRun, outputFile);
+    logs.end();
+  }
 })().catch((error) => {
   console.log('failed some checks!', error);
   logs.end();
