@@ -9,13 +9,16 @@ import json
 
 '''
 example run:
-python3 provision-user.py <UserPoolId> <ClientId> <Region>
-python3 provision-user.py us-west-2_yk8jbgpWM 12pgvi3gsl32qp9h8lg130arr0 us-west-2
+python3 provision-user.py <UserPoolId> <ClientId> <Region> <TempPassword>
+python3 provision-user.py us-west-2_yk8jbgpWM 12pgvi3gsl32qp9h8lg130arr0 us-west-2 Master123!
+
+NOTE: TempPassword MUST have 1 Uppercase, 1 number, and 1 symbol
 '''
 
 client = boto3.client('cognito-idp', region_name=sys.argv[3])
 
 USERNAME = 'workshopuser'
+TEMP_PASSWORD = sys.argv[4]
 
 response = client.admin_create_user(
     UserPoolId=sys.argv[1],
@@ -41,7 +44,7 @@ response = client.admin_create_user(
             'Value': 'example@example.com'
         }
     ],
-    TemporaryPassword='Master123!',
+    TemporaryPassword=TEMP_PASSWORD,
     MessageAction='SUPPRESS'
 )
 
@@ -49,7 +52,7 @@ response = client.initiate_auth(
     AuthFlow='USER_PASSWORD_AUTH',
     AuthParameters={
         'USERNAME': USERNAME,
-        'PASSWORD': 'Master123!'
+        'PASSWORD': TEMP_PASSWORD
     },
 
     ClientId=sys.argv[2]
@@ -62,7 +65,7 @@ response = client.respond_to_auth_challenge(
     Session=sessionid,
     ChallengeResponses={
         'USERNAME': USERNAME,
-        'NEW_PASSWORD': 'Master123!'
+        'NEW_PASSWORD': TEMP_PASSWORD
     }
 )
 
@@ -76,7 +79,7 @@ response = client.initiate_auth(
     AuthFlow='USER_PASSWORD_AUTH',
     AuthParameters={
         'USERNAME': USERNAME,
-        'PASSWORD': 'Master123!'
+        'PASSWORD': TEMP_PASSWORD
     },
 
     ClientId=sys.argv[2]

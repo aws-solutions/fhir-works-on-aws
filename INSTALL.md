@@ -138,13 +138,13 @@ First declare the following environment variables on your machine:
 Restart your terminal.
 
 ```sh
-scripts/provision-user.py <USER_POOL_ID> <USER_POOL_APP_CLIENT_ID> <REGION>
+scripts/provision-user.py <USER_POOL_ID> <USER_POOL_APP_CLIENT_ID> <REGION> <TEMP_PASSWORD>
 ```
 
 For Mac:
 
 ```sh
-AWS_ACCESS_KEY_ID=<ACCESS_KEY> AWS_SECRET_ACCESS_KEY=<SECRET_KEY> python3 scripts/provision-user.py <USER_POOL_ID> <USER_POOL_APP_CLIENT_ID> <REGION>
+AWS_ACCESS_KEY_ID=<ACCESS_KEY> AWS_SECRET_ACCESS_KEY=<SECRET_KEY> python3 scripts/provision-user.py <USER_POOL_ID> <USER_POOL_APP_CLIENT_ID> <REGION> <TEMP_PASSWORD>
 ```
 
 This will create a user in your Cognito User Pool. The return value will be an access token that can be used for authentication with the FHIR API.

@@ -201,7 +201,7 @@ Additional customization information can be found in document [CUSTOMIZE.md](../
 2. Create 3 Cognito users, two practitioners and one auditor. You can create users with script [provision-user.py](./scripts/provision-user.py).
 
 - The script requires 3 inputs, userPoolId, userPoolAppClientId and region. These value can be found in the output of the FWoA CloudFormation stack you deployed.
-- The script can be executed with `python3 scripts/provision-user.py <userPoolId> <userPoolAppClientId> <region>`
+- The script can be executed with `python3 scripts/provision-user.py <userPoolId> <userPoolAppClientId> <region> <TEMP_PASSWORD>`
 - The three test users will use the same password. Update the password in `provision-user.py` script with your preferred password and save the change.
 - To create the first practitioner user, change the username in `provision-user.py` script to `practitionerTest`. Save the change, then run the script.
 - To create the auditor user, change the username to `auditorTest` and group to `auditor`. Save the change, then run the script.
