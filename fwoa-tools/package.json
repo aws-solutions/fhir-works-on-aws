@@ -19,7 +19,7 @@
     "build": "heft build --clean && rushx pkg-json-lint",
     "build-test": "heft test --clean && rushx pkg-json-lint",
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
-    "int-test": "jest --testPathPattern=src/integration-tests/migrationIntegTests*",
+    "int-test": "jest --testPathPattern=src/integration-tests/migrationUtils*",
     "jest": "jest",
     "lint-fix": "eslint . --fix",
     "local": "node .",

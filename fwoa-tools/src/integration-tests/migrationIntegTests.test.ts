@@ -39,7 +39,7 @@ describe('migration: end to end test', () => {
       JSON.stringify(postResponse.data)
     );
 
-    await expect(executeCommand(`set -o allexport; source src/.smartenv; set +o allexport`));
+    await executeCommand(`set -o allexport; source src/.smartenv; set +o allexport`);
     await expect(
       executeCommand(`ts-node src/migrationExport.ts -s --since=${startTime.toISOString()}`)
     ).resolves.not.toThrowError();
@@ -58,7 +58,7 @@ describe('migration: end to end test', () => {
       JSON.stringify(postResponse.data)
     );
 
-    await expect(executeCommand(`set -o allexport; source src/.cognitoenv; set +o allexport`));
+    await executeCommand(`set -o allexport; source src/.cognitoenv; set +o allexport`);
     await expect(
       executeCommand(`ts-node src/migrationExport.ts --since=${startTime.toISOString()}`)
     ).resolves.not.toThrowError();
