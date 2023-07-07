@@ -21,8 +21,8 @@ INSTALL.md
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
-solutions/deployment/scripts/provision-user.py:26
-solutions/deployment/scripts/provision-user.py:41
+solutions/deployment/scripts/provision-user.py:29
+solutions/deployment/scripts/provision-user.py:44
 solutions/smart-deployment/README.md:67
 solutions/smart-deployment/README.md:111
 fwoa-core/routing/src/router/validation/schemas/fhir.schema.v3.json:10255
