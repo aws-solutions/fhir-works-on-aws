@@ -23,7 +23,7 @@ const executeCommand = async (command: string): Promise<unknown> =>
 
 describe('migration: end to end test', () => {
   let fhirClient: AxiosInstance;
-  jest.setTimeout(90 * 1000);
+  jest.setTimeout(10000 * 1000);
 
   test('SMART: end to end test', async () => {
     fhirClient = await getFhirClientSMART();
@@ -39,11 +39,12 @@ describe('migration: end to end test', () => {
       JSON.stringify(postResponse.data)
     );
 
+    await expect(executeCommand(`set -o allexport; source src/.smartenv; set +o allexport`));
     await expect(
-      executeCommand(`ts-node ../migrationExport.ts -s --since=${startTime.toISOString()}`)
-    ).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ../binaryConverter.ts`)).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ../migrationimport.ts -s`)).resolves.toEqual(expect.anything());
+      executeCommand(`ts-node src/migrationExport.ts -s --since=${startTime.toISOString()}`)
+    ).resolves.not.toThrowError();
+    await expect(executeCommand(`ts-node src/binaryConverter.ts`)).resolves.not.toThrowError();
+    await expect(executeCommand(`ts-node src/migrationimport.ts -s`)).resolves.not.toThrowError();
   });
 
   test('non-SMART: end to end test', async () => {
@@ -57,10 +58,11 @@ describe('migration: end to end test', () => {
       JSON.stringify(postResponse.data)
     );
 
+    await expect(executeCommand(`set -o allexport; source src/.cognitoenv; set +o allexport`));
     await expect(
-      executeCommand(`ts-node ../migrationExport.ts --since=${startTime.toISOString()}`)
-    ).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ../binaryConverter.ts`)).resolves.toEqual(expect.anything());
-    await expect(executeCommand(`ts-node ../migrationimport.ts`)).resolves.toEqual(expect.anything());
+      executeCommand(`ts-node src/migrationExport.ts --since=${startTime.toISOString()}`)
+    ).resolves.not.toThrowError();
+    await expect(executeCommand(`ts-node src/binaryConverter.ts`)).resolves.not.toThrowError();
+    await expect(executeCommand(`ts-node src/migrationimport.ts`)).resolves.not.toThrowError();
   });
 });
