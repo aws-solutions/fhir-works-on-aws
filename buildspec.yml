@@ -33,13 +33,4 @@ phases:
 
 artifacts:
   files:
-    - common/**/*
-    - solutions/**/*
-    - fwoa-core/**/*
-    - core/**/*
-    - deployment/**/*
-    - .gitignore
-    - sonar-project.properties
-    - buildspec.yml
-    - CHANGELOG.md
-    - .cfnnag_*
+    - '**/*'
