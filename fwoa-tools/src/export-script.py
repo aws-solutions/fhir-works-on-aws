@@ -14,7 +14,6 @@ import boto3
 import re
 import json
 import threading
-from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from pyspark.conf import SparkConf
@@ -71,6 +70,8 @@ table_export_start_time = datetime.now()
 print("Starting Table Export Time =",
       table_export_start_time.strftime("%H:%M:%S"))
 original_data_source_dyn_frame = None
+
+time_format_str = "%Y-%m-%dT%H:%M:%S.%fZ"
 
 if (snapshotExists and snapshotLocation is not None):
     original_data_source_dyn_frame = glueContext.create_dynamic_frame.from_options(
@@ -156,17 +157,17 @@ print('Elapsed time for tenantId Filtering = ',
 print('start filtering by group_id')
 
 datetime_transaction_time = datetime.strptime(
-    transaction_time, "%Y-%m-%dT%H:%M:%S.%fZ")
+    transaction_time, time_format_str)
 
 print('Start filtering by transactionTime and Since')
 time_filter_start_time = datetime.now()
 # Filter by transactionTime and Since
-datetime_since = datetime.strptime(since, "%Y-%m-%dT%H:%M:%S.%fZ")
+datetime_since = datetime.strptime(since, time_format_str)
 filtered_dates_dyn_frame = filtered_tenant_id_frame.filter(
     f=lambda x:
-    datetime.strptime(x["meta"]["lastUpdated"], "%Y-%m-%dT%H:%M:%S.%fZ") > datetime_since and
+    datetime.strptime(x["meta"]["lastUpdated"], time_format_str) > datetime_since and
     datetime.strptime(x["meta"]["lastUpdated"],
-                      "%Y-%m-%dT%H:%M:%S.%fZ") <= datetime_transaction_time
+                      time_format_str) <= datetime_transaction_time
 )
 
 time_filter_finish_time = datetime.now()
