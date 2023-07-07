@@ -11,30 +11,33 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import yargs from 'yargs';
-import { EXPORT_STATE_FILE_NAME, ExportOutput, MS_TO_HOURS, POLLING_TIME, sleep } from './migrationUtils';
+import {
+  EXPORT_STATE_FILE_NAME,
+  ExportOutput,
+  MS_TO_HOURS,
+  POLLING_TIME,
+  sleep,
+  checkConfiguration,
+  HEALTHLAKE_BUNDLE_LIMIT,
+  Bundle,
+  getEmptyFHIRBundle
+} from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const {
-  EXPORT_BUCKET_URI,
-  DATASTORE_ID,
-  DATASTORE_ENDPOINT,
-  API_AWS_REGION,
-  DATA_ACCESS_ROLE_ARN,
-  HEALTHLAKE_CLIENT_TOKEN,
-  IMPORT_OUTPUT_S3_URI,
-  IMPORT_OUTPUT_S3_BUCKET_NAME,
-  IMPORT_KMS_KEY_ARN
-} = process.env;
+const { API_AWS_REGION, HEALTHLAKE_CLIENT_TOKEN } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
-
 const successfullyCompletedFolders: string[] = [];
+
 // eslint-disable-next-line security/detect-non-literal-fs-filename
-const logs: WriteStream = createWriteStream(`${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`, {
-  flags: 'a'
-});
+export const logs: WriteStream = createWriteStream(
+  `${IMPORT_OUTPUT_LOG_FILE_PREFIX}${Date.now().toString()}.log`,
+  {
+    flags: 'a'
+  }
+);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
@@ -49,43 +52,50 @@ function parseCmdOptions(): any {
 const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
 
-// get the job id from the export output file
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
-const jobId: string = outputFile.jobId;
-
-const healthLake: HealthLake = new HealthLake({
-  region: API_AWS_REGION
-});
-
-async function startImport(folderNames: string[]): Promise<void> {
+export async function startImport(
+  folderNames: string[],
+  jobId: string,
+  outputFile: ExportOutput
+): Promise<void> {
   let i: number = 0;
   // To see if we have completed folders to skip importing
   if (existsSync(`${IMPORT_STATE_FILE_NAME}`)) {
     const folders = JSON.parse(readFileSync(`${IMPORT_STATE_FILE_NAME}`).toString());
-    if (folders.length > 0) {
-      i = parseInt(folders[folders.length - 1]);
-    }
+    i = folders.length;
+    // append previous successful imports
+    successfullyCompletedFolders.push(...folders);
   }
+
+  const healthLake: HealthLake = new HealthLake({
+    region: API_AWS_REGION
+  });
 
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
+    // We don't import Binary-v... folders since they are unconverted Binary resources
+    if (folderName.startsWith('Binary-v')) {
+      continue;
+    }
     console.log(`Starting import for folder ${folderName}`);
     const startTime = new Date();
     logs.write(`${startTime.toISOString()}: Start Import for folder ${folderName}...\n`);
-
+    let tenantPrefix = '';
+    if (process.env.MIGRATION_TENANT_ID) {
+      tenantPrefix = `${process.env.MIGRATION_TENANT_ID}/`;
+    }
     const params: StartFHIRImportJobRequest = {
       InputDataConfig: {
-        S3Uri: `${EXPORT_BUCKET_URI}/${jobId}/${folderName}`
+        S3Uri: `s3://${process.env.EXPORT_BUCKET_NAME}/${tenantPrefix}${jobId}/${folderName}`
       },
-      JobName: `FWoAFolderMigration-${folderName}`,
-      DatastoreId: DATASTORE_ID!,
-      DataAccessRoleArn: DATA_ACCESS_ROLE_ARN!,
+      // Job Names must be less than 64 characters in length
+      JobName: `FWoAFolderMigration-${folderName}`.substring(0, 64),
+      DatastoreId: process.env.DATASTORE_ID!,
+      DataAccessRoleArn: process.env.DATA_ACCESS_ROLE_ARN!,
       JobOutputDataConfig: {
         S3Configuration: {
-          S3Uri: IMPORT_OUTPUT_S3_URI!,
-          KmsKeyId: IMPORT_KMS_KEY_ARN!
+          S3Uri: process.env.IMPORT_OUTPUT_S3_URI!,
+          KmsKeyId: process.env.IMPORT_KMS_KEY_ARN!
         }
       },
       ClientToken: HEALTHLAKE_CLIENT_TOKEN || uuidv4()
@@ -98,7 +108,7 @@ async function startImport(folderNames: string[]): Promise<void> {
       try {
         const jobStatus = await healthLake
           .describeFHIRImportJob({
-            DatastoreId: DATASTORE_ID!,
+            DatastoreId: process.env.DATASTORE_ID!,
             JobId: importJob.JobId
           })
           .promise();
@@ -111,10 +121,8 @@ async function startImport(folderNames: string[]): Promise<void> {
             }\n`
           );
 
-          await deleteFhirResourceFromHealthLakeIfNeeded(
-            folderName,
-            jobStatus.ImportJobProperties.JobOutputDataConfig?.S3Configuration?.S3Uri!
-          );
+          await sleep(POLLING_TIME);
+          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, outputFile);
           logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
           successfullyCompletedFolders.push(folderName);
           break;
@@ -143,7 +151,7 @@ async function startImport(folderNames: string[]): Promise<void> {
   }
 }
 
-async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
+export async function checkFolderSizeOfResource(resources: string[], jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkFolderSizeOfResource \n`);
   const s3Client = new S3({
     region: API_AWS_REGION!
@@ -153,7 +161,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
     const resource = resources[i];
     // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
     // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
-    if (resource === 'Binary') {
+    if (resource.startsWith('Binary')) {
       continue;
     }
     console.log(`Checking resource ${resource}`);
@@ -161,11 +169,14 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
 
     let folderSize = 0;
     let continuationToken: string | undefined = undefined;
+    const prefix = process.env.MIGRATION_TENANT_ID
+      ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${resource}`
+      : `${jobId}/${resource}`;
     do {
       const response: ListObjectsV2Output = await s3Client
         .listObjectsV2({
-          Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-          Prefix: `${outputFile.jobId}/${resource}`,
+          Bucket: process.env.EXPORT_BUCKET_NAME!,
+          Prefix: prefix,
           ContinuationToken: continuationToken
         })
         .promise();
@@ -191,7 +202,7 @@ async function checkFolderSizeOfResource(resources: string[]): Promise<void> {
   }
 }
 
-async function checkConvertedBinaryFileSize(): Promise<void> {
+export async function checkConvertedBinaryFileSize(jobId: string): Promise<void> {
   logs.write(`${new Date().toISOString()}: Start checkConvertedBinaryFileSize \n`);
   console.log('Checking Binary file size');
   const s3Client = new S3({
@@ -200,11 +211,14 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
   const convertedBinaryFolderName = 'Binary_converted';
   let continuationToken: string | undefined = undefined;
+  const prefix = process.env.MIGRATION_TENANT_ID
+    ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${convertedBinaryFolderName}`
+    : `${jobId}/${convertedBinaryFolderName}`;
   do {
     const response: ListObjectsV2Output = await s3Client
       .listObjectsV2({
-        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
-        Prefix: `${outputFile.jobId}/${convertedBinaryFolderName}`,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
+        Prefix: prefix,
         ContinuationToken: continuationToken
       })
       .promise();
@@ -223,77 +237,100 @@ async function checkConvertedBinaryFileSize(): Promise<void> {
   logs.write(`${new Date().toISOString()}: Finish checkConvertedBinaryFileSize \n`);
 }
 
-async function deleteFhirResourceFromHealthLakeIfNeeded(folderName: string, s3Uri: string): Promise<void> {
-  const path = s3Uri.replace('s3://', '').replace(`${IMPORT_OUTPUT_S3_BUCKET_NAME!}/`, '');
-  const interceptor = aws4Interceptor({
-    region: API_AWS_REGION!,
-    service: 'healthlake'
-  });
-
+export async function deleteFhirResourceFromHealthLakeIfNeeded(
+  folderName: string,
+  outputFile: ExportOutput
+): Promise<void> {
+  let deleteQueue: string[] = [];
   // eslint-disable-next-line security/detect-object-injection
   for (let j = 0; j < outputFile.file_names[folderName].length; j += 1) {
     const s3Client = new S3({
       region: API_AWS_REGION!
     });
-    const healthLakeClient = axios.create();
-    healthLakeClient.interceptors.request.use(interceptor);
 
     // eslint-disable-next-line security/detect-object-injection
-    const resourcePath = outputFile.file_names[folderName][j].replace(outputFile.jobId, `${path}SUCCESS`);
-    logs.write(`${new Date().toISOString()}: Verifying Import from ${resourcePath}...\n`);
+    const resourcePath = outputFile.file_names[folderName][j];
+    logs.write(`${new Date().toISOString()}: Checking resources from ${resourcePath}...\n`);
     const resourceFile = await s3Client
       .getObject({
-        Bucket: IMPORT_OUTPUT_S3_BUCKET_NAME!,
+        Bucket: process.env.EXPORT_BUCKET_NAME!,
         Key: resourcePath
       })
       .promise();
     if (resourceFile.$response.error) {
       throw new Error(`Failed to read file ${resourceFile.$response.error}`);
     }
-    const allResourceVersions: string[] = resourceFile.Body!.toString().split('\n');
-    let resource = JSON.parse(allResourceVersions[allResourceVersions.length - 1]); // latest version
-    // eslint-disable-next-line security/detect-object-injection
-    const responseKey = Object.keys(resource).find((x) => resource[x].jsonBlob !== undefined);
-    resource = resource[responseKey!].jsonBlob;
-    // This is a resource marked for deletion
-    if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
-      // DELETE the resource from HealthLake
-      logs.write(
-        `${new Date().toISOString()}: Resource at ${resourcePath} marked for DELETION, deleting...\n`
-      );
-      await healthLakeClient.delete(`${DATASTORE_ENDPOINT}/${resource.resourceType}/${resource.id}`);
+    const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
+    for (let i = 0; i < allResources.length; i++) {
+      // eslint-disable-next-line security/detect-object-injection
+      const resource = JSON.parse(allResources[i]);
+      // This is a resource marked for deletion
+      if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+        // DELETE the resource from HealthLake
+        logs.write(
+          `${new Date().toISOString()}: Resource at ${resourcePath} line ${i} is marked for DELETION\n`
+        );
+        deleteQueue.push(`/${resource.resourceType}/${resource.id}`);
+        if (deleteQueue.length >= HEALTHLAKE_BUNDLE_LIMIT) {
+          // eslint-disable-next-line no-await-in-loop
+          await deleteResourcesInBundle(deleteQueue);
+          deleteQueue = [];
+        }
+      }
     }
+  }
+  if (deleteQueue.length !== 0) {
+    await deleteResourcesInBundle(deleteQueue);
   }
 }
 
-async function checkConfiguration(): Promise<void> {
-  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
-  if (!EXPORT_BUCKET_URI) throw new Error('EXPORT_BUCKET_URI environment variable is not defined');
-  if (!DATASTORE_ID) throw new Error('DATASTORE_ID environment variable is not defined');
-  if (!DATASTORE_ENDPOINT) throw new Error('DATASTORE_ENDPOINT environment variable is not defined');
-  if (!API_AWS_REGION) throw new Error('API_AWS_REGION environment variable is not defined');
-  if (!DATA_ACCESS_ROLE_ARN) throw new Error('DATA_ACCESS_ROLE_ARN environment variable is not defined');
-  if (!HEALTHLAKE_CLIENT_TOKEN)
-    throw new Error('HEALTHLAKE_CLIENT_TOKEN environment variable is not defined');
-  if (!IMPORT_OUTPUT_S3_URI) throw new Error('IMPORT_OUTPUT_S3_URI environment variable is not defined');
-  if (!IMPORT_OUTPUT_S3_BUCKET_NAME)
-    throw new Error('IMPORT_OUTPUT_S3_BUCKET_NAME environment variable is not defined');
-  if (!IMPORT_KMS_KEY_ARN) throw new Error('IMPORT_KMS_KEY_ARN environment variable is not defined');
-  await healthLake
-    .describeFHIRDatastore({
-      DatastoreId: DATASTORE_ID!
-    })
-    .promise();
-  console.log('successfully accessed healthlake datastore');
-  logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
+export async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
+  const interceptor = aws4Interceptor({
+    region: API_AWS_REGION!,
+    service: 'healthlake'
+  });
+  const healthLakeClient = axios.create();
+  healthLakeClient.interceptors.request.use(interceptor);
+  const bundle: Bundle = getEmptyFHIRBundle();
+
+  for (const path of deletePaths) {
+    bundle.entry.push({
+      request: {
+        method: 'DELETE',
+        url: path
+      }
+    });
+  }
+
+  logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
+
+  const healthLakeBundleDeleteResponse = await healthLakeClient.post(
+    `${process.env.DATASTORE_ENDPOINT}`,
+    JSON.stringify(bundle)
+  );
+  if (healthLakeBundleDeleteResponse.status !== 200) {
+    throw new Error(`Failed to Delete Resources in bundle: ${healthLakeBundleDeleteResponse.data}`);
+  }
 }
-(async () => {
-  await checkConfiguration();
-  await checkConvertedBinaryFileSize();
-  await checkFolderSizeOfResource(Object.keys(outputFile.file_names));
+
+async function runScript(): Promise<void> {
+  // get the job id from the export output file
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
+  const jobId: string = outputFile.jobId;
+
+  await checkConfiguration(logs);
+  await checkConvertedBinaryFileSize(jobId);
+  await checkFolderSizeOfResource(Object.keys(outputFile.file_names), jobId);
   if (!dryRun) {
     try {
-      await startImport(Object.keys(outputFile.file_names));
+      const sortedKeys = Object.keys(outputFile.file_names).sort((a: string, b: string) => {
+        return a.localeCompare(b, undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        });
+      });
+      await startImport(sortedKeys, jobId, outputFile);
     } catch (e) {
       console.log('import failed!', e);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${e}\n`);
@@ -302,7 +339,15 @@ async function checkConfiguration(): Promise<void> {
       writeFileSync(`${IMPORT_STATE_FILE_NAME}`, JSON.stringify(successfullyCompletedFolders));
     }
   }
-  logs.end();
+}
+
+/* istanbul ignore next */
+(async () => {
+  // don't runScript when importing code for unit tests
+  if (!process.env.UNIT_TEST) {
+    await runScript();
+    logs.end();
+  }
 })().catch((e) => {
   console.log('Checks failed', e);
   logs.end();

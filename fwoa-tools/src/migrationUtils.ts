@@ -2,11 +2,12 @@
  *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
  */
+import { WriteStream } from 'fs';
 import * as AWS from 'aws-sdk';
-import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import { HealthLake, S3, CognitoIdentityServiceProvider } from 'aws-sdk';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as dotenv from 'dotenv';
-import objectHash from 'object-hash';
+import { isEmpty } from 'lodash';
 import { stringify } from 'qs';
 
 export interface ExportOutput {
@@ -20,15 +21,14 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 
 export const POLLING_TIME: number = 5000;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
+export const HEALTHLAKE_BUNDLE_LIMIT: number = 160;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
 
-const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: string; USERNAME: string } = (
-  requestAdditionalScopes?: boolean
-) => {
-  const { COGNITO_USERNAME, COGNITO_ADMIN_USERNAME, COGNITO_PASSWORD } = process.env;
+const getAuthParameters: () => { PASSWORD: string; USERNAME: string } = () => {
+  const { COGNITO_USERNAME, COGNITO_PASSWORD } = process.env;
 
   const password = COGNITO_PASSWORD;
-  const username = requestAdditionalScopes ? COGNITO_ADMIN_USERNAME : COGNITO_USERNAME;
+  const username = COGNITO_USERNAME;
   if (username === undefined) {
     throw new Error('COGNITO_USERNAME environment variable is not defined');
   }
@@ -42,9 +42,7 @@ const getAuthParameters: (requestAdditionalScopes?: boolean) => { PASSWORD: stri
   };
 };
 
-export const getFhirClient: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
-  requestAdditionalScopes
-): Promise<AxiosInstance> => {
+export const getFhirClient: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   const { API_URL, API_KEY, API_AWS_REGION, COGNITO_CLIENT_ID } = process.env;
@@ -68,7 +66,7 @@ export const getFhirClient: (requestAdditionalScopes?: boolean) => Promise<Axios
     await Cognito.initiateAuth({
       ClientId: COGNITO_CLIENT_ID,
       AuthFlow: 'USER_PASSWORD_AUTH',
-      AuthParameters: getAuthParameters(requestAdditionalScopes)
+      AuthParameters: getAuthParameters()
     }).promise()
   ).AuthenticationResult!.IdToken!;
 
@@ -115,9 +113,7 @@ async function getAuthToken(
   return response.data.access_token;
 }
 
-export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<AxiosInstance> = async (
-  requestAdditionalScopes
-): Promise<AxiosInstance> => {
+export const getFhirClientSMART: () => Promise<AxiosInstance> = async (): Promise<AxiosInstance> => {
   dotenv.config({ path: '.env' });
 
   // Check all environment variables are provided
@@ -153,7 +149,7 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
   }
 
   // SMART_AUTH_USERNAME should be for a System
-  const username = requestAdditionalScopes ? process.env.SMART_AUTH_ADMIN_USERNAME : SMART_AUTH_USERNAME;
+  const username = process.env.SMART_AUTH_USERNAME;
   if (!username) {
     throw new Error('SMART_AUTH_ADMIN_USERNAME environment variable is not defined');
   }
@@ -162,8 +158,7 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
     SMART_AUTH_PASSWORD,
     SMART_CLIENT_ID,
     SMART_CLIENT_SECRET,
-    SMART_OAUTH2_API_ENDPOINT,
-    requestAdditionalScopes
+    SMART_OAUTH2_API_ENDPOINT
   );
 
   const baseURL = SMART_SERVICE_URL;
@@ -177,40 +172,59 @@ export const getFhirClientSMART: (requestAdditionalScopes?: boolean) => Promise<
   });
 };
 
-export async function getResource(
-  s3Client: AWS.S3,
-  itemKey: string,
-  bucketName: string
-): Promise<AWS.S3.GetObjectOutput> {
-  console.log(`getting ${itemKey}`);
-  const file = await s3Client
-    .getObject({
-      Bucket: bucketName,
-      Key: itemKey
-    })
-    .promise();
-  if (file.$response.error) {
-    throw new Error(`Failed to get object ${itemKey}`);
+function checkEnvVars(envVarsToCheck: string[]): void {
+  //eslint-disable-next-line security/detect-object-injection
+  const undefinedEnvVars = envVarsToCheck.filter((varName) => isEmpty(process.env[varName]));
+  if (undefinedEnvVars.length > 0) {
+    throw new Error(`Environment variables ${undefinedEnvVars.join(', ')} not defined.`);
   }
-  return file;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function verifyResource(
-  fhirClient: AxiosInstance,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  healthLakeResource: any,
-  resourceId: string,
-  resourceType: string
-): Promise<boolean> {
-  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
-  delete fwoaResponse.meta;
-  delete healthLakeResource.meta;
-  if (resourceType === 'Binary') {
-    delete healthLakeResource.data;
-    delete fwoaResponse.presignedGetUrl;
-  }
-  return objectHash(fwoaResponse) === objectHash(healthLakeResource);
+export type FhirServerType = 'Smart' | 'Cognito';
+// This function checks the configuration required for every scripts
+// This ensures any configuration issue is discovered from the start and dealt with
+export async function checkConfiguration(logs: WriteStream, fhirServerType?: FhirServerType): Promise<void> {
+  dotenv.config({ path: '.env' });
+  logs.write(`${new Date().toISOString()}: Checking configuration\n`);
+
+  const envVarsToCheck = [
+    // Export script variables
+    'EXPORT_BUCKET_NAME',
+    'BINARY_BUCKET_NAME',
+    'API_AWS_REGION',
+    'GLUE_JOB_NAME',
+    // Import script variables
+    'DATASTORE_ID',
+    'DATASTORE_ENDPOINT',
+    'DATA_ACCESS_ROLE_ARN',
+    'IMPORT_KMS_KEY_ARN',
+    'IMPORT_OUTPUT_S3_BUCKET_NAME',
+    'HEALTHLAKE_CLIENT_TOKEN',
+    'EXPORT_BUCKET_URI',
+    'IMPORT_OUTPUT_S3_URI'
+  ];
+  checkEnvVars(envVarsToCheck);
+  logs.write('Export and Import environment variables verified.');
+
+  const s3Client = new S3({
+    region: process.env.API_AWS_REGION
+  });
+  await s3Client.listObjectsV2({ Bucket: process.env.EXPORT_BUCKET_NAME! }).promise();
+  await s3Client.listObjectsV2({ Bucket: process.env.BINARY_BUCKET_NAME! }).promise();
+  await s3Client.listObjectsV2({ Bucket: process.env.IMPORT_OUTPUT_S3_BUCKET_NAME! }).promise();
+
+  logs.write('S3 buckets access verified.');
+
+  if (fhirServerType === 'Smart') await getFhirClientSMART();
+  if (fhirServerType === 'Cognito') await getFhirClient();
+
+  const healthLake: HealthLake = new HealthLake({
+    region: process.env.API_AWS_REGION
+  });
+  await healthLake.describeFHIRDatastore({ DatastoreId: process.env.DATASTORE_ID! }).promise();
+  logs.write('Healthlake access verified.');
+
+  logs.write(`${new Date().toISOString()}: Finished checking configuration\n`);
 }
 
 export const binaryResource: { resourceType: string; contentType: string } = {
@@ -219,3 +233,21 @@ export const binaryResource: { resourceType: string; contentType: string } = {
 };
 
 export const binaryObject: string = 'exampleBinaryStreamData';
+
+export interface BundleEntry {
+  request: { method: string; url: string };
+}
+
+export interface Bundle {
+  resourceType: string;
+  type: string;
+  entry: BundleEntry[];
+}
+
+export const getEmptyFHIRBundle = (): Bundle => {
+  return {
+    resourceType: 'Bundle',
+    type: 'batch',
+    entry: []
+  };
+};

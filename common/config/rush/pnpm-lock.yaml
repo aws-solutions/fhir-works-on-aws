@@ -528,6 +528,7 @@ importers:
       aws-sdk-mock: ^5.1.0
       aws4-axios: ^2.4.9
       axios: 0.25.0
+      axios-mock-adapter: ^1.18.2
       chance: ^1.1.7
       dotenv: ^16.0.3
       eslint: ^8.7.0
@@ -535,6 +536,7 @@ importers:
       jest-each: ^26.6.2
       jest-mock-extended: ^1.0.8
       jsonwebtoken: ^9.0.0
+      lodash: ^4.17.21
       npm-package-json-lint: ^6.3.0
       npm-package-json-lint-config-default: ^5.0.0
       object-hash: ^3.0.0
@@ -549,6 +551,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       axios: 0.25.0
+      lodash: 4.17.21
       object-hash: 3.0.0
     devDependencies:
       '@aws/eslint-config-fwoa-eslint-custom': link:../core/eslint-custom
@@ -569,6 +572,7 @@ importers:
       aws-sdk: 2.1303.0
       aws-sdk-mock: 5.8.0
       aws4-axios: 2.4.9_axios@0.25.0
+      axios-mock-adapter: 1.21.2_axios@0.25.0
       chance: 1.1.9
       dotenv: 16.0.3
       eslint: 8.33.0

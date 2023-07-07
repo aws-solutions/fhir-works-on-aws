@@ -230,7 +230,7 @@ print('Elapsed time for dropping fields = ',
 
 
 def add_dup_resource_type(record):
-    record["partitionKeyDup"] = record["resourceType"]
+    record["partitionKeyDup"] = record["resourceType"] + "-v" + record["meta"]["versionId"]
     return record
 
 
@@ -241,14 +241,6 @@ data_source_cleaned_dyn_frame = data_source_cleaned_dyn_frame.map(
 partition_column_add_finish_time = datetime.now()
 print('Elapsed time for adding partitionkey column = ',
       partition_column_add_finish_time - partition_column_add_start_time)
-
-# Sort the data frame by versionId
-vid_sorting_start_time = datetime.now()
-data_source_cleaned_dyn_frame = DynamicFrame.fromDF(data_source_cleaned_dyn_frame.toDF(
-).sortWithinPartitions("meta.versionId"), glueContext, "data_source_cleaned_dyn_frame")
-vid_sorting_finish_time = datetime.now()
-print('Elapsed time for Sorting = ',
-      vid_sorting_finish_time - vid_sorting_start_time)
 
 if data_source_cleaned_dyn_frame.count() == 0:
     print('No resources within requested parameters to export')
@@ -293,7 +285,7 @@ else:
                     yield item
 
     resulting_file_names = {}
-    regex_pattern = '\/partitionKeyDup=(\w+)\/run-\d{13}-part-r-(\d{5})$'
+    regex_pattern = '\/partitionKeyDup=(\w+-v\d+)\/run-\d{13}-part-r-(\d{5})$'
 
     def rename_files(s3_file_names):
         for s3_file_name in s3_file_names:
