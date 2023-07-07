@@ -4,7 +4,7 @@ const path = require('path');
 
 // expected usage: `node build_lambda.js <path> <path> <pathToFile> <fileName>`
 // for use with NodeJsFunction command hooks to add files to Lambda functions,
-// so <path> <path> will usually be the inputDir and outputDir constiables, respectively
+// so <path> <path> will usually be the inputDir and outputDir variables, respectively
 const inputDir = process.argv[2];
 const outputDir = process.argv[3];
 const fileToMove = process.argv[4];
