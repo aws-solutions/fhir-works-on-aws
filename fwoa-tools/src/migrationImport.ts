@@ -20,7 +20,8 @@ import {
   checkConfiguration,
   HEALTHLAKE_BUNDLE_LIMIT,
   Bundle,
-  getEmptyFHIRBundle
+  getEmptyFHIRBundle,
+  EXTENDED_POLLING_TIME
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
@@ -135,7 +136,7 @@ export async function startImport(
           );
         }
         // eslint-disable-next-line no-await-in-loop
-        await sleep(POLLING_TIME);
+        await sleep(EXTENDED_POLLING_TIME);
       } catch (e) {
         console.error('Failed to check import status', e);
         throw e;
