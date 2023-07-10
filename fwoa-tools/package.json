@@ -1,0 +1,91 @@
+{
+  "name": "@aws/fhir-works-on-aws-tools",
+  "version": "1.1.0",
+  "description": "FHIR Works on AWS tools",
+  "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws-solutions/fhir-works-on-aws.git"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Amazon Web Services",
+    "email": "fhir-works-on-aws-dev@amazon.com",
+    "url": "https://aws.amazon.com/solutions"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "heft build --clean && rushx pkg-json-lint",
+    "build-test": "UNIT_TEST=true heft test --clean && rushx pkg-json-lint",
+    "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
+    "int-test": "jest --testPathPattern=src/integration-tests/*",
+    "jest": "jest",
+    "lint-fix": "eslint . --fix",
+    "local": "node .",
+    "pkg-json-lint": "npmPkgJsonLint -c ../.npmpackagejsonlintrc.json .",
+    "prettier": "prettier --config '../.prettierrc.js' 'src/**/*.ts' --write",
+    "sort-package-json": "sort-package-json package.json",
+    "standard-version": "standard-version --skip.tag=true",
+    "test": "UNIT_TEST=true heft test --clean --no-build && rushx pkg-json-lint",
+    "watch": "tsc -w"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testRegex": ".test.ts",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    }
+  },
+  "dependencies": {
+    "axios": "0.25.0",
+    "lodash": "^4.17.21",
+    "object-hash": "^3.0.0"
+  },
+  "devDependencies": {
+    "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",
+    "@rushstack/eslint-config": "^3.0.0",
+    "@rushstack/heft": "0.49.0",
+    "@rushstack/heft-jest-plugin": "0.4.2",
+    "@rushstack/heft-node-rig": "1.11.11",
+    "@types/chance": "^1.1.1",
+    "@types/heft-jest": "^1.0.3",
+    "@types/jest": "^26.0.19",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^14",
+    "@types/object-hash": "^3.0.2",
+    "@types/qs": "^6.9.7",
+    "@types/uuid": "^8.3.4",
+    "@types/yargs": "^17.0.22",
+    "aws-sdk": "^2.1000.0",
+    "aws-sdk-mock": "^5.1.0",
+    "aws4-axios": "^2.4.9",
+    "axios-mock-adapter": "^1.18.2",
+    "chance": "^1.1.7",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.7.0",
+    "jest": "^26.6.3",
+    "jest-each": "^26.6.2",
+    "jest-mock-extended": "^1.0.8",
+    "jsonwebtoken": "^9.0.0",
+    "npm-package-json-lint": "^6.3.0",
+    "npm-package-json-lint-config-default": "^5.0.0",
+    "prettier": "^2.4.1",
+    "qs": "^6.10.3",
+    "sort-package-json": "^1.57.0",
+    "standard-version": "^9.3.2",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.9.4",
+    "uuid": "^8.3.2",
+    "yargs": "^16.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "stackname": "fhir-works-on-aws-tools"
+}

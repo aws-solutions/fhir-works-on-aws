@@ -1,6 +1,7 @@
 # Logs
 *.log
 npm-debug.log*
+migrationExport_Output.json
 
 # Runtime data
 *.pid
@@ -73,6 +74,7 @@ dist
 .idea
 
 coverage
+undefined
 
 # Implementation guides
 /solutions/**/implementationGuides
@@ -104,3 +106,8 @@ fwoa-utilities/javaHapiValidatorLambda/src/main/resources/implementationGuides/
 **/lib/**/*.map
 **/lib/**/*d.ts
 **/lib/**/*.json
+
+# fwoa-tools
+**migrationExport_Output.json
+**.log
+**import_state.txt

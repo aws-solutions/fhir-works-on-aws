@@ -21,10 +21,17 @@ INSTALL.md
 # Line excludes
 # False positive
 fwoa-core/interface/src/fhirConfig.ts:49
-solutions/deployment/scripts/provision-user.py:26
-solutions/deployment/scripts/provision-user.py:41
+solutions/deployment/scripts/provision-user.py:29
+solutions/deployment/scripts/provision-user.py:44
 solutions/smart-deployment/README.md:67
 solutions/smart-deployment/README.md:111
+fwoa-core/routing/src/router/validation/schemas/fhir.schema.v3.json:10255
+fwoa-core/routing/src/router/validation/schemas/fhir.schema.v3.json:10256
+fwoa-core/routing/src/router/validation/schemas/fhir.schema.v3.json:10260
+fwoa-core/routing/src/router/validation/schemas/fhir.schema.v3.json:10261
+fwoa-core/search-es/src/schema/compiledSearchParameters.4.0.1.json:6626
+fwoa-core/search-es/src/schema/compiledSearchParameters.4.0.1.json:6627
+fwoa-core/search-es/src/schema/compiledSearchParameters.4.0.1.json:6631
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4146
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4150
@@ -69,3 +76,4 @@ README.md:5
 
 # PDF Implementation Guide
 FHIR Works on AWS Implementation Guide - 24-MAR-2023 - v6.0.0.pdf
+FHIR Works on AWS - Migration Tool User Guide.pdf

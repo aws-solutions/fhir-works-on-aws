@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@aws/fhir-works-on-aws-authz-smart",
+      "comment": "update axios version",
+      "type": "none"
+    }
+  ],
+  "packageName": "@aws/fhir-works-on-aws-authz-smart"
+}

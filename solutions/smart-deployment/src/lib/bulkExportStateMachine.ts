@@ -1,7 +1,7 @@
 import { Duration } from 'aws-cdk-lib';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Function } from 'aws-cdk-lib/aws-lambda';
-import { LogGroup } from 'aws-cdk-lib/aws-logs';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import {
     TaskInput,
     Wait,
@@ -110,6 +110,7 @@ export default class BulkExportStateMachine {
                 destination: new LogGroup(scope, 'bulkExportStateMachineLogs', {
                     logGroupName: `BulkExportSM-Logs-${stage}`,
                     encryptionKey: logKMSKey,
+                    retention: RetentionDays.TEN_YEARS
                 }),
             },
         });

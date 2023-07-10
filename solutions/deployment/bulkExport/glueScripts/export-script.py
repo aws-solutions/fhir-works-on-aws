@@ -12,7 +12,7 @@ import sys
 import boto3
 import re
 import json
-from awsglue.transforms import *
+from awsglue.transforms import Map, Filter, DropFields, SelectFields
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
@@ -57,11 +57,13 @@ number_workers = args['numberWorkers']
 
 bucket_name = args['s3OutputBucket']
 
+time_format_str = "%Y-%m-%dT%H:%M:%S.%fZ"
+
 # Read data from DDB
 # dynamodb.splits is determined by the formula from the weblink below
 # https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html#aws-glue-programming-etl-connect-dynamodb
 if (worker_type != "G.2X" and worker_type != "G.1X"):
-    raise Exception(f"Worker type {worker_type} not supported. Please choose either worker G2.X or G1.X")
+    raise ValueError(f"Worker type {worker_type} not supported. Please choose either worker G2.X or G1.X")
 
 num_executors = int(number_workers) - 1
 num_slots_per_executor = 16 if worker_type == "G.2X" else 8
@@ -98,7 +100,7 @@ def is_active_group_member(member, datetime_transaction_time):
     member_period = getattr(member, 'period', None)
     if member_period != None:
         end_date = getattr(member_period, 'end', None)
-        if end_date != None and datetime.strptime(end_date, "%Y-%m-%dT%H:%M:%S.%fZ") < datetime_transaction_time:
+        if end_date != None and datetime.strptime(end_date, time_format_str) < datetime_transaction_time:
             return False
     return True
 
@@ -152,7 +154,7 @@ def get_transitive_references(resource, transitive_reference_map, server_url):
         resource['_generated_transitive_refs'] = generated_transitive_refs if len(generated_transitive_refs) !=0 else None
     return resource
 
-datetime_transaction_time = datetime.strptime(transaction_time, "%Y-%m-%dT%H:%M:%S.%fZ")
+datetime_transaction_time = datetime.strptime(transaction_time, time_format_str)
 
 if (group_id is None):
     filtered_group_reference_frame = filtered_tenant_id_frame
@@ -196,11 +198,11 @@ else:
 
 print('Start filtering by transactionTime and Since')
 # Filter by transactionTime and Since
-datetime_since = datetime.strptime(since, "%Y-%m-%dT%H:%M:%S.%fZ")
+datetime_since = datetime.strptime(since, time_format_str)
 filtered_dates_dyn_frame = Filter.apply(frame = filtered_group_reference_frame,
                            f = lambda x:
-                           datetime.strptime(x["meta"]["lastUpdated"], "%Y-%m-%dT%H:%M:%S.%fZ") > datetime_since and
-                           datetime.strptime(x["meta"]["lastUpdated"], "%Y-%m-%dT%H:%M:%S.%fZ") <= datetime_transaction_time
+                           datetime.strptime(x["meta"]["lastUpdated"], time_format_str) > datetime_since and
+                           datetime.strptime(x["meta"]["lastUpdated"], time_format_str) <= datetime_transaction_time
                           )
 
 print('Start filtering by documentStatus and resourceType')
