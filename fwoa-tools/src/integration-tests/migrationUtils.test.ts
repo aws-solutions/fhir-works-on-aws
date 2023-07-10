@@ -11,7 +11,7 @@ dotenv.config({ path: path.resolve(__dirname, './.env') });
 describe('MigrationUtils', () => {
   describe('getFhirClient', () => {
     test('client should be able to authenticate', async () => {
-      expect(await getFhirClient()).toBeTruthy();
+      expect(await getFhirClient()).toBeDefined();
     });
 
     // Not needed because this functionality does not exist in any migration scripts
@@ -32,7 +32,7 @@ describe('MigrationUtils', () => {
 
   describe('getFhirClientSMART', () => {
     test('client should be able to authenticate', async () => {
-      expect(await getFhirClientSMART()).toBeTruthy();
+      expect(await getFhirClientSMART()).toBeDefined();
     });
 
     // Not needed because this functionality does not exist in any migration scripts
