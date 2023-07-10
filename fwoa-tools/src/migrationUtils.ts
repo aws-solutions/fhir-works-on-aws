@@ -20,6 +20,7 @@ export async function sleep(milliseconds: number): Promise<unknown> {
 }
 
 export const POLLING_TIME: number = 5000;
+export const EXTENDED_POLLING_TIME: number = POLLING_TIME * 20;
 export const MS_TO_HOURS: number = 60 * 60 * 1000;
 export const HEALTHLAKE_BUNDLE_LIMIT: number = 160;
 export const EXPORT_STATE_FILE_NAME: string = 'migrationExport_Output.json';
