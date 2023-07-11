@@ -1,0 +1,124 @@
+name: create-release
+on: workflow_dispatch
+env:  
+  BOT_USER_EMAIL: ${{ vars.BOT_USER_EMAIL }}
+  BOT_USER_NAME: ${{ vars.BOT_USER_NAME }}
+jobs:
+  create-release-branch:
+    if: ${{github.ref_name == 'stage'}}
+    runs-on: ubuntu-20.04
+    outputs:
+      source_branch: ${{ steps.create_branch.outputs.source_branch }}
+    steps:
+      - uses: actions-cool/check-user-permission@v2
+        with:
+          require: 'admin'
+          username: ${{ github.triggering_actor }}
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Set git config
+        run: |
+          git config user.email $BOT_USER_EMAIL
+          git config user.name $BOT_USER_NAME
+      - name: create release branch
+        id: create_branch
+        run: |
+          echo "Create UUID"
+          uuid=`uuidgen`
+          echo 'Creating release branch'
+          git checkout -b release/$uuid
+          git push -u origin release/$uuid
+
+          echo 'Rush version to bump updates'
+          node common/scripts/install-run-rush.js version --bump -b release/$uuid --ignore-git-hooks
+          echo "source_branch=release/$uuid" >> $GITHUB_OUTPUT
+  
+  create-release-branch-pr-to-main:
+    runs-on: ubuntu-20.04
+    needs: create-release-branch
+    outputs:
+      pr_number: ${{ steps.open-pr.outputs.pr_number }}
+    steps:
+    - name: Get current date
+      id: date
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+    
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: create-pull-request
+      id: open-pr
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: ${{ needs.create-release-branch.outputs.source_branch }}
+        destination_branch: main
+        pr_title: release-${{ steps.date.outputs.date }}
+        pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
+        pr_label: "auto-release-pr"
+        pr_allow_empty: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  merge-release-pr-to-main:
+    runs-on: ubuntu-20.04
+    needs: create-release-branch-pr-to-main
+    steps:
+      - name: enable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Temporarily disable branch protection on main
+        uses: octokit/request-action@v2.x
+        with:
+          route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: merge release branch pr to main
+        uses: octokit/request-action@v2.x
+        with:
+          route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          pull_number: ${{ needs.create-release-branch-pr-to-main.outputs.pr_number }}
+          merge_method: 'merge'
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: disable merge commits
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          allow_merge_commit: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+      
+      - name: Enable branch protection on main
+        uses: octokit/request-action@v2.x
+        if: always() # Make sure to enable branch protection even if other steps fail
+        with:
+          route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+          owner: aws-solutions
+          repo: fhir-works-on-aws
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}

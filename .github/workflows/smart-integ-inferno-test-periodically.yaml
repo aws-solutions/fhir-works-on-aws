@@ -1,0 +1,147 @@
+name: (SMART) Unit Tests, Integration Test periodically
+on:
+  schedule:
+    - cron: '0 13 1,15 * *'
+
+jobs:
+  inferno-test:
+    name: Run Inferno Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-east-1
+            serviceUrlSuffix: ''
+            smartServiceURLSecretName: SMART_SERVICE_URL
+          - enableMultiTenancy: true
+            region: us-east-2
+            serviceUrlSuffix: /tenant/tenant1
+            smartServiceURLSecretName: MULTITENANCY_SMART_SERVICE_URL
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: nguyen102/inferno
+          ref: fhir-works
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Install dependency
+        run: |
+          gem install bundler
+          bundle install
+      - name: Execute Inferno tests
+        env:
+          SERVICE_URL: ${{ secrets[matrix.smartServiceURLSecretName]}}${{ matrix.serviceUrlSuffix }}
+          CLIENT_ID: ${{ secrets.SMART_AUTH_CLIENT_ID}}
+          CLIENT_SECRET: ${{ secrets.SMART_AUTH_CLIENT_SECRET }}
+          AUTH_ENDPOINT: ${{ secrets.SMART_AUTH_ENDPOINT }}
+          TOKEN_ENDPOINT: ${{ secrets.SMART_TOKEN_ENDPOINT}}
+          AUTH_USERNAME: ${{ secrets.SMART_AUTH_USERNAME}}
+          AUTH_PASSWORD: ${{ secrets.SMART_AUTH_PASSWORD}}
+        run: |
+          cp fhir-works-example.json fhir-works.json
+          sed -i -e "s#SERVER_ENDPOINT#$SERVICE_URL#g" fhir-works.json
+          sed -i -e "s#CLIENT_ID#$CLIENT_ID#g" fhir-works.json
+          sed -i -e "s#CLIENT_SECRET#$CLIENT_SECRET#g" fhir-works.json
+          sed -i -e "s#AUTH_ENDPOINT#$AUTH_ENDPOINT#g" fhir-works.json
+          sed -i -e "s#TOKEN_ENDPOINT#$TOKEN_ENDPOINT#g" fhir-works.json
+          sed -i -e "s#AUTH_USERNAME#$AUTH_USERNAME#g" fhir-works.json
+          sed -i -e "s#AUTH_PASSWORD#$AUTH_PASSWORD#g" fhir-works.json
+          sed -i -e "s/okta-signin-username/input28/g" fhir-works.json
+          sed -i -e "s/okta-signin-password/input36/g" fhir-works.json
+          sed -i -e "s/okta-signin-submit/button-primary/g" fhir-works.json
+          sed -i -e "14 s/id/class/" fhir-works.json
+          bundle exec rake db:create db:schema:load
+          bundle exec rake inferno:execute_batch[fhir-works.json]
+  custom-integration-tests:
+    needs: inferno-test
+    name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    environment: FWoA Integ Test Env
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-east-1
+            smartOauth2ApiEndpointSecretName: SMART_OAUTH2_API_ENDPOINT
+            smartAuthUsernameSecretName: SMART_AUTH_USERNAME
+            smartAuthAdminUsernameSecretName: SMART_AUTH_ADMIN_USERNAME
+            smartServiceURLSecretName: SMART_SERVICE_URL
+            smartApiKeySecretName: SMART_API_KEY
+            subscriptionsNotificationsTableSecretName: SMART_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: SMART_SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: SMART_SUBSCRIPTIONS_API_KEY
+          - enableMultiTenancy: true
+            region: us-east-2
+            smartOauth2ApiEndpointSecretName: MULTITENANCY_SMART_OAUTH2_API_ENDPOINT
+            smartAuthUsernameSecretName: MULTITENANCY_SMART_AUTH_USERNAME
+            smartAuthAdminUsernameSecretName: MULTITENANCY_SMART_AUTH_ADMIN_USERNAME
+            smartServiceURLSecretName: MULTITENANCY_SMART_SERVICE_URL
+            smartApiKeySecretName: MULTITENANCY_SMART_API_KEY
+            subscriptionsNotificationsTableSecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_API_KEY
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+      - name: Execute tests
+        env:
+          SMART_OAUTH2_API_ENDPOINT: ${{ secrets[matrix.smartOauth2ApiEndpointSecretName] }}
+          SMART_INTEGRATION_TEST_CLIENT_ID: ${{ secrets.SMART_INTEGRATION_TEST_CLIENT_ID}}
+          SMART_INTEGRATION_TEST_CLIENT_PW: ${{ secrets.SMART_INTEGRATION_TEST_CLIENT_PW}}
+          SMART_AUTH_USERNAME: ${{ secrets[matrix.smartAuthUsernameSecretName] }}
+          SMART_AUTH_ADMIN_USERNAME: ${{ secrets[matrix.smartAuthAdminUsernameSecretName] }}
+          SMART_AUTH_ADMIN_ANOTHER_TENANT_USERNAME: ${{ secrets.SMART_AUTH_ADMIN_ANOTHER_TENANT_USERNAME}}
+          SMART_AUTH_PASSWORD: ${{ secrets.SMART_AUTH_PASSWORD}}
+          SMART_SERVICE_URL: ${{ secrets[matrix.smartServiceURLSecretName] }}
+          SMART_API_KEY: ${{ secrets[matrix.smartApiKeySecretName] }}
+          MULTI_TENANCY_ENABLED: ${{ matrix.enableMultiTenancy }}
+          SUBSCRIPTIONS_ENABLED: 'true'
+          SUBSCRIPTIONS_NOTIFICATIONS_TABLE: ${{ secrets[matrix.subscriptionsNotificationsTableSecretName] }}
+          SUBSCRIPTIONS_ENDPOINT: ${{ secrets[matrix.subscriptionsEndpointSecretName] }}
+          SUBSCRIPTIONS_API_KEY: ${{ secrets[matrix.subscriptionsApiKeySecretName] }}
+          AWS_REGION: ${{ matrix.region }}
+          API_AWS_REGION: ${{ matrix.region }}
+        run: |
+          cd ./solutions/smart-deployment
+          node ../../common/scripts/install-run-rushx.js int-test
+  slack-notification:
+    needs: [inferno-test, custom-integration-tests]
+    runs-on: ubuntu-20.04
+    if: failure()
+    steps:
+      - name: Slack notification when inferno tests or integration tests failed
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "slack_message": "On ${{ github.ref_name }} branch of ${{ github.repository }}:",
+              "inferno_result": "${{ needs.inferno-test.result }}",
+              "integration_result": "${{ needs.custom-integration-tests.result }}",
+              "workflow_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SCHEDULED_INTEGRATION_WEBHOOK_URL }}

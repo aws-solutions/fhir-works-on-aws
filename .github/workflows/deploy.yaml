@@ -1,0 +1,210 @@
+#
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+name: Unit Tests, Deploy, Integration Test
+on:
+  workflow_call:
+
+jobs:
+  build-validate:
+    name: Build and validate
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # install dependencies, build, and test
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      - name: Rush test
+        run: node common/scripts/install-run-rush.js test --verbose
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build Hapi validator
+        run: |
+          cd ./fwoa-utilities/javaHapiValidatorLambda
+          mvn --batch-mode --update-snapshots --no-transfer-progress clean install
+  deploy:
+    needs: build-validate
+    name: Deploy to Dev - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-west-1
+          - enableMultiTenancy: true
+            region: us-west-2
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      # for compile igs we would need to use node v16 due to ERR_PACKAGE_PATH_NOT_EXPORTED in elasticsearch package
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Download US Core IG
+        # NOTE if updating the IG version. Please see update implementationGuides.test.ts test too.
+        run: |
+          cd ./solutions/deployment
+          mkdir -p implementationGuides
+          curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
+      - name: Compile IGs
+        run: |
+          npm install -g ts-node
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js compile-igs
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Setup allowList for Subscriptions integ tests
+        run: cp solutions/deployment/src/integration-tests/infrastructure/allowList-integTests.ts solutions/deployment/src/subscriptions/allowList.ts
+
+      - name: Deploy Hapi validator
+        run: |
+          cd ./fwoa-utilities/javaHapiValidatorLambda
+          mvn --batch-mode --update-snapshots --no-transfer-progress clean install
+      - name: Deploy FHIR Server and Hapi Validator with CDK
+        run: |
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js deploy -c region=${{ matrix.region }} -c useHapiValidator=true -c enableMultiTenancy=${{ matrix.enableMultiTenancy }} -c enableSubscriptions=true --all --require-approval never
+  crucible-test:
+    needs: deploy
+    name: Run Crucible Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-west-1
+            serviceUrlSuffix: ''
+            serviceUrlSecretName: SERVICE_URL
+            cognitoClientIdSecretName: COGNITO_CLIENT_ID
+            apiKeySecretName: API_KEY
+          - enableMultiTenancy: true
+            region: us-west-2
+            serviceUrlSuffix: /tenant/tenant1
+            serviceUrlSecretName: MULTITENANCY_SERVICE_URL
+            cognitoClientIdSecretName: MULTITENANCY_COGNITO_CLIENT_ID
+            apiKeySecretName: MULTITENANCY_API_KEY
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: nguyen102/plan_executor
+          ref: r4-aws-fhir-solution
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Install dependency
+        run: |
+          gem install bundler
+          bundle install
+      - name: Execute tests
+        env:
+          SERVICE_URL: ${{ secrets[matrix.serviceUrlSecretName] }}${{ matrix.serviceUrlSuffix }}
+          API_KEY: ${{ secrets[matrix.apiKeySecretName] }}
+          COGNITO_CLIENT_ID: ${{ secrets[matrix.cognitoClientIdSecretName] }}
+          COGNITO_USERNAME: ${{ secrets.COGNITO_USERNAME_PRACTITIONER }}
+          COGNITO_PASSWORD: ${{ secrets.COGNITO_PASSWORD }}
+        run: |
+          ACCESS_TOKEN=$(aws cognito-idp initiate-auth --region ${{ matrix.region }} --client-id $COGNITO_CLIENT_ID \
+          --auth-flow USER_PASSWORD_AUTH --auth-parameters USERNAME=$COGNITO_USERNAME,PASSWORD=$COGNITO_PASSWORD | \
+          python3 -c 'import json,sys;obj=json.load(sys.stdin);print(obj["AuthenticationResult"]["IdToken"])')
+          echo User authenticated
+          bundle exec rake crucible:execute_hearth_tests[$SERVICE_URL,$API_KEY,$ACCESS_TOKEN]
+  custom-integration-tests:
+    needs: crucible-test
+    name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-west-1
+            serviceUrlSecretName: SERVICE_URL
+            cognitoClientIdSecretName: COGNITO_CLIENT_ID
+            apiKeySecretName: API_KEY
+            subscriptionsNotificationsTableSecretName: SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: SUBSCRIPTIONS_API_KEY
+          - enableMultiTenancy: true
+            region: us-west-2
+            serviceUrlSecretName: MULTITENANCY_SERVICE_URL
+            cognitoClientIdSecretName: MULTITENANCY_COGNITO_CLIENT_ID
+            apiKeySecretName: MULTITENANCY_API_KEY
+            subscriptionsNotificationsTableSecretName: MULTITENANCY_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: MULTITENANCY_SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: MULTITENANCY_SUBSCRIPTIONS_API_KEY
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      - name: Execute tests
+        env:
+          API_URL: ${{ secrets[matrix.serviceUrlSecretName] }}
+          API_KEY: ${{ secrets[matrix.apiKeySecretName] }}
+          API_AWS_REGION: ${{ matrix.region }}
+          COGNITO_CLIENT_ID: ${{ secrets[matrix.cognitoClientIdSecretName] }}
+          COGNITO_USERNAME_PRACTITIONER: ${{ secrets.COGNITO_USERNAME_PRACTITIONER }}
+          COGNITO_USERNAME_AUDITOR: ${{ secrets.COGNITO_USERNAME_AUDITOR }}
+          COGNITO_USERNAME_PRACTITIONER_ANOTHER_TENANT: ${{ secrets.COGNITO_USERNAME_PRACTITIONER_ANOTHER_TENANT }}
+          COGNITO_PASSWORD: ${{ secrets.COGNITO_PASSWORD }}
+          MULTI_TENANCY_ENABLED: ${{ matrix.enableMultiTenancy }}
+          SUBSCRIPTIONS_ENABLED: 'true'
+          SUBSCRIPTIONS_NOTIFICATIONS_TABLE: ${{ secrets[matrix.subscriptionsNotificationsTableSecretName] }}
+          SUBSCRIPTIONS_ENDPOINT: ${{ secrets[matrix.subscriptionsEndpointSecretName] }}
+          SUBSCRIPTIONS_API_KEY: ${{ secrets[matrix.subscriptionsApiKeySecretName] }}
+          AWS_REGION: ${{ matrix.region }}
+        run: |
+          cd ./solutions/deployment
+          node ../../common/scripts/install-run-rushx.js int-test

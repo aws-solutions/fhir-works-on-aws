@@ -1,0 +1,213 @@
+name: (SMART) Unit Tests, Deploy, Integration Test
+on:
+  workflow_call:
+
+jobs:
+  build-validate:
+    name: Build and validate
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # install dependencies, build, and test
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      - name: Rush test
+        run: node common/scripts/install-run-rush.js test --verbose
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Build Hapi validator
+        run: |
+          cd ./fwoa-utilities/javaHapiValidatorLambda
+          mvn --batch-mode --update-snapshots --no-transfer-progress clean install
+  deploy:
+    needs: build-validate
+    name: Deploy to Dev - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    environment: FWoA Integ Test Env
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-east-1
+            issuerEndpointSecretName: SMART_ISSUER_ENDPOINT
+            oAuth2ApiEndpointSecretName: SMART_OAUTH2_API_ENDPOINT
+            patientPickerEndpointSecretName: SMART_PATIENT_PICKER_ENDPOINT
+          - enableMultiTenancy: true
+            region: us-east-2
+            issuerEndpointSecretName: MULTITENANCY_SMART_ISSUER_ENDPOINT
+            oAuth2ApiEndpointSecretName: MULTITENANCY_SMART_OAUTH2_API_ENDPOINT
+            patientPickerEndpointSecretName: MULTITENANCY_SMART_PATIENT_PICKER_ENDPOINT
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+
+      # for compile igs we would need to use node v16 due to ERR_PACKAGE_PATH_NOT_EXPORTED in elasticsearch package
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Download US Core IG
+        # NOTE if updating the IG version. Please see update implementationGuides.test.ts test too.
+        run: |
+          cd ./solutions/smart-deployment
+          mkdir -p implementationGuides
+          curl http://hl7.org/fhir/us/core/STU3.1.1/package.tgz | tar xz -C implementationGuides
+      - name: Compile IGs
+        run: |
+          npm install -g ts-node
+          cd ./solutions/smart-deployment
+          node ../../common/scripts/install-run-rushx.js compile-igs
+      - name: Setup allowList for Subscriptions integ tests
+        run: cp solutions/smart-deployment/src/integration-tests/infrastructure/allowList-integTests.ts solutions/smart-deployment/src/subscriptions/allowList.ts
+      - name: Build Hapi validator
+        run: |
+          cd ./fwoa-utilities/javaHapiValidatorLambda
+          mvn --batch-mode --update-snapshots --no-transfer-progress clean install
+
+      - name: Deploy FWoA with CDK
+        run: |
+          cd ./solutions/smart-deployment
+           node ../../common/scripts/install-run-rushx.js deploy -c issuerEndpoint=${{ secrets[matrix.issuerEndpointSecretName] }} -c oAuth2ApiEndpoint=${{ secrets[matrix.oAuth2ApiEndpointSecretName] }} -c patientPickerEndpoint=${{ secrets[matrix.patientPickerEndpointSecretName] }} -c enableSubscriptions=true -c useHapiValidator=true -c region=${{ matrix.region }} -c enableMultiTenancy=${{ matrix.enableMultiTenancy }} --all --require-approval=never
+  inferno-test:
+    needs: deploy
+    name: Run Inferno Tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-east-1
+            serviceUrlSuffix: ''
+            smartServiceURLSecretName: SMART_SERVICE_URL
+          - enableMultiTenancy: true
+            region: us-east-2
+            serviceUrlSuffix: /tenant/tenant1
+            smartServiceURLSecretName: MULTITENANCY_SMART_SERVICE_URL
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: nguyen102/inferno
+          ref: fhir-works
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Install dependency
+        run: |
+          gem install bundler
+          bundle install
+      - name: Execute Inferno tests
+        env:
+          SERVICE_URL: ${{ secrets[matrix.smartServiceURLSecretName]}}${{ matrix.serviceUrlSuffix }}
+          CLIENT_ID: ${{ secrets.SMART_AUTH_CLIENT_ID}}
+          CLIENT_SECRET: ${{ secrets.SMART_AUTH_CLIENT_SECRET }}
+          AUTH_ENDPOINT: ${{ secrets.SMART_AUTH_ENDPOINT }}
+          TOKEN_ENDPOINT: ${{ secrets.SMART_TOKEN_ENDPOINT}}
+          AUTH_USERNAME: ${{ secrets.SMART_AUTH_USERNAME}}
+          AUTH_PASSWORD: ${{ secrets.SMART_AUTH_PASSWORD}}
+        run: |
+          cp fhir-works-example.json fhir-works.json
+          sed -i -e "s#SERVER_ENDPOINT#$SERVICE_URL#g" fhir-works.json
+          sed -i -e "s#CLIENT_ID#$CLIENT_ID#g" fhir-works.json
+          sed -i -e "s#CLIENT_SECRET#$CLIENT_SECRET#g" fhir-works.json
+          sed -i -e "s#AUTH_ENDPOINT#$AUTH_ENDPOINT#g" fhir-works.json
+          sed -i -e "s#TOKEN_ENDPOINT#$TOKEN_ENDPOINT#g" fhir-works.json
+          sed -i -e "s#AUTH_USERNAME#$AUTH_USERNAME#g" fhir-works.json
+          sed -i -e "s#AUTH_PASSWORD#$AUTH_PASSWORD#g" fhir-works.json
+          sed -i -e "s/okta-signin-username/input28/g" fhir-works.json
+          sed -i -e "s/okta-signin-password/input36/g" fhir-works.json
+          sed -i -e "s/okta-signin-submit/button-primary/g" fhir-works.json
+          sed -i -e "14 s/id/class/" fhir-works.json
+          bundle exec rake db:create db:schema:load
+          bundle exec rake inferno:execute_batch[fhir-works.json]
+  custom-integration-tests:
+    needs: inferno-test
+    name: Run custom integration tests - enableMultiTenancy=${{ matrix.enableMultiTenancy }}
+    environment: FWoA Integ Test Env
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - enableMultiTenancy: false
+            region: us-east-1
+            smartOauth2ApiEndpointSecretName: SMART_OAUTH2_API_ENDPOINT
+            smartAuthUsernameSecretName: SMART_AUTH_USERNAME
+            smartAuthAdminUsernameSecretName: SMART_AUTH_ADMIN_USERNAME
+            smartServiceURLSecretName: SMART_SERVICE_URL
+            smartApiKeySecretName: SMART_API_KEY
+            subscriptionsNotificationsTableSecretName: SMART_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: SMART_SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: SMART_SUBSCRIPTIONS_API_KEY
+          - enableMultiTenancy: true
+            region: us-east-2
+            smartOauth2ApiEndpointSecretName: MULTITENANCY_SMART_OAUTH2_API_ENDPOINT
+            smartAuthUsernameSecretName: MULTITENANCY_SMART_AUTH_USERNAME
+            smartAuthAdminUsernameSecretName: MULTITENANCY_SMART_AUTH_ADMIN_USERNAME
+            smartServiceURLSecretName: MULTITENANCY_SMART_SERVICE_URL
+            smartApiKeySecretName: MULTITENANCY_SMART_API_KEY
+            subscriptionsNotificationsTableSecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_NOTIFICATIONS_TABLE
+            subscriptionsEndpointSecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_ENDPOINT
+            subscriptionsApiKeySecretName: MULTITENANCY_SMART_SUBSCRIPTIONS_API_KEY
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ matrix.region }}
+          role-to-assume: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+          role-duration-seconds: 7200
+      - name: Base Action
+        uses: ./.github/actions/baseAction
+      - name: Execute tests
+        env:
+          SMART_OAUTH2_API_ENDPOINT: ${{ secrets[matrix.smartOauth2ApiEndpointSecretName] }}
+          SMART_INTEGRATION_TEST_CLIENT_ID: ${{ secrets.SMART_INTEGRATION_TEST_CLIENT_ID}}
+          SMART_INTEGRATION_TEST_CLIENT_PW: ${{ secrets.SMART_INTEGRATION_TEST_CLIENT_PW}}
+          SMART_AUTH_USERNAME: ${{ secrets[matrix.smartAuthUsernameSecretName] }}
+          SMART_AUTH_ADMIN_USERNAME: ${{ secrets[matrix.smartAuthAdminUsernameSecretName] }}
+          SMART_AUTH_ADMIN_ANOTHER_TENANT_USERNAME: ${{ secrets.SMART_AUTH_ADMIN_ANOTHER_TENANT_USERNAME}}
+          SMART_AUTH_PASSWORD: ${{ secrets.SMART_AUTH_PASSWORD}}
+          SMART_SERVICE_URL: ${{ secrets[matrix.smartServiceURLSecretName] }}
+          SMART_API_KEY: ${{ secrets[matrix.smartApiKeySecretName] }}
+          MULTI_TENANCY_ENABLED: ${{ matrix.enableMultiTenancy }}
+          SUBSCRIPTIONS_ENABLED: 'true'
+          SUBSCRIPTIONS_NOTIFICATIONS_TABLE: ${{ secrets[matrix.subscriptionsNotificationsTableSecretName] }}
+          SUBSCRIPTIONS_ENDPOINT: ${{ secrets[matrix.subscriptionsEndpointSecretName] }}
+          SUBSCRIPTIONS_API_KEY: ${{ secrets[matrix.subscriptionsApiKeySecretName] }}
+          AWS_REGION: ${{ matrix.region }}
+          API_AWS_REGION: ${{ matrix.region }}
+        run: |
+          cd ./solutions/smart-deployment
+          node ../../common/scripts/install-run-rushx.js int-test
