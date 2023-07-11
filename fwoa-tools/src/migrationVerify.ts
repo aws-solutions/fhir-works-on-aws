@@ -127,15 +127,19 @@ export async function verifyFolderImport(smartClient: boolean, outputFile: Expor
   }
 }
 
-export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean} {
+export function buildRunScriptParams(): { smartClient: boolean; dryRun: boolean } {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const argv: any = parseCmdOptions();
   const smartClient: boolean = argv.smart;
   const dryRun: boolean = argv.dryRun;
-  return {smartClient, dryRun};
+  return { smartClient, dryRun };
 }
 
-export async function runScript(smartClient: boolean, dryRun: boolean, outputFile: ExportOutput): Promise<void> {
+export async function runScript(
+  smartClient: boolean,
+  dryRun: boolean,
+  outputFile: ExportOutput
+): Promise<void> {
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   if (!dryRun) {
     try {
@@ -152,7 +156,7 @@ export async function runScript(smartClient: boolean, dryRun: boolean, outputFil
 (async () => {
   // Don't runScript when code is being imported for unit tests
   if (!process.env.UNIT_TEST) {
-    const {smartClient, dryRun} = buildRunScriptParams();
+    const { smartClient, dryRun } = buildRunScriptParams();
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
     await runScript(smartClient, dryRun, outputFile);
