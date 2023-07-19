@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { WriteStream, createWriteStream, readFileSync, writeFileSync } from 'fs';
+import { performance } from 'perf_hooks';
 import { S3 } from 'aws-sdk';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as dotenv from 'dotenv';
@@ -11,6 +12,10 @@ import { EXPORT_STATE_FILE_NAME, ExportOutput, checkConfiguration } from './migr
 
 dotenv.config({ path: '.env' });
 const CONVERSION_OUTPUT_LOG_FILE_PREFIX: string = 'binary_conversion_output_';
+
+let totalDownloadTime: number = 0;
+let totalUploadTime: number = 0;
+let totalConversionTime: number = 0;
 
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 export const logs: WriteStream = createWriteStream(
@@ -132,16 +137,30 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
         continue;
       }
       // Step 3, Retrieve Binary objects from S3 Binary Bucket
+      const downloadStartTime = performance.now();
       const binaryObject = await getBinaryObject(binaryResource.id, binaryResource.meta.versionId, s3Client);
+      const downloadEndTime = performance.now();
+      logs.write(
+        `${new Date().toISOString()}: Download Time for Binary Object: ${
+          downloadEndTime - downloadStartTime
+        }\n`
+      );
+      totalDownloadTime += downloadEndTime - downloadStartTime;
       logs.write(
         `${new Date().toISOString()}: Retrieved Binary Object from Binary bucket with vid ${
           binaryResource.meta.versionId
         }.\n`
       );
+
       // Step 4, Convert to Binary string
+      const conversionStartTime = performance.now();
       binaryResource.data = binaryObject.Body?.toString('base64');
+      const conversionEndTime = performance.now();
+      totalConversionTime += conversionEndTime - conversionStartTime;
+
       // Step 5, append to downloaded file
-      results += JSON.stringify(binaryResource) + '\n';
+      results = JSON.stringify(binaryResource) + '\n';
+      results = results.trimEnd();
       logs.write(`${new Date().toISOString()}: Binary data appended to resource.\n`);
       // upload to separate folder to avoid import limit
       // Binary resources are generally large in size, and this conversion may push the file
@@ -155,20 +174,28 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
         outputFile.file_names[folderName] = [];
       // eslint-disable-next-line security/detect-object-injection
       outputFile.file_names[folderName].push(newKey);
+      const uploadStartTime = performance.now();
       await uploadBinaryResource(newKey, results, s3Client);
+      const uploadEndTime = performance.now();
+      totalUploadTime += uploadEndTime - uploadStartTime;
       logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
     }
-    results = results.trimEnd();
   }
 }
 
 async function startBinaryConversion(outputFile: ExportOutput): Promise<void> {
   console.log(`Starting Binary Resource Conversion...`);
-  logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
+  logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion\n`);
+  const startTime = performance.now();
   await convertBinaryResource(outputFile);
+  const endTime = performance.now();
+  logs.write(`${new Date().toISOString()}: Total Downloads time: ${totalDownloadTime}\n`);
+  logs.write(`${new Date().toISOString()}: Total Uploads time: ${totalUploadTime}\n`);
+  logs.write(`${new Date().toISOString()}: Total Conversions time: ${totalConversionTime}\n`);
+  logs.write(`${new Date().toISOString()}: Total Script time: ${endTime - startTime}\n`);
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   writeFileSync(`${EXPORT_STATE_FILE_NAME}`, JSON.stringify(outputFile));
-  logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
+  logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion\n`);
 }
 
 async function runScript(): Promise<void> {
