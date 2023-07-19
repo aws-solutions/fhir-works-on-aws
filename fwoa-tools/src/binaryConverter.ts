@@ -141,7 +141,7 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
       // Step 4, Convert to Binary string
       binaryResource.data = binaryObject.Body?.toString('base64');
       // Step 5, append to downloaded file
-      results += JSON.stringify(binaryResource) + '\n';
+      results = JSON.stringify(binaryResource);
       logs.write(`${new Date().toISOString()}: Binary data appended to resource.\n`);
       // upload to separate folder to avoid import limit
       // Binary resources are generally large in size, and this conversion may push the file
@@ -158,17 +158,16 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
       await uploadBinaryResource(newKey, results, s3Client);
       logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
     }
-    results = results.trimEnd();
   }
 }
 
 async function startBinaryConversion(outputFile: ExportOutput): Promise<void> {
   console.log(`Starting Binary Resource Conversion...`);
-  logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion`);
+  logs.write(`${new Date().toISOString()}: Starting Binary Resource Conversion\n`);
   await convertBinaryResource(outputFile);
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   writeFileSync(`${EXPORT_STATE_FILE_NAME}`, JSON.stringify(outputFile));
-  logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion`);
+  logs.write(`${new Date().toISOString()}: Finished Binary Resource Conversion\n`);
 }
 
 async function runScript(): Promise<void> {
