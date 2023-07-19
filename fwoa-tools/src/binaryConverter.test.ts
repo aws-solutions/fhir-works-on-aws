@@ -111,7 +111,7 @@ describe('binaryConverter', () => {
         'getObject',
         // eslint-disable-next-line @typescript-eslint/ban-types
         (params: GetObjectRequest, callback: Function) => {
-          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
+          callback(null, { Body: Buffer.from(JSON.stringify(binaryResource)), $response: {} });
         }
       );
       AWSMock.mock(
@@ -121,6 +121,9 @@ describe('binaryConverter', () => {
         (params: PutObjectRequest, callback: Function) => {
           // check that we are uploading the right binary resource
           expect(params.Key).toBe('binaryUnitTests/Binary_converted_testBinaryObj/Binary-1.ndjson');
+          const tempResource = binaryResource;
+          tempResource.data = Buffer.from(JSON.stringify(binaryResource)).toString('base64');
+          expect(params.Body).toEqual(JSON.stringify(tempResource));
           callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
         }
       );

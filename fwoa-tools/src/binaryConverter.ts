@@ -141,8 +141,7 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
       // Step 4, Convert to Binary string
       binaryResource.data = binaryObject.Body?.toString('base64');
       // Step 5, append to downloaded file
-      results = JSON.stringify(binaryResource) + '\n';
-      results = results.trimEnd();
+      results = JSON.stringify(binaryResource);
       logs.write(`${new Date().toISOString()}: Binary data appended to resource.\n`);
       // upload to separate folder to avoid import limit
       // Binary resources are generally large in size, and this conversion may push the file
