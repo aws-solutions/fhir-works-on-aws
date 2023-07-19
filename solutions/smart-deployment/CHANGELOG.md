@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
-- clear appended data
+- binary conversion performance fix to remove duplicated imports
 
 ## [6.1.0-smart] (2023-06-01)
 
