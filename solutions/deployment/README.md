@@ -138,13 +138,13 @@ To access the FHIR API, an ID token is required. A Cognito ID token can be obtai
 - For Windows, enter:
 
 ```sh
-scripts/init-auth.py <CLIENT_ID> <REGION>
+scripts/init-auth.py <CLIENT_ID> <REGION> <USERNAME> <PASSWORD>
 ```
 
 - For Mac, enter:
 
 ```sh
-python3 scripts/init-auth.py <CLIENT_ID> <REGION>
+python3 scripts/init-auth.py <CLIENT_ID> <REGION> <USERNAME> <PASSWORD>
 ```
 
 The return value is the `COGNITO_AUTH_TOKEN` (found in the postman collection) to be used for access to the FHIR APIs.
