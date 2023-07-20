@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-deployment",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "FHIR Works on AWS deployment",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
