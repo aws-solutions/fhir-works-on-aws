@@ -85,7 +85,7 @@ const stack = new FhirWorksStack(app, `fhir-service-${stage}`, {
   igMemorySize,
   igStorageSize,
   description:
-    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. (Version %%VERSION%%)',
+    '(SO0128) - Solution - Primary Template - This template creates all the necessary resources to deploy FHIR Works on AWS; a framework to deploy a FHIR server on AWS. %%VERSION%%',
   enableSecurityLogging,
   validateXHTML
 });

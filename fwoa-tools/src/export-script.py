@@ -72,6 +72,7 @@ print("Starting Table Export Time =",
 original_data_source_dyn_frame = None
 
 time_format_str = "%Y-%m-%dT%H:%M:%S.%fZ"
+max_folder_size_bytes = 536870912000 # 500 GB in Bytes
 
 if (snapshotExists and snapshotLocation is not None):
     original_data_source_dyn_frame = glueContext.create_dynamic_frame.from_options(
@@ -286,6 +287,8 @@ else:
                     yield item
 
     resulting_file_names = {}
+    folder_sizes = {}
+    current_version_aliases = {}
     regex_pattern = '\/partitionKeyDup=(\w+-v\d+)\/run-\d{13}-part-r-(\d{5})$'
 
     def rename_files(s3_file_names):
@@ -320,12 +323,32 @@ else:
             continue
         else:
             resource_type_name = match.group(1)
-            new_s3_file_name = resource_type_name + "/" + resource_type_name + "-" + match.group(2) + ".ndjson"
+            version_num = match.group(1).split('-')[1]
+            item_size = item["Size"]
+            version_num_alias = version_num
+            if (version_num not in current_version_aliases):
+                current_version_aliases[version_num] = 0
+            version_num_alias = version_num + "-" + str(current_version_aliases[version_num])
+            if resource_type_name.startswith("Binary"):
+                version_num_alias = resource_type_name
+
+            if (version_num_alias not in folder_sizes):
+                folder_sizes[version_num_alias] = {"object_count": 0, "total_size": 0}
+            # Check for 500 GB size limit or 10000 object count limit in folder
+            if (folder_sizes[version_num_alias]["object_count"] >= 10000 or folder_sizes[version_num_alias]["total_size"] + item_size >= max_folder_size_bytes):
+                current_version_aliases[version_num] += 1
+                version_num_alias = version_num + "-" + str(current_version_aliases[version_num])
+                folder_sizes[version_num_alias] = {"object_count": 0, "total_size": 0}
+
+            folder_sizes[version_num_alias]["object_count"] += 1
+            folder_sizes[version_num_alias]["total_size"] += item_size
+
+            new_s3_file_name = version_num_alias + "/" + resource_type_name + "-" + match.group(2) + ".ndjson"
             tenant_specific_path = '' if (tenantId is None) else tenantId + '/'
             new_s3_file_path = tenant_specific_path + job_id + '/' + new_s3_file_name
-            if resource_type_name not in resulting_file_names:
-                resulting_file_names[resource_type_name] = []
-            resulting_file_names[resource_type_name].append(new_s3_file_path)
+            if version_num_alias not in resulting_file_names:
+                resulting_file_names[version_num_alias] = []
+            resulting_file_names[version_num_alias].append(new_s3_file_path)
 
             list_of_file_names[count % number_of_threads].append({
                 "file_name": file_name,

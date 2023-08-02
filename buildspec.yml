@@ -2,13 +2,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16 #The Solutions pipeline version do not support 14, v14 will be manually set
+      nodejs: 18
     commands:
       - echo "nothing to do in install"
   pre_build:
     commands:
-      - echo "Setting node version to 18"
-      - n 18
       - echo "Installing dependencies and executing unit tests - `pwd`"
       - echo Update npm to latest
       - npm install -g npm@latest
@@ -16,8 +14,6 @@ phases:
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-#      - cd ./../fwoa-core/interface
-#      - node ./../../common/scripts/install-run-rushx.js compile
       - echo "Starting build `date` `pwd`"
       - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
       - echo "Build completed `date`"
@@ -33,4 +29,20 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
+    - solutions/**/*
+    - fwoa-core/**/*
+    - core/**/*
+    - deployment/**/*
+    - fwoa-tools/**/*
+    - fwoa-utilities/**/*
+    - solutions/**/*
+    - buildspec.yml
+    - CHANGELOG.md
+    - LICENSE
+    - NOTICE
+    - CODE_OF_CONDUCT.md
+    - CONTRIBUTING.md
+    - README.md
+    - .github/**/*
+    - sonar-project.properties
+    - .cfnnag_global_suppress_list

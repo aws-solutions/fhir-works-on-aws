@@ -28,6 +28,7 @@ dotenv.config({ path: '.env' });
 const { API_AWS_REGION, HEALTHLAKE_CLIENT_TOKEN } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
+const MAX_IMPORT_RETRIES: number = 3;
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
 const successfullyCompletedFolders: string[] = [];
@@ -43,15 +44,24 @@ export const logs: WriteStream = createWriteStream(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
-    .usage('Usage: $0 [--dryRun, -d boolean]')
+    .usage('Usage: $0 [--dryRun, -d boolean] [--continueOnError, -c boolean]')
     .describe('dryRun', 'Check operations and authentication status')
     .boolean('dryRun')
     .default('dryRun', false)
-    .alias('d', 'dryRun').argv;
+    .alias('d', 'dryRun')
+    .describe('continueOnError', 'Check operations and authentication status')
+    .boolean('continueOnError')
+    .default('continueOnError', false)
+    .alias('c', 'continueOnError').argv;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argv: any = parseCmdOptions();
 const dryRun: boolean = argv.dryRun;
+const continueOnError: boolean = argv.continueOnError;
+
+const successfulJobStatuses: string[] = continueOnError
+  ? ['COMPLETED', 'COMPLETED_WITH_ERRORS']
+  : ['COMPLETED'];
 
 export async function startImport(
   folderNames: string[],
@@ -71,13 +81,10 @@ export async function startImport(
     region: API_AWS_REGION
   });
 
+  let retryAttempts = 0;
   for (i; i < folderNames.length; i += 1) {
     // eslint-disable-next-line security/detect-object-injection
     const folderName = folderNames[i];
-    // We don't import Binary-v... folders since they are unconverted Binary resources
-    if (folderName.startsWith('Binary-v')) {
-      continue;
-    }
     console.log(`Starting import for folder ${folderName}`);
     const startTime = new Date();
     logs.write(`${startTime.toISOString()}: Start Import for folder ${folderName}...\n`);
@@ -101,53 +108,69 @@ export async function startImport(
       },
       ClientToken: HEALTHLAKE_CLIENT_TOKEN || uuidv4()
     };
-    const importJob = await healthLake.startFHIRImportJob(params).promise();
-    console.log(`successfully started import job, checking status at ${importJob.JobId}`);
-    logs.write(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}\n`);
-    const cutOffTime = new Date(new Date().getTime() + MAX_IMPORT_RUNTIME);
-    while (new Date().getTime() < cutOffTime.getTime()) {
-      try {
-        const jobStatus = await healthLake
-          .describeFHIRImportJob({
-            DatastoreId: process.env.DATASTORE_ID!,
-            JobId: importJob.JobId
-          })
-          .promise();
-        if (jobStatus.ImportJobProperties.JobStatus === 'COMPLETED') {
-          const finishTime = new Date();
-          console.log(`successfully imported folder ${folderName}`);
-          logs.write(
-            `${finishTime.toISOString()}: Import Job for folder ${folderName} succeeded! Elapsed Time: ${
-              Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
-            }\n`
-          );
+    try {
+      const importJob = await healthLake.startFHIRImportJob(params).promise();
+      console.log(`successfully started import job, checking status at ${importJob.JobId}`);
+      logs.write(`${new Date().toISOString()}: Started Import Job, JobId - ${importJob.JobId}\n`);
+      const cutOffTime = new Date(new Date().getTime() + MAX_IMPORT_RUNTIME);
+      while (new Date().getTime() < cutOffTime.getTime()) {
+        try {
+          const jobStatus = await healthLake
+            .describeFHIRImportJob({
+              DatastoreId: process.env.DATASTORE_ID!,
+              JobId: importJob.JobId
+            })
+            .promise();
+          if (successfulJobStatuses.includes(jobStatus.ImportJobProperties.JobStatus)) {
+            const finishTime = new Date();
+            console.log(`successfully imported folder ${folderName}`);
+            logs.write(
+              `${finishTime.toISOString()}: Import Job for folder ${folderName} succeeded! Elapsed Time: ${
+                Math.abs(startTime.getTime() - finishTime.getTime()) / MS_TO_HOURS
+              }\n`
+            );
 
-          await sleep(POLLING_TIME);
-          await deleteFhirResourceFromHealthLakeIfNeeded(folderName, outputFile);
-          logs.write(`${new Date().toISOString()}: Verification of folder ${folderName} import succeeded!\n`);
-          successfullyCompletedFolders.push(folderName);
-          break;
-        } else if (
-          jobStatus.ImportJobProperties.JobStatus === 'FAILED' ||
-          jobStatus.ImportJobProperties.JobStatus === 'COMPLETED_WITH_ERRORS'
-        ) {
-          throw new Error(
-            `Import Job for folder ${folderName} failed! Job Id: ${importJob.JobId}. Error: ${jobStatus.$response.error}.`
-          );
+            await sleep(POLLING_TIME);
+            await deleteFhirResourceFromHealthLakeIfNeeded(folderName, outputFile);
+            logs.write(`${new Date().toISOString()}: Import of folder ${folderName} import succeeded!\n`);
+            successfullyCompletedFolders.push(folderName);
+            break;
+          } else if (
+            jobStatus.ImportJobProperties.JobStatus === 'FAILED' ||
+            jobStatus.ImportJobProperties.JobStatus === 'COMPLETED_WITH_ERRORS'
+          ) {
+            throw new Error(
+              `Import Job for folder ${folderName} failed! Job Id: ${importJob.JobId}. Error: ${jobStatus.$response.error}.`
+            );
+          }
+          // eslint-disable-next-line no-await-in-loop
+          await sleep(EXTENDED_POLLING_TIME);
+        } catch (e) {
+          console.error('Failed to check import status', e);
+          throw e;
         }
-        // eslint-disable-next-line no-await-in-loop
-        await sleep(EXTENDED_POLLING_TIME);
-      } catch (e) {
-        console.error('Failed to check import status', e);
-        throw e;
       }
-    }
-    if (new Date().getTime() >= cutOffTime.getTime()) {
-      throw new Error(
-        `Expected import status did not occur during polling time frame of ${
-          MAX_IMPORT_RUNTIME / 1000
-        } seconds`
-      );
+
+      if (new Date().getTime() >= cutOffTime.getTime()) {
+        throw new Error(
+          `Expected import status did not occur during polling time frame of ${
+            MAX_IMPORT_RUNTIME / 1000
+          } seconds`
+        );
+      }
+    } catch (e) {
+      if (e.message.includes('rate exceeded') || e.message.includes('429')) {
+        // Only 1 import job allowed per minute by default
+        logs.write(`${new Date().toISOString()}: Failed Import Job for folder ${folderName}, retrying...\n`);
+        retryAttempts += 1;
+        if (retryAttempts > MAX_IMPORT_RETRIES) {
+          throw new Error(`Exceeded Retry limit for folder ${folderName}`);
+        }
+        await sleep(60000 * retryAttempts);
+        i -= 1;
+      } else {
+        throw new Error(`Error trying to start import for ${folderName}`);
+      }
     }
   }
 }
@@ -160,8 +183,7 @@ export async function checkFolderSizeOfResource(resources: string[], jobId: stri
   for (let i = 0; i < resources.length; i++) {
     // eslint-disable-next-line security/detect-object-injection
     const resource = resources[i];
-    // We don't check Binary resource ndjson file, instead we check the `Binary_converted` ndjson files
-    // Each binary file is limited to 5GB and each `Binary_converted` ndjson file has only one binary file
+
     if (resource.startsWith('Binary')) {
       continue;
     }
@@ -210,7 +232,7 @@ export async function checkConvertedBinaryFileSize(jobId: string): Promise<void>
     region: API_AWS_REGION!
   });
   const maximumBinaryFileSize = 5368709120; // 5 GB in bytes
-  const convertedBinaryFolderName = 'Binary_converted';
+  const convertedBinaryFolderName = 'Binary';
   let continuationToken: string | undefined = undefined;
   const prefix = process.env.MIGRATION_TENANT_ID
     ? `${process.env.MIGRATION_TENANT_ID}/${jobId}/${convertedBinaryFolderName}`
@@ -305,15 +327,19 @@ export async function deleteResourcesInBundle(deletePaths: string[]): Promise<vo
 
   logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
 
-  const healthLakeBundleDeleteResponse = await healthLakeClient.post(
-    `${process.env.DATASTORE_ENDPOINT}`,
-    JSON.stringify(bundle)
-  );
-  if (healthLakeBundleDeleteResponse.status !== 200) {
-    throw new Error(`Failed to Delete Resources in bundle: ${healthLakeBundleDeleteResponse.data}`);
+  try {
+    await healthLakeClient.post(`${process.env.DATASTORE_ENDPOINT}`, JSON.stringify(bundle));
+  } catch (e) {
+    if (e.message.includes('rate exceeded') || e.message.includes('429')) {
+      await sleep(2000);
+      await healthLakeClient.post(`${process.env.DATASTORE_ENDPOINT}`, JSON.stringify(bundle));
+    } else {
+      throw new Error(`Failed to Delete Resources in bundle: ${e.message}`);
+    }
   }
 }
 
+/* istanbul ignore next */
 async function runScript(): Promise<void> {
   // get the job id from the export output file
   // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -342,7 +368,6 @@ async function runScript(): Promise<void> {
   }
 }
 
-/* istanbul ignore next */
 (async () => {
   // don't runScript when importing code for unit tests
   if (!process.env.UNIT_TEST) {

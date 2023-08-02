@@ -40,15 +40,18 @@ The prerequisites for FHIR IGs are same as in the FHIR [installation documentati
    mvn clean install
    ```
 1. Deploy the FHIR Works on AWS server using the `deploy` command (after navigating back to the top level directory of the chosen solution):
+
    ```bash
    rushx deploy -c useHapiValidator=true --all
    ```
+
    > **Note**
-   >  If you are deploying with implementation guides that are large in file size such as [us.nlm.vsac](https://registry.fhir.org/package/us.nlm.vsac|0.3.0), you can specify the additional context parameters `-c igMemoryLimit`, `-c igMemorySize`, and `-c igStorageSize`. These values are reflected in the `memoryLimit` of the BucketDeployment, and the `memorySize` and `ephemeralStorageSize` values for the Validator Lambda Function. These values can be found [here](../../solutions//smart-deployment/src/lib/javaHapiValidator.ts) for FWoA SMART and [here](../../solutions//smart-deployment/lib/javaHapiValidator.ts) for FWoA
+   > If you are deploying with implementation guides that are large in file size such as [us.nlm.vsac](https://registry.fhir.org/package/us.nlm.vsac|0.3.0), you can specify the additional context parameters `-c igMemoryLimit`, `-c igMemorySize`, and `-c igStorageSize`. These values are reflected in the `memoryLimit` of the BucketDeployment, and the `memorySize` and `ephemeralStorageSize` values for the Validator Lambda Function. These values can be found [here](../../solutions//smart-deployment/src/lib/javaHapiValidator.ts) for FWoA SMART and [here](../../solutions//smart-deployment/lib/javaHapiValidator.ts) for FWoA
 
    > **Note**  
    > By default the Hapi Validator is set up with FHIR R4. If you want to use FHIR STU3, follow the
-   comments on [pom.xml](./pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+   > comments on [pom.xml](./pom.xml) to update the dependencies and deploy using the `fhirVersion` parameter:
+
    ```bash
    rushx deploy -c fhirVersion="3.0.1"
    ```

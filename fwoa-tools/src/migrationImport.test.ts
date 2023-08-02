@@ -85,6 +85,50 @@ describe('migrationImport', () => {
       mock.onPost(/.*/g).reply(200, { data: 'successful delete' });
       await expect(deleteFhirResourceFromHealthLakeIfNeeded('Patient', fakeFile)).resolves.not.toThrowError();
     });
+
+    it('should retry if a call fails due to rate limit exceeded', async () => {
+      process.env.DATASTORE_ENDPOINT = 'https://fake-endpoint.endpoint/';
+      const fakeFileBody =
+        '{"resourceType": "Patient", "id": "unit_test_patient", "meta": {"tag":[]}}\n{"resourceType": "Patient", "id": "unit_test_patient2", "meta": {"tag":[{"display": "DELETED", "code": "DELETED"}]}}';
+      AWSMock.mock(
+        'S3',
+        'getObject',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: GetObjectRequest, callback: Function) => {
+          expect(params.Key).toBe('Patient/Patient-0.ndjson');
+          callback(null, { Body: fakeFileBody, $response: {} });
+        }
+      );
+      mock.onPost(/.*/g).replyOnce(() =>
+        Promise.reject({
+          message: 'ThrottlingException: rate exceeded'
+        })
+      );
+      mock.onPost(/.*/g).replyOnce(200, { data: 'successful delete' });
+      await expect(deleteFhirResourceFromHealthLakeIfNeeded('Patient', fakeFile)).resolves.not.toThrowError();
+    });
+
+    it('should retry if a call fails due to rate limit exceeded', async () => {
+      process.env.DATASTORE_ENDPOINT = 'https://fake-endpoint.endpoint/';
+      const fakeFileBody =
+        '{"resourceType": "Patient", "id": "unit_test_patient", "meta": {"tag":[]}}\n{"resourceType": "Patient", "id": "unit_test_patient2", "meta": {"tag":[{"display": "DELETED", "code": "DELETED"}]}}';
+      AWSMock.mock(
+        'S3',
+        'getObject',
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        (params: GetObjectRequest, callback: Function) => {
+          expect(params.Key).toBe('Patient/Patient-0.ndjson');
+          callback(null, { Body: fakeFileBody, $response: {} });
+        }
+      );
+      mock.onPost(/.*/g).replyOnce(() =>
+        Promise.reject({
+          message: 'ThrottlingException: rate exceeded'
+        })
+      );
+      mock.onPost(/.*/g).replyOnce(200, { data: 'successful delete' });
+      await expect(deleteFhirResourceFromHealthLakeIfNeeded('Patient', fakeFile)).resolves.not.toThrowError();
+    });
   });
 
   describe('deleteResourcesInBundle', () => {
@@ -172,7 +216,7 @@ describe('migrationImport', () => {
         'listObjectsV2',
         // eslint-disable-next-line @typescript-eslint/ban-types
         (params: ListObjectsV2Request, callback: Function) => {
-          expect(params.Prefix).toBe('testBinaryJobId/Binary_converted');
+          expect(params.Prefix).toBe('testBinaryJobId/Binary');
           callback(null, {
             Contents: [{ Key: 'testBinaryObj_1.png', Size: 5 }],
             $response: {}
@@ -188,7 +232,7 @@ describe('migrationImport', () => {
         'listObjectsV2',
         // eslint-disable-next-line @typescript-eslint/ban-types
         (params: ListObjectsV2Request, callback: Function) => {
-          expect(params.Prefix).toBe('testBinaryJobId/Binary_converted');
+          expect(params.Prefix).toBe('testBinaryJobId/Binary');
           callback(null, {
             Contents: [{ Key: 'testBinaryObj_1.png', Size: 6368709120 }],
             $response: {}

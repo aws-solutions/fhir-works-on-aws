@@ -15,8 +15,7 @@ serverless FHIR API that supports FHIR resource types and operations to help hea
 leverage the FHIR standard to manage healthcare records. It is a reference implementation,
 designed to be extensible.
 
-To learn more about FWoA, download the [FWoA Implementation Guide](./FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf)
-and see the following README files for individual FWoA packages:
+To learn more about FWoA, download the [FWoA Implementation Guide](./FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf) and see the following README files for individual FWoA packages:
 
 - [deployment](./solutions/deployment/README.md)
 - [smart-deployment](./solutions/smart-deployment/README.md)
@@ -51,4 +50,4 @@ This project is licensed under the Apache-2.0 license.
 
 For more information, see the [LICENSE](LICENSE) file. If you choose to contribute, we will ask you to confirm your contribution's license.
 
-This solution collects anonymous operational metrics to help AWS improve the quality of features of the solution. For more information, including how to disable this capability, please see the [implementation guide](https://github.com/aws-solutions/fhir-works-on-aws/blob/main/FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf).
+This solution collects anonymous operational metrics to help AWS improve the quality and features of the solution. For more information, including how to disable this capability, please see the [FWoA Implementation Guide](https://docs.aws.amazon.com/solutions/latest/fhir-works-on-aws/welcome.html)
