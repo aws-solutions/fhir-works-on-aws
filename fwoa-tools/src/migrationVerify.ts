@@ -5,7 +5,7 @@
 import { readFileSync, WriteStream, createWriteStream } from 'fs';
 import { S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import * as dotenv from 'dotenv';
 import objectHash from 'object-hash';
 import yargs from 'yargs';
@@ -18,7 +18,6 @@ import {
 } from './migrationUtils';
 
 dotenv.config({ path: '.env' });
-const { DATASTORE_ENDPOINT, API_AWS_REGION } = process.env;
 
 const IMPORT_VERIFICATION_LOG_FILE_PREFIX: string = 'import_verification_';
 
@@ -29,6 +28,9 @@ const logs: WriteStream = createWriteStream(
     flags: 'a'
   }
 );
+
+let completedWithErrors: boolean = false;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseCmdOptions(): any {
   return yargs(process.argv.slice(2))
@@ -40,17 +42,20 @@ export function parseCmdOptions(): any {
     .describe('dryRun', 'Check operations and authentication status')
     .boolean('dryRun')
     .default('dryRun', false)
-    .alias('d', 'dryRun').argv;
+    .alias('d', 'dryRun')
+    .describe('continueOnError', 'Check operations and authentication status')
+    .boolean('continueOnError')
+    .default('continueOnError', false)
+    .alias('c', 'continueOnError').argv;
 }
 
 export async function verifyResource(
-  fhirClient: AxiosInstance,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fwoaResponse: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   healthLakeResource: any,
-  resourceId: string,
   resourceType: string
 ): Promise<boolean> {
-  const fwoaResponse = (await fhirClient.get(`/${resourceType}/${resourceId}`)).data;
   delete fwoaResponse.meta;
   delete healthLakeResource.meta;
   if (resourceType === 'Binary') {
@@ -60,7 +65,11 @@ export async function verifyResource(
   return objectHash(fwoaResponse) === objectHash(healthLakeResource);
 }
 
-export async function verifyFolderImport(smartClient: boolean, outputFile: ExportOutput): Promise<void> {
+export async function verifyFolderImport(
+  smartClient: boolean,
+  continueOnError: boolean,
+  outputFile: ExportOutput
+): Promise<void> {
   const fileNames = outputFile.file_names;
 
   for (let k = 0; k < Object.keys(fileNames).length; k++) {
@@ -73,17 +82,17 @@ export async function verifyFolderImport(smartClient: boolean, outputFile: Expor
     }
     // eslint-disable-next-line security/detect-object-injection
     const resourcePaths = fileNames[resourceType];
-    console.log(`Starting import for resource ${resourceType}`);
+    console.log(`Starting import verification for ${resourceType} resources`);
     const interceptor = aws4Interceptor({
-      region: API_AWS_REGION!,
+      region: process.env.API_AWS_REGION!,
       service: 'healthlake'
     });
 
-    const fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+    let fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
     const s3Client = new S3({
-      region: API_AWS_REGION!
+      region: process.env.API_AWS_REGION!
     });
-    const healthLakeClient = axios.create();
+    let healthLakeClient = axios.create();
     healthLakeClient.interceptors.request.use(interceptor);
 
     // Retrieve resource from HealthLake and compare it to fwoa.
@@ -99,7 +108,12 @@ export async function verifyFolderImport(smartClient: boolean, outputFile: Expor
         })
         .promise();
       if (resourceFile.$response.error) {
-        throw new Error(`Failed to read file ${resourceFile.$response.error}`);
+        if (!continueOnError) {
+          throw new Error(`Failed to read file ${resourceFile.$response.error}`);
+        } else {
+          completedWithErrors = true;
+          continue;
+        }
       }
 
       // Each resource file can contain a number of resource objects
@@ -108,18 +122,60 @@ export async function verifyFolderImport(smartClient: boolean, outputFile: Expor
         // eslint-disable-next-line security/detect-object-injection
         const resource = JSON.parse(allResources[j]);
         // Skip any resources marked for deletion, we don't need to verify these.
-        if (!resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
+        if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
           continue;
         }
         const id = resource.id;
-        const resourceInHL = await healthLakeClient.get(
-          `${DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
-        );
+        let resourceInHL;
+        try {
+          resourceInHL = await healthLakeClient.get(
+            `${process.env.DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
+          );
+        } catch (e) {
+          if (e.message.includes('401')) {
+            healthLakeClient = axios.create();
+            healthLakeClient.interceptors.request.use(interceptor);
+            resourceInHL = await healthLakeClient.get(
+              `${process.env.DATASTORE_ENDPOINT}/${resource.resourceType}/${id}`
+            );
+          } else if (!continueOnError) {
+            throw new Error(
+              `Failed to retrieve resource at ${resourcePath} line ${j} from HealthLake: ${e.message}`
+            );
+          } else {
+            completedWithErrors = true;
+            continue;
+          }
+        }
         logs.write(
           `\n${new Date().toISOString()}: Retrieved resource at ${resourcePath} line ${j} from datastore, comparing to FWoA...`
         );
-        if (!(await verifyResource(fhirClient, resourceInHL.data, id, resource.resourceType))) {
-          throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath}`);
+        let fwoaResponse;
+        try {
+          fwoaResponse = (await fhirClient.get(`/${resource.resourceType}/${id}`)).data;
+        } catch (e) {
+          if (e.message.includes('401')) {
+            fhirClient = await (smartClient ? getFhirClientSMART() : getFhirClient());
+            fwoaResponse = (await fhirClient.get(`/${resource.resourceType}/${id}`)).data;
+          } else if (!continueOnError) {
+            throw new Error(
+              `Failed to retrieve resource at ${resourcePath} line ${j} from FWoA: ${e.message}`
+            );
+          } else {
+            completedWithErrors = true;
+            continue;
+          }
+        }
+
+        if (!(await verifyResource(fwoaResponse, resourceInHL.data, resource.resourceType))) {
+          if (!continueOnError) {
+            throw new Error(`Resources in FWoA and AHL do not match, ${resourcePath} line ${j}`);
+          } else {
+            completedWithErrors = true;
+            logs.write(
+              `\n${new Date().toISOString()}: \nERROR!\n Resources in FWoA and AHL do not match! ${resourcePath} line ${j}`
+            );
+          }
         }
       }
     }
@@ -127,20 +183,30 @@ export async function verifyFolderImport(smartClient: boolean, outputFile: Expor
   }
 }
 
-export function buildRunScriptParams(): {smartClient: boolean, dryRun: boolean} {
+export function buildRunScriptParams(): { smartClient: boolean; dryRun: boolean; continueOnError: boolean } {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const argv: any = parseCmdOptions();
   const smartClient: boolean = argv.smart;
   const dryRun: boolean = argv.dryRun;
-  return {smartClient, dryRun};
+  const continueOnError: boolean = argv.continueOnError;
+  return { smartClient, dryRun, continueOnError };
 }
 
-export async function runScript(smartClient: boolean, dryRun: boolean, outputFile: ExportOutput): Promise<void> {
+export async function runScript(
+  smartClient: boolean,
+  dryRun: boolean,
+  continueOnError: boolean,
+  outputFile: ExportOutput
+): Promise<void> {
   await checkConfiguration(logs, smartClient ? 'Smart' : 'Cognito');
   if (!dryRun) {
     try {
-      await verifyFolderImport(smartClient, outputFile);
-      console.log('successfully completed verifying Import Jobs!');
+      await verifyFolderImport(smartClient, continueOnError, outputFile);
+      if (completedWithErrors) {
+        console.log('Completed verifying import jobs with some errors. Please check the logs.');
+      } else {
+        console.log('successfully completed verifying Import Jobs!');
+      }
     } catch (error) {
       console.log('verification failed!', error);
       logs.write(`\n**${new Date().toISOString()}: ERROR!**\n${error}\n`);
@@ -152,10 +218,10 @@ export async function runScript(smartClient: boolean, dryRun: boolean, outputFil
 (async () => {
   // Don't runScript when code is being imported for unit tests
   if (!process.env.UNIT_TEST) {
-    const {smartClient, dryRun} = buildRunScriptParams();
+    const { smartClient, dryRun, continueOnError } = buildRunScriptParams();
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     const outputFile: ExportOutput = JSON.parse(readFileSync(EXPORT_STATE_FILE_NAME).toString());
-    await runScript(smartClient, dryRun, outputFile);
+    await runScript(smartClient, dryRun, continueOnError, outputFile);
     logs.end();
   }
 })().catch((error) => {

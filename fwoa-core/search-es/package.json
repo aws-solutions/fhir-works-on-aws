@@ -17,7 +17,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "heft build --clean && rushx pkg-json-lint",
-    "build-test": "heft test --clean && rushx pkg-json-lint",
+    "build-test": "TZ=UTC heft test --clean && rushx pkg-json-lint",
     "clean": "rm -rf build/* node_modules/* dist/* .nyc_output/* lib/*",
     "jest": "jest",
     "lint": "eslint . --ext .ts,.tsx",

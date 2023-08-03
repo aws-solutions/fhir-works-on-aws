@@ -35,15 +35,10 @@ fwoa-core/search-es/src/schema/compiledSearchParameters.4.0.1.json:6631
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4145
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4146
 fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4150
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4333
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4334
-fwoa-core/search-es/src/schema/compiledSearchParameters.3.0.1.json:4338
 fwoa-core/search-es/src/schema/searchMappingsBase.3.0.1.json:1340
 fwoa-core/search-es/src/schema/searchMappingsBase.4.0.1.json:1446
-fwoa-utilities/javaHapiValidatorLambda/src/test/resources/testImplementationGuides-r4/us-core/ValueSet-us-core-allergy-substance.json:1
 
 # Team Email
-.github/temp-workflows/release-pr.yml:28
 fwoa-core/interface/package.json:13
 fwoa-core/interface/openapi.yaml:7
 fwoa-core/routing/package.json:13

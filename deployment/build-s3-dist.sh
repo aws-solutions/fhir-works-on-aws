@@ -338,6 +338,9 @@ echo "find $dist_dir -iname ".mypy_cache" -type d -exec rm -rf "{}" \; 2> /dev/n
 find $dist_dir -iname ".mypy_cache" -type d -exec rm -rf "{}" \; 2> /dev/null
 echo "find $dist_dir -iname ".viperlightignore" -type d -exec rm -rf "{}" \; 2> /dev/null"
 find $dist_dir -iname ".viperlightignore" -type d -exec rm -rf "{}" \; 2> /dev/null
+echo "find $dist_dir -iname "temp" -type d -exec rm -rf "{}" \; 2> /dev/null"
+find $dist_dir -iname "temp"
+find $dist_dir -iname "temp" -type d -exec rm -rf "{}" \; 2> /dev/null
 
 # ... For each asset.* source code artifact in the temporary /staging folder...
 cd $staging_dist_dir

@@ -3,17 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import child_process from 'child_process';
+import fs, { PathLike } from 'fs';
 import AWS from 'aws-sdk';
-import { GetObjectRequest, ListObjectsV2Request, PutObjectRequest } from 'aws-sdk/clients/s3';
 import * as AWSMock from 'aws-sdk-mock';
-import {
-  convertBinaryResource,
-  getBinaryObject,
-  getBinaryResource,
-  parseCmdOptions,
-  uploadBinaryResource,
-  logs
-} from './binaryConverter';
+import { convertBinaryResource, parseCmdOptions, logs } from './binaryConverter';
 import { ExportOutput } from './migrationUtils';
 
 AWSMock.setSDKInstance(AWS);
@@ -29,7 +23,8 @@ describe('binaryConverter', () => {
       console.log(log);
       return true;
     });
-    jest.spyOn(logs, 'end').mockImplementation(jest.fn());
+    jest.spyOn(logs, 'end').mockImplementation();
+    jest.spyOn(child_process, 'execSync').mockImplementation();
   });
 
   afterEach(() => {
@@ -79,11 +74,13 @@ describe('binaryConverter', () => {
       // reset the output
       fakeFile = {
         jobId: 'binaryUnitTests',
-        file_names: { Binary: ['Binary/Binary-0.ndjson'] }
+        file_names: { 'Binary-v1': ['binaryUnitTests/Binary-v1/Binary-0.ndjson'] }
       };
+      jest.resetAllMocks();
     });
 
     test('multi-tenancy = false', async () => {
+      delete process.env.MIGRATION_TENANT_ID;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const binaryResource: any = {
         resourceType: 'Binary',
@@ -94,40 +91,50 @@ describe('binaryConverter', () => {
           versionId: 1
         }
       };
-      AWSMock.mock(
-        'S3',
-        'listObjectsV2',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: ListObjectsV2Request, callback: Function) => {
-          callback(null, {
-            Contents: [{ Key: 'testBinaryObj_1.png' }],
-            $response: {}
-          });
-        }
-      );
 
-      AWSMock.mock(
-        'S3',
-        'getObject',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: GetObjectRequest, callback: Function) => {
-          callback(null, { Body: Buffer.from(JSON.stringify(binaryResource)), $response: {} });
-        }
-      );
-      AWSMock.mock(
-        'S3',
-        'upload',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: PutObjectRequest, callback: Function) => {
-          // check that we are uploading the right binary resource
-          expect(params.Key).toBe('binaryUnitTests/Binary_converted_testBinaryObj/Binary-1.ndjson');
-          const tempResource = binaryResource;
-          tempResource.data = Buffer.from(JSON.stringify(binaryResource)).toString('base64');
-          expect(params.Body).toEqual(JSON.stringify(tempResource));
-          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
-        }
-      );
+      // mock the readdirSync call. we need to do type-casting here since jest doesn't
+      // know which overload to use for mocking and defaults to the wrong one
+      (jest.spyOn(fs, 'readdirSync') as unknown as jest.SpyInstance<string[]>).mockReturnValue([
+        'testBinaryObj_1.png'
+      ]);
+
+      // mock the two readFileSync calls
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+        return JSON.stringify(binaryResource);
+      });
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryObjects/testBinaryObj_1.png`);
+        return JSON.stringify(binaryResource);
+      });
+
+      // mock the rename call
+      jest.spyOn(fs, 'renameSync').mockImplementationOnce((oldPath: PathLike, newPath: PathLike) => {
+        expect(oldPath).toBe('./binaryFiles/temp.ndjson');
+        expect(newPath).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+      });
+
+      jest.spyOn(fs, 'createWriteStream').mockImplementationOnce((path: PathLike) => {
+        expect(path).toBe('./binaryFiles/temp.ndjson');
+        return logs;
+      });
+
       await expect(convertBinaryResource(fakeFile)).resolves.not.toThrowError();
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        1,
+        `aws s3 sync s3://unit_test_export_bucket_name/binaryUnitTests ./binaryFiles --exclude "*" --include "Binary-v*"`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        2,
+        `aws s3 sync s3://unit_test_binary_bucket_name/ ./binaryObjects`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        3,
+        `aws s3 sync ./binaryFiles s3://unit_test_export_bucket_name/binaryUnitTests`,
+        { stdio: 'ignore' }
+      );
     });
 
     test('multi-tenancy = true', async () => {
@@ -142,160 +149,205 @@ describe('binaryConverter', () => {
           versionId: 1
         }
       };
-      AWSMock.mock(
-        'S3',
-        'listObjectsV2',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: ListObjectsV2Request, callback: Function) => {
-          callback(null, {
-            Contents: [{ Key: 'testBinaryObj_1.png' }],
-            $response: {}
-          });
-        }
-      );
+      fakeFile = {
+        jobId: 'binaryUnitTests',
+        file_names: { 'Binary-v1': ['unitTestTenant/binaryUnitTests/Binary-v1/Binary-0.ndjson'] }
+      };
 
-      AWSMock.mock(
-        'S3',
-        'getObject',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: GetObjectRequest, callback: Function) => {
-          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
-        }
+      // mock the readdirSync call. we need to do type-casting here since jest doesn't
+      // know which overload to use for mocking and defaults to the wrong one
+      (jest.spyOn(fs, 'readdirSync') as unknown as jest.SpyInstance<string[]>).mockReturnValue([
+        'testBinaryObj_1.png'
+      ]);
+
+      // mock the two readFileSync calls
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+        return JSON.stringify(binaryResource);
+      });
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryObjects/testBinaryObj_1.png`);
+        return JSON.stringify(binaryResource);
+      });
+
+      // mock the rename call
+      jest.spyOn(fs, 'renameSync').mockImplementationOnce((oldPath: PathLike, newPath: PathLike) => {
+        expect(oldPath).toBe('./binaryFiles/temp.ndjson');
+        expect(newPath).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+      });
+
+      jest.spyOn(fs, 'createWriteStream').mockImplementationOnce((path: PathLike) => {
+        expect(path).toBe('./binaryFiles/temp.ndjson');
+        return logs;
+      });
+
+      await expect(convertBinaryResource(fakeFile)).resolves.not.toThrowError();
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        1,
+        `aws s3 sync s3://unit_test_export_bucket_name/unitTestTenant/binaryUnitTests ./binaryFiles --exclude "*" --include "Binary-v*"`,
+        { stdio: 'ignore' }
       );
-      AWSMock.mock(
-        'S3',
-        'upload',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: PutObjectRequest, callback: Function) => {
-          // check that we are uploading the right binary resource
-          expect(params.Key).toBe(
-            'unitTestTenant/binaryUnitTests/Binary_converted_testBinaryObj/Binary-1.ndjson'
-          );
-          callback(null, { Body: JSON.stringify(binaryResource), $response: {} });
-        }
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        2,
+        `aws s3 sync s3://unit_test_binary_bucket_name/unitTestTenant/ ./binaryObjects`,
+        { stdio: 'ignore' }
       );
-      await convertBinaryResource(fakeFile);
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        3,
+        `aws s3 sync ./binaryFiles s3://unit_test_export_bucket_name/unitTestTenant/binaryUnitTests`,
+        { stdio: 'ignore' }
+      );
     });
-  });
 
-  describe('getBinaryObject', () => {
-    afterEach(() => {
-      AWSMock.restore();
-    });
-
-    test('multi-tenancy = false', async () => {
+    test('multi-tenancy = false, multiple resources', async () => {
       delete process.env.MIGRATION_TENANT_ID;
-      AWSMock.mock(
-        'S3',
-        'listObjectsV2',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: ListObjectsV2Request, callback: Function) => {
-          expect(params).toMatchObject({
-            Bucket: 'unit_test_binary_bucket_name',
-            Prefix: 'testBinaryObj_1.'
-          });
-          callback(null, {
-            Contents: [{ Key: 'testBinaryObj_1.png' }],
-            $response: {}
-          });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const binaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj',
+        meta: {
+          tag: [],
+          versionId: 1
         }
-      );
+      };
 
-      AWSMock.mock(
-        'S3',
-        'getObject',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: GetObjectRequest, callback: Function) => {
-          expect(params).toMatchObject({
-            Bucket: 'unit_test_binary_bucket_name',
-            Key: 'testBinaryObj_1.png'
-          });
-          callback(null, { Body: 'binary data', $response: {} });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const secondBinaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj2',
+        meta: {
+          tag: [],
+          versionId: 1
         }
-      );
-      const getBinaryObjectResult = await getBinaryObject('testBinaryObj', 1, new AWS.S3());
-      expect(getBinaryObjectResult).toMatchObject({
-        Body: 'binary data'
+      };
+
+      // mock the readdirSync call. we need to do type-casting here since jest doesn't
+      // know which overload to use for mocking and defaults to the wrong one
+      (jest.spyOn(fs, 'readdirSync') as unknown as jest.SpyInstance<string[]>).mockReturnValue([
+        'testBinaryObj_1.png',
+        'testBinaryObj2_1.png'
+      ]);
+
+      // mock the three readFileSync calls
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+        return JSON.stringify(binaryResource) + '\n' + JSON.stringify(secondBinaryResource);
       });
-    });
+      jest
+        .spyOn(fs, 'readFileSync')
+        .mockImplementationOnce((path: number | PathLike): string | Buffer => {
+          expect(path).toBe(`./binaryObjects/testBinaryObj_1.png`);
+          return JSON.stringify(binaryResource);
+        })
+        .mockImplementationOnce((path: number | PathLike): string | Buffer => {
+          expect(path).toBe(`./binaryObjects/testBinaryObj2_1.png`);
+          return JSON.stringify(secondBinaryResource);
+        });
 
-    test('multi-tenancy = true', async () => {
-      process.env.MIGRATION_TENANT_ID = 'unit_test_tenant';
-      AWSMock.mock(
-        'S3',
-        'listObjectsV2',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: ListObjectsV2Request, callback: Function) => {
-          expect(params).toMatchObject({
-            Bucket: 'unit_test_binary_bucket_name',
-            Prefix: 'unit_test_tenant/testBinaryObj_1.'
-          });
-          callback(null, {
-            Contents: [{ Key: 'unit_test_tenant/testBinaryObj_1.png' }],
-            $response: {}
-          });
-        }
-      );
-
-      AWSMock.mock(
-        'S3',
-        'getObject',
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (params: GetObjectRequest, callback: Function) => {
-          expect(params).toMatchObject({
-            Bucket: 'unit_test_binary_bucket_name',
-            Key: 'unit_test_tenant/testBinaryObj_1.png'
-          });
-          callback(null, { Body: 'binary data', $response: {} });
-        }
-      );
-      const getBinaryObjectResult = await getBinaryObject('testBinaryObj', 1, new AWS.S3());
-      expect(getBinaryObjectResult).toMatchObject({
-        Body: 'binary data'
+      // mock the rename call
+      jest.spyOn(fs, 'renameSync').mockImplementationOnce((oldPath: PathLike, newPath: PathLike) => {
+        expect(oldPath).toBe('./binaryFiles/temp.ndjson');
+        expect(newPath).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
       });
-    });
-  });
 
-  test('getBinaryResource', async () => {
-    AWSMock.mock(
-      'S3',
-      'getObject',
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      (params: GetObjectRequest, callback: Function) => {
-        expect(params).toMatchObject({
-          Bucket: 'unit_test_export_bucket_name',
-          Key: 'path/to/testBinaryObj'
-        });
-        callback(null, { Body: 'binary data', $response: {} });
-      }
-    );
-    const getBinaryResourceResult = await getBinaryResource('path/to/testBinaryObj', new AWS.S3());
-    expect(getBinaryResourceResult).toMatchObject({
-      Body: 'binary data'
-    });
-  });
+      jest.spyOn(fs, 'createWriteStream').mockImplementationOnce((path: PathLike) => {
+        expect(path).toBe('./binaryFiles/temp.ndjson');
+        return logs;
+      });
 
-  test('uploadBinaryResource', async () => {
-    AWSMock.mock(
-      'S3',
-      'upload',
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      (params: PutObjectRequest, callback: Function) => {
-        expect(params).toMatchObject({
-          Bucket: 'unit_test_export_bucket_name',
-          Key: 'path/to/testBinaryObj',
-          Body: 'new item Data'
-        });
-        callback(null, { Body: 'binary data', $response: {} });
-      }
-    );
-    const getBinaryObjectResult = await uploadBinaryResource(
-      'path/to/testBinaryObj',
-      'new item Data',
-      new AWS.S3()
-    );
-    expect(getBinaryObjectResult).toMatchObject({
-      Body: 'binary data'
+      await expect(convertBinaryResource(fakeFile)).resolves.not.toThrowError();
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        1,
+        `aws s3 sync s3://unit_test_export_bucket_name/binaryUnitTests ./binaryFiles --exclude "*" --include "Binary-v*"`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        2,
+        `aws s3 sync s3://unit_test_binary_bucket_name/ ./binaryObjects`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        3,
+        `aws s3 sync ./binaryFiles s3://unit_test_export_bucket_name/binaryUnitTests`,
+        { stdio: 'ignore' }
+      );
+    });
+
+    test('multi-tenancy = false, deleted resource included', async () => {
+      delete process.env.MIGRATION_TENANT_ID;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const binaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj',
+        meta: {
+          tag: [],
+          versionId: 1
+        }
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const secondBinaryResource: any = {
+        resourceType: 'Binary',
+        contentType: 'image/jpeg',
+        id: 'testBinaryObj2',
+        meta: {
+          tag: [
+            {
+              display: 'DELETED',
+              code: 'DELETED'
+            }
+          ],
+          versionId: 1
+        }
+      };
+
+      // mock the readdirSync call. we need to do type-casting here since jest doesn't
+      // know which overload to use for mocking and defaults to the wrong one
+      (jest.spyOn(fs, 'readdirSync') as unknown as jest.SpyInstance<string[]>).mockReturnValue([
+        'testBinaryObj_1.png',
+        'testBinaryObj2_1.png'
+      ]);
+
+      // mock the three readFileSync calls
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+        return JSON.stringify(binaryResource) + '\n' + JSON.stringify(secondBinaryResource);
+      });
+      jest.spyOn(fs, 'readFileSync').mockImplementationOnce((path: number | PathLike): string | Buffer => {
+        expect(path).toBe(`./binaryObjects/testBinaryObj_1.png`);
+        return JSON.stringify(binaryResource);
+      });
+
+      // mock the rename call
+      jest.spyOn(fs, 'renameSync').mockImplementationOnce((oldPath: PathLike, newPath: PathLike) => {
+        expect(oldPath).toBe('./binaryFiles/temp.ndjson');
+        expect(newPath).toBe(`./binaryFiles/Binary-v1/Binary-0.ndjson`);
+      });
+
+      jest.spyOn(fs, 'createWriteStream').mockImplementationOnce((path: PathLike) => {
+        expect(path).toBe('./binaryFiles/temp.ndjson');
+        return logs;
+      });
+
+      await expect(convertBinaryResource(fakeFile)).resolves.not.toThrowError();
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        1,
+        `aws s3 sync s3://unit_test_export_bucket_name/binaryUnitTests ./binaryFiles --exclude "*" --include "Binary-v*"`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        2,
+        `aws s3 sync s3://unit_test_binary_bucket_name/ ./binaryObjects`,
+        { stdio: 'ignore' }
+      );
+      expect(child_process.execSync).toHaveBeenNthCalledWith(
+        3,
+        `aws s3 sync ./binaryFiles s3://unit_test_export_bucket_name/binaryUnitTests`,
+        { stdio: 'ignore' }
+      );
     });
   });
 });
