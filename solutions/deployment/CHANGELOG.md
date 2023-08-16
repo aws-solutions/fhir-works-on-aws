@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
-- fix retry logic for bundle requests
+- fix retry logic for bundle requests in import script
 
 ## [6.1.2] (2023-08-03)
 
