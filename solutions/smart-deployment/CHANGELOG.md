@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [6.1.2] (2023-07-19)
+## [6.1.3] (2023-08-15)
+
+### Fixes
+
+- fix retry logic for bundle requests
+
+## [6.1.2] (2023-08-03)
 
 ### Fixes
 
