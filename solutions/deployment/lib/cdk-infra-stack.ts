@@ -358,7 +358,7 @@ export default class FhirWorksStack extends Stack {
         }.amazoncognito.com/oauth2`,
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
-      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.1.2',
+      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.1.3',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,

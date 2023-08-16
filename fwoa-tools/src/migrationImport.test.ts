@@ -15,7 +15,8 @@ import {
   deleteFhirResourceFromHealthLakeIfNeeded,
   deleteResourcesInBundle,
   startImport,
-  logs
+  logs,
+  MAX_IMPORT_RETRIES
 } from './migrationImport';
 import { Bundle, ExportOutput, POLLING_TIME, getEmptyFHIRBundle } from './migrationUtils';
 
@@ -154,6 +155,30 @@ describe('migrationImport', () => {
       mock.onPost(/.*/g).reply(200, { data: 'successful delete' });
       await expect(deleteResourcesInBundle(['test1', 'test2'])).resolves.not.toThrowError();
       expect(mock.history.post[0].data).toEqual(JSON.stringify(mockBundle));
+    });
+
+    it('should retry bundle on failure', async () => {
+      const mockBundle: Bundle = getEmptyFHIRBundle();
+      mockBundle.entry = [
+        { request: { method: 'DELETE', url: 'test1' } },
+        { request: { method: 'DELETE', url: 'test2' } }
+      ];
+      mock.onPost(/.*/g).networkErrorOnce();
+      mock.onPost(/.*/g).reply(200, { data: 'successful delete' });
+      await expect(deleteResourcesInBundle(['test1', 'test2'])).resolves.not.toThrowError();
+      expect(mock.history.post[0].data).toEqual(JSON.stringify(mockBundle));
+      expect(mock.history.post.length).toBe(2);
+    });
+
+    it('should retry bundle on failure and stop after max retry attempts', async () => {
+      const mockBundle: Bundle = getEmptyFHIRBundle();
+      mockBundle.entry = [
+        { request: { method: 'DELETE', url: 'test1' } },
+        { request: { method: 'DELETE', url: 'test2' } }
+      ];
+      mock.onPost(/.*/g).networkError();
+      await expect(deleteResourcesInBundle(['test1', 'test2'])).rejects.toThrowError();
+      expect(mock.history.post.length).toBe(MAX_IMPORT_RETRIES);
     });
   });
 

@@ -28,10 +28,13 @@ dotenv.config({ path: '.env' });
 const { API_AWS_REGION, HEALTHLAKE_CLIENT_TOKEN } = process.env;
 
 const MAX_IMPORT_RUNTIME: number = 48 * 60 * 60 * 1000; // 48 hours
-const MAX_IMPORT_RETRIES: number = 3;
+const BUNDLE_RETRY_SLEEP_TIME: number = 2000;
+const IMPORT_RETRY_SLEEP_TIME: number = 60000;
 const IMPORT_OUTPUT_LOG_FILE_PREFIX: string = 'import_output_';
 const IMPORT_STATE_FILE_NAME: string = 'import_state.txt';
 const successfullyCompletedFolders: string[] = [];
+
+export const MAX_IMPORT_RETRIES: number = 3;
 
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 export const logs: WriteStream = createWriteStream(
@@ -159,14 +162,14 @@ export async function startImport(
         );
       }
     } catch (e) {
-      if (e.message.includes('rate exceeded') || e.message.includes('429')) {
+      if (e.message.includes('Rate exceeded') || e.message.includes('429')) {
         // Only 1 import job allowed per minute by default
         logs.write(`${new Date().toISOString()}: Failed Import Job for folder ${folderName}, retrying...\n`);
         retryAttempts += 1;
         if (retryAttempts > MAX_IMPORT_RETRIES) {
           throw new Error(`Exceeded Retry limit for folder ${folderName}`);
         }
-        await sleep(60000 * retryAttempts);
+        await sleep(IMPORT_RETRY_SLEEP_TIME * retryAttempts);
         i -= 1;
       } else {
         throw new Error(`Error trying to start import for ${folderName}`);
@@ -307,35 +310,47 @@ export async function deleteFhirResourceFromHealthLakeIfNeeded(
   }
 }
 
-export async function deleteResourcesInBundle(deletePaths: string[]): Promise<void> {
-  const interceptor = aws4Interceptor({
-    region: API_AWS_REGION!,
-    service: 'healthlake'
-  });
-  const healthLakeClient = axios.create();
-  healthLakeClient.interceptors.request.use(interceptor);
-  const bundle: Bundle = getEmptyFHIRBundle();
-
-  for (const path of deletePaths) {
-    bundle.entry.push({
-      request: {
-        method: 'DELETE',
-        url: path
-      }
-    });
-  }
-
-  logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...`);
-
+export async function deleteResourcesInBundle(
+  deletePaths: string[],
+  retryAttempts: number = 1
+): Promise<void> {
   try {
+    logs.write(`${new Date().toISOString()}: Starting to delete Resource : Attempt #${retryAttempts}\n`);
+
+    const interceptor = aws4Interceptor({
+      region: API_AWS_REGION!,
+      service: 'healthlake'
+    });
+    const healthLakeClient = axios.create();
+    healthLakeClient.interceptors.request.use(interceptor);
+    const bundle: Bundle = getEmptyFHIRBundle();
+
+    for (const path of deletePaths) {
+      bundle.entry.push({
+        request: {
+          method: 'DELETE',
+          url: path
+        }
+      });
+    }
+
+    logs.write(`${new Date().toISOString()}: Sending Bundle For Deletion...\n`);
+
     await healthLakeClient.post(`${process.env.DATASTORE_ENDPOINT}`, JSON.stringify(bundle));
   } catch (e) {
-    if (e.message.includes('rate exceeded') || e.message.includes('429')) {
-      await sleep(2000);
-      await healthLakeClient.post(`${process.env.DATASTORE_ENDPOINT}`, JSON.stringify(bundle));
-    } else {
-      throw new Error(`Failed to Delete Resources in bundle: ${e.message}`);
+    logs.write(
+      `${new Date().toISOString()}: Failed to delete resources - Attempt #${retryAttempts}. Retrying...\n`
+    );
+    retryAttempts += 1;
+    if (retryAttempts > MAX_IMPORT_RETRIES) {
+      throw new Error(
+        `${new Date().toISOString()}: Exceeded Retry limit for deletion after ${retryAttempts} attempts\n`
+      );
     }
+    const sleepTime = BUNDLE_RETRY_SLEEP_TIME * retryAttempts;
+    logs.write(`Sleeping for ${sleepTime}\n`);
+    await sleep(sleepTime);
+    await deleteResourcesInBundle(deletePaths, retryAttempts);
   }
 }
 
