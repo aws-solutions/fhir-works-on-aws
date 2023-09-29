@@ -351,6 +351,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "readline",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "sanitize-html",
       "allowedCategories": ["production"]
     },

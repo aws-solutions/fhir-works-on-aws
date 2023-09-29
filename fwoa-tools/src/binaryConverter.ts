@@ -82,6 +82,7 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
       logs.write(`${new Date().toISOString()}: No Binary resources found to convert...\n`);
       continue;
     }
+    const additionalFiles: string[] = [];
     logs.write(`${new Date().toISOString()}: Retrieved All Binary Keys from migration export output.\n`);
     for (const itemKey of itemKeys) {
       logs.write(`${new Date().toISOString()}: Retrieving Binary Resource from ${itemKey}...\n`);
@@ -145,6 +146,9 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
             './binaryFiles/temp.ndjson',
             `./binaryFiles/${key}/Binary-part-${currentFilePartition}.ndjson`
           );
+          additionalFiles.push(
+            `${itemKey.replace(pathToSyncedFile, `/${key}/Binary-part-${currentFilePartition}.ndjson`)}`
+          );
           results = createWriteStream('./binaryFiles/temp.ndjson');
           currentFileSize = 0;
           currentFilePartition += 1;
@@ -159,6 +163,8 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       renameSync('./binaryFiles/temp.ndjson', `./binaryFiles${pathToSyncedFile}`);
     }
+    // eslint-disable-next-line security/detect-object-injection
+    outputFile.file_names[key].push(...additionalFiles);
   }
   const uploadStartTime = performance.now();
   execSync(
@@ -168,6 +174,8 @@ export async function convertBinaryResource(outputFile: ExportOutput): Promise<v
   const uploadEndTime = performance.now();
   totalUploadTime += uploadEndTime - uploadStartTime;
   logs.write(`${new Date().toISOString()}: Updated Binary .ndjson uploaded to Export Bucket!\n`);
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  writeFileSync(EXPORT_STATE_FILE_NAME, JSON.stringify(outputFile));
 }
 
 /* istanbul ignore next */

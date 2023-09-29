@@ -3,6 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { existsSync, readFileSync, WriteStream, createWriteStream, writeFileSync } from 'fs';
+import * as readline from 'readline';
+import { Readable } from 'stream';
 import { HealthLake, S3 } from 'aws-sdk';
 import { StartFHIRImportJobRequest } from 'aws-sdk/clients/healthlake';
 import { ListObjectsV2Output } from 'aws-sdk/clients/s3';
@@ -277,19 +279,17 @@ export async function deleteFhirResourceFromHealthLakeIfNeeded(
     // eslint-disable-next-line security/detect-object-injection
     const resourcePath = outputFile.file_names[folderName][j];
     logs.write(`${new Date().toISOString()}: Checking resources from ${resourcePath}...\n`);
-    const resourceFile = await s3Client
+    const resourceFileStream: Readable = s3Client
       .getObject({
         Bucket: process.env.EXPORT_BUCKET_NAME!,
         Key: resourcePath
       })
-      .promise();
-    if (resourceFile.$response.error) {
-      throw new Error(`Failed to read file ${resourceFile.$response.error}`);
-    }
-    const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
-    for (let i = 0; i < allResources.length; i++) {
-      // eslint-disable-next-line security/detect-object-injection
-      const resource = JSON.parse(allResources[i]);
+      .createReadStream();
+    const resourceFile: readline.Interface = readline.createInterface({ input: resourceFileStream });
+
+    let i = 0;
+    for await (const line of resourceFile) {
+      const resource = JSON.parse(line);
       // This is a resource marked for deletion
       if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
         // DELETE the resource from HealthLake
@@ -303,6 +303,7 @@ export async function deleteFhirResourceFromHealthLakeIfNeeded(
           deleteQueue = [];
         }
       }
+      i++;
     }
   }
   if (deleteQueue.length !== 0) {
@@ -383,6 +384,7 @@ async function runScript(): Promise<void> {
   }
 }
 
+/* istanbul ignore next */
 (async () => {
   // don't runScript when importing code for unit tests
   if (!process.env.UNIT_TEST) {
