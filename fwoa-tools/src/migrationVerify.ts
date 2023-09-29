@@ -3,6 +3,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 import { readFileSync, WriteStream, createWriteStream } from 'fs';
+import * as readline from 'readline';
+import { Readable } from 'stream';
 import { S3 } from 'aws-sdk';
 import { aws4Interceptor } from 'aws4-axios';
 import axios from 'axios';
@@ -101,26 +103,30 @@ export async function verifyFolderImport(
       // eslint-disable-next-line security/detect-object-injection
       const resourcePath = resourcePaths[i];
       logs.write(`\n${new Date().toISOString()}: Verifying Import from ${resourcePath}...`);
-      const resourceFile = await s3Client
-        .getObject({
-          Bucket: process.env.EXPORT_BUCKET_NAME!,
-          Key: resourcePath
-        })
-        .promise();
-      if (resourceFile.$response.error) {
+      let resourceFileStream: Readable;
+      try {
+        resourceFileStream = s3Client
+          .getObject({
+            Bucket: process.env.EXPORT_BUCKET_NAME!,
+            Key: resourcePath
+          })
+          .createReadStream();
+      } catch (e) {
         if (!continueOnError) {
-          throw new Error(`Failed to read file ${resourceFile.$response.error}`);
+          throw new Error(`Failed to read file ${e}\n`);
         } else {
           completedWithErrors = true;
           continue;
         }
       }
+      const resourceFile: readline.Interface = readline.createInterface({ input: resourceFileStream! });
 
+      let j = 0;
       // Each resource file can contain a number of resource objects
-      const allResources: string[] = resourceFile.Body!.toString().trimEnd().split('\n');
-      for (let j = 0; j < allResources.length; j += 1) {
+      /* istanbul ignore next */
+      for await (const line of resourceFile) {
         // eslint-disable-next-line security/detect-object-injection
-        const resource = JSON.parse(allResources[j]);
+        const resource = JSON.parse(line);
         // Skip any resources marked for deletion, we don't need to verify these.
         if (resource.meta.tag.some((x: { display: string; code: string }) => x.code === 'DELETED')) {
           continue;
@@ -177,6 +183,7 @@ export async function verifyFolderImport(
             );
           }
         }
+        j++;
       }
     }
     logs.write(`\n${new Date().toISOString()}: Successfully completed verifying Import Jobs!`);

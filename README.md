@@ -1,5 +1,23 @@
 # FHIR Works on AWS
 
+## **End of Life Notice**
+
+FHIR Works on AWS is reaching end of life and will no longer be available starting on January 31, 2024 — the End of Life (EOL) date. Customers will be able to use FHIR Works on AWS until the EOL date, at which time the FHIR Works on AWS solution repository will be made read-only and archived for customers.
+
+### Will there be any new feature releases for FHIR Works on AWS?
+
+No. As the service is reaching EOL, we will not release any new features. However, we will continue to make security improvements and manage FHIR Works on AWS as expected until the EOL date. After the EOL date, FHIR Works on AWS will no longer receive any new feature updates, bug fixes or security updates from AWS. After the EOL date, customers who continue to use the software are responsible for the maintenance of the software and its dependencies.
+
+### Where should I migrate to?
+
+AWS HealthLake is a HIPAA-eligible service that provides FHIR APIs that help healthcare and life sciences companies securely store, transform, transact, and analyze health data in minutes to give a chronological view at the patient and population-level. AWS HealthLake natively achieved feature parity with FHIR Works on AWS including SMART on FHIR and Bulk FHIR capabilities. Further, AWS HealthLake can support customer conformance with 21st Century Cures Act for patient access and interoperability requirements through a fully managed FHIR server.
+
+AWS has released a migration tool in the FHIR Works on AWS GitHub repository to enable migration to Amazon HealthLake. The migration tool is a collection of scripts that automates the export of FHIR resources from FHIR Works on AWS and imports them into Amazon HealthLake.
+
+### What support is available?
+
+Customers using FHIR Works on AWS can now move their workloads to AWS HealthLake leveraging the migration tool provided by AWS. Customers will be supported for migration from FHIR Works to an AWS Service such as AWS HealthLake beyond EOL. For you prefer not to migrate to AWS HealthLake or do not have AWS HealthLake support in your region, please contact your AWS account team for alternatives. If you have any questions regarding migration support, please reach out to AWS at fwoa-migration-support@amazon.com.
+
 ## Maintenance Notice
 
 FHIR Works on AWS has been moved to maintenance mode. While in maintenance, we will not add any new features to this solution. All security issues should be reported directly to AWS Security at [aws-security@amazon.com](mailto:security@amazon.com). If you are new to this solution, we advise you to explore using [HealthLake](https://aws.amazon.com/healthlake), which is our managed service for building FHIR based transactional and analytics applications. You can get started by contacting your AWS Account team. If you are an existing customer of FHIR Works on AWS, and have additional questions or need immediate help, please reach out to [fwoa-migration-support@amazon.com](mailto:fwoa-migration-support@amazon.com) or contact your AWS Account team.
@@ -16,6 +34,8 @@ leverage the FHIR standard to manage healthcare records. It is a reference imple
 designed to be extensible.
 
 To learn more about FWoA, download the [FWoA Implementation Guide](./FHIR%20Works%20on%20AWS%20Implementation%20Guide%20-%2024-MAR-2023%20-%20v6.0.0.pdf) and see the following README files for individual FWoA packages:
+
+and see the following README files for individual FWoA packages:
 
 - [deployment](./solutions/deployment/README.md)
 - [smart-deployment](./solutions/smart-deployment/README.md)

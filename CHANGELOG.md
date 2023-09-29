@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.4] - 2023-09-20
+
+### Changelog for Packages in This project
+
+Please click corresponded links for more details for changelog of each package.
+| Folder | Package | CHANGELOG |
+| ----------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------ |
+| [solutions/deployment](./solutions/deployment/) | [@aws/fhir-works-on-aws-deployment] | [Changelog](./solutions/deployment/CHANGELOG.md) |
+| [solutions/smart-deployment](./solutions/smart-deployment/) | [@aws/fhir-works-on-aws-smart-deployment] | [Changelog](./solutions/smart-deployment/CHANGELOG.md) |
+
 ## [6.1.3] - 2023-08-15
 
 ### Changelog for Packages in This project

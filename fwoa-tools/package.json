@@ -43,7 +43,8 @@
   "dependencies": {
     "axios": "0.25.0",
     "lodash": "^4.17.21",
-    "object-hash": "^3.0.0"
+    "object-hash": "^3.0.0",
+    "readline": "^1.3.0"
   },
   "devDependencies": {
     "@aws/eslint-config-fwoa-eslint-custom": "workspace:*",

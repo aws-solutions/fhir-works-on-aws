@@ -66,8 +66,11 @@ fwoa-core/routing/src/router/middlewares/setLogger.test.ts:72
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:132
 fwoa-core/routing/src/router/middlewares/setLogger.test.ts:189
 fwoa-core/interface/src/inputExampleEncryptSelectedField.json:18
+#Email for eol mode
+README.md:19
+
 #Email for maintenance mode
-README.md:5
+README.md:23
 
 # PDF Implementation Guide
 FHIR Works on AWS Implementation Guide - 24-MAR-2023 - v6.0.0.pdf
