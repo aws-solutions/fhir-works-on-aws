@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-smart-deployment",
-  "version": "6.1.4-smart",
+  "version": "6.1.5-smart",
   "description": "FHIR Works on AWS deployment with SMART",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {
@@ -60,7 +60,7 @@
     "node-fetch": "^2.6.1",
     "normalize-url": "^4.5.1",
     "path-parse": "^1.0.7",
-    "postcss": "^8.2.10",
+    "postcss": "^8.4.31",
     "set-value": "^4.0.1",
     "socket.io-parser": "^4.0.5",
     "tar": "^6.1.2",
