@@ -47,6 +47,10 @@
       "allowedCategories": ["production", "tools"]
     },
     {
+      "name": "@babel/traverse",
+      "allowedCategories": ["tools"]
+    },
+    {
       "name": "@elastic/elasticsearch",
       "allowedCategories": ["production"]
     },
