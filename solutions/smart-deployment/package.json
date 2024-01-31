@@ -1,6 +1,6 @@
 {
   "name": "@aws/fhir-works-on-aws-smart-deployment",
-  "version": "6.1.5-smart",
+  "version": "6.1.6-smart",
   "description": "FHIR Works on AWS deployment with SMART",
   "homepage": "https://github.com/aws-solutions/fhir-works-on-aws",
   "repository": {

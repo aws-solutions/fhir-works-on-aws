@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   CfnCondition,
   CfnOutput,
@@ -21,6 +22,7 @@ import {
 } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, StreamViewType, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
 import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
+import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
 import {
   AnyPrincipal,
   Effect,
@@ -33,22 +35,20 @@ import {
 import { Alias } from 'aws-cdk-lib/aws-kms';
 import { Runtime, StartingPosition, Tracing } from 'aws-cdk-lib/aws-lambda';
 import { DynamoEventSource, SqsEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
-import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
-import { Construct } from 'constructs';
-import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
-import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
-import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import path from 'path';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
+import { Bucket, BucketAccessControl, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
+import { Queue, QueuePolicy } from 'aws-cdk-lib/aws-sqs';
 import { NagSuppressions } from 'cdk-nag';
-import KMSResources from './kms';
-import ElasticSearchResources from './elasticsearch';
-import SubscriptionsResources from './subscriptions';
+import { Construct } from 'constructs';
+import AlarmsResource from './alarms';
+import Backup from './backup';
 import BulkExportResources from './bulkExport';
 import BulkExportStateMachine from './bulkExportStateMachine';
-import Backup from './backup';
-import AlarmsResource from './alarms';
+import ElasticSearchResources from './elasticsearch';
 import JavaHapiValidator from './javaHapiValidator';
+import KMSResources from './kms';
+import SubscriptionsResources from './subscriptions';
 
 export interface FhirWorksStackProps extends StackProps {
   stage: string;
@@ -358,7 +358,7 @@ export default class FhirWorksStack extends Stack {
       PATIENT_PICKER_ENDPOINT: props!.patientPickerEndpoint,
       EXPORT_RESULTS_BUCKET: bulkExportResources.bulkExportResultsBucket.bucketName,
       EXPORT_RESULTS_SIGNER_ROLE_ARN: bulkExportResources.exportResultsSignerRole.roleArn,
-      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.1.5-smart',
+      CUSTOM_USER_AGENT: 'AwsSolution/SO0128/GH-v6.1.6-smart',
       ENABLE_MULTI_TENANCY: `${props!.enableMultiTenancy}`,
       ENABLE_SUBSCRIPTIONS: `${props!.enableSubscriptions}`,
       LOG_LEVEL: props!.logLevel,

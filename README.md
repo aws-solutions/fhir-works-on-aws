@@ -1,5 +1,9 @@
 # FHIR Works on AWS
 
+# End of Life
+
+**FHIR Works on AWS has reached End of Life. This repository will be archived and set as read only. For migration alternatives please read the End of Life Notice below.**
+
 ## **End of Life Notice**
 
 FHIR Works on AWS is reaching end of life and will no longer be available starting on January 31, 2024 — the End of Life (EOL) date. Customers will be able to use FHIR Works on AWS until the EOL date, at which time the FHIR Works on AWS solution repository will be made read-only and archived for customers.
