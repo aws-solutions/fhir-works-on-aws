@@ -235,6 +235,10 @@
       "allowedCategories": ["production"]
     },
     {
+      "name": "follow-redirects",
+      "allowedCategories": ["production"]
+    },
+    {
       "name": "fs",
       "allowedCategories": ["tools"]
     },
